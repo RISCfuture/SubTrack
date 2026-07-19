@@ -1,0 +1,72 @@
+name: Periphery
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  periphery:
+    name: Run Periphery
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      # setup-swift xcode-selects the Xcode that can open the project's file format; keep it pinned
+      # to the same toolchain the lint workflow uses.
+      - uses: SwiftyLab/setup-swift@latest
+        with:
+          swift-version: "6.3"
+
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/vendored-ffmpeg
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Install Periphery
+        run: brew install periphery
+
+      # Both app shells are scanned, because a symbol used only by one edition — the update checker
+      # in the download build, the App Store gating in the other — looks unused to a scan covering
+      # just the other. They emit the same SubTrack.app, so each is built into its own derived-data
+      # directory; a shared one would have the second overwrite the first. The runner has no signing
+      # certificate, so ad-hoc sign and drop the entitlements: these analysis builds never ship.
+      - name: Build both editions for indexing
+        run: |
+          set -o pipefail
+          for scheme in "SubTrack (MAS)" "SubTrack (download)" "SubTrack Common Tests" "SubTrack CLI Tests"; do
+            echo "::group::Index $scheme"
+            xcodebuild \
+              -project SubTrack.xcodeproj \
+              -scheme "$scheme" \
+              -parallelizeTargets \
+              -derivedDataPath "$RUNNER_TEMP/peri-dd" \
+              -destination 'platform=macOS,arch=arm64' \
+              -destination-timeout 300 \
+              build-for-testing \
+              COMPILER_INDEX_STORE_ENABLE=YES \
+              INDEX_ENABLE_DATA_STORE=YES \
+              DEBUG_INFORMATION_FORMAT=dwarf \
+              CODE_SIGN_IDENTITY=- \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGNING_ALLOWED=YES \
+              CODE_SIGN_STYLE=Manual \
+              DEVELOPMENT_TEAM= \
+              PROVISIONING_PROFILE_SPECIFIER= \
+              CODE_SIGN_ENTITLEMENTS= \
+              | xcbeautify --renderer github-actions
+            echo "::endgroup::"
+          done
+
+      - name: Run Periphery
+        run: |
+          periphery scan --strict --skip-build \
+            --index-store-path "$RUNNER_TEMP/peri-dd/Index.noindex/DataStore"

@@ -1,0 +1,1548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 100;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01387CFE3017ED1C0033110E /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01387CFD3017ED1C0033110E /* XCUITestKit */; };
+		01387D003017ED240033110E /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01387CFF3017ED240033110E /* XCUITestKit */; };
+		01387D09301842490033110E /* GitHubUpdateChecker in Frameworks */ = {isa = PBXBuildFile; productRef = 01387D08301842490033110E /* GitHubUpdateChecker */; };
+		01D6205530172CCE004758E7 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 01D6205430172CCE004758E7 /* Sentry */; };
+		01DC0A01300CA2B3003C1729 /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = 01DC0A02300CA2B3003C1729 /* DockProgress */; };
+		01ECAF43300CA2B3003C1729 /* SubTrack_Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */; };
+		01ECAF4D300CA2B3003C1729 /* SubTrack_Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */; };
+		01ECAF4E300CA2B3003C1729 /* SubTrack_Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01ECAF57300CA2D6003C1729 /* SubTrack_Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */; };
+		01ECAF58300CA2D6003C1729 /* SubTrack_Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01ECAF5F300CA644003C1729 /* SwiftData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01ECAF5C300CA62D003C1729 /* SwiftData.framework */; };
+		01ECAF80300CC0B1003C1729 /* subtrack in Embed CLI */ = {isa = PBXBuildFile; fileRef = 01ECAEFF300C9E50003C1729 /* subtrack */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		01ECAF81300CC0B1003C1729 /* subtrack in Embed CLI */ = {isa = PBXBuildFile; fileRef = 01ECAEFF300C9E50003C1729 /* subtrack */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		01ECAF97300CC0B1003C1729 /* ffmpeg in Copy ffmpeg */ = {isa = PBXBuildFile; fileRef = 01ECAF90300CC0B1003C1729 /* ffmpeg */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		01ECAF98300CC0B1003C1729 /* ffprobe in Copy ffmpeg */ = {isa = PBXBuildFile; fileRef = 01ECAF91300CC0B1003C1729 /* ffprobe */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		01ECAF99300CC0B1003C1729 /* ffmpeg in Copy ffmpeg */ = {isa = PBXBuildFile; fileRef = 01ECAF92300CC0B1003C1729 /* ffmpeg */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		01ECAF9A300CC0B1003C1729 /* ffprobe in Copy ffmpeg */ = {isa = PBXBuildFile; fileRef = 01ECAF93300CC0B1003C1729 /* ffprobe */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		01D61F0030170001004758E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAEFE300C9E50003C1729;
+			remoteInfo = subtrack;
+		};
+		01ECAEE9300C9E0A003C1729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAED0300C9E09003C1729;
+			remoteInfo = SubTrack;
+		};
+		01ECAF21300CA18A003C1729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAF09300CA189003C1729;
+			remoteInfo = "SubTrack (download)";
+		};
+		01ECAF44300CA2B3003C1729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAF37300CA2B3003C1729;
+			remoteInfo = "SubTrack Common";
+		};
+		01ECAF4B300CA2B3003C1729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAF37300CA2B3003C1729;
+			remoteInfo = "SubTrack Common";
+		};
+		01ECAF59300CA2D6003C1729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAF37300CA2B3003C1729;
+			remoteInfo = "SubTrack Common";
+		};
+		01ECAF84300CC0B1003C1729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAEFE300C9E50003C1729;
+			remoteInfo = subtrack;
+		};
+		01ECAF85300CC0B1003C1729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01ECAEC9300C9E09003C1729 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01ECAEFE300C9E50003C1729;
+			remoteInfo = subtrack;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		01ECAEFD300C9E50003C1729 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolder = None;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		01ECAF52300CA2B3003C1729 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Frameworks;
+			files = (
+				01ECAF4E300CA2B3003C1729 /* SubTrack_Common.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+		};
+		01ECAF5B300CA2D6003C1729 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Frameworks;
+			files = (
+				01ECAF58300CA2D6003C1729 /* SubTrack_Common.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+		};
+		01ECAF76300CC0B1003C1729 /* Copy ffmpeg */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = Contents/Helpers;
+			dstSubfolder = Wrapper;
+			files = (
+				01ECAF97300CC0B1003C1729 /* ffmpeg in Copy ffmpeg */,
+				01ECAF98300CC0B1003C1729 /* ffprobe in Copy ffmpeg */,
+			);
+			name = "Copy ffmpeg";
+		};
+		01ECAF77300CC0B1003C1729 /* Copy ffmpeg */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = Contents/Helpers;
+			dstSubfolder = Wrapper;
+			files = (
+				01ECAF99300CC0B1003C1729 /* ffmpeg in Copy ffmpeg */,
+				01ECAF9A300CC0B1003C1729 /* ffprobe in Copy ffmpeg */,
+			);
+			name = "Copy ffmpeg";
+		};
+		01ECAF82300CC0B1003C1729 /* Embed CLI */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Resources;
+			files = (
+				01ECAF80300CC0B1003C1729 /* subtrack in Embed CLI */,
+			);
+			name = "Embed CLI";
+		};
+		01ECAF83300CC0B1003C1729 /* Embed CLI */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Resources;
+			files = (
+				01ECAF81300CC0B1003C1729 /* subtrack in Embed CLI */,
+			);
+			name = "Embed CLI";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		01D61ECD3016C554004758E7 /* SubTrackCLITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubTrackCLITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAED1300C9E09003C1729 /* SubTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAEE8300C9E0A003C1729 /* SubTrackMASUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubTrackMASUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAEFF300C9E50003C1729 /* subtrack */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = subtrack; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAF0A300CA189003C1729 /* SubTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAF20300CA18A003C1729 /* SubTrackDownloadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubTrackDownloadUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAF31300CA261003C1729 /* SubTrack-download-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SubTrack-download-Info.plist"; sourceTree = "<group>"; };
+		01ECAF32300CA282003C1729 /* SubTrack-MAS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SubTrack-MAS-Info.plist"; sourceTree = "<group>"; };
+		01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SubTrack_Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAF42300CA2B3003C1729 /* SubTrackCommonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubTrackCommonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01ECAF5C300CA62D003C1729 /* SwiftData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftData.framework; path = System/Library/Frameworks/SwiftData.framework; sourceTree = SDKROOT; };
+		01ECAF90300CC0B1003C1729 /* ffmpeg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ffmpeg; sourceTree = "<group>"; };
+		01ECAF91300CC0B1003C1729 /* ffprobe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ffprobe; sourceTree = "<group>"; };
+		01ECAF92300CC0B1003C1729 /* ffmpeg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ffmpeg; sourceTree = "<group>"; };
+		01ECAF93300CC0B1003C1729 /* ffprobe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ffprobe; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		01D61ECE3016C554004758E7 /* SubTrackCLITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SubTrackCLITests;
+			sourceTree = "<group>";
+		};
+		01ECAED3300C9E09003C1729 /* SubTrack-MAS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "SubTrack-MAS";
+			sourceTree = "<group>";
+		};
+		01ECAEEB300C9E0A003C1729 /* SubTrack-MASUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "SubTrack-MASUITests";
+			sourceTree = "<group>";
+		};
+		01ECAF00300C9E50003C1729 /* subtrack-cli */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "subtrack-cli";
+			sourceTree = "<group>";
+		};
+		01ECAF0B300CA189003C1729 /* SubTrack-download */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "SubTrack-download";
+			sourceTree = "<group>";
+		};
+		01ECAF23300CA18A003C1729 /* SubTrack-downloadUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "SubTrack-downloadUITests";
+			sourceTree = "<group>";
+		};
+		01ECAF39300CA2B3003C1729 /* SubTrack Common */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "SubTrack Common";
+			sourceTree = "<group>";
+		};
+		01ECAF48300CA2B3003C1729 /* SubTrack CommonTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "SubTrack CommonTests";
+			sourceTree = "<group>";
+		};
+		01ECAF60300CB0B1003C1729 /* Engine */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Engine;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		01D61ECA3016C554004758E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		01ECAECE300C9E09003C1729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01ECAF4D300CA2B3003C1729 /* SubTrack_Common.framework in Frameworks */,
+			);
+		};
+		01ECAEE5300C9E0A003C1729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01387CFE3017ED1C0033110E /* XCUITestKit in Frameworks */,
+			);
+		};
+		01ECAEFC300C9E50003C1729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		01ECAF07300CA189003C1729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01ECAF57300CA2D6003C1729 /* SubTrack_Common.framework in Frameworks */,
+				01387D09301842490033110E /* GitHubUpdateChecker in Frameworks */,
+			);
+		};
+		01ECAF1D300CA18A003C1729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01387D003017ED240033110E /* XCUITestKit in Frameworks */,
+			);
+		};
+		01ECAF35300CA2B3003C1729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01ECAF5F300CA644003C1729 /* SwiftData.framework in Frameworks */,
+				01DC0A01300CA2B3003C1729 /* DockProgress in Frameworks */,
+				01D6205530172CCE004758E7 /* Sentry in Frameworks */,
+			);
+		};
+		01ECAF3F300CA2B3003C1729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01ECAF43300CA2B3003C1729 /* SubTrack_Common.framework in Frameworks */,
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01ECAEC8300C9E09003C1729 = {
+			isa = PBXGroup;
+			children = (
+				01ECAF32300CA282003C1729 /* SubTrack-MAS-Info.plist */,
+				01ECAF31300CA261003C1729 /* SubTrack-download-Info.plist */,
+				01ECAED3300C9E09003C1729 /* SubTrack-MAS */,
+				01ECAEEB300C9E0A003C1729 /* SubTrack-MASUITests */,
+				01ECAF00300C9E50003C1729 /* subtrack-cli */,
+				01ECAF0B300CA189003C1729 /* SubTrack-download */,
+				01ECAF23300CA18A003C1729 /* SubTrack-downloadUITests */,
+				01ECAF60300CB0B1003C1729 /* Engine */,
+				01ECAF39300CA2B3003C1729 /* SubTrack Common */,
+				01ECAF48300CA2B3003C1729 /* SubTrack CommonTests */,
+				01ECAF94300CC0B1003C1729 /* Vendor */,
+				01D61ECE3016C554004758E7 /* SubTrackCLITests */,
+				01ECAF56300CA2D6003C1729 /* Frameworks */,
+				01ECAED2300C9E09003C1729 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		01ECAED2300C9E09003C1729 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				01ECAED1300C9E09003C1729 /* SubTrack.app */,
+				01ECAEE8300C9E0A003C1729 /* SubTrackMASUITests.xctest */,
+				01ECAEFF300C9E50003C1729 /* subtrack */,
+				01ECAF0A300CA189003C1729 /* SubTrack.app */,
+				01ECAF20300CA18A003C1729 /* SubTrackDownloadUITests.xctest */,
+				01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */,
+				01ECAF42300CA2B3003C1729 /* SubTrackCommonTests.xctest */,
+				01D61ECD3016C554004758E7 /* SubTrackCLITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		01ECAF56300CA2D6003C1729 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01ECAF5C300CA62D003C1729 /* SwiftData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		01ECAF94300CC0B1003C1729 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				01ECAF95300CC0B1003C1729 /* ffmpeg-lgpl */,
+				01ECAF96300CC0B1003C1729 /* ffmpeg-full */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		01ECAF95300CC0B1003C1729 /* ffmpeg-lgpl */ = {
+			isa = PBXGroup;
+			children = (
+				01ECAF90300CC0B1003C1729 /* ffmpeg */,
+				01ECAF91300CC0B1003C1729 /* ffprobe */,
+			);
+			path = "ffmpeg-lgpl";
+			sourceTree = "<group>";
+		};
+		01ECAF96300CC0B1003C1729 /* ffmpeg-full */ = {
+			isa = PBXGroup;
+			children = (
+				01ECAF92300CC0B1003C1729 /* ffmpeg */,
+				01ECAF93300CC0B1003C1729 /* ffprobe */,
+			);
+			path = "ffmpeg-full";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		01ECAF33300CA2B3003C1729 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			files = (
+			);
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		01D61ECC3016C554004758E7 /* SubTrackCLITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01D61ED13016C554004758E7 /* Build configuration list for PBXNativeTarget "SubTrackCLITests" */;
+			buildPhases = (
+				01D61EC93016C554004758E7 /* Sources */,
+				01D61ECA3016C554004758E7 /* Frameworks */,
+				01D61ECB3016C554004758E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01D61F0130170002004758E7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01D61ECE3016C554004758E7 /* SubTrackCLITests */,
+			);
+			name = SubTrackCLITests;
+			productName = SubTrackCLITests;
+			productReference = 01D61ECD3016C554004758E7 /* SubTrackCLITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		01ECAED0300C9E09003C1729 /* SubTrack (MAS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01ECAEF2300C9E0A003C1729 /* Build configuration list for PBXNativeTarget "SubTrack (MAS)" */;
+			buildPhases = (
+				01ECAECD300C9E09003C1729 /* Sources */,
+				01ECAECE300C9E09003C1729 /* Frameworks */,
+				01ECAECF300C9E09003C1729 /* Resources */,
+				01ECAF52300CA2B3003C1729 /* Embed Frameworks */,
+				01ECAF76300CC0B1003C1729 /* Copy ffmpeg */,
+				01ECAF82300CC0B1003C1729 /* Embed CLI */,
+				01F0A1000000000000000003 /* Sandbox Embedded Executables */,
+				01F0A1000000000000000001 /* Upload Debug Symbols to Sentry */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01ECAF4C300CA2B3003C1729 /* PBXTargetDependency */,
+				01ECAF86300CC0B1003C1729 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01ECAED3300C9E09003C1729 /* SubTrack-MAS */,
+			);
+			name = "SubTrack (MAS)";
+			productName = SubTrack;
+			productReference = 01ECAED1300C9E09003C1729 /* SubTrack.app */;
+			productType = "com.apple.product-type.application";
+		};
+		01ECAEE7300C9E0A003C1729 /* SubTrackMASUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01ECAEF8300C9E0A003C1729 /* Build configuration list for PBXNativeTarget "SubTrackMASUITests" */;
+			buildPhases = (
+				01ECAEE4300C9E0A003C1729 /* Sources */,
+				01ECAEE5300C9E0A003C1729 /* Frameworks */,
+				01ECAEE6300C9E0A003C1729 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01ECAEEA300C9E0A003C1729 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01ECAEEB300C9E0A003C1729 /* SubTrack-MASUITests */,
+			);
+			name = SubTrackMASUITests;
+			packageProductDependencies = (
+				01387CFD3017ED1C0033110E /* XCUITestKit */,
+			);
+			productName = SubTrackUITests;
+			productReference = 01ECAEE8300C9E0A003C1729 /* SubTrackMASUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		01ECAEFE300C9E50003C1729 /* subtrack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01ECAF03300C9E50003C1729 /* Build configuration list for PBXNativeTarget "subtrack" */;
+			buildPhases = (
+				01ECAEFB300C9E50003C1729 /* Sources */,
+				01ECAEFC300C9E50003C1729 /* Frameworks */,
+				01ECAEFD300C9E50003C1729 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				01ECAF00300C9E50003C1729 /* subtrack-cli */,
+				01ECAF60300CB0B1003C1729 /* Engine */,
+			);
+			name = subtrack;
+			productName = subtrck;
+			productReference = 01ECAEFF300C9E50003C1729 /* subtrack */;
+			productType = "com.apple.product-type.tool";
+		};
+		01ECAF09300CA189003C1729 /* SubTrack (download) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01ECAF28300CA18A003C1729 /* Build configuration list for PBXNativeTarget "SubTrack (download)" */;
+			buildPhases = (
+				01ECAF06300CA189003C1729 /* Sources */,
+				01ECAF07300CA189003C1729 /* Frameworks */,
+				01ECAF08300CA189003C1729 /* Resources */,
+				01ECAF5B300CA2D6003C1729 /* Embed Frameworks */,
+				01ECAF77300CC0B1003C1729 /* Copy ffmpeg */,
+				01ECAF83300CC0B1003C1729 /* Embed CLI */,
+				01F0A1000000000000000002 /* Upload Debug Symbols to Sentry */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01ECAF5A300CA2D6003C1729 /* PBXTargetDependency */,
+				01ECAF87300CC0B1003C1729 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01ECAF0B300CA189003C1729 /* SubTrack-download */,
+			);
+			name = "SubTrack (download)";
+			packageProductDependencies = (
+				01387D08301842490033110E /* GitHubUpdateChecker */,
+			);
+			productName = "SubTrack (download)";
+			productReference = 01ECAF0A300CA189003C1729 /* SubTrack.app */;
+			productType = "com.apple.product-type.application";
+		};
+		01ECAF1F300CA18A003C1729 /* SubTrackDownloadUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01ECAF2E300CA18A003C1729 /* Build configuration list for PBXNativeTarget "SubTrackDownloadUITests" */;
+			buildPhases = (
+				01ECAF1C300CA18A003C1729 /* Sources */,
+				01ECAF1D300CA18A003C1729 /* Frameworks */,
+				01ECAF1E300CA18A003C1729 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01ECAF22300CA18A003C1729 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01ECAF23300CA18A003C1729 /* SubTrack-downloadUITests */,
+			);
+			name = SubTrackDownloadUITests;
+			packageProductDependencies = (
+				01387CFF3017ED240033110E /* XCUITestKit */,
+			);
+			productName = "SubTrack (download)UITests";
+			productReference = 01ECAF20300CA18A003C1729 /* SubTrackDownloadUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		01ECAF37300CA2B3003C1729 /* SubTrack Common */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01ECAF4F300CA2B3003C1729 /* Build configuration list for PBXNativeTarget "SubTrack Common" */;
+			buildPhases = (
+				01ECAF33300CA2B3003C1729 /* Headers */,
+				01ECAF34300CA2B3003C1729 /* Sources */,
+				01ECAF35300CA2B3003C1729 /* Frameworks */,
+				01ECAF36300CA2B3003C1729 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				01ECAF39300CA2B3003C1729 /* SubTrack Common */,
+				01ECAF60300CB0B1003C1729 /* Engine */,
+			);
+			name = "SubTrack Common";
+			packageProductDependencies = (
+				01DC0A02300CA2B3003C1729 /* DockProgress */,
+				01D6205430172CCE004758E7 /* Sentry */,
+			);
+			productName = "SubTrack Common";
+			productReference = 01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		01ECAF41300CA2B3003C1729 /* SubTrackCommonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01ECAF53300CA2B3003C1729 /* Build configuration list for PBXNativeTarget "SubTrackCommonTests" */;
+			buildPhases = (
+				01ECAF3E300CA2B3003C1729 /* Sources */,
+				01ECAF3F300CA2B3003C1729 /* Frameworks */,
+				01ECAF40300CA2B3003C1729 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01ECAF45300CA2B3003C1729 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01ECAF48300CA2B3003C1729 /* SubTrack CommonTests */,
+			);
+			name = SubTrackCommonTests;
+			productName = "SubTrack CommonTests";
+			productReference = 01ECAF42300CA2B3003C1729 /* SubTrackCommonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01ECAEC9300C9E09003C1729 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					01D61ECC3016C554004758E7 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01ECAED0300C9E09003C1729 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01ECAEE7300C9E0A003C1729 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 01ECAED0300C9E09003C1729;
+					};
+					01ECAEFE300C9E50003C1729 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01ECAF09300CA189003C1729 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01ECAF1F300CA18A003C1729 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 01ECAF09300CA189003C1729;
+					};
+					01ECAF37300CA2B3003C1729 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01ECAF41300CA2B3003C1729 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = 01ECAECC300C9E09003C1729 /* Build configuration list for PBXProject "SubTrack" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 01ECAEC8300C9E09003C1729;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				01DC0A03300CA2B3003C1729 /* XCRemoteSwiftPackageReference "DockProgress" */,
+				01D6205330172CCE004758E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */,
+				01387D07301842490033110E /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */,
+			);
+			preferredProjectObjectVersion = 100;
+			productRefGroup = 01ECAED2300C9E09003C1729 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				01ECAED0300C9E09003C1729 /* SubTrack (MAS) */,
+				01ECAF09300CA189003C1729 /* SubTrack (download) */,
+				01ECAEFE300C9E50003C1729 /* subtrack */,
+				01ECAF37300CA2B3003C1729 /* SubTrack Common */,
+				01ECAEE7300C9E0A003C1729 /* SubTrackMASUITests */,
+				01ECAF1F300CA18A003C1729 /* SubTrackDownloadUITests */,
+				01ECAF41300CA2B3003C1729 /* SubTrackCommonTests */,
+				01D61ECC3016C554004758E7 /* SubTrackCLITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		01D61ECB3016C554004758E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAECF300C9E09003C1729 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAEE6300C9E0A003C1729 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF08300CA189003C1729 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF1E300CA18A003C1729 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF36300CA2B3003C1729 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF40300CA2B3003C1729 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		01F0A1000000000000000001 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/.sentryclirc",
+			);
+			name = "Upload Debug Symbols to Sentry";
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Uploads debug symbols and source context to Sentry so production crash reports symbolicate.",
+				"if [[ \"$(uname -m)\" == arm64 ]]; then",
+				"  export PATH=\"/opt/homebrew/bin:$PATH\"",
+				"fi",
+				"",
+				"if which sentry-cli >/dev/null; then",
+				"  export SENTRY_ORG=timcodes",
+				"  export SENTRY_PROJECT=subtrack",
+				"  ERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)",
+				"  if [ ! $? -eq 0 ]; then",
+				"    echo \"warning: sentry-cli - $ERROR\"",
+				"  fi",
+				"else",
+				"  echo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"",
+				"fi",
+				"",
+			);
+		};
+		01F0A1000000000000000002 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/.sentryclirc",
+			);
+			name = "Upload Debug Symbols to Sentry";
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Uploads debug symbols and source context to Sentry so production crash reports symbolicate.",
+				"if [[ \"$(uname -m)\" == arm64 ]]; then",
+				"  export PATH=\"/opt/homebrew/bin:$PATH\"",
+				"fi",
+				"",
+				"if which sentry-cli >/dev/null; then",
+				"  export SENTRY_ORG=timcodes",
+				"  export SENTRY_PROJECT=subtrack",
+				"  ERROR=$(sentry-cli debug-files upload --include-sources \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)",
+				"  if [ ! $? -eq 0 ]; then",
+				"    echo \"warning: sentry-cli - $ERROR\"",
+				"  fi",
+				"else",
+				"  echo \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"",
+				"fi",
+				"",
+			);
+		};
+		01F0A1000000000000000003 /* Sandbox Embedded Executables */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"$(SRCROOT)/SubTrack-MAS/Helpers.entitlements",
+			);
+			name = "Sandbox Embedded Executables";
+			shellPath = /bin/sh;
+			shellScript = (
+				"# App Store validation rejects a sandboxed app whose embedded executables carry no sandbox",
+				"# entitlement of their own (error 90296). Code-Sign-On-Copy signs them with none, so re-sign",
+				"# them here, before the app bundle is sealed around them. `inherit` is what confines a helper to",
+				"# the parent app's sandbox, and it is only valid alongside `app-sandbox`.",
+				"#",
+				"# Only the App Store build does this. The downloadable one embeds the same `subtrack` binary but",
+				"# lets the user install it to /usr/local/bin, and a tool signed to inherit a sandbox cannot run",
+				"# standalone from a shell.",
+				"if [ \"${CODE_SIGNING_ALLOWED}\" = \"NO\" ]; then",
+				"  echo \"note: code signing disabled; leaving embedded executables unsigned\"",
+				"  exit 0",
+				"fi",
+				"",
+				"IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY:-${CODE_SIGN_IDENTITY}}\"",
+				"APP=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"",
+				"",
+				"for helper in Helpers/ffmpeg Helpers/ffprobe Resources/subtrack; do",
+				"  [ -f \"${APP}/${helper}\" ] || continue",
+				"  codesign --force --sign \"${IDENTITY}\" \\",
+				"    --entitlements \"${SRCROOT}/SubTrack-MAS/Helpers.entitlements\" \\",
+				"    --options runtime \\",
+				"    \"${APP}/${helper}\" || exit 1",
+				"done",
+				"",
+			);
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01D61EC93016C554004758E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAECD300C9E09003C1729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAEE4300C9E0A003C1729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAEFB300C9E50003C1729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF06300CA189003C1729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF1C300CA18A003C1729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF34300CA2B3003C1729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01ECAF3E300CA2B3003C1729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01D61F0130170002004758E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAEFE300C9E50003C1729 /* subtrack */;
+			targetProxy = 01D61F0030170001004758E7 /* PBXContainerItemProxy */;
+		};
+		01ECAEEA300C9E0A003C1729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAED0300C9E09003C1729 /* SubTrack (MAS) */;
+			targetProxy = 01ECAEE9300C9E0A003C1729 /* PBXContainerItemProxy */;
+		};
+		01ECAF22300CA18A003C1729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAF09300CA189003C1729 /* SubTrack (download) */;
+			targetProxy = 01ECAF21300CA18A003C1729 /* PBXContainerItemProxy */;
+		};
+		01ECAF45300CA2B3003C1729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAF37300CA2B3003C1729 /* SubTrack Common */;
+			targetProxy = 01ECAF44300CA2B3003C1729 /* PBXContainerItemProxy */;
+		};
+		01ECAF4C300CA2B3003C1729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAF37300CA2B3003C1729 /* SubTrack Common */;
+			targetProxy = 01ECAF4B300CA2B3003C1729 /* PBXContainerItemProxy */;
+		};
+		01ECAF5A300CA2D6003C1729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAF37300CA2B3003C1729 /* SubTrack Common */;
+			targetProxy = 01ECAF59300CA2D6003C1729 /* PBXContainerItemProxy */;
+		};
+		01ECAF86300CC0B1003C1729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAEFE300C9E50003C1729 /* subtrack */;
+			targetProxy = 01ECAF84300CC0B1003C1729 /* PBXContainerItemProxy */;
+		};
+		01ECAF87300CC0B1003C1729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01ECAEFE300C9E50003C1729 /* subtrack */;
+			targetProxy = 01ECAF85300CC0B1003C1729 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		01D61ED23016C554004758E7 /* Debug configuration for PBXNativeTarget "SubTrackCLITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackCLITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		01D61ED33016C554004758E7 /* Release configuration for PBXNativeTarget "SubTrackCLITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackCLITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		01ECAEF0300C9E0A003C1729 /* Debug configuration for PBXProject "SubTrack" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		01ECAEF1300C9E0A003C1729 /* Release configuration for PBXProject "SubTrack" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		01ECAEF3300C9E0A003C1729 /* Debug configuration for PBXNativeTarget "SubTrack (MAS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "SubTrack-MAS/SubTrack-MAS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_FILE_ACCESS_MOVIES_FOLDER = readwrite;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readwrite;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SubTrack-MAS-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SubTrack;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-MAS";
+				PRODUCT_MODULE_NAME = SubTrackMAS;
+				PRODUCT_NAME = SubTrack;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01ECAEF4300C9E0A003C1729 /* Release configuration for PBXNativeTarget "SubTrack (MAS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "SubTrack-MAS/SubTrack-MAS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_FILE_ACCESS_MOVIES_FOLDER = readwrite;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readwrite;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SubTrack-MAS-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SubTrack;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-MAS";
+				PRODUCT_MODULE_NAME = SubTrackMAS;
+				PRODUCT_NAME = SubTrack;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01ECAEF9300C9E0A003C1729 /* Debug configuration for PBXNativeTarget "SubTrackMASUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "SubTrack (MAS)";
+			};
+			name = Debug;
+		};
+		01ECAEFA300C9E0A003C1729 /* Release configuration for PBXNativeTarget "SubTrackMASUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "SubTrack (MAS)";
+			};
+			name = Release;
+		};
+		01ECAF04300C9E50003C1729 /* Debug configuration for PBXNativeTarget "subtrack" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01ECAF05300C9E50003C1729 /* Release configuration for PBXNativeTarget "subtrack" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01ECAF29300CA18A003C1729 /* Debug configuration for PBXNativeTarget "SubTrack (download)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "SubTrack-download/SubTrack-download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readwrite;
+				ENABLE_FILE_ACCESS_MOVIES_FOLDER = readwrite;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readwrite;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SubTrack-download-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SubTrack;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download";
+				PRODUCT_MODULE_NAME = SubTrackDownload;
+				PRODUCT_NAME = SubTrack;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01ECAF2A300CA18A003C1729 /* Release configuration for PBXNativeTarget "SubTrack (download)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "SubTrack-download/SubTrack-download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readwrite;
+				ENABLE_FILE_ACCESS_MOVIES_FOLDER = readwrite;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readwrite;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SubTrack-download-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SubTrack;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download";
+				PRODUCT_MODULE_NAME = SubTrackDownload;
+				PRODUCT_NAME = SubTrack;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01ECAF2F300CA18A003C1729 /* Debug configuration for PBXNativeTarget "SubTrackDownloadUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "SubTrack (download)";
+			};
+			name = Debug;
+		};
+		01ECAF30300CA18A003C1729 /* Release configuration for PBXNativeTarget "SubTrackDownloadUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download-UITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "SubTrack (download)";
+			};
+			name = Release;
+		};
+		01ECAF50300CA2B3003C1729 /* Debug configuration for PBXNativeTarget "SubTrack Common" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-Common";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		01ECAF51300CA2B3003C1729 /* Release configuration for PBXNativeTarget "SubTrack Common" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-Common";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		01ECAF54300CA2B3003C1729 /* Debug configuration for PBXNativeTarget "SubTrackCommonTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-CommonTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		01ECAF55300CA2B3003C1729 /* Release configuration for PBXNativeTarget "SubTrackCommonTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-CommonTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01D61ED13016C554004758E7 /* Build configuration list for PBXNativeTarget "SubTrackCLITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D61ED23016C554004758E7 /* Debug configuration for PBXNativeTarget "SubTrackCLITests" */,
+				01D61ED33016C554004758E7 /* Release configuration for PBXNativeTarget "SubTrackCLITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAECC300C9E09003C1729 /* Build configuration list for PBXProject "SubTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAEF0300C9E0A003C1729 /* Debug configuration for PBXProject "SubTrack" */,
+				01ECAEF1300C9E0A003C1729 /* Release configuration for PBXProject "SubTrack" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAEF2300C9E0A003C1729 /* Build configuration list for PBXNativeTarget "SubTrack (MAS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAEF3300C9E0A003C1729 /* Debug configuration for PBXNativeTarget "SubTrack (MAS)" */,
+				01ECAEF4300C9E0A003C1729 /* Release configuration for PBXNativeTarget "SubTrack (MAS)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAEF8300C9E0A003C1729 /* Build configuration list for PBXNativeTarget "SubTrackMASUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAEF9300C9E0A003C1729 /* Debug configuration for PBXNativeTarget "SubTrackMASUITests" */,
+				01ECAEFA300C9E0A003C1729 /* Release configuration for PBXNativeTarget "SubTrackMASUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAF03300C9E50003C1729 /* Build configuration list for PBXNativeTarget "subtrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAF04300C9E50003C1729 /* Debug configuration for PBXNativeTarget "subtrack" */,
+				01ECAF05300C9E50003C1729 /* Release configuration for PBXNativeTarget "subtrack" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAF28300CA18A003C1729 /* Build configuration list for PBXNativeTarget "SubTrack (download)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAF29300CA18A003C1729 /* Debug configuration for PBXNativeTarget "SubTrack (download)" */,
+				01ECAF2A300CA18A003C1729 /* Release configuration for PBXNativeTarget "SubTrack (download)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAF2E300CA18A003C1729 /* Build configuration list for PBXNativeTarget "SubTrackDownloadUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAF2F300CA18A003C1729 /* Debug configuration for PBXNativeTarget "SubTrackDownloadUITests" */,
+				01ECAF30300CA18A003C1729 /* Release configuration for PBXNativeTarget "SubTrackDownloadUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAF4F300CA2B3003C1729 /* Build configuration list for PBXNativeTarget "SubTrack Common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAF50300CA2B3003C1729 /* Debug configuration for PBXNativeTarget "SubTrack Common" */,
+				01ECAF51300CA2B3003C1729 /* Release configuration for PBXNativeTarget "SubTrack Common" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01ECAF53300CA2B3003C1729 /* Build configuration list for PBXNativeTarget "SubTrackCommonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01ECAF54300CA2B3003C1729 /* Debug configuration for PBXNativeTarget "SubTrackCommonTests" */,
+				01ECAF55300CA2B3003C1729 /* Release configuration for PBXNativeTarget "SubTrackCommonTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RISCfuture/XCUITestKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		01387D07301842490033110E /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RISCfuture/GitHubUpdateChecker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		01D6205330172CCE004758E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.23.0;
+			};
+			traits = (
+			);
+		};
+		01DC0A03300CA2B3003C1729 /* XCRemoteSwiftPackageReference "DockProgress" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/DockProgress";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		01387CFD3017ED1C0033110E /* XCUITestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */;
+			productName = XCUITestKit;
+		};
+		01387CFF3017ED240033110E /* XCUITestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */;
+			productName = XCUITestKit;
+		};
+		01387D08301842490033110E /* GitHubUpdateChecker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01387D07301842490033110E /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */;
+			productName = GitHubUpdateChecker;
+		};
+		01D6205430172CCE004758E7 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01D6205330172CCE004758E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		01DC0A02300CA2B3003C1729 /* DockProgress */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01DC0A03300CA2B3003C1729 /* XCRemoteSwiftPackageReference "DockProgress" */;
+			productName = DockProgress;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 01ECAEC9300C9E09003C1729 /* Project object */;
+}

@@ -1,0 +1,332 @@
+# frozen_string_literal: true
+
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+require "fileutils"
+require "json"
+require "shellwords"
+require "tmpdir"
+require "xcodeproj"
+
+# Xcode 26 writes a multi-line build-phase script as a list of lines, a format xcodeproj 1.28.1
+# rejects: it type-checks `shellScript` as a String and raises on an Array. gym parses the project to
+# enumerate its build configurations, so without this an archive dies before xcodebuild is ever
+# reached — and this project has such a phase, the Sentry dSYM upload. Joining the lines back
+# together yields exactly the script the attribute expects. Remove this once xcodeproj understands
+# the newer format.
+module JoinsMultiLineShellScripts
+  def shell_script=(value)
+    super(value.is_a?(Array) ? value.join("\n") : value)
+  end
+end
+Xcodeproj::Project::Object::PBXShellScriptBuildPhase.prepend(JoinsMultiLineShellScripts)
+
+default_platform :mac
+
+XCODEPROJ = "SubTrack.xcodeproj"
+
+# `sh` runs its command from the fastlane directory while gym resolves paths from the project root,
+# so anything touching the working tree is built from here rather than written relative to either.
+REPO_ROOT = File.expand_path("..", __dir__)
+
+# Where archives, disk images, and dSYMs land, so a CI run can collect them as artifacts. Relative,
+# because that is what gym expects; use OUTPUT_PATH for anything reading the directory back.
+OUTPUT_DIRECTORY = "build"
+OUTPUT_PATH = File.join(REPO_ROOT, OUTPUT_DIRECTORY)
+
+# The two editions this app ships. They are separate targets producing separate bundle identifiers
+# from one project, and they sign completely differently: the App Store build is signed for the store
+# and uploaded to App Store Connect, while the download build is signed with Developer ID, notarized,
+# and attached to a GitHub release.
+#
+# `ffmpeg` names the variant each bundles. `Scripts/build-ffmpeg.sh` writes it to Vendor/ffmpeg-<x>,
+# and the target's Copy ffmpeg phase reads it from there. The App Store build takes the LGPL build,
+# which carries no GPL codecs.
+EDITIONS = {
+  "mas" => { scheme: "SubTrack (MAS)", ffmpeg: "lgpl",
+             app_identifier: "codes.tim.SubTrack-MAS", export_method: "app-store",
+             # A Mac App Store submission ships as a .pkg, which the Apple Distribution certificate
+             # cannot sign — that takes the separate Mac Installer Distribution certificate.
+             match_type: "appstore", additional_cert_types: ["mac_installer_distribution"] },
+  "download" => { scheme: "SubTrack (download)", ffmpeg: "full",
+                  app_identifier: "codes.tim.SubTrack-download", export_method: "developer-id",
+                  # Unlike a plain Developer ID app, this one carries iCloud and push entitlements,
+                  # which a bare Developer ID signature cannot satisfy — so match syncs a profile for
+                  # it rather than only a certificate.
+                  match_type: "developer_id", additional_cert_types: [] }
+}.freeze
+
+# The Sentry project the release lanes upload dSYMs and sources to. `sentry-cli` reads
+# SENTRY_AUTH_TOKEN from the environment itself; `.sentryclirc` is committed and so holds only the
+# project's identity.
+SENTRY_ORG = "timcodes"
+SENTRY_PROJECT = "subtrack"
+
+# Signing credentials live in a private repository, everything in it encrypted under one
+# MATCH_PASSWORD: the signing certificates (managed by _match_) and the App Store Connect API key
+# (decrypted by that repository's own `bin/api-key`). Neither is ever written to this working tree.
+# CI checks the repository out and sets CERTIFICATES_REPO; a local run falls back to a clone
+# alongside the other repositories.
+DEFAULT_CERTIFICATES_REPO = File.expand_path("~/Repositories/certificates")
+
+def certificates_repo
+  path = ENV.fetch("CERTIFICATES_REPO", DEFAULT_CERTIFICATES_REPO)
+  return path if Dir.exist?(path)
+
+  UI.user_error!("No signing credentials at #{path} — clone the certificates repository there, " \
+                 "or point CERTIFICATES_REPO at an existing checkout.")
+end
+
+def edition(name)
+  EDITIONS.fetch(name) do
+    UI.user_error!("Unknown edition #{name.inspect}. This app ships #{EDITIONS.keys.join(', ')}.")
+  end
+end
+
+# gym never hands App Store Connect credentials to xcodebuild, so `-allowProvisioningUpdates` on its
+# own has no account to authenticate with and automatic signing cannot fetch a distribution profile.
+# xcodebuild takes the key directly through its own flags. They want a path, so the key is written to
+# a private temp file that goes away when the process exits — it never lands in the working tree.
+def provisioning_authentication_args
+  key = Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::APP_STORE_CONNECT_API_KEY]
+  UI.user_error!("ensure_api_key has to run before an archive can be signed.") if key.nil?
+
+  directory = Dir.mktmpdir("asc-api-key")
+  at_exit { FileUtils.remove_entry(directory, true) }
+  path = File.join(directory, "AuthKey_#{key[:key_id]}.p8")
+  File.write(path, key[:key])
+  FileUtils.chmod(0o600, path)
+
+  "-authenticationKeyPath #{path.shellescape} " \
+    "-authenticationKeyID #{key[:key_id].shellescape} " \
+    "-authenticationKeyIssuerID #{key[:issuer_id].shellescape}"
+end
+
+platform :mac do
+  desc "Build and upload the App Store edition to TestFlight"
+  lane :beta do
+    archive_edition(edition_name: "mas")
+    upload_to_testflight(app_identifier: EDITIONS["mas"][:app_identifier])
+    upload_debug_symbols
+  end
+
+  desc "Build and upload the App Store edition to App Store Connect"
+  lane :release do
+    archive_edition(edition_name: "mas")
+    upload_store_build
+    upload_debug_symbols
+  end
+
+  desc "Build, notarize, and package the downloadable edition as a disk image"
+  lane :download_release do |options|
+    archive_edition(edition_name: "download", version: options[:version], build: options[:build])
+    notarize_and_package
+    upload_debug_symbols
+  end
+
+  desc "Resolve the next build number and write it where CI can read it"
+  lane :ci_next_build_number do
+    ensure_api_key
+
+    # App Store Connect is the authority, not the project file: the checked-in build number drifts
+    # behind whatever was last uploaded. Both editions share one number, so a user comparing them
+    # sees the same build behind the same version.
+    latest = latest_testflight_build_number(app_identifier:       EDITIONS["mas"][:app_identifier],
+                                            platform:             "osx",
+                                            initial_build_number: 0)
+
+    next_build_number = latest + 1
+    UI.success("Next build number: #{next_build_number}")
+
+    # Only CI needs the value in a file to hand to the next job; a local run just wants to see it.
+    build_number_file = ENV.fetch("BUILD_NUMBER_FILE", nil)
+    File.write(build_number_file, next_build_number) if build_number_file
+  end
+
+  desc "Archive one edition and ship it (CI)"
+  lane :ci_release do |options|
+    name = options.fetch(:platform)
+    archive_edition(edition_name: name,
+                    version:      options.fetch(:version),
+                    build:        options.fetch(:build))
+
+    case name
+      when "mas" then upload_store_build
+      when "download" then notarize_and_package
+      else UI.user_error!("Unknown edition #{name.inspect}.")
+    end
+
+    upload_debug_symbols
+  end
+
+  # Archives one edition. `version` and `build` are optional: a local run without them keeps whatever
+  # the project already carries.
+  private_lane :archive_edition do |options|
+    config = edition(options.fetch(:edition_name))
+
+    setup_ci # No-op off CI; elsewhere it keeps match out of the login keychain.
+    ensure_ffmpeg(variant: config.fetch(:ffmpeg))
+    ensure_signing(match_type:            config.fetch(:match_type),
+                   app_identifier:        config.fetch(:app_identifier),
+                   additional_cert_types: config.fetch(:additional_cert_types))
+
+    # Passing the version on the command line rather than writing it into the project keeps a release
+    # from leaving a commit behind, and stamps every target in the archive alike.
+    #
+    # The archive signs automatically, exactly as it does in Xcode: `-allowProvisioningUpdates` plus
+    # the API key lets it resolve a profile, and the certificate comes from the certificates
+    # repository. The export cannot do the same — cloud signing is refused for distribution — so it
+    # consumes the stored match profiles instead, which build_app puts into its export options from
+    # match's mapping. Hence automatic signing here and managed profiles there.
+    stamps = []
+    stamps << "MARKETING_VERSION=#{options[:version]}" if options[:version]
+    stamps << "CURRENT_PROJECT_VERSION=#{options[:build]}" if options[:build]
+
+    build_app(
+      scheme:           config.fetch(:scheme),
+      destination:      "generic/platform=macOS",
+      export_method:    config.fetch(:export_method),
+      output_directory: OUTPUT_DIRECTORY,
+      xcargs:           "#{stamps.join(' ')} -allowProvisioningUpdates " \
+                        "#{provisioning_authentication_args}".strip
+    )
+  end
+
+  # Uploads the archived App Store build. Metadata and screenshots are maintained by hand in App
+  # Store Connect, and the build waits there to be attached to a version and submitted.
+  private_lane :upload_store_build do
+    upload_to_app_store(
+      app_identifier:             EDITIONS["mas"][:app_identifier],
+      platform:                   "osx",
+      skip_metadata:              true,
+      skip_screenshots:           true,
+      submit_for_review:          false,
+      run_precheck_before_submit: false
+    )
+  end
+
+  # Notarizes the exported app and wraps it in the disk image the GitHub release ships — which is
+  # also what the in-app update checker downloads, since it looks for a .dmg asset first.
+  private_lane :notarize_and_package do
+    app_path = Dir[File.join(OUTPUT_PATH, "*.app")].first
+    UI.user_error!("The export produced no .app in #{OUTPUT_PATH}.") if app_path.nil?
+
+    # `notarize` staples the ticket onto the app once Apple accepts it, so the copy that goes into
+    # the disk image validates offline.
+    notarize(package:   app_path,
+             bundle_id: EDITIONS["download"][:app_identifier],
+             api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+             print_log: true)
+
+    version = get_version_number(xcodeproj: XCODEPROJ, target: "SubTrack (download)")
+    dmg = sh(File.join(REPO_ROOT, "Scripts", "make-dmg.sh"), app_path, version, OUTPUT_PATH).strip
+    UI.success("Packaged #{dmg}")
+  end
+
+  # Builds the bundled ffmpeg if it is not already there. Both app targets copy it into the app at
+  # build time, and a missing Vendor/ yields an app with no Contents/Helpers rather than a build
+  # failure — so this checks before every archive rather than trusting the tree.
+  private_lane :ensure_ffmpeg do |options|
+    variant = options.fetch(:variant)
+    next if File.executable?(File.join(REPO_ROOT, "Vendor", "ffmpeg-#{variant}", "ffmpeg"))
+
+    UI.message("Building the #{variant} ffmpeg — this takes a while the first time.")
+    sh(File.join(REPO_ROOT, "Scripts", "build-ffmpeg.sh"), variant)
+  end
+
+  # Loads the App Store Connect API key. `--stdout` keeps the decrypted key in memory rather than
+  # leaving a plaintext .p8 in the working tree, and `log: false` stops fastlane echoing it into the
+  # build log.
+  private_lane :ensure_api_key do
+    if ENV["MATCH_PASSWORD"].to_s.empty?
+      UI.user_error!("MATCH_PASSWORD is not set. Put it in fastlane/.env (git-ignored, loaded " \
+                     "automatically; see fastlane/.env.example) or export it before this lane.")
+    end
+
+    key = JSON.parse(sh(File.join(certificates_repo, "bin", "api-key"), "--stdout", log: false))
+    app_store_connect_api_key(
+      key_id:      key["key_id"],
+      issuer_id:   key["issuer_id"],
+      key_content: key["key"]
+    )
+  end
+
+  # Everything an archive needs to be signed and accepted.
+  #
+  # Two certificates, because an archive and its export sign differently: `xcodebuild archive` uses a
+  # development identity, just as Xcode does locally, and `exportArchive` re-signs the payload for
+  # distribution. Keeping the development certificate here means a runner installs it instead of
+  # minting a throwaway one every release — a team holds only a few, and automatic signing will
+  # exhaust the quota.
+  #
+  # Skipping profiles on that first call keeps it edition-agnostic: the archive gets its profile from
+  # `-allowProvisioningUpdates`, and the certificate is all match is being asked for. It must come
+  # first, because match records a profile mapping whether or not it synced any — the development
+  # call maps every bundle identifier to nil, so the distribution call has to be the one that wins.
+  #
+  # Both calls are scoped to the one bundle identifier being archived. The Matchfile lists both,
+  # which is what the maintenance commands want, but the editions store different kinds of profile —
+  # App Store for one, Developer ID for the other — so asking for either kind across the whole list
+  # looks for a profile that will never exist. Scoping the *development* call matters just as much:
+  # it records a nil for every identifier it is given, and gym turns a nil into an empty value in the
+  # export options, which `exportArchive` rejects outright ("Expected to decode String but found a
+  # data value instead"). Only the identifier being exported may appear in that mapping.
+  private_lane :ensure_signing do |options|
+    app_identifier = options.fetch(:app_identifier)
+
+    ensure_api_key
+    match(type:                     "development",
+          app_identifier:           app_identifier,
+          readonly:                 true,
+          skip_provisioning_profiles: true)
+    match(type:                  options.fetch(:match_type),
+          platform:              "macos",
+          app_identifier:        app_identifier,
+          readonly:              true,
+          additional_cert_types: options.fetch(:additional_cert_types))
+  end
+
+  # Uploads dSYMs and source context so Sentry can symbolicate the build that was just shipped. The
+  # Xcode run-script phase does this too, but only when `sentry-cli` happens to be installed on the
+  # archiving machine; doing it here makes symbolication a property of the release instead.
+  #
+  # `sentry-cli` is invoked directly rather than through a `sentry_cli` action, which does not
+  # exist — Sentry ships no built-in fastlane action, and no plugin is installed.
+  private_lane :upload_debug_symbols do
+    dsym_path = lane_context[SharedValues::DSYM_OUTPUT_PATH]
+    if dsym_path.nil?
+      UI.important("No dSYM archive was produced, so there is nothing to symbolicate.")
+      next
+    end
+
+    # By the time this runs the binary is already shipped, so nothing here is allowed to fail the
+    # release — a missing token or a rejected upload costs symbolication, not the build, and
+    # `sentry-cli debug-files upload` can be re-run by hand afterwards.
+    token = ENV.fetch("SENTRY_AUTH_TOKEN", nil)
+    if token.nil? || token.empty?
+      UI.important("SENTRY_AUTH_TOKEN is not set; skipping the Sentry upload of #{dsym_path}.")
+      next
+    end
+
+    begin
+      sh("sentry-cli", "debug-files", "upload",
+         "--org", SENTRY_ORG,
+         "--project", SENTRY_PROJECT,
+         "--include-sources",
+         dsym_path)
+    rescue StandardError => error
+      UI.error("Sentry rejected the dSYM upload: #{error.message}")
+      UI.important("The build itself uploaded fine; re-run sentry-cli once the token is valid.")
+    end
+  end
+end

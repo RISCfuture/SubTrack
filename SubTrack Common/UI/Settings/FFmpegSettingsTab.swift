@@ -1,0 +1,240 @@
+import SwiftUI
+
+/**
+ Chooses where `ffmpeg`/`ffprobe` come from: the built-in binary or a
+ user-selected folder, and reports the resolved build's version and formats.
+ */
+struct FFmpegSettingsTab: View {
+  /// Separates the two sections more clearly than the spacing within either one.
+  private static let sectionSpacing: CGFloat = 20
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: Self.sectionSpacing) {
+      FFmpegLocationSection()
+      Divider()
+      FFmpegInformationSection()
+      Spacer()
+    }
+    .padding()
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+  }
+}
+
+/**
+ Where `ffmpeg`/`ffprobe` are resolved from — a fixed notice in the App Store
+ build, and the built-in/custom choice everywhere else.
+ */
+private struct FFmpegLocationSection: View {
+  @Environment(AppEnvironment.self)
+  private var env
+
+  var body: some View {
+    @Bindable var settings = env.ffmpegSettings
+    VStack(alignment: .leading, spacing: 8) {
+      Text("FFmpeg Location")
+      if env.featureFlags.isAppStoreBuild {
+        BuiltInOnlyNotice()
+      } else {
+        // Each option carries its own identifier: SwiftUI gives every radio
+        // button the Picker's own identifier as well, so the Picker's can't
+        // select one.
+        Picker("FFmpeg Location", selection: $settings.mode) {
+          Text("Built-in")
+            .tag(FFmpegLocationMode.builtIn)
+            .accessibilityIdentifier("settings.ffmpegModeBuiltIn")
+          Text("Custom…")
+            .tag(FFmpegLocationMode.custom)
+            .accessibilityIdentifier("settings.ffmpegModeCustom")
+        }
+        .pickerStyle(.radioGroup)
+        .labelsHidden()
+        .accessibilityIdentifier("settings.ffmpegMode")
+
+        if settings.mode == .custom { CustomFFmpegFolderPicker() }
+      }
+    }
+    .onAppear {
+      // The App Store build can't run a custom ffmpeg; ignore any stale preference.
+      if env.featureFlags.isAppStoreBuild { env.ffmpegSettings.mode = .builtIn }
+    }
+  }
+}
+
+/**
+ The App Store build's stand-in for the location picker: the built-in ffmpeg
+ is the only one it can run.
+ */
+private struct BuiltInOnlyNotice: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      HStack(spacing: 6) {
+        Text("Built-in").foregroundStyle(.secondary)
+        FullVersionHelpLink()
+      }
+      Text("Using a custom ffmpeg is available in the downloadable version.")
+        .font(.callout)
+        .foregroundStyle(.secondary)
+    }
+  }
+}
+
+/**
+ The chosen custom folder, a button to change it, and whether that folder
+ actually holds the two binaries.
+ */
+private struct CustomFFmpegFolderPicker: View {
+  @Environment(AppEnvironment.self)
+  private var env
+
+  var body: some View {
+    let settings = env.ffmpegSettings
+    VStack(alignment: .leading, spacing: 8) {
+      HStack(spacing: 12) {
+        Text(
+          settings.customDirectory.isEmpty
+            ? String(localized: "Not chosen")
+            : settings.customDirectory
+        )
+        .foregroundStyle(settings.customDirectory.isEmpty ? .secondary : .primary)
+        .lineLimit(1)
+        .truncationMode(.middle)
+        Spacer(minLength: 0)
+        Button("Choose…") { chooseFolder() }
+          .accessibilityIdentifier("settings.ffmpegChoose")
+      }
+      Label(
+        settings.customIsValid
+          ? String(localized: "Found ffmpeg and ffprobe")
+          : String(localized: "This folder must contain ffmpeg and ffprobe"),
+        systemImage: settings.customIsValid
+          ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
+      )
+      .foregroundStyle(settings.customIsValid ? .green : .orange)
+      .font(.callout)
+      .accessibilityIdentifier("settings.ffmpegCustomStatus")
+    }
+  }
+
+  private func chooseFolder() {
+    if let url = FilePanels.chooseFolder() {
+      env.ffmpegSettings.customDirectory = url.path(percentEncoded: false)
+    }
+  }
+}
+
+/**
+ What the resolved build turned out to be: its version, and a way into the
+ full list of formats it supports.
+ */
+private struct FFmpegInformationSection: View {
+  @Environment(AppEnvironment.self)
+  private var env
+  @State private var showingFormats = false
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Text("FFmpeg Information")
+      FFmpegVersionRow(state: env.capabilities.state)
+      Button {
+        showingFormats = true
+      } label: {
+        Text("Supported Formats")
+      }
+      .accessibilityIdentifier("settings.ffmpegFormats")
+      .disabled(!env.capabilities.state.isLoaded)
+    }
+    .sheet(isPresented: $showingFormats) {
+      FFmpegFormatsSheet(
+        store: env.capabilities,
+        showsFullVersionLink: env.featureFlags.isAppStoreBuild
+      )
+    }
+  }
+}
+
+/**
+ Shows the resolved `ffmpeg` build's version, or the probe's progress and
+ any "not runnable" reason.
+ */
+struct FFmpegVersionRow: View {
+  let state: FFmpegCapabilitiesStore.State
+
+  var body: some View {
+    switch state {
+      case .idle, .loading:
+        HStack {
+          ProgressView().controlSize(.small)
+          Text("Reading version…").foregroundStyle(.secondary)
+        }
+      case .loaded(let capabilities):
+        LabeledContent("Version") {
+          Text(capabilities.version?.version ?? String(localized: "Unknown"))
+            .foregroundStyle(.secondary)
+            .textSelection(.enabled)
+        }
+      case .unavailable(let reason):
+        Label(reason, systemImage: "exclamationmark.triangle.fill")
+          .foregroundStyle(.orange)
+          .font(.callout)
+    }
+  }
+}
+
+extension FFmpegCapabilitiesStore.State {
+  /// Whether a probe has produced capabilities ready to display.
+  var isLoaded: Bool {
+    if case .loaded = self { return true }
+    return false
+  }
+}
+
+#if DEBUG
+  #Preview("FFmpeg Version — states") {
+    VStack(alignment: .leading, spacing: 12) {
+      FFmpegVersionRow(state: .loading)
+      FFmpegVersionRow(
+        state: .loaded(
+          FFmpegCapabilities(
+            version: FFmpegVersionInfo(
+              version: "6.1.1",
+              bannerLine: "ffmpeg version 6.1.1 Copyright (c) 2000-2023 the FFmpeg developers",
+              configuration: "--enable-gpl --enable-libx265",
+              libraryVersions: []
+            ),
+            containers: [],
+            videoCodecs: [],
+            audioCodecs: [],
+            subtitleCodecs: []
+          )
+        )
+      )
+      FFmpegVersionRow(state: .unavailable("Couldn’t run ffmpeg"))
+      Spacer()
+    }
+    .padding()
+    .frame(width: 480, height: 260, alignment: .topLeading)
+  }
+
+  #Preview("FFmpeg Tab — App Store (gated)") {
+    FFmpegSettingsTab()
+      .environment(settingsPreviewEnvironment(isAppStoreBuild: true))
+      .frame(width: 480, height: 340)
+  }
+
+  #Preview("FFmpeg Tab — Built-in (download)") {
+    FFmpegSettingsTab()
+      .environment(settingsPreviewEnvironment(isAppStoreBuild: false))
+      .frame(width: 480, height: 340)
+  }
+
+  #Preview("FFmpeg Tab — Custom (download)") {
+    let env = settingsPreviewEnvironment(isAppStoreBuild: false)
+    // An empty customDirectory leaves the picker in the orange "must contain
+    // ffmpeg and ffprobe" state; a green "valid custom" state would require real
+    // ffmpeg/ffprobe files on disk, which a preview can't provide.
+    env.ffmpegSettings.mode = .custom
+    return FFmpegSettingsTab()
+      .environment(env)
+      .frame(width: 480, height: 340)
+  }
+#endif

@@ -1,0 +1,54 @@
+name: Vendored FFmpeg
+description: >-
+  Restores Vendor/ffmpeg-lgpl and Vendor/ffmpeg-full from cache, building them from source on a
+  miss. Every job that builds an app target or runs the CLI tests needs them, because the binaries
+  are not checked in.
+
+runs:
+  using: composite
+  steps:
+    # Both variants are always built, even for a job needing only one, so that every job in every
+    # workflow shares a single cache entry. Splitting them would trade one cold build for three.
+    #
+    # Every version FFmpeg, x264, x265, libaom, and CMake are pinned at lives in the build script,
+    # so keying on the script invalidates the cache exactly when a version moves and never
+    # otherwise.
+    - name: Restore the FFmpeg build
+      id: cache
+      uses: actions/cache@v6
+      with:
+        path: Vendor
+        key: ffmpeg-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Scripts/build-ffmpeg.sh') }}
+
+    # x264 assembles with nasm, and FFmpeg's configure locates the static libraries through
+    # pkg-config. Neither is guaranteed on a hosted runner.
+    - name: Install build tools
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: brew install nasm pkg-config
+
+    - name: Build FFmpeg
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        for variant in lgpl full; do
+          echo "::group::Build ffmpeg ($variant)"
+          Scripts/build-ffmpeg.sh "$variant"
+          echo "::endgroup::"
+        done
+
+    # A cache restore preserves the executable bit, but a corrupt or partial entry would surface as
+    # an app with no Contents/Helpers rather than as a build failure — so fail here instead.
+    - name: Verify the binaries run
+      shell: bash
+      run: |
+        for variant in lgpl full; do
+          for tool in ffmpeg ffprobe; do
+            binary="Vendor/ffmpeg-$variant/$tool"
+            if [ ! -x "$binary" ]; then
+              echo "::error::$binary is missing or not executable."
+              exit 1
+            fi
+            "$binary" -version | head -1
+          done
+        done

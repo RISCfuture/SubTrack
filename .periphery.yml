@@ -1,0 +1,22 @@
+project: SubTrack.xcodeproj
+# The test schemes are here so that usage *from* tests counts as usage — without them a helper
+# exercised only by the suite looks dead. `report_exclude` below still keeps findings inside the
+# test targets themselves out of the report.
+schemes:
+  - SubTrack (MAS)
+  - SubTrack (download)
+  - SubTrack Common Tests
+  - SubTrack CLI Tests
+retain_public: false
+retain_swift_ui_previews: true
+# Two kinds of property here are written but never read back by name, and both are load-bearing.
+# `ProbeCoordinator.CacheKey` is a Hashable struct whose stored properties are consumed only by the
+# synthesized `==` and `hash(into:)` — dropping them would silently key the probe cache on less than
+# the file's identity. `ConversionProgress` decodes ffmpeg's progress stream in full, including
+# fields no view reads yet; keeping them costs nothing and losing them costs fidelity.
+retain_assign_only_properties: true
+report_exclude:
+  - "**/SubTrack CommonTests/**"
+  - "**/SubTrackCLITests/**"
+  - "**/SubTrack-MASUITests/**"
+  - "**/SubTrack-downloadUITests/**"

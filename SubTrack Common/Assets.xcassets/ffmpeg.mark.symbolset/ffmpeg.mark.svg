@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3300 2200">
+ <g id="Notes">
+  <rect height="2200" id="artboard" style="fill:white;opacity:1" width="3300" x="0" y="0"/>
+  <text id="descriptive-name" style="stroke:none;fill:black;font-family:sans-serif;font-size:13;" transform="matrix(1 0 0 1 263 200)">ffmpeg.mark — the FFmpeg mark, redrawn as a monochrome template.</text>
+  <text id="template-version" style="stroke:none;fill:black;font-family:sans-serif;font-size:13;text-anchor:end;" transform="matrix(1 0 0 1 3036 200)">Template v.6.0</text>
+ </g>
+ <g id="Guides">
+  <line id="Baseline-S" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="696" y2="696"/>
+  <line id="Capline-S" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="625.541" y2="625.541"/>
+  <line id="Baseline-M" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1126" y2="1126"/>
+  <line id="Capline-M" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1055.54" y2="1055.54"/>
+  <line id="Baseline-L" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1556" y2="1556"/>
+  <line id="Capline-L" style="fill:none;stroke:#27AAE1;opacity:1;stroke-width:0.5;" x1="263" x2="3036" y1="1485.54" y2="1485.54"/>
+  <line id="left-margin-Ultralight-S" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="515.611" x2="515.611" y1="600.785" y2="720.121"/>
+  <line id="right-margin-Ultralight-S" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="603.811" x2="603.811" y1="600.785" y2="720.121"/>
+  <line id="left-margin-Regular-S" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="1403.59" x2="1403.59" y1="600.785" y2="720.121"/>
+  <line id="right-margin-Regular-S" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="1496.09" x2="1496.09" y1="600.785" y2="720.121"/>
+  <line id="left-margin-Black-S" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="2884.6" x2="2884.6" y1="600.785" y2="720.121"/>
+  <line id="right-margin-Black-S" style="fill:none;stroke:#00AEEF;stroke-width:0.5;opacity:1.0;" x1="2982.2" x2="2982.2" y1="600.785" y2="720.121"/>
+ </g>
+ <g id="Symbols">
+  <g id="Ultralight-S" transform="matrix(1 0 0 1 515.611 696)">
+   <path d="M80.672 0.000L48.258 -2.510L65.259 -19.004L65.259 -31.363L36.988 -3.383L8.276 -5.603L59.652 -60.855L47.705 -60.209L12.628 -21.803L12.628 -52.626L17.676 -58.586L7.528 -58.036L7.528 -64.870L33.379 -66.872L18.616 -49.940L18.616 -38.211L44.820 -67.757L79.723 -70.459L23.292 -11.640L34.096 -11.071L73.631 -51.509L73.631 -15.177L67.339 -9.262L80.672 -8.542Z"/>
+  </g>
+  <g id="Regular-S" transform="matrix(1 0 0 1 1403.59 696)">
+   <path d="M82.470 0.000L47.404 -2.716L65.279 -20.057L65.279 -28.603L39.724 -3.311L9.124 -5.676L58.207 -58.462L50.129 -58.025L14.665 -19.195L14.665 -52.324L18.024 -56.289L9.759 -55.842L9.759 -64.760L38.600 -66.993L22.791 -48.862L22.791 -41.146L46.238 -67.584L83.376 -70.459L28.749 -13.520L36.021 -13.137L75.699 -53.720L75.699 -15.363L71.291 -11.220L82.470 -10.616Z"/>
+  </g>
+  <g id="Black-S" transform="matrix(1 0 0 1 2884.6 696)">
+   <path d="M84.511 0.000L46.468 -2.946L65.324 -21.238L65.324 -25.503L42.818 -3.229L10.099 -5.759L56.607 -55.775L52.874 -55.573L16.974 -16.266L16.974 -51.983L18.437 -53.711L12.288 -53.378L12.288 -64.637L44.485 -67.129L27.502 -47.652L27.502 -44.442L47.854 -67.390L87.501 -70.459L34.899 -15.631L38.206 -15.457L78.042 -56.202L78.042 -15.572L75.751 -13.418L84.511 -12.945Z"/>
+  </g>
+ </g>
+</svg>

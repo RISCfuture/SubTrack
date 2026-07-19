@@ -1,0 +1,142 @@
+import Foundation
+import Testing
+
+import SubTrack_Common
+
+@Suite
+struct SlimRulesTests {
+
+  /// Decodes a rules blob written by an earlier build.
+  private func decode(_ json: String) throws -> SlimRules {
+    try JSONDecoder().decode(SlimRules.self, from: Data(json.utf8))
+  }
+
+  @Test
+  func repairsPresetPassedAsProfile() throws {
+    let rules = try decode(
+      """
+      {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
+       "videoPreferredCodecs":["hevc","h264"],"videoConversionCodec":"hevc",
+       "videoConversionOptions":["-profile:v","veryslow"],
+       "audioPreferredCodecs":["aac"],"audioConversionCodec":"truehd",
+       "audioConversionOptions":[],"subtitlePreferredCodecs":["subrip"]}
+      """
+    )
+    #expect(rules.videoConversionOptions == ["-preset", "veryslow"])
+  }
+
+  @Test
+  func leavesRealProfileAlone() throws {
+    let rules = try decode(
+      """
+      {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
+       "videoPreferredCodecs":["hevc"],"videoConversionCodec":"hevc",
+       "videoConversionOptions":["-profile:v","main10"],
+       "audioPreferredCodecs":["aac"],"audioConversionCodec":"truehd",
+       "audioConversionOptions":[],"subtitlePreferredCodecs":["subrip"]}
+      """
+    )
+    #expect(rules.videoConversionOptions == ["-profile:v", "main10"])
+  }
+
+  @Test
+  func addsAV1ToTheUneditedDefaultCodecList() throws {
+    let rules = try decode(
+      """
+      {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
+       "videoPreferredCodecs":["hevc","h264"],"videoConversionCodec":"hevc",
+       "videoConversionOptions":[],
+       "audioPreferredCodecs":["aac"],"audioConversionCodec":"truehd",
+       "audioConversionOptions":[],"subtitlePreferredCodecs":["subrip"]}
+      """
+    )
+    #expect(rules.videoPreferredCodecs == ["av1", "hevc", "h264"])
+  }
+
+  @Test
+  func leavesAnEditedCodecListAlone() throws {
+    let rules = try decode(
+      """
+      {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
+       "videoPreferredCodecs":["h264"],"videoConversionCodec":"hevc",
+       "videoConversionOptions":[],
+       "audioPreferredCodecs":["aac"],"audioConversionCodec":"truehd",
+       "audioConversionOptions":[],"subtitlePreferredCodecs":["subrip"]}
+      """
+    )
+    #expect(rules.videoPreferredCodecs == ["h264"])
+  }
+
+  /**
+   A blob missing a key must keep every other stored value rather than
+   collapsing the whole record to `SlimRules.default`.
+   */
+  @Test
+  func aMissingKeyFallsBackWithoutDiscardingTheRest() throws {
+    let rules = try decode(
+      """
+      {"languages":["jpn","eng"],"preserveNoLanguages":true,"includeOtherAudio":true,
+       "videoPreferredCodecs":["h264"],"videoConversionCodec":"hevc",
+       "videoConversionOptions":[],
+       "audioPreferredCodecs":["aac"],"audioConversionCodec":"truehd",
+       "audioConversionOptions":[]}
+      """
+    )
+    #expect(rules.languages == ["jpn", "eng"])
+    #expect(rules.preserveNoLanguages)
+    #expect(rules.includeOtherAudio)
+    #expect(rules.subtitlePreferredCodecs == SlimRules.default.subtitlePreferredCodecs)
+  }
+
+  /// AV1 sources are copied rather than transcoded, so no AV1 decoder is needed.
+  @Test
+  func av1VideoIsCopied() throws {
+    let container = try JSONDecoder().decode(
+      Container.self,
+      from: Data(
+        """
+        {
+          "streams": [
+            {"index":0,"codec_name":"av1","codec_type":"video","width":1440,"height":1080,
+             "disposition":{"default":1},"tags":{}},
+            {"index":1,"codec_name":"aac","codec_type":"audio","sample_rate":"48000","channels":2,
+             "bits_per_sample":0,"disposition":{"default":1},"tags":{"language":"eng"}}
+          ],
+          "format":{"filename":"/m.mkv","duration":"60.0","size":"1000"}
+        }
+        """.utf8
+      )
+    )
+    let operations = try SlimRules.default.makeConverter(container: container).operations()
+    let video = try #require(operations.first { $0.streamType == .video })
+    #expect(video.kind == .copy)
+  }
+
+  @Test
+  func repairsAnExperimentalAudioTranscodeTarget() throws {
+    let rules = try decode(
+      """
+      {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
+       "videoPreferredCodecs":["hevc"],"videoConversionCodec":"hevc",
+       "videoConversionOptions":[],
+       "audioPreferredCodecs":["aac"],"audioConversionCodec":"truehd",
+       "audioConversionOptions":[],"subtitlePreferredCodecs":["subrip"]}
+      """
+    )
+    #expect(rules.audioConversionCodec == "eac3")
+  }
+
+  @Test
+  func leavesAUsableAudioTranscodeTargetAlone() throws {
+    let rules = try decode(
+      """
+      {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
+       "videoPreferredCodecs":["hevc"],"videoConversionCodec":"hevc",
+       "videoConversionOptions":[],
+       "audioPreferredCodecs":["aac"],"audioConversionCodec":"flac",
+       "audioConversionOptions":[],"subtitlePreferredCodecs":["subrip"]}
+      """
+    )
+    #expect(rules.audioConversionCodec == "flac")
+  }
+}

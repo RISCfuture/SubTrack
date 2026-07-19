@@ -1,0 +1,5 @@
+[defaults]
+# Read by sentry-cli (e.g. the release/dSYM upload build phase). The auth token is supplied out of
+# band via SENTRY_AUTH_TOKEN, never committed here.
+org = timcodes
+project = subtrack

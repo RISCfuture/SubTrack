@@ -1,0 +1,84 @@
+name: Release
+
+# Pushing a version tag archives both editions: the App Store build goes to App Store Connect, where
+# it waits to be attached to a version and submitted by hand, and the Developer-ID build is
+# notarized, packaged as a disk image, and published as a GitHub release. Nothing here re-runs the
+# tests: tag a commit CI has already passed.
+#
+# Tags carry no "v" prefix. The in-app update checker compares release tags against
+# CFBundleShortVersionString, so "1.2" is the tag for version 1.2.
+on:
+  push:
+    tags: ["[0-9]+.[0-9]+*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Marketing version to build and release.
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.version || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@main
+    with:
+      # Not platforms in the Apple sense — both are macOS. The reusable workflow passes these
+      # through to the release lane verbatim, and `ci_release` reads them as edition names.
+      platforms: '["mas","download"]'
+      version: ${{ inputs.version || github.ref_name }}
+      certificates-repo: RISCfuture/certificates
+      # Each leg builds the bundled FFmpeg its edition needs — the LGPL build for the App Store, the
+      # GPL one for the download — from source, since Vendor/ is not checked in. The `ci_release`
+      # lane does this itself, so no post-checkout-run is needed, but it dominates the job: x264,
+      # x265, and libaom all compile from scratch with no cache to fall back on.
+      timeout-minutes: 150
+    secrets:
+      certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
+      match-password: ${{ secrets.MATCH_PASSWORD }}
+      sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+  publish:
+    name: Publish GitHub release
+    needs: release
+    # Nothing here is Apple-specific: the disk image arrives already built and notarized, and
+    # collecting the FFmpeg source is curl, git, and tar.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download the notarized disk image
+        uses: actions/download-artifact@v8
+        with:
+          name: release-download-${{ inputs.version || github.ref_name }}
+          path: artifacts
+
+      # The GPL FFmpeg inside the download edition obliges us to ship its source alongside the
+      # binary. Built here rather than carried from the archive job so it cannot go stale.
+      - name: Collect the FFmpeg source
+        env:
+          VERSION: ${{ inputs.version || github.ref_name }}
+        run: Scripts/collect-ffmpeg-sources.sh "$VERSION" artifacts
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version || github.ref_name }}
+        run: |
+          set -o pipefail
+          dmg=$(find artifacts -name '*.dmg' -print -quit)
+          if [ -z "$dmg" ]; then
+            echo "::error::No disk image in the download edition's artifacts."
+            exit 1
+          fi
+          sources=$(find artifacts -name 'ffmpeg-sources-*.tar.xz' -print -quit)
+
+          gh release create "$VERSION" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "SubTrack $VERSION" \
+            --generate-notes \
+            "$dmg" "$sources"

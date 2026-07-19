@@ -1,0 +1,32 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# FFmpeg build cache and vendored binaries (produced by Scripts/build-ffmpeg.sh)
+.build/
+Vendor/
+
+# SwiftLint's cache of the remote parent config
+.swiftlint/RemoteConfigCache
+
+# Scratch snapshots of source files, not sources
+.superpowers/
+
+# fastlane: local secrets and run output. Archives and disk images land in build/, ignored above.
+fastlane/.env
+fastlane/report.xml
+fastlane/Preview.html
+*.dmg
+
+# Decrypted App Store Connect API key, written here by the certificates repo's bin/api-key.
+asc_api_key.json
+*.p8
+
+# macOS
+.DS_Store
+
+# Scratch: captured console output and coverage traces
+log.txt
+*.profraw

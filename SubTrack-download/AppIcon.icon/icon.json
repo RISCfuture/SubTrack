@@ -1,0 +1,120 @@
+{
+  "groups": [
+    {
+      "layers": [
+        {
+          "image-name": "captions.bubble.png",
+          "name": "captions.bubble",
+          "glass": true,
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "name": "captions.bubble",
+      "specular": true,
+      "shadow": {
+        "kind": "layer-color",
+        "opacity": 0.45
+      },
+      "blur-material": null
+    },
+    {
+      "layers": [
+        {
+          "image-name": "speaker.wave.2.png",
+          "name": "speaker.wave.2",
+          "opacity": 1,
+          "blend-mode": "normal",
+          "glass": true,
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "name": "speaker.wave.2",
+      "specular": true,
+      "shadow": {
+        "kind": "layer-color",
+        "opacity": 0.45
+      }
+    },
+    {
+      "layers": [
+        {
+          "image-name": "movieclapper.fill.png",
+          "name": "movieclapper.fill",
+          "opacity": 1,
+          "blend-mode": "normal",
+          "glass": true,
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "name": "movieclapper.fill",
+      "specular": true,
+      "shadow": {
+        "kind": "layer-color",
+        "opacity": 0.5
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared",
+    "circles": [
+      "watchOS"
+    ]
+  },
+  "fill-specializations": [
+    {
+      "value": {
+        "linear-gradient": [
+          "srgb:0.22745,0.10980,0.44314,1.00000",
+          "srgb:0.91373,0.20000,0.47843,1.00000"
+        ],
+        "orientation": {
+          "start": {
+            "x": 0.25,
+            "y": 0.9330127018922194
+          },
+          "stop": {
+            "x": 0.75,
+            "y": 0.06698729810778065
+          }
+        }
+      }
+    },
+    {
+      "appearance": "dark",
+      "value": {
+        "linear-gradient": [
+          "srgb:0.14118,0.07059,0.29020,1.00000",
+          "srgb:0.60784,0.13333,0.31765,1.00000"
+        ],
+        "orientation": {
+          "start": {
+            "x": 0.25,
+            "y": 0.9330127018922194
+          },
+          "stop": {
+            "x": 0.75,
+            "y": 0.06698729810778065
+          }
+        }
+      }
+    }
+  ]
+}

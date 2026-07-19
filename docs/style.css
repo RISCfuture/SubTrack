@@ -1,0 +1,953 @@
+/*
+ * SubTrack marketing site.
+ *
+ * The palette is lifted from the app icon: the indigo-to-magenta gradient
+ * behind the clapperboard, and the gold its glyphs are outlined in. One family
+ * sets the whole page — Archivo's width axis separates display from text, so
+ * the width jump itself carries the typography.
+ */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("assets/fonts/archivo.woff2") format("woff2-variations");
+  font-weight: 400 800;
+  font-stretch: 62.5% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plex Mono";
+  src: url("assets/fonts/plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plex Mono";
+  src: url("assets/fonts/plex-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --paper: #edebf0;
+  --paper-raised: #f9f8fa;
+  --paper-deep: #e3e0e9;
+  --ink: #17131f;
+  --ink-soft: #5d5570;
+  --rule: #d8d3e0;
+
+  /* The ledger panel, straight off the icon's upper corner. */
+  --chassis-top: #271c49;
+  --chassis-bottom: #1a1230;
+  --chassis-line: #372a5e;
+  --chassis-ink: #ece8f4;
+  --chassis-ink-dim: #8d84ab;
+
+  --magenta: #b23566;
+  --magenta-hover: #98284f;
+  --on-magenta: #ffffff;
+  --gold: #dfad55;
+
+  --page-width: 1080px;
+  --gutter: 1.5rem;
+  --measure: 60ch;
+  --radius: 6px;
+  --radius-panel: 12px;
+
+  --font: "Archivo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Display type is the same family opened up and pushed heavy. */
+  --width-display: 116%;
+  --width-text: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #131020;
+    --paper-raised: #1c1830;
+    --paper-deep: #0e0b1a;
+    --ink: #f1eef8;
+    --ink-soft: #a29ab9;
+    --rule: #2c2544;
+
+    --chassis-top: #2b1f52;
+    --chassis-bottom: #1c1334;
+    --chassis-line: #3d2f68;
+
+    --magenta: #d95c8b;
+    --magenta-hover: #e87ba3;
+    --on-magenta: #16101f;
+    --gold: #e8bc63;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-stretch: var(--width-text);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2 {
+  font-stretch: var(--width-display);
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.1rem, 4.8vw, 3.375rem);
+  margin: 0 0 1.25rem;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  margin: 0 0 1.75rem;
+}
+
+h3 {
+  font-stretch: 106%;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.4em;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--magenta);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--magenta-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--magenta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  border-radius: 3px;
+  padding: 0.12em 0.36em;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 20;
+  padding: 0.5rem 1rem;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  transition: top 120ms ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* ─────────────────────────────  Layout  ───────────────────────────── */
+
+/*
+ * The section owns the content column, so every child shares one left edge
+ * whether or not it sets its own margins.
+ */
+main > section,
+.site-header,
+.footer-inner {
+  padding-inline: max(var(--gutter), calc((100% - var(--page-width)) / 2));
+}
+
+main > section {
+  padding-block: 5.5rem;
+
+  /* Clears the sticky header, so an anchored heading isn't hidden behind it. */
+  scroll-margin-top: 3.5rem;
+}
+
+/* Exceeds the hero's own offset, so the wordmark returns to the very top. */
+#top {
+  scroll-margin-top: 12rem;
+}
+
+/* A hairline is the only separator between sections; there are no colour bands. */
+main > section:not(.hero):not(.showcase):not(.doc) {
+  border-top: 1px solid var(--rule);
+}
+
+/* The app captures are light windows, so they get a deeper ground to sit on. */
+.tinted {
+  background: var(--paper-deep);
+}
+
+.section-lede {
+  max-width: var(--measure);
+  margin: -0.75rem 0 2.5rem;
+  color: var(--ink-soft);
+}
+
+/* The mono label repeats the section's name in the nav, so the rule says where you are. */
+.section-mark,
+.eyebrow,
+.step-label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.6875rem;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.section-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+}
+
+.section-mark::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--magenta);
+}
+
+/* ─────────────────────────────  Header  ───────────────────────────── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-block: 0.7rem;
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-stretch: 116%;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.wordmark img {
+  border-radius: 6px;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-right: auto;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-header nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-block: 0.35rem;
+  border-bottom: 1px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+
+.site-header nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--magenta);
+}
+
+/* ─────────────────────────────  Buttons  ──────────────────────────── */
+
+.button {
+  display: inline-block;
+  padding: 0.65rem 1.35rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.button:hover {
+  border-color: var(--magenta);
+  color: var(--ink);
+}
+
+.button-primary {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: var(--on-magenta);
+}
+
+.button-primary:hover {
+  background: var(--magenta-hover);
+  border-color: var(--magenta-hover);
+  color: var(--on-magenta);
+}
+
+.button-small {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.875rem;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+/* ──────────────────────────────  Hero  ────────────────────────────── */
+
+.hero {
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+}
+
+.hero-icon {
+  width: 88px;
+  height: 88px;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+  margin: 0 0 1.1rem;
+}
+
+.lede {
+  max-width: 56ch;
+  margin-bottom: 2rem;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.fine-print {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+/* ─────────────────────────────  Ledger  ───────────────────────────── */
+
+/*
+ * The signature element: one file's track list, with the dropped tracks struck
+ * out. The markup carries the finished state, so no-JS and reduced-motion get
+ * the answer; ledger.js replays the subtraction for everyone else.
+ */
+.ledger {
+  margin: 3.5rem 0 0;
+  padding: 1.5rem 1.75rem 1.75rem;
+  border-radius: var(--radius-panel);
+  background: linear-gradient(158deg, var(--chassis-top), var(--chassis-bottom) 62%, #2a1540);
+  color: var(--chassis-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.9;
+  box-shadow: 0 18px 40px -22px rgb(23 8 46 / 55%);
+}
+
+/* The drop shadow does no work against a dark page, so the edge is drawn. */
+@media (prefers-color-scheme: dark) {
+  .ledger {
+    border: 1px solid var(--chassis-line);
+    box-shadow: none;
+  }
+}
+
+.ledger-io {
+  display: grid;
+  grid-template-columns: 4ch 1fr auto auto;
+  gap: 0 1.25rem;
+  align-items: baseline;
+}
+
+.ledger-dir {
+  color: var(--chassis-ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+.ledger-file {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ledger-count {
+  color: var(--chassis-ink-dim);
+}
+
+.ledger-size {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  min-width: 7ch;
+  text-align: right;
+}
+
+.ledger-out {
+  border-top: 1px solid var(--chassis-line);
+  padding-top: 0.9rem;
+  margin-top: 0.9rem;
+}
+
+.tracks {
+  list-style: none;
+  margin: 0.9rem 0;
+  padding: 0.9rem 0;
+  border-block: 1px solid var(--chassis-line);
+}
+
+.track {
+  position: relative;
+  display: grid;
+  grid-template-columns: 5.5ch 9.5ch 4.5ch 8ch 1fr 5ch;
+  gap: 0 0.75rem;
+}
+
+.track-keep .t-verdict {
+  color: var(--gold);
+}
+
+.track-drop {
+  color: var(--chassis-ink-dim);
+}
+
+/*
+ * The strike is a pseudo-element so it can be drawn on, rather than toggled. It
+ * stops short of the verdict column: the verdict annotates the line, the way a
+ * proofreader's mark sits in the margin of the text it cancels.
+ */
+.track-drop::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: calc(5ch + 0.75rem);
+  top: 50%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transform-origin: left center;
+}
+
+.t-idx,
+.t-detail {
+  color: var(--chassis-ink-dim);
+}
+
+.track-drop .t-idx,
+.track-drop .t-detail {
+  color: inherit;
+}
+
+.t-verdict {
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6875rem;
+}
+
+.ledger figcaption {
+  margin-top: 1.5rem;
+  max-width: 62ch;
+  font-family: var(--font);
+  font-stretch: var(--width-text);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--chassis-ink-dim);
+}
+
+/* The output size is the payoff, so it carries the same gold as the kept rows. */
+.ledger-out .ledger-size {
+  color: var(--gold);
+}
+
+/* Replay: rows dim and strike in sequence, oldest first. */
+@media (prefers-reduced-motion: no-preference) {
+  .ledger.is-playing .track-drop {
+    animation: track-dim 240ms ease-out both;
+    animation-delay: calc(var(--i) * 55ms);
+  }
+
+  .ledger.is-playing .track-drop::after {
+    animation: track-strike 240ms ease-out both;
+    animation-delay: calc(var(--i) * 55ms);
+  }
+}
+
+@keyframes track-dim {
+  from {
+    color: var(--chassis-ink);
+  }
+}
+
+@keyframes track-strike {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ────────────────────────────  Showcase  ──────────────────────────── */
+
+.showcase {
+  padding-block: 0 5.5rem;
+}
+
+.shot {
+  margin: 0;
+}
+
+/* The captures carry their own window shadow, so they need no frame. */
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.shot figcaption {
+  margin-top: 0.9rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.shot-row {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+}
+
+/*
+ * The columns are sized to the captures' aspect ratios, so both fill their
+ * column at one shared height and the captions start on the same line.
+ */
+@media (min-width: 861px) {
+  .shot-row {
+    grid-template-columns: 1.336fr 1fr;
+  }
+}
+
+/* ────────────────────────────  Steps  ─────────────────────────────── */
+
+/* A signal path: one rule across all three stages, ticked at each. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  border-top: 1px solid var(--ink);
+  padding-top: 1rem;
+}
+
+.step-label {
+  position: relative;
+  margin: 0 0 1.25rem;
+  color: var(--magenta);
+}
+
+.step-label::before {
+  content: "";
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  width: 1px;
+  height: 0.5rem;
+  background: var(--ink);
+}
+
+.steps p:last-child {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* ───────────────────────────  Features  ───────────────────────────── */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.25rem 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-grid li {
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+
+.feature-grid p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* ───────────────────────────  Editions  ───────────────────────────── */
+
+.editions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/*
+ * Both cards run the same seven rows in the same order, so the difference
+ * between the builds is legible without either being framed as the leftovers.
+ */
+.edition {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-panel);
+}
+
+.edition h3 {
+  font-stretch: 112%;
+  font-size: 1.375rem;
+  margin-bottom: 0.25rem;
+}
+
+.edition-note {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  margin-bottom: 1.5rem;
+}
+
+.edition .button {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.edition .fine-print {
+  margin: 0 0 1.25rem;
+}
+
+.spec {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.spec li {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  align-items: baseline;
+  padding-block: 0.4rem;
+  border-top: 1px solid var(--rule);
+}
+
+.spec li:first-child {
+  border-top: 0;
+}
+
+.spec .off {
+  color: var(--ink-soft);
+}
+
+.mark {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.mark.yes {
+  color: var(--magenta);
+}
+
+.mark.no {
+  color: var(--ink-soft);
+  opacity: 0.6;
+}
+
+/* ─────────────────────────────  FAQ  ──────────────────────────────── */
+
+.faq {
+  max-width: var(--measure);
+  margin: 0;
+}
+
+.faq dt {
+  font-stretch: 106%;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+.faq dt:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.faq dd {
+  margin: 0.4rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ─────────────────────  Long-form document page  ──────────────────── */
+
+.doc h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin-bottom: 0.5rem;
+}
+
+.doc-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 2.5rem;
+}
+
+/* A plain-language précis of the sections below; the policy itself governs. */
+.doc-summary {
+  max-width: var(--measure);
+  margin-bottom: 3.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-panel);
+}
+
+.doc-summary h2 {
+  font-stretch: 108%;
+  font-size: 1.0625rem;
+  margin-bottom: 1rem;
+}
+
+.doc-summary ul {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.doc-summary li {
+  padding-left: 1rem;
+  margin-bottom: 0.6rem;
+  text-indent: -1rem;
+  color: var(--ink-soft);
+}
+
+.doc-summary li::before {
+  content: "";
+  display: inline-block;
+  width: 0.3rem;
+  height: 0.3rem;
+  margin-right: 0.7rem;
+  vertical-align: 0.2em;
+  text-indent: 0;
+  background: var(--magenta);
+}
+
+.doc-summary > p:last-child {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.doc-body {
+  max-width: var(--measure);
+}
+
+.doc-body h2 {
+  font-stretch: 108%;
+  text-wrap: pretty;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+  margin: 3rem 0 1rem;
+}
+
+.doc-body h3 {
+  margin: 2rem 0 0.5rem;
+}
+
+.doc-body p {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+/* ────────────────────────────  Footer  ────────────────────────────── */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  background: var(--paper-deep);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.footer-inner {
+  padding-block: 3rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.footer-links a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.footer-links a:hover {
+  border-bottom-color: var(--magenta);
+}
+
+.attribution {
+  max-width: var(--measure);
+  margin-top: 1.75rem;
+  line-height: 1.55;
+}
+
+.copyright {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+/* ───────────────────────────  Narrow  ─────────────────────────────── */
+
+@media (max-width: 860px) {
+  .site-header nav {
+    display: none;
+  }
+
+  .site-header {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  main > section,
+  .site-header,
+  .footer-inner {
+    padding-inline: 1.25rem;
+  }
+
+  main > section {
+    padding-block: 3.5rem;
+  }
+
+  .hero {
+    padding-top: 2.5rem;
+  }
+
+  .showcase {
+    padding-block: 0 3.5rem;
+  }
+
+  .ledger {
+    padding: 1.1rem 1.1rem 1.25rem;
+    font-size: 0.6875rem;
+    line-height: 1.85;
+  }
+
+  /* Codec and channel layout are the first things to go when space runs out. */
+  .track {
+    grid-template-columns: 5.5ch 9.5ch 4.5ch 1fr 5ch;
+  }
+
+  .t-detail {
+    display: none;
+  }
+
+  /* The track counts carry the argument; the filename is the decorative part. */
+  .ledger-io {
+    grid-template-columns: 4ch auto 1fr;
+  }
+
+  .ledger-file {
+    display: none;
+  }
+}

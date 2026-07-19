@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SubTrack — Lossless track slimming for your video library</title>
+    <meta
+      name="description"
+      content="SubTrack strips unwanted audio and subtitle tracks out of your video files by copying, not re-encoding. A drag-and-drop track slimmer for macOS."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="assets/favicon-64.png" />
+    <link
+      rel="preload"
+      href="assets/fonts/archivo.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script src="ledger.js" defer></script>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SubTrack — Lossless track slimming for macOS" />
+    <meta
+      property="og:description"
+      content="Drop the tracks you don't need. Keep every bit of the ones you do."
+    />
+    <meta property="og:image" content="assets/icon-512.png" />
+    <meta name="twitter:card" content="summary" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="wordmark" href="#top">
+        <img src="assets/icon-320.webp" alt="" width="26" height="26" />
+        <span>SubTrack</span>
+      </a>
+      <nav aria-label="Sections">
+        <a href="#how">Workflow</a>
+        <a href="#features">Features</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#get-it">Get it</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="button button-primary button-small" href="#get-it">Download</a>
+    </header>
+
+    <main id="main">
+      <!-- ────────────────────────────  Hero  ──────────────────────────── -->
+      <section class="hero" id="top">
+        <picture>
+          <source srcset="assets/icon-320-dark.webp" media="(prefers-color-scheme: dark)" />
+          <img
+            class="hero-icon"
+            src="assets/icon-320.webp"
+            alt="The SubTrack app icon"
+            width="88"
+            height="88"
+          />
+        </picture>
+
+        <p class="eyebrow">A lossless track slimmer for the Mac</p>
+
+        <h1>Drop the tracks you don't need.<br />Keep every bit of the ones you do.</h1>
+
+        <p class="lede">
+          SubTrack strips unwanted audio and subtitle tracks out of your video files by
+          <strong>copying, not re-encoding</strong> — so a two-hour Blu-ray rip slims down in
+          seconds, with zero quality loss.
+        </p>
+
+        <div class="cta-row">
+          <a class="button button-primary" href="https://apps.apple.com/app/id6794950780"
+            >Mac App Store</a
+          >
+          <a class="button" href="https://github.com/RISCfuture/SubTrack/releases/latest"
+            >Direct download</a
+          >
+        </div>
+        <p class="fine-print">Free, both ways · Requires macOS 26.4 or later</p>
+
+      </section>
+
+      <!-- ────────────────────────  App screenshot  ─────────────────────── -->
+      <section class="showcase">
+        <figure class="shot">
+          <img
+            src="assets/shot-main.webp"
+            alt="The SubTrack main window: a queue of eight Blu-ray rips showing input and output track counts and file sizes, with the rules inspector open alongside."
+            width="2080"
+            height="1266"
+          />
+        </figure>
+      </section>
+
+      <!-- ──────────────────────────  How it works  ─────────────────────── -->
+      <section id="how">
+        <p class="section-mark">Workflow</p>
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li>
+            <p class="step-label">Queue</p>
+            <h3>Queue up your files</h3>
+            <p>
+              Drag in movies, or a whole folder — SubTrack finds every video inside it and queues
+              them up.
+            </p>
+          </li>
+          <li>
+            <p class="step-label">Decide</p>
+            <h3>Rules pick the tracks</h3>
+            <p>
+              Keep English, drop the other eleven dubs. Keep or skip commentary. Decide what happens
+              to tracks with no language tag at all.
+            </p>
+          </li>
+          <li>
+            <p class="step-label">Copy</p>
+            <h3>Slim, without re-encoding</h3>
+            <p>
+              Everything you keep is stream-copied into a new file, bit for bit. Same container,
+              same quality, a fraction of the size.
+            </p>
+          </li>
+        </ol>
+
+        <!-- The signature: the three steps above, run against one real file. -->
+        <figure class="ledger" id="ledger">
+          <div class="ledger-io">
+            <span class="ledger-dir">in</span>
+            <span class="ledger-file">Nightjar.2019.2160p.UHD.BDRemux.mkv</span>
+            <span class="ledger-count">12 tracks</span>
+            <span class="ledger-size">8.42 GB</span>
+          </div>
+
+          <ul class="tracks">
+            <li class="track track-keep" style="--i: 0">
+              <span class="t-idx">0:0</span><span class="t-kind">video</span
+              ><span class="t-lang">—</span><span class="t-codec">hevc</span
+              ><span class="t-detail">2160p HDR10</span><span class="t-verdict">keep</span>
+            </li>
+            <li class="track track-keep" style="--i: 1">
+              <span class="t-idx">0:1</span><span class="t-kind">audio</span
+              ><span class="t-lang">eng</span><span class="t-codec">truehd</span
+              ><span class="t-detail">7.1 Atmos</span><span class="t-verdict">keep</span>
+            </li>
+            <li class="track track-keep" style="--i: 2">
+              <span class="t-idx">0:2</span><span class="t-kind">audio</span
+              ><span class="t-lang">eng</span><span class="t-codec">ac3</span
+              ><span class="t-detail">5.1</span><span class="t-verdict">keep</span>
+            </li>
+            <li class="track track-drop" style="--i: 3">
+              <span class="t-idx">0:3</span><span class="t-kind">audio</span
+              ><span class="t-lang">eng</span><span class="t-codec">ac3</span
+              ><span class="t-detail">2.0 commentary</span><span class="t-verdict">drop</span>
+            </li>
+            <li class="track track-drop" style="--i: 4">
+              <span class="t-idx">0:4</span><span class="t-kind">audio</span
+              ><span class="t-lang">fra</span><span class="t-codec">dts</span
+              ><span class="t-detail">5.1</span><span class="t-verdict">drop</span>
+            </li>
+            <li class="track track-drop" style="--i: 5">
+              <span class="t-idx">0:5</span><span class="t-kind">audio</span
+              ><span class="t-lang">deu</span><span class="t-codec">dts</span
+              ><span class="t-detail">5.1</span><span class="t-verdict">drop</span>
+            </li>
+            <li class="track track-drop" style="--i: 6">
+              <span class="t-idx">0:6</span><span class="t-kind">audio</span
+              ><span class="t-lang">spa</span><span class="t-codec">ac3</span
+              ><span class="t-detail">5.1</span><span class="t-verdict">drop</span>
+            </li>
+            <li class="track track-keep" style="--i: 7">
+              <span class="t-idx">0:7</span><span class="t-kind">subtitle</span
+              ><span class="t-lang">eng</span><span class="t-codec">pgs</span
+              ><span class="t-detail"></span><span class="t-verdict">keep</span>
+            </li>
+            <li class="track track-drop" style="--i: 8">
+              <span class="t-idx">0:8</span><span class="t-kind">subtitle</span
+              ><span class="t-lang">fra</span><span class="t-codec">pgs</span
+              ><span class="t-detail"></span><span class="t-verdict">drop</span>
+            </li>
+            <li class="track track-drop" style="--i: 9">
+              <span class="t-idx">0:9</span><span class="t-kind">subtitle</span
+              ><span class="t-lang">deu</span><span class="t-codec">pgs</span
+              ><span class="t-detail"></span><span class="t-verdict">drop</span>
+            </li>
+            <li class="track track-drop" style="--i: 10">
+              <span class="t-idx">0:10</span><span class="t-kind">subtitle</span
+              ><span class="t-lang">spa</span><span class="t-codec">pgs</span
+              ><span class="t-detail"></span><span class="t-verdict">drop</span>
+            </li>
+            <li class="track track-drop" style="--i: 11">
+              <span class="t-idx">0:11</span><span class="t-kind">subtitle</span
+              ><span class="t-lang">jpn</span><span class="t-codec">pgs</span
+              ><span class="t-detail"></span><span class="t-verdict">drop</span>
+            </li>
+          </ul>
+
+          <div class="ledger-io ledger-out">
+            <span class="ledger-dir">out</span>
+            <span class="ledger-file">Nightjar.2019.2160p.UHD.BDRemux.mkv</span>
+            <span class="ledger-count">4 tracks</span>
+            <span class="ledger-size" data-count-from="8.42" data-count-to="6.02">6.02 GB</span>
+          </div>
+
+          <figcaption>
+            Those three steps on one twelve-track UHD remux: down to the four tracks you'd
+            actually play, 2.40 GB lighter. Every track it keeps is copied across bit for bit, so the picture is the same
+            file it always was.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ───────────────────────────  Features  ────────────────────────── -->
+      <section id="features">
+        <p class="section-mark">Features</p>
+        <h2>What's in it</h2>
+        <ul class="feature-grid">
+          <li>
+            <h3>Lossless by default</h3>
+            <p>
+              Kept tracks are copied, never re-compressed. No generation loss, no hours of encoding
+              — just a smaller file.
+            </p>
+          </li>
+          <li>
+            <h3>Rules, not busywork</h3>
+            <p>
+              Choose languages to keep, whether to include commentary and alternate mixes, and what
+              to do with untagged tracks. The same rules apply to every file in the queue.
+            </p>
+          </li>
+          <li>
+            <h3>See the plan before it runs</h3>
+            <p>
+              The inspector lists every track in the file and exactly what SubTrack will do with it
+              — keep, drop, or convert. Override any of it per file, per track.
+            </p>
+          </li>
+          <li>
+            <h3>Presets that follow you</h3>
+            <p>
+              Save a set of rules as a preset and it syncs to your other Macs through your own
+              iCloud account. Starter presets for Blu-ray, streaming, and web rips are built in.
+            </p>
+          </li>
+          <li>
+            <h3>As many queues as you like</h3>
+            <p>
+              Separate queues for movies, TV, and the backlog — each with its own files, rules,
+              preset, and output folder. They come back exactly as you left them.
+            </p>
+          </li>
+          <li>
+            <h3>Built for batches</h3>
+            <p>
+              Per-file and overall progress, progress in the Dock, a cap on how many files encode at
+              once, and an activity log when you want the details.
+            </p>
+          </li>
+          <li>
+            <h3>Transcoding only when it must</h3>
+            <p>
+              Name the codecs you're happy to keep. If a track you're keeping isn't one of them,
+              SubTrack converts just that track — and tells you up front that it's going to.
+            </p>
+          </li>
+          <li>
+            <h3>FFmpeg included</h3>
+            <p>
+              A signed, self-contained FFmpeg ships inside the app. Nothing to install, nothing to
+              keep up to date, no Homebrew.
+            </p>
+          </li>
+          <li>
+            <h3>Command line too</h3>
+            <p>
+              The direct download installs <code>subtrack</code>, the same engine as a CLI, for
+              scripts and overnight jobs.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ─────────────────────────  Screenshots  ───────────────────────── -->
+      <section class="tinted" id="screenshots">
+        <p class="section-mark">Screenshots</p>
+        <h2>A look around</h2>
+        <div class="shot-row">
+          <figure class="shot">
+            <img
+              src="assets/shot-presets.webp"
+              alt="The Presets settings tab, editing the Streaming Service Rip preset's output name and track selection."
+              width="1100"
+              height="928"
+            />
+            <figcaption>
+              Languages, commentary, and output naming — saved as a preset, synced to your other
+              Macs.
+            </figcaption>
+          </figure>
+          <figure class="shot">
+            <img
+              src="assets/shot-formats.webp"
+              alt="The Supported Formats sheet, listing the bundled FFmpeg build's version and its 404 supported containers."
+              width="1100"
+              height="1240"
+            />
+            <figcaption>
+              Every container and codec the bundled FFmpeg can read and write, straight from the
+              binary that's running.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ───────────────────────────  Get it  ──────────────────────────── -->
+      <section id="get-it">
+        <p class="section-mark">Get it</p>
+        <h2>Two builds, one engine</h2>
+        <p class="section-lede">
+          Both are free and sandboxed, and they slim files identically — same rules, same presets,
+          same queues. Three capabilities Apple doesn't permit inside a sandboxed App Store app are
+          the whole difference.
+        </p>
+
+        <div class="editions">
+          <div class="edition">
+            <h3>Mac App Store</h3>
+            <p class="edition-note">Installs and updates through the App Store.</p>
+            <ul class="spec">
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Lossless stream-copy slimming</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Rules, presets, and multiple queues</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Preset sync over iCloud</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Hardware HEVC and H.264 encoding</span>
+              </li>
+              <li class="off">
+                <span class="sr-only">Not included:</span>
+                <span class="mark no" aria-hidden="true">—</span>
+                <span>Software x264 and x265 encoding</span>
+              </li>
+              <li class="off">
+                <span class="sr-only">Not included:</span>
+                <span class="mark no" aria-hidden="true">—</span>
+                <span>Your own FFmpeg build</span>
+              </li>
+              <li class="off">
+                <span class="sr-only">Not included:</span>
+                <span class="mark no" aria-hidden="true">—</span>
+                <span>The <code>subtrack</code> command-line tool</span>
+              </li>
+            </ul>
+            <p class="fine-print">Bundled LGPL FFmpeg.</p>
+            <a class="button button-primary" href="https://apps.apple.com/app/id6794950780"
+              >View on the App Store</a
+            >
+          </div>
+
+          <div class="edition">
+            <h3>Direct download</h3>
+            <p class="edition-note">Signed, notarized, and checks for its own updates.</p>
+            <ul class="spec">
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Lossless stream-copy slimming</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Rules, presets, and multiple queues</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Preset sync over iCloud</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Hardware HEVC and H.264 encoding</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Software x264 and x265 encoding</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>Your own FFmpeg build</span>
+              </li>
+              <li>
+                <span class="sr-only">Included:</span>
+                <span class="mark yes" aria-hidden="true">✓</span>
+                <span>The <code>subtrack</code> command-line tool</span>
+              </li>
+            </ul>
+            <p class="fine-print">Bundled GPL FFmpeg, with libx264 and libx265.</p>
+            <a
+              class="button button-primary"
+              href="https://github.com/RISCfuture/SubTrack/releases/latest"
+              >Download the latest release</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────  FAQ  ───────────────────────────── -->
+      <section id="faq">
+        <p class="section-mark">FAQ</p>
+        <h2>Questions</h2>
+        <dl class="faq">
+          <dt>Does SubTrack re-encode my video?</dt>
+          <dd>
+            Normally, no — that's the whole point. Tracks you keep are copied straight across.
+            SubTrack only transcodes when a track you've kept is in a codec you've said you don't
+            want, and then only that one track. There are no quality sliders, because there's
+            almost never anything to tune. If you're looking to re-encode a library, you want
+            HandBrake; SubTrack is for making files smaller without touching the picture.
+          </dd>
+
+          <dt>Which version should I get?</dt>
+          <dd>
+            They slim files identically, so it comes down to three things the App Store doesn't
+            permit inside a sandboxed app: software x264/x265 encoding, pointing SubTrack at your
+            own FFmpeg build, and the <code>subtrack</code> command-line tool. Want any of those,
+            take the direct download. Don't need them, take whichever you'd rather install from.
+          </dd>
+
+          <dt>What files can it open?</dt>
+          <dd>
+            Anything the bundled FFmpeg can read — MKV, MP4, M4V, MOV, AVI, TS, and plenty more.
+            The Settings window lists every container and codec the build you're running supports.
+            Output stays in the same container as the source.
+          </dd>
+
+          <dt>Does it send anything anywhere?</dt>
+          <dd>
+            Your video files never leave your Mac — the bundled FFmpeg is built with
+            networking disabled and can't open a connection at all. There are no accounts, no
+            advertising identifiers, and no tracking. Presets sync only if you're signed into
+            iCloud, through your own private iCloud database that nobody else can read. Two
+            things do go out: crash and performance reports, which aren't linked to your
+            identity, and — in the direct download only — a check with GitHub for new
+            releases, which you can switch off in Settings ▸ Updates. The
+            <a href="privacy.html">privacy policy</a> spells all of it out.
+          </dd>
+        </dl>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-links">
+          <a href="https://github.com/RISCfuture/SubTrack">Source on GitHub</a>
+          <a href="https://github.com/RISCfuture/SubTrack/issues">Report an issue</a>
+          <a href="https://github.com/RISCfuture/SubTrack/releases">Releases</a>
+          <a href="privacy.html">Privacy</a>
+        </p>
+        <p class="attribution">
+          SubTrack bundles FFmpeg. The App Store build uses an LGPL v2.1+ FFmpeg with no
+          GPL-licensed components; the direct download uses an FFmpeg built with libx264 and
+          libx265 and is distributed under the GPL v2+. FFmpeg source and license information are
+          available at <a href="https://www.ffmpeg.org">ffmpeg.org</a>.
+        </p>
+        <p class="copyright">© 2026 Tim Morgan</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+{
+  "originHash" : "cf51d28137d9fe03e596185b23d9cc29a8a1009fa78801655eb4e13b8b9c30e4",
+  "pins" : [
+    {
+      "identity" : "dockprogress",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/DockProgress",
+      "state" : {
+        "revision" : "43ca0137201a479fbd891b129155f4a84c1e1b13",
+        "version" : "5.1.0"
+      }
+    },
+    {
+      "identity" : "githubupdatechecker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RISCfuture/GitHubUpdateChecker",
+      "state" : {
+        "revision" : "38b306f65a75deadec10272a75871aebdfe90315",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "networkimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/NetworkImage",
+      "state" : {
+        "revision" : "2849f5323265386e200484b0d0f896e73c3411b9",
+        "version" : "6.0.1"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa",
+      "state" : {
+        "revision" : "afa7510e05b99f35c1febe47566bfd868fa53fb9",
+        "version" : "9.23.0"
+      }
+    },
+    {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark",
+      "state" : {
+        "revision" : "924936d0427cb25a61169739a7660230bffa6ea6",
+        "version" : "0.8.0"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log",
+      "state" : {
+        "revision" : "a878e7f8f46cfc0e1125e565b5c08e7d5272dc9a",
+        "version" : "1.14.0"
+      }
+    },
+    {
+      "identity" : "swift-markdown-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "state" : {
+        "revision" : "5f613358148239d0292c0cef674a3c2314737f9e",
+        "version" : "2.4.1"
+      }
+    },
+    {
+      "identity" : "xcuitestkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RISCfuture/XCUITestKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "88e15f85c41b97514e71afafab86ac789b57be9c"
+      }
+    }
+  ],
+  "version" : 3
+}

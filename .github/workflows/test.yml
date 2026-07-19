@@ -1,0 +1,183 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  # macOS enforces code signing to build and launch; the runner has no cert or profile. Ad-hoc sign
+  # instead, and drop the entitlements file (CODE_SIGN_ENTITLEMENTS=) — its CloudKit and push
+  # entitlements would otherwise demand a provisioning profile. The tests don't need them: the
+  # -uiTesting harness never touches CloudKit. This only affects the throwaway CI build.
+  SIGNING: >-
+    CODE_SIGN_IDENTITY=-
+    CODE_SIGNING_REQUIRED=NO
+    CODE_SIGNING_ALLOWED=YES
+    CODE_SIGN_STYLE=Manual
+    DEVELOPMENT_TEAM=
+    PROVISIONING_PROFILE_SPECIFIER=
+    CODE_SIGN_ENTITLEMENTS=
+
+jobs:
+  # The only suite needing no FFmpeg: the scheme is host-less and builds just the test bundle.
+  unit:
+    name: Unit Tests
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+
+      # SwiftData's @Model and Observation's @Observable macros can fail fingerprint validation on
+      # hosted runners; skipping it lets the build resolve the macro implementations.
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
+            ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      - name: Run unit tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -scheme "SubTrack Common Tests" \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath "$RUNNER_TEMP/dd-unit" \
+            -resultBundlePath "TestResults-Unit.xcresult" \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-unit
+          path: TestResults-Unit.xcresult
+          if-no-files-found: ignore
+
+  # These tests drive the real subtrack binary against the real Vendor/ffmpeg-full build, generating
+  # their movie fixtures at run time rather than committing them.
+  cli:
+    name: CLI Tests
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/vendored-ffmpeg
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Run CLI tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -scheme "SubTrack CLI Tests" \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath "$RUNNER_TEMP/dd-cli" \
+            -resultBundlePath "TestResults-CLI.xcresult" \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-cli
+          path: TestResults-CLI.xcresult
+          if-no-files-found: ignore
+
+  ui-download:
+    name: UI Tests (download)
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/vendored-ffmpeg
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      # XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI hardware doesn't
+      # trip element lookups that pass locally.
+      - name: Run UI tests
+        env:
+          XCUITEST_TIMEOUT_MULTIPLIER: "3"
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -scheme "SubTrack (download) UITests" \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath "$RUNNER_TEMP/dd-ui-download" \
+            -resultBundlePath "TestResults-UI-download.xcresult" \
+            ${{ env.SIGNING }} \
+            | xcbeautify --renderer github-actions
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-ui-download
+          path: TestResults-UI-download.xcresult
+          if-no-files-found: ignore
+
+  # Deliberately serialized behind ui-download rather than run beside it. Both app targets produce
+  # SubTrack.app, so building one while the other's suite is running replaces the bundle mid-run and
+  # every subsequent launch fails with "does not have a process ID".
+  ui-mas:
+    name: UI Tests (MAS)
+    needs: ui-download
+    if: ${{ !cancelled() }}
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/vendored-ffmpeg
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Run UI tests
+        env:
+          XCUITEST_TIMEOUT_MULTIPLIER: "3"
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -scheme "SubTrack (MAS) UITests" \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath "$RUNNER_TEMP/dd-ui-mas" \
+            -resultBundlePath "TestResults-UI-MAS.xcresult" \
+            ${{ env.SIGNING }} \
+            | xcbeautify --renderer github-actions
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-ui-mas
+          path: TestResults-UI-MAS.xcresult
+          if-no-files-found: ignore

@@ -1,0 +1,18 @@
+git_url("git@github.com:RISCfuture/certificates.git")
+storage_mode("git")
+
+type("appstore")
+team_id("2NFSK2WB24")
+
+# App Store profiles are stored alongside the certificate, because `exportArchive` cannot obtain one
+# on its own — cloud signing is refused for distribution. The archive still signs automatically, so
+# the project stays on automatic signing for local development; only the export consumes these
+# profiles, which build_app wires into its export options from match's mapping.
+#
+# The download edition needs a stored profile for a second reason: its iCloud and push entitlements
+# cannot be satisfied by a bare Developer ID signature, so a `developer_id` profile is synced for it
+# too — unlike the other apps sharing this repository, which store certificates only.
+app_identifier([
+  "codes.tim.SubTrack-MAS",
+  "codes.tim.SubTrack-download"
+])
