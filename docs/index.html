@@ -3,13 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SubTrack — Lossless track slimming for your video library</title>
+    <title>SubTrack — Lossless audio and subtitle track remover for macOS</title>
     <meta
       name="description"
-      content="SubTrack strips unwanted audio and subtitle tracks out of your video files by copying, not re-encoding. A drag-and-drop track slimmer for macOS."
+      content="SubTrack strips unwanted audio and subtitle tracks out of MKV, MP4, and other video files by copying, not re-encoding — no quality loss. Free for macOS."
     />
+    <link rel="canonical" href="https://riscfuture.github.io/SubTrack/" />
+    <meta name="author" content="Tim Morgan" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="theme-color" content="#edebf0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#131020" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="assets/favicon-64.png" />
+    <link rel="icon" href="assets/favicon-64.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <link
       rel="preload"
       href="assets/fonts/archivo.woff2"
@@ -20,13 +28,129 @@
     <script src="ledger.js" defer></script>
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SubTrack" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://riscfuture.github.io/SubTrack/" />
     <meta property="og:title" content="SubTrack — Lossless track slimming for macOS" />
     <meta
       property="og:description"
-      content="Drop the tracks you don't need. Keep every bit of the ones you do."
+      content="Drop the audio and subtitle tracks you don't need. Keep every bit of the ones you do — copied, never re-encoded."
     />
-    <meta property="og:image" content="assets/icon-512.png" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://riscfuture.github.io/SubTrack/assets/og-card.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="SubTrack: a track ledger showing English audio and subtitles kept and the French and German tracks struck out, taking a file from 12 tracks and 8.42 GB down to 4 tracks and 6.02 GB."
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SubTrack — Lossless track slimming for macOS" />
+    <meta
+      name="twitter:description"
+      content="Drop the audio and subtitle tracks you don't need. Keep every bit of the ones you do — copied, never re-encoded."
+    />
+    <meta name="twitter:image" content="https://riscfuture.github.io/SubTrack/assets/og-card.png" />
+    <meta
+      name="twitter:image:alt"
+      content="SubTrack: a track ledger taking a file from 12 tracks and 8.42 GB down to 4 tracks and 6.02 GB."
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://riscfuture.github.io/SubTrack/#website",
+            "url": "https://riscfuture.github.io/SubTrack/",
+            "name": "SubTrack",
+            "inLanguage": "en-US",
+            "publisher": { "@id": "https://riscfuture.github.io/SubTrack/#author" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://riscfuture.github.io/SubTrack/#author",
+            "name": "Tim Morgan",
+            "url": "https://github.com/RISCfuture"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://riscfuture.github.io/SubTrack/#app",
+            "name": "SubTrack",
+            "url": "https://riscfuture.github.io/SubTrack/",
+            "description": "SubTrack strips unwanted audio and subtitle tracks out of video files by copying, not re-encoding, so files slim down in seconds with no quality loss.",
+            "applicationCategory": "MultimediaApplication",
+            "applicationSubCategory": "Video utility",
+            "operatingSystem": "macOS 26.4 or later",
+            "softwareRequirements": "macOS 26.4 or later",
+            "screenshot": "https://riscfuture.github.io/SubTrack/assets/shot-main.webp",
+            "image": "https://riscfuture.github.io/SubTrack/assets/og-card.png",
+            "author": { "@id": "https://riscfuture.github.io/SubTrack/#author" },
+            "license": "https://github.com/RISCfuture/SubTrack/blob/main/LICENSE",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "url": "https://apps.apple.com/app/id6794950780"
+            },
+            "downloadUrl": "https://github.com/RISCfuture/SubTrack/releases/latest",
+            "featureList": [
+              "Lossless stream-copy removal of audio and subtitle tracks",
+              "Language, commentary, and untagged-track rules applied across a queue",
+              "Per-file and per-track overrides in the inspector",
+              "Presets synced across Macs over iCloud",
+              "Multiple independent queues",
+              "Batch progress, concurrency limits, and an activity log",
+              "Selective transcoding only when a kept track is in an unwanted codec",
+              "Bundled, self-contained FFmpeg",
+              "subtrack command-line tool in the direct download"
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://riscfuture.github.io/SubTrack/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Does SubTrack re-encode my video?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Normally, no. Tracks you keep are copied straight across. SubTrack only transcodes when a track you've kept is in a codec you've said you don't want, and then only that one track."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which version should I get?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Both editions slim files identically. Three things the App Store doesn't permit inside a sandboxed app separate them: software x264/x265 encoding, pointing SubTrack at your own FFmpeg build, and the subtrack command-line tool. Want any of those, take the direct download."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What files can SubTrack open?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Anything the bundled FFmpeg can read — MKV, MP4, M4V, MOV, AVI, TS, and plenty more. Output stays in the same container as the source."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does SubTrack send anything anywhere?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Your video files never leave your Mac; the bundled FFmpeg is built with networking disabled. There are no accounts, advertising identifiers, or tracking. Presets sync only through your own private iCloud database. Crash and performance reports, not linked to your identity, and — in the direct download only — an optional check with GitHub for new releases are the only things that go out."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
 
   <body>
@@ -91,6 +215,7 @@
             alt="The SubTrack main window: a queue of eight Blu-ray rips showing input and output track counts and file sizes, with the rules inspector open alongside."
             width="2080"
             height="1266"
+            decoding="async"
           />
         </figure>
       </section>
@@ -295,6 +420,8 @@
               alt="The Presets settings tab, editing the Streaming Service Rip preset's output name and track selection."
               width="1100"
               height="928"
+              loading="lazy"
+              decoding="async"
             />
             <figcaption>
               Languages, commentary, and output naming — saved as a preset, synced to your other
@@ -307,6 +434,8 @@
               alt="The Supported Formats sheet, listing the bundled FFmpeg build's version and its 404 supported containers."
               width="1100"
               height="1240"
+              loading="lazy"
+              decoding="async"
             />
             <figcaption>
               Every container and codec the bundled FFmpeg can read and write, straight from the
