@@ -8,8 +8,9 @@
 # app and a symlink to /Applications, which is the whole of the expected drag-to-install gesture;
 # no background art or window geometry, both of which would need a scripted Finder session.
 #
-# The image is not signed or stapled here — the app inside it already is, and Gatekeeper checks
-# the app. Notarizing the image itself would need a second submission round trip.
+# This script only packages. The caller signs, notarizes, and staples the image afterwards — a
+# downloaded image is quarantined and judged by Gatekeeper on its own merits, so notarizing the app
+# inside it is not enough.
 
 set -euo pipefail
 

@@ -87,6 +87,18 @@ def certificates_repo
                  "or point CERTIFICATES_REPO at an existing checkout.")
 end
 
+# The Developer ID Application identity _match_ installed, read back from the keychain rather than
+# written out here, so renewing the certificate never means editing this file. Backticks rather than
+# `sh` because this runs while building an argument list, and the listing is noise in the log.
+def developer_id_identity
+  identity = `security find-identity -v -p codesigning`[/"(Developer ID Application:[^"]+)"/, 1]
+  if identity.nil?
+    UI.user_error!("No Developer ID Application identity in the keychain — ensure_signing has to " \
+                   "run before anything can be signed with it.")
+  end
+  identity
+end
+
 def edition(name)
   EDITIONS.fetch(name) do
     UI.user_error!("Unknown edition #{name.inspect}. This app ships #{EDITIONS.keys.join(', ')}.")
@@ -230,6 +242,17 @@ platform :mac do
 
     version = get_version_number(xcodeproj: XCODEPROJ, target: "SubTrack (download)")
     dmg = sh(File.join(REPO_ROOT, "Scripts", "make-dmg.sh"), app_path, version, OUTPUT_PATH).strip
+
+    # The disk image needs notarizing in its own right. It reaches users as a browser download, so
+    # it arrives carrying a quarantine flag, and Gatekeeper judges the image at the moment it is
+    # opened — before anyone reaches the app inside. An unsigned image fails that check and is
+    # refused as unverified, however impeccably the app within it is signed. Notarizing the app is
+    # still what lets it run once dragged out; these are two separate gates.
+    sh("codesign", "--force", "--timestamp", "--sign", developer_id_identity, dmg)
+    notarize(package:   dmg,
+             bundle_id: EDITIONS["download"][:app_identifier],
+             api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+             print_log: true)
     UI.success("Packaged #{dmg}")
   end
 
