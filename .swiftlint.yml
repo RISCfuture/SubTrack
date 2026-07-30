@@ -2,7 +2,7 @@ parent_config: https://gist.githubusercontent.com/RISCfuture/c57d132e5e0160a768d
 
 excluded:
   - .build
-  - .superpowers # scratch snapshots of source files, not sources
+  - .superpowers  # scratch snapshots of source files, not sources
   - Vendor
   - build
 
