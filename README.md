@@ -12,6 +12,10 @@ with no quality loss.
 
 <https://riscfuture.github.io/SubTrack/>
 
+Get it from the
+[Mac App Store](https://apps.apple.com/us/app/subtrack-trim-video-files/id6794950780), or
+[download it directly](https://github.com/RISCfuture/SubTrack/releases/latest).
+
 ## What It Is
 
 A Blu-ray or UHD remux often carries a dozen tracks: eight dubs you don't speak, five
@@ -44,7 +48,7 @@ Two app targets build from this one project, and both produce `SubTrack.app`:
 
 | | **SubTrack (MAS)** | **SubTrack (download)** |
 | --- | --- | --- |
-| Distribution | Mac App Store | Developer-ID notarized |
+| Distribution | [Mac App Store](https://apps.apple.com/us/app/subtrack-trim-video-files/id6794950780) | [Developer-ID notarized](https://github.com/RISCfuture/SubTrack/releases/latest) |
 | Bundle ID | `codes.tim.SubTrack-MAS` | `codes.tim.SubTrack-download` |
 | Bundled FFmpeg | LGPL v2.1+, VideoToolbox only | GPL v2+, with libx264 and libx265 |
 | Custom FFmpeg location | — | ✓ |
