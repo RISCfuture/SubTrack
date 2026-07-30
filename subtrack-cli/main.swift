@@ -18,7 +18,7 @@ func run(_ options: CommandOptions) async throws {
   let operations = try options.rules.makeConverter(container: container).operations()
 
   if options.dryRun {
-    try await DryRunProcessor(inputURL: input, operations: operations).process(outputURL: output)
+    try DryRunProcessor(inputURL: input, operations: operations).process(outputURL: output)
     return
   }
 
