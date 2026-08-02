@@ -30,7 +30,7 @@ The full text of the GNU GPL v2 is available at
 
 ### Copyright and source
 
-- FFmpeg — Copyright © 2000–2024 the FFmpeg developers. <https://www.ffmpeg.org>
+- FFmpeg — Copyright © 2000–2026 the FFmpeg developers. <https://www.ffmpeg.org>
 - x264 — Copyright © 2003–2024 the x264 project. <https://www.videolan.org/developers/x264.html>
 - x265 — Copyright © 2013–2024 MulticoreWare, Inc. <https://www.videolan.org/developers/x265.html>
 - libaom (AV1) — Copyright © 2016 Alliance for Open Media. BSD 2-Clause, with the

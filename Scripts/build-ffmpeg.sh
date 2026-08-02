@@ -39,10 +39,10 @@
 # when needed, so it need not be installed.
 set -euo pipefail
 
-FFMPEG_VERSION="7.1.5"
+FFMPEG_VERSION="8.1.2"
 X264_COMMIT="b35605ace3ddf7c1a5d67a2eb553f034aef41d55" # videolan/x264 stable
-X265_TAG="4.1"
-AOM_TAG="v3.10.0"
+X265_TAG="4.2"
+AOM_TAG="v3.14.1"
 CMAKE_VERSION="3.30.5"
 # arm64 on Apple Silicon. The app targets pin ARCHS to arm64 to match: a universal app
 # bundling a single-slice helper would ship an Intel slice that cannot run ffmpeg at all.
@@ -57,6 +57,12 @@ DEPS="${CACHE_DIR}/deps-${VARIANT}"
 OUT_DIR="${REPO_ROOT}/Vendor/ffmpeg-${VARIANT}"
 JOBS="$(sysctl -n hw.ncpu)"
 CFLAGS_COMMON="-arch ${ARCH} -mmacosx-version-min=${MIN_MACOS}"
+# x265 assembles its aarch64 .S files through a bare add_custom_command that invokes the
+# compiler directly, so CMAKE_OSX_DEPLOYMENT_TARGET never reaches them and those objects
+# claim the build machine's macOS version. Clang reads this variable when no explicit
+# -mmacosx-version-min is given, which pins the assembly to the same floor as everything
+# else; where the flag is passed it simply wins, so this is inert for the other builds.
+export MACOSX_DEPLOYMENT_TARGET="${MIN_MACOS}"
 
 echo "==> Building ffmpeg ${FFMPEG_VERSION} (${VARIANT}, ${ARCH})"
 
