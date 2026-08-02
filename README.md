@@ -82,6 +82,14 @@ Each produces a static, self-contained, arm64 `ffmpeg` and `ffprobe` in
 pinned in the script; nothing floats to "latest". `Scripts/upgrade-ffmpeg.sh` re-pins,
 rebuilds, and verifies both variants.
 
+### Help book
+
+Both editions ship the Apple Help book in `Help/SubTrack.help`, staged into the app by the
+**Build Help Book** phase and illustrated by screenshots taken from the running app.
+[`Help/README.md`](Help/README.md) covers writing a page, the anchor check that fails the
+build, the `fastlane mac help_screenshots` lane, and the `helpd` cache that makes an edit
+look like it never took.
+
 ### Targets
 
 - **SubTrack Common** — framework holding the shared UI and model layer.

@@ -39,6 +39,14 @@ Build and upload the App Store edition to App Store Connect
 
 Build, notarize, and package the downloadable edition as a disk image
 
+### mac help_screenshots
+
+```sh
+[bundle exec] fastlane mac help_screenshots
+```
+
+Regenerate the Help book's screenshots from the UI test harness
+
 ### mac ci_next_build_number
 
 ```sh

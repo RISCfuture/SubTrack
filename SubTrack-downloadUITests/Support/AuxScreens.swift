@@ -5,6 +5,14 @@ import XCUITestKit
 struct SettingsScreen {
   let app: XCUIApplication
 
+  /**
+   The Settings window itself, so a screenshot can frame the whole pane. Found
+   by identifier rather than title, which tracks the selected tab.
+   */
+  var window: XCUIElement {
+    app.windows.matching(identifier: XCUIApplication.settingsWindowIdentifier).firstMatch
+  }
+
   @discardableResult
   func open() -> Self {
     app.openSettings()

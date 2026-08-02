@@ -8,6 +8,9 @@ import XCUITestKit
  while the test keeps *what* it is proving.
  */
 struct MainWindowScreen {
+  /// Where on the Add control its menu's disclosure arrow sits.
+  private static let addMenuArrow = CGVector(dx: 0.88, dy: 0.5)
+
   let app: XCUIApplication
 
   // MARK: - Element accessors
@@ -26,6 +29,10 @@ struct MainWindowScreen {
   var outputSize: XCUIElement { app.staticTexts["queue.cell.outputSize"] }
   var ingestSheet: XCUIElement { app.descendant(id: "ingest.sheet") }
   var inspectorModePicker: XCUIElement { app.descendant(id: "inspector.mode") }
+
+  /// The trailing inspector as one element, so a screenshot can frame it alone.
+  var inspectorPane: XCUIElement { app.descendant(id: "inspector.pane") }
+
   var summaryValue: String { (statusSummary.value as? String) ?? "" }
 
   /**
@@ -41,6 +48,9 @@ struct MainWindowScreen {
       NSPredicate(format: "identifier == %@ AND value == %@", "queue.cell.name", name)
     ).firstMatch
   }
+
+  /// One named editor within a form, so a screenshot can frame just that part of it.
+  func editor(_ identifier: String) -> XCUIElement { app.descendant(id: identifier) }
 
   // MARK: - Landing
 
@@ -86,6 +96,24 @@ struct MainWindowScreen {
     app.buttons["queue.emptyState"]
       .assertExists("The empty state's Add button never appeared.")
       .click()
+    return self
+  }
+
+  /**
+   Opens the toolbar's Add menu, which is the only place both ways of adding
+   sources are offered together.
+
+   Clicked on its disclosure arrow rather than anywhere on the control: Add is
+   a split button whose primary action adds files outright, so a centred click
+   ingests the fixtures instead of showing the menu.
+   */
+  @discardableResult
+  func openAddMenu() -> Self {
+    app.descendant(id: "toolbar.add")
+      .assertExists("The toolbar’s Add control is missing.")
+      .coordinate(withNormalizedOffset: Self.addMenuArrow)
+      .click()
+    app.openMenu()
     return self
   }
 
