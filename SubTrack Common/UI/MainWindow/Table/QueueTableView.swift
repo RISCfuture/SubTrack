@@ -79,8 +79,9 @@ private struct QueueRowMenu: View {
         .disabled(!selectedItems.contains(where: \.status.isRescannable))
       Divider()
       Button(LocalizedStringResource("Reveal Output in Finder", bundle: #bundle)) {
-        reveal(selectedItems.map(\.outputURL))
+        reveal(writtenOutputURLs)
       }
+      .disabled(writtenOutputURLs.isEmpty)
       Button(LocalizedStringResource("Reveal Source in Finder", bundle: #bundle)) {
         reveal(selectedItems.map(\.sourceURL))
       }
@@ -94,6 +95,11 @@ private struct QueueRowMenu: View {
   /// The selected items, in queue order.
   private var selectedItems: [QueueItem] {
     env.queue.items.filter { ids.contains($0.id) }
+  }
+
+  /// The selected outputs a run has put on disk — the only ones Finder can select.
+  private var writtenOutputURLs: [URL] {
+    selectedItems.filter(\.status.holdsWrittenOutput).map(\.outputURL)
   }
 
   private func reveal(_ urls: [URL]) {
