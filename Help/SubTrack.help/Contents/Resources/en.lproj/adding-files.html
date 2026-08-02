@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Add videos to a queue</title>
+  <meta name="AppleTitle" content="Add videos to a queue">
+  <meta name="description" content="Drag videos or folders into SubTrack, or add them from the toolbar, and organize work into separate queues.">
+  <meta name="keywords" content="add, drag, drop, folder, import, queue, scan, mkv, mp4, mov, avi, batch">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="adding-files" id="adding-files"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Add videos to a queue</h1>
+
+<p>A queue is a list of files waiting to be slimmed, together with the rules that decide what each
+one keeps. You can add to it three ways.</p>
+
+<figure>
+  <picture>
+    <source srcset="images/add-videos-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/add-videos.webp" width="1000" height="620" alt="An empty SubTrack queue reading “Drop Videos Here”, with the toolbar’s Add menu open on Add Files and Add Folder.">
+  </picture>
+  <figcaption>The toolbar’s Add menu offers both ways; an empty window also takes files dropped onto it.</figcaption>
+</figure>
+
+<h2>Add files</h2>
+
+<ol>
+  <li>Drag videos from the Finder onto the SubTrack window, or</li>
+  <li>Choose <strong>File</strong> &#9656; <strong>Add Files…</strong> (<kbd>⌘O</kbd>) and select
+    them, or</li>
+  <li>Click <strong>Add</strong> in the toolbar.</li>
+</ol>
+
+<p>SubTrack reads each file as it arrives to find out what’s inside — that’s the brief
+<em>Inspecting</em> state in the queue. Until that finishes it doesn’t yet know what the file will
+keep.</p>
+
+<a name="folder-scan" id="folder-scan"></a>
+<h2>Add a whole folder</h2>
+
+<ol>
+  <li>Choose <strong>File</strong> &#9656; <strong>Add Folder…</strong> (<kbd>⇧⌘O</kbd>), or drag a
+    folder onto the window.</li>
+  <li>Choose the folder and click <strong>Open</strong>.</li>
+</ol>
+
+<p>SubTrack searches the whole folder, including everything nested inside it, and queues every video
+it finds. A season of episodes in per-episode subfolders arrives in one gesture.</p>
+
+<p class="note">Dropping a large folder can take a moment; SubTrack shows its progress while it
+looks. Files it doesn’t recognize as video are skipped silently rather than queued and failed.</p>
+
+<a name="queues" id="queues"></a>
+<h2>Work in more than one queue</h2>
+
+<p>A queue is more than a list. Each one owns its own files, its own keep rules, its own preset, its
+own output folder, and its own naming — so a queue of foreign-language films and a queue of English
+TV rips can want completely different things without either disturbing the other.</p>
+
+<ol>
+  <li>Choose <strong>File</strong> &#9656; <strong>New Queue</strong> (<kbd>⌘N</kbd>).</li>
+  <li>Select a queue in the sidebar to work in it.</li>
+  <li>To rename or remove one, choose <strong>File</strong> &#9656; <strong>Rename Queue…</strong> or
+    <strong>Delete Queue</strong>.</li>
+</ol>
+
+<p>Queues are restored exactly as you left them the next time you open SubTrack, including files
+that hadn’t run yet.</p>
+
+<h2>If a file goes missing</h2>
+
+<p>SubTrack remembers where each source file lives. If you move or delete one after queueing it, the
+row is marked as missing rather than failing partway through a run. See
+<a href="missing-source.html">If the source file is missing</a>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="running-a-queue.html">Run a queue and watch its progress</a></li>
+    <li><a href="slim-rules.html">Choose which languages to keep</a></li>
+    <li><a href="destinations.html">Choose where slimmed files are saved</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

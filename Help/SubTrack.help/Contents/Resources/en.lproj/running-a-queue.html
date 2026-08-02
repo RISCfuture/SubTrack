@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Run a queue and watch its progress</title>
+  <meta name="AppleTitle" content="Run a queue and watch its progress">
+  <meta name="description" content="Start all or selected files, follow progress in the window and the Dock, and read what each finished file saved.">
+  <meta name="keywords" content="start, run, cancel, progress, dock, status, savings, size, batch, re-scan">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="running-a-queue" id="running-a-queue"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Run a queue and watch its progress</h1>
+
+<p>Once the queue shows what each file will keep, you can run all of it or just part of it.</p>
+
+<figure>
+  <picture>
+    <source srcset="images/queue-running-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/queue-running.webp" width="1280" height="860" alt="A queue part-way through a run: finished files carry a checkmark, one shows a progress ring, and the rest wait their turn.">
+  </picture>
+  <figcaption>Each row carries its own state, and the bar underneath counts the queue as a whole.</figcaption>
+</figure>
+
+<h2>Start slimming</h2>
+
+<ol>
+  <li>To run everything, choose <strong>Queue</strong> &#9656; <strong>Start All</strong>
+    (<kbd>⌘R</kbd>).</li>
+  <li>To run only some files, select them and choose <strong>Queue</strong> &#9656;
+    <strong>Start Selected</strong> (<kbd>⌘Return</kbd>).</li>
+  <li>To stop, choose <strong>Queue</strong> &#9656; <strong>Cancel All</strong> (<kbd>⌘.</kbd>).</li>
+</ol>
+
+<p>Cancelling stops the work in progress and discards the partial output. Your source files are
+never modified — SubTrack only ever writes new ones.</p>
+
+<p class="note">If Start is dimmed, two files in the queue would write to the same place, or one
+would overwrite its own source. SubTrack won’t start until that’s resolved, because either would
+destroy a file. See <a href="name-conflicts.html">Name the files SubTrack writes</a>.</p>
+
+<a name="queue-progress" id="queue-progress"></a>
+<h2>Follow along</h2>
+
+<p>Each running row shows its own progress, and the bar beneath the queue shows how many items there
+are, how many are done, and how many are encoding right now. The Dock icon carries the overall
+progress too, so you can start a batch and switch away.</p>
+
+<p>Files that are only being copied finish almost immediately. A file that needs one track converted
+takes as long as that conversion takes — which is why a queue can appear to stall on a single row
+while the others fly past. That row is doing real work.</p>
+
+<a name="queue-status" id="queue-status"></a>
+<h2>Read the results</h2>
+
+<p>The queue lists each file’s track count and size before and after, so you can see what a run
+actually bought you. Output size only becomes real once a file finishes; until then there is nothing
+on disk to measure.</p>
+
+<p>The status column carries a symbol per row. Point at one to read what it means:</p>
+
+<ul>
+  <li>A spinning ring — being inspected, or being slimmed.</li>
+  <li>A checkmark — finished.</li>
+  <li>A warning triangle — the file is missing, the run failed, or the current FFmpeg can’t do what
+    the rules ask. See <a href="troubleshooting.html#troubleshooting">If a file won’t slim</a>.</li>
+</ul>
+
+<h2>Tidy up</h2>
+
+<ul>
+  <li><strong>Queue</strong> &#9656; <strong>Clear Completed</strong> removes finished rows and leaves
+    the rest.</li>
+  <li><strong>Queue</strong> &#9656; <strong>Remove Selected</strong> (<kbd>Delete</kbd>) takes files
+    out of the queue. It never deletes anything from disk.</li>
+  <li><strong>Queue</strong> &#9656; <strong>Re-scan Selected</strong> reads a source again — useful
+    if you replaced the file, or changed which FFmpeg SubTrack uses.</li>
+</ul>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="encoding.html#settings-encoding">Set how many files encode at once</a></li>
+    <li><a href="troubleshooting.html">If a file won’t slim</a></li>
+    <li><a href="output-names.html">Name the files SubTrack writes</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

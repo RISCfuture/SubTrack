@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Save a set of rules as a preset</title>
+  <meta name="AppleTitle" content="Save a set of rules as a preset">
+  <meta name="description" content="Reuse a set of keep rules across queues and Macs by saving it as a preset, and understand when the preset menu says New Preset.">
+  <meta name="keywords" content="preset, save, rules, reuse, starter, blu-ray, streaming, web rip, new preset, delete">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="presets" id="presets"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Save a set of rules as a preset</h1>
+
+<p>A preset is a named set of keep rules. Once you’ve worked out what a particular kind of rip needs,
+saving it means never working it out again.</p>
+
+<figure>
+  <picture>
+    <source srcset="images/settings-presets-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/settings-presets.webp" width="620" height="548" alt="The Presets tab of SubTrack Settings, with a list of presets on the left and the selected preset’s rules on the right.">
+  </picture>
+  <figcaption>Settings &#9656; Presets lists your presets and edits the selected one’s rules.</figcaption>
+</figure>
+
+<a name="saving-presets" id="saving-presets"></a>
+<h2>Save the rules you’re using</h2>
+
+<figure>
+  <picture>
+    <source srcset="images/preset-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/preset-menu.webp" width="1280" height="860" alt="The preset menu open at the top of the inspector, listing the saved presets above a Save Current as Preset item.">
+  </picture>
+  <figcaption>Every saved preset, and the item that adds the rules you’re using to them.</figcaption>
+</figure>
+
+<ol>
+  <li>Set up the rules you want in the inspector.</li>
+  <li>Click the preset menu at the top of the inspector.</li>
+  <li>Choose <strong>Save Current as Preset…</strong>, name it, and click
+    <strong>Save</strong>.</li>
+</ol>
+
+<p>To apply one, choose it from the same menu. The queue takes on its rules immediately.</p>
+
+<h2>Why the menu sometimes says “(New Preset)”</h2>
+
+<p>This is the part of SubTrack most worth understanding, because it looks like a bug the first time
+you see it.</p>
+
+<p>The preset menu doesn’t show what you last <em>clicked</em>. It shows which preset the current
+rules <em>match</em>. Apply “Blu-ray Rip”, then add one language, and the menu stops saying “Blu-ray
+Rip” — because the rules are no longer that preset’s rules. It says “(New Preset)” instead: you have
+a set of rules that isn’t any saved preset.</p>
+
+<p>Remove that language again and the menu goes back to saying “Blu-ray Rip”, without you reapplying
+anything. Nothing was lost, and the preset was never modified — applying a preset copies its rules
+into the queue rather than binding the queue to it.</p>
+
+<p>So “(New Preset)” is an invitation, not a warning: save these rules if you want to keep them.</p>
+
+<a name="starter-presets" id="starter-presets"></a>
+<h2>The presets that come with SubTrack</h2>
+
+<p>SubTrack ships five starters, grouped by where the file came from — which is what decides both
+which tracks are worth keeping and which codecs are worth copying.</p>
+
+<ul>
+  <li><strong>Blu-ray Rip — English Only</strong> — English audio and subtitles, and nothing
+    else.</li>
+  <li><strong>Blu-ray Rip — English + Commentary</strong> — the same, plus the non-default English
+    audio: commentary, descriptive audio, alternate mixes.</li>
+  <li><strong>Blu-ray Rip — Keep Untagged Tracks</strong> — the same again, and keeps tracks that
+    carry no language tag, for a disc rip that tagged them inconsistently.</li>
+  <li><strong>Web / YouTube Rip — English Only</strong> — keeps untagged tracks, and prefers the
+    codecs a web download already uses, so VP9, AV1, and Opus are copied rather than converted into
+    disc codecs that would only cost size and quality.</li>
+  <li><strong>Streaming Service Rip — English Only</strong> — keeps untagged tracks, on the ordinary
+    disc codec list.</li>
+</ul>
+
+<p>The setting that separates most of them is whether untagged tracks are kept. Studio discs tag
+everything, so the first two drop them as clutter; web and streaming rips very often ship a single
+untagged audio track that is the whole soundtrack, so the rest keep them. See
+<a href="slim-rules.html#rule-untagged">Choose which languages to keep</a>.</p>
+
+<p>The starters are ordinary presets from the moment they appear — SubTrack neither protects nor
+restores them. Edit them freely, or delete the ones you don’t use.</p>
+
+<h2>Edit, rename, and delete</h2>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+    <strong>Presets</strong>.</li>
+  <li>Select a preset. Its name, output naming, and rules appear beside the list.</li>
+  <li>To remove it, click <strong>Delete Preset</strong> and confirm.</li>
+</ol>
+
+<p class="note">Deleting a preset doesn’t disturb any queue. A queue that was using those rules keeps
+them — it holds a copy, not a reference — its preset menu just starts saying “(New Preset)”.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="preset-sync.html">Sync presets between your Macs</a></li>
+    <li><a href="slim-rules.html">Choose which languages to keep</a></li>
+    <li><a href="output-names.html">Name the files SubTrack writes</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

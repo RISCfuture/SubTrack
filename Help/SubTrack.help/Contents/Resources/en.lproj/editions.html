@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Choose between the two versions of SubTrack</title>
+  <meta name="AppleTitle" content="Choose between the two versions of SubTrack">
+  <meta name="description" content="Both versions of SubTrack slim files identically; three capabilities and the update check are all that separate the App Store build from the downloadable one.">
+  <meta name="keywords" content="edition, version, app store, mas, download, sandbox, dimmed, disabled, greyed out, unavailable, x264, x265, libx264, libx265, videotoolbox, gpl, lgpl, licence, license">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="editions" id="editions"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Choose between the two versions of SubTrack</h1>
+
+<p>SubTrack comes in two builds: one from the Mac App Store, one downloaded from the web. They slim
+files identically — same rules, same presets, same stream copying, same output, byte for byte. For
+the thing the app exists to do, there is no difference between them.</p>
+
+<p>Three capabilities separate them, and all three are App Store policy rather than anything SubTrack
+chose. If you arrived here by clicking a “?” next to a dimmed control, that control is one of the
+three.</p>
+
+<h2>Find out which version you have</h2>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+    <strong>Encoding</strong>.</li>
+  <li>Read the <strong>Codec set</strong> line. <strong>Full (all codecs)</strong> is the
+    downloadable version; <strong>App Store (VideoToolbox)</strong> is the App Store version.</li>
+</ol>
+
+<p>The App Store version also has no <strong>Updates</strong> tab in Settings, because the store
+handles its updates.</p>
+
+<a name="app-store-limits" id="app-store-limits"></a>
+<h2>What the App Store version can’t do</h2>
+
+<p><strong>Software H.264 and H.265 encoding.</strong> The App Store build bundles an FFmpeg licensed
+under the LGPL, without libx264 and libx265 — those are GPL, and the store’s terms and the GPL pull
+against each other. Video encoding is done by VideoToolbox, the hardware encoder in your Mac, which
+handles both H.264 and HEVC and is much faster than software encoding. The software encoders fit more
+quality into the same file size; the hardware ones finish sooner. You’ll meet this in
+<strong>Settings</strong> &#9656; <strong>FFmpeg</strong> &#9656; <strong>Supported Formats</strong>,
+where the codec list carries a <strong>Missing codecs?</strong> link, and in the warning you get if
+you choose a transcode target this build can’t encode.</p>
+
+<p><strong>Pointing SubTrack at your own FFmpeg.</strong> In <strong>Settings</strong> &#9656;
+<strong>FFmpeg</strong>, the App Store version shows <strong>Built-in</strong> and the line “Using a
+custom ffmpeg is available in the downloadable version.” The downloadable version puts a
+<strong>Built-in</strong> / <strong>Custom…</strong> choice there instead. A sandboxed app can’t run
+an executable you supply.</p>
+
+<p><strong>Installing the <code>subtrack</code> command-line tool.</strong> In
+<strong>Settings</strong> &#9656; <strong>CLI</strong>, the App Store version says “Installing the
+command-line tool is available in the downloadable version” where the downloadable one offers
+<strong>Install…</strong>. Copying a binary into a folder on your <code>PATH</code> is outside the
+sandbox.</p>
+
+<p>Beyond those three, the downloadable version checks GitHub for its own new releases and can tell
+you one is out. The App Store version doesn’t need to.</p>
+
+<p class="note">Neither version is the crippled one. Slimming — dropping tracks and copying the rest
+— is untouched by all of this, and transcoding still works in both; it’s the encoder behind it that
+differs.</p>
+
+<h2>Get the other version</h2>
+
+<p>The downloadable version is notarized by Apple and installed from a disk image; you update it
+yourself when it tells you there’s a new release. The App Store version installs and updates like
+everything else on your Mac.</p>
+
+<ul>
+  <li><a href="https://riscfuture.github.io/SubTrack/">The SubTrack website</a>, which links to
+    both.</li>
+  <li><a href="https://github.com/RISCfuture/SubTrack/releases">SubTrack releases on GitHub</a>, for
+    the downloadable version and its notes.</li>
+</ul>
+
+<p>You can keep both installed. They share the same iCloud container, so your presets sync between
+them just as they sync between Macs.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="unsupported-codec.html">If a codec can’t be encoded</a></li>
+    <li><a href="custom-ffmpeg.html">Use an FFmpeg build of your own</a></li>
+    <li><a href="subtrack-cli.html">Install the <code>subtrack</code> command-line tool</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

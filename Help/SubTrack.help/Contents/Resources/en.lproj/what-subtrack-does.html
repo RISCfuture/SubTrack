@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Slim videos without re-encoding them</title>
+  <meta name="AppleTitle" content="Slim videos without re-encoding them">
+  <meta name="description" content="SubTrack copies the tracks you keep instead of converting them, so files slim down in seconds with no loss of quality.">
+  <meta name="keywords" content="lossless, stream copy, remux, re-encode, transcode, quality, blu-ray, rip, dub, handbrake">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="what-subtrack-does" id="what-subtrack-does"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Slim videos without re-encoding them</h1>
+
+<p>A Blu-ray or UHD remux often carries a dozen tracks: eight dubs you don’t speak, five subtitle
+languages you don’t read, and a commentary track you’ll never play. They’re most of the file size
+and none of the value.</p>
+
+<p>SubTrack drops them. Everything you keep is written into a new file exactly as it was, and the
+result is a fraction of the size at identical quality.</p>
+
+<figure>
+  <picture>
+    <source srcset="images/main-window-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/main-window.webp" width="1280" height="860" alt="The SubTrack main window: a queue of Blu-ray rips showing input and output track counts and file sizes, with the rules inspector open alongside.">
+  </picture>
+  <figcaption>The queue lists what each file will lose and what it will weigh afterwards.</figcaption>
+</figure>
+
+<a name="stream-copy" id="stream-copy"></a>
+<h2>Why it’s so fast</h2>
+
+<p>Most video tools decode every frame and encode it again. That takes hours and costs quality every
+time, because the picture is thrown away and approximated afresh.</p>
+
+<p>SubTrack doesn’t decode anything. A track you keep is copied from one container into another, byte
+for byte — the same compressed data, moved. There is no generation loss because nothing is
+regenerated, and the work is limited by how fast your disk reads rather than how fast your
+processor computes. A two-hour film typically finishes in seconds.</p>
+
+<p>The container stays the same too. An MKV in is an MKV out, so nothing that plays your original
+will refuse the slimmed copy.</p>
+
+<a name="not-a-transcoder" id="not-a-transcoder"></a>
+<h2>What SubTrack deliberately isn’t</h2>
+
+<p>SubTrack is a track slimmer, not a transcoder. There are no quality sliders, no bitrate fields,
+and no encoder presets, because in normal use there is nothing to tune — copying has no settings.</p>
+
+<p>It <em>will</em> convert a track, but only in one situation: you asked to keep a track, and it’s in
+a codec you said you don’t want. Then that one track is converted and the rest are still copied, and
+SubTrack tells you before it starts. See
+<a href="preferred-codecs.html#preferred-codecs">Set preferred codecs and transcode targets</a>.</p>
+
+<p class="note">If what you actually want is to shrink the <em>picture</em> — to re-encode a library
+at a lower bitrate — SubTrack is the wrong tool and always will be. HandBrake is the right one.</p>
+
+<h2>The shape of the work</h2>
+
+<ol>
+  <li><strong>Queue up your files.</strong> Drag in movies, or a whole folder.</li>
+  <li><strong>Let the rules pick the tracks.</strong> Keep English, drop the other eleven dubs.
+    Decide about commentary and about tracks with no language tag at all.</li>
+  <li><strong>Run it.</strong> Everything you kept is copied into a new file.</li>
+</ol>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="adding-files.html">Add videos to a queue</a></li>
+    <li><a href="slim-rules.html">Choose which languages to keep</a></li>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

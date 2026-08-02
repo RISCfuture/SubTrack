@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Set preferred codecs and transcode targets</title>
+  <meta name="AppleTitle" content="Set preferred codecs and transcode targets">
+  <meta name="description" content="Name the codecs you’re happy to keep as they are, and what SubTrack should convert anything else to.">
+  <meta name="keywords" content="codec, preferred, transcode, convert, target, h264, hevc, av1, eac3, aac, x265, encoder, unsupported">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="preferred-codecs" id="preferred-codecs"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Set preferred codecs and transcode targets</h1>
+
+<p>Keeping a track normally means copying it exactly as it is. But sometimes you keep a track that’s
+in a format you can’t use — a lossless audio mix your player won’t decode, say. These two settings
+describe that case, and only that case.</p>
+
+<p>They’re two different lists doing two different jobs, which is the thing worth getting straight
+before you touch either.</p>
+
+<figure>
+  <picture>
+    <source srcset="images/rules-codecs-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/rules-codecs.webp" width="300" height="792" alt="The Rules inspector, showing Preferred codecs listed per media type above the Transcode targets they fall back to.">
+  </picture>
+  <figcaption>Preferred codecs sit directly above the targets they fall back to.</figcaption>
+</figure>
+
+<a name="transcode-targets" id="transcode-targets"></a>
+<h2>How the two lists work together</h2>
+
+<p><strong>Preferred codecs</strong> is a filter on what’s already in the file. It says: <em>if a
+track I’m keeping is in one of these formats, leave it alone.</em></p>
+
+<p><strong>Transcode targets</strong> is the fallback. It says: <em>and if it isn’t, convert it to
+this.</em></p>
+
+<p>So a track is copied untouched when its codec is in the preferred list, and converted to the
+target when it isn’t. A file whose tracks are all preferred is never converted at all, which is the
+normal case and the fast one.</p>
+
+<p class="note">Adding <em>more</em> codecs to the preferred list means <em>less</em> converting, not
+more. The list is what you’re willing to accept as-is.</p>
+
+<h2>Set them</h2>
+
+<ol>
+  <li>Show the inspector (<kbd>⌥⌘I</kbd>) and choose <strong>Rules</strong>.</li>
+  <li>Under <strong>Preferred codecs</strong>, click <strong>Video</strong>,
+    <strong>Audio</strong>, or <strong>Subtitle</strong> and edit the list. Order is preference.</li>
+  <li>Under <strong>Transcode targets</strong>, choose what video and audio should become when they
+    fail the filter.</li>
+</ol>
+
+<p>Subtitles have a preferred list but no transcode target: a subtitle track is either kept or
+dropped, never converted.</p>
+
+<h2>Know before you run</h2>
+
+<p>Converting is the slow path, and SubTrack always tells you it’s coming rather than surprising you
+with it. Select a file and choose <strong>Override</strong> in the inspector — any track that will be
+converted says so, and names what it’s being converted to.</p>
+
+<h2>If a codec can’t be encoded</h2>
+
+<p>Choosing to convert is one thing; having the encoder to do it is another. When SubTrack warns
+that the build you’re running can’t write a target you picked, see
+<a href="unsupported-codec.html">If a codec can’t be encoded</a>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="supported-formats.html">See what an FFmpeg build supports</a></li>
+    <li><a href="overrides.html">Override the track plan for one file</a></li>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

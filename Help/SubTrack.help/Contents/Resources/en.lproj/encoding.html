@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Set how many files encode at once</title>
+  <meta name="AppleTitle" content="Set how many files encode at once">
+  <meta name="description" content="Choose how many files SubTrack works on simultaneously, and see which codec set your build ships with.">
+  <meta name="keywords" content="simultaneous, concurrent, encodes, performance, parallel, codec set, videotoolbox, speed">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-encoding" id="settings-encoding"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Set how many files encode at once</h1>
+
+<p>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+<strong>Encoding</strong>.</p>
+
+<a name="simultaneous-encodes" id="simultaneous-encodes"></a>
+<h2>Simultaneous encodes</h2>
+
+<p>This caps how many files SubTrack works on at the same time. The choices step from one to eight
+rather than offering every number, because the meaningful decision is “one at a time”, “a couple”, or
+“use the whole machine” — the values in between don’t behave differently enough to matter.</p>
+
+<p><strong>For ordinary slimming, this setting barely matters.</strong> Copying tracks is limited by
+how fast your disk can read and write, not by your processor. Running eight copies at once mostly
+makes them queue up for the same disk, and can be slower than running two.</p>
+
+<p><strong>It matters when tracks are being converted.</strong> Converting is real processor work, so
+several at once genuinely use more of the machine. If your queues routinely convert — because your
+sources use codecs outside your preferred list — raising the limit will finish a batch sooner.</p>
+
+<p>The trade is responsiveness. A high limit while converting will make the rest of the Mac feel
+sluggish. If you’re working while a batch runs, keep it low.</p>
+
+<p class="note">Lowering the limit doesn’t interrupt anything already running. Files in flight
+finish; the new limit applies to what starts next.</p>
+
+<a name="codec-sets" id="codec-sets"></a>
+<h2>Codec set</h2>
+
+<p>This reports which FFmpeg build your copy of SubTrack ships with. It isn’t a setting — there’s
+nothing to change — it’s there so you know what you have.</p>
+
+<ul>
+  <li><strong>Full (all codecs)</strong> — the downloadable version. Includes the software H.264 and
+    H.265 encoders.</li>
+  <li><strong>App Store (VideoToolbox)</strong> — the App Store version. Hardware encoding through
+    VideoToolbox, without the software encoders, whose licence App Store distribution doesn’t
+    permit.</li>
+</ul>
+
+<p>Both slim files identically. The difference only appears when a track has to be converted, and
+only for certain target codecs. See
+<a href="editions.html#editions">Choose between the two versions of SubTrack</a>.</p>
+
+<p>For the full list of what the build you’re running can read and write, open
+<strong>Settings</strong> &#9656; <strong>FFmpeg</strong> and click <strong>Supported
+Formats</strong>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Use a different FFmpeg build</a></li>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+    <li><a href="running-a-queue.html">Run a queue and watch its progress</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

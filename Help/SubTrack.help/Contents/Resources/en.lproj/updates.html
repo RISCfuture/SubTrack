@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Check for SubTrack updates</title>
+  <meta name="AppleTitle" content="Check for SubTrack updates">
+  <meta name="description" content="Set how often the downloadable version of SubTrack looks for a new release, whether to include prereleases, and how to unskip a version.">
+  <meta name="keywords" content="update, upgrade, new version, release, beta, prerelease, github, skip, download, sparkle, automatic">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-updates" id="settings-updates"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Check for SubTrack updates</h1>
+
+<p>The downloadable version of SubTrack keeps itself current: it asks GitHub whether a newer release
+exists and offers it to you.</p>
+
+<p>If you don’t see an <strong>Updates</strong> tab, you’re running the App Store version. It has no
+update settings at all, because the App Store keeps that copy current — see
+<a href="editions.html">Choose between the two versions of SubTrack</a>.</p>
+
+<h2>Set how often SubTrack checks</h2>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+    <strong>Updates</strong>.</li>
+  <li>Set <strong>Check for updates</strong> to <strong>Hourly</strong>, <strong>Daily</strong>,
+    <strong>Weekly</strong>, or <strong>Never</strong>.</li>
+  <li>Turn on <strong>Include prerelease versions</strong> if you want beta builds too.</li>
+</ol>
+
+<p>The schedule only runs while SubTrack is open — there’s no background helper ticking away when the
+app is quit. A prerelease is a release marked as such on GitHub: a build published for testing before
+it’s declared final. Leave the switch off and you’re offered finished releases only.</p>
+
+<p><strong>Last checked</strong> shows when the last check finished, or a dash if none has.
+<strong>Check Now</strong> runs one immediately and tells you either way; it’s dimmed while a check is
+already running. The same check is available any time from <strong>SubTrack</strong> &#9656;
+<strong>Check for Updates…</strong>.</p>
+
+<h2>Reconsider a version you skipped</h2>
+
+<p>When SubTrack offers you an update, one of the buttons in that prompt is <strong>Skip This
+Version</strong>. Take it and that release is never mentioned again — not by the scheduled check, and
+not by <strong>Check Now</strong>, which will cheerfully tell you you’re up to date. Skipping happens
+there, not in this pane.</p>
+
+<p><strong>Reset Skipped Versions</strong> forgets every version you’ve skipped, so each is offered
+again. It’s dimmed unless you’ve actually skipped something. If you know a newer version exists and
+SubTrack insists you’re current, this is the button.</p>
+
+<p class="note">A check is one request to GitHub’s public list of releases. It sends nothing about
+you, your Mac, or your files — see <a href="privacy-and-data.html">What SubTrack sends, and what it
+doesn’t</a>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+    <li><a href="privacy-and-data.html">What SubTrack sends, and what it doesn’t</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

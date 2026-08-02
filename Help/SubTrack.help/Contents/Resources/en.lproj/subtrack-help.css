@@ -1,0 +1,195 @@
+/*
+ * SubTrack Help.
+ *
+ * A help book is system UI. It is read in a window Apple draws, from a menu item Apple names, next
+ * to the help for Finder and Mail — so it is set in the system font, on the system background, with
+ * system-blue links. The marketing site's Archivo and magenta belong to the marketing site; here
+ * they would read as somebody's web page embedded in the app.
+ *
+ * `font: -apple-system-body` is the load-bearing declaration: it is what makes Help Viewer's text
+ * size controls work. A hard pixel size silently defeats them.
+ */
+
+:root {
+  color-scheme: light dark;
+  --link: #0066cc;
+  --ink: #1d1d1f;
+  --ink-soft: #58585d;
+  --rule: #d8d8dc;
+  --panel: #f5f5f7;
+  --measure: 40em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --link: #4da3ff;
+    --ink: #f2f2f4;
+    --ink-soft: #a6a6ad;
+    --rule: #3a3a3e;
+    --panel: #1f1f22;
+  }
+}
+
+body {
+  font: -apple-system-body;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  color: var(--ink);
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+  line-height: 1.55;
+}
+
+h1 {
+  font-size: 1.6em;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 0.6em;
+}
+
+h2 {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 2em 0 0.5em;
+}
+
+h3 {
+  font-size: 1.05em;
+  font-weight: 600;
+  margin: 1.5em 0 0.4em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.15em;
+}
+
+/* Leaving Help Viewer for a browser is a surprise worth marking. */
+a[href^="http"]::after {
+  content: " ↗";
+  font-size: 0.85em;
+}
+
+ol,
+ul {
+  margin: 0 0 1em;
+  padding-left: 1.4em;
+}
+
+li {
+  margin-bottom: 0.4em;
+}
+
+code,
+kbd {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.92em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+figure {
+  margin: 1.5em 0;
+}
+
+/*
+ * The app's icon, above the title of every page, as Help's own books carry it.
+ * It is the one image here that isn't a screenshot, so it opts out of the
+ * frame the rule above gives them.
+ */
+.topicIcon {
+  display: block;
+  margin: 0;
+}
+
+.topicIcon img {
+  border: none;
+  border-radius: 0;
+}
+
+.topicIcon + h1 {
+  margin-top: 0.1em;
+}
+
+figcaption {
+  color: var(--ink-soft);
+  font-size: 0.9em;
+  margin-top: 0.5em;
+}
+
+/*
+ * An inline label rather than a boxed alert: a fixed-height box breaks the moment the reader turns
+ * the text size up, which Help Viewer invites them to do.
+ */
+p.note {
+  color: var(--ink-soft);
+}
+
+p.note::before {
+  content: "Note: ";
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.seealso {
+  border-top: 1px solid var(--rule);
+  margin-top: 2.5em;
+  padding-top: 1em;
+}
+
+.seealso h2 {
+  font-size: 0.95em;
+  margin: 0 0 0.5em;
+}
+
+.seealso ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* The landing page's grouped contents. */
+.toc section {
+  border-top: 1px solid var(--rule);
+  padding-top: 1em;
+  margin-top: 1.5em;
+}
+
+.toc h2 {
+  margin-top: 0;
+}
+
+.toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.toc li {
+  margin-bottom: 0.8em;
+}
+
+.toc .gloss {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.92em;
+}
+
+.start-here {
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem 0.75rem;
+  margin-top: 1.5em;
+}
+
+.start-here h2 {
+  margin-top: 0;
+}

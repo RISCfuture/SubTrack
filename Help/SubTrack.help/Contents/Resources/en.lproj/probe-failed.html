@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>If SubTrack can’t read a file</title>
+  <meta name="AppleTitle" content="If SubTrack can’t read a file">
+  <meta name="description" content="Why inspecting a file fails before any slimming starts — not really a video, truncated, an unsupported container, or encrypted — and what to do.">
+  <meta name="keywords" content="ffprobe, unreadable, corrupt, truncated, drm, encrypted, container, inspect, rescan, couldn’t read">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="probe-failed" id="probe-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>If SubTrack can’t read a file</h1>
+
+<p>This happens before any slimming starts. SubTrack inspects every file you add, and that has to
+succeed before there’s a track list to make decisions about. When it fails, the row says SubTrack
+couldn’t read the video file, and the detail beneath is whatever <code>ffprobe</code> said on its
+way out.</p>
+
+<h2>What it usually is</h2>
+
+<ul>
+  <li><strong>It isn’t really a video.</strong> An extension can say anything. A file with no video
+    track in it — a stray audio file, a sidecar — is refused outright, and says so.</li>
+  <li><strong>It’s truncated, or still arriving.</strong> A download in progress or a copy that
+    hasn’t finished reads as a broken container until the last byte lands.</li>
+  <li><strong>The container isn’t one this build reads.</strong> FFmpeg builds differ in what
+    they’ve been compiled to handle.</li>
+  <li><strong>It’s encrypted.</strong> Purchased and rented video carries DRM, and nothing in
+    SubTrack removes it.</li>
+</ul>
+
+<h2>What to do</h2>
+
+<p>Try playing the file elsewhere first: if it won’t open in QuickTime Player either, the problem is
+the file. If it plays fine, open <strong>Settings</strong> &#9656; <strong>FFmpeg</strong> and click
+<strong>Supported Formats</strong> to confirm this build reads that container. Then select the row
+and choose <strong>Queue</strong> &#9656; <strong>Re-scan Selected</strong>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="troubleshooting.html">If a file won’t slim</a></li>
+    <li><a href="supported-formats.html">See what an FFmpeg build supports</a></li>
+    <li><a href="troubleshooting.html#activity-log">Read the full error in the activity log</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

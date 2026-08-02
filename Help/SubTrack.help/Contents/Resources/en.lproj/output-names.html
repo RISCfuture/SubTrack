@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Name the files SubTrack writes</title>
+  <meta name="AppleTitle" content="Name the files SubTrack writes">
+  <meta name="description" content="Build output file names from tokens, and resolve the two conflicts that stop a queue from starting.">
+  <meta name="keywords" content="output name, format, token, rename, slimmed, conflict, duplicate, overwrite, extension">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="output-names" id="output-names"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Name the files SubTrack writes</h1>
+
+<p>SubTrack never modifies a source file — it writes a new one alongside. The naming format decides
+what that new file is called.</p>
+
+<p>To change it, show the inspector (<kbd>⌥⌘I</kbd>), choose <strong>Rules</strong>, and edit
+<strong>Output name</strong>. Each queue has its own.</p>
+
+<a name="name-tokens" id="name-tokens"></a>
+<h2>Build a name from tokens</h2>
+
+<figure>
+  <picture>
+    <source srcset="images/output-name-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/output-name.webp" width="280" height="87" alt="The output name field holding an Original Name token followed by the text “(slimmed)”, with the tokens available below it and a preview of the resulting file name.">
+  </picture>
+  <figcaption>The line underneath previews the format against a real file in the queue.</figcaption>
+</figure>
+
+<p>The format is ordinary text with tokens standing in for each file’s own details:</p>
+
+<ul>
+  <li><code>{name}</code> — the source file’s name, without its extension.</li>
+  <li><code>{n}</code> — the file’s position in the queue.</li>
+</ul>
+
+<p>So <code>{name} (slimmed)</code> turns <code>The Third Man.mkv</code> into
+<code>The Third Man (slimmed).mkv</code>.</p>
+
+<p>The extension is never part of the format. The output keeps the same container as the source, so
+SubTrack supplies the extension itself and a format that tried to change it would be describing
+something it can’t do.</p>
+
+<h3>Writing a literal brace</h3>
+
+<p>Double a brace to mean it literally: <code>{{name}}</code> produces the text
+<code>{name}</code> rather than the file’s name. An unrecognized token like <code>{title}</code> is
+left alone and appears as-is in the name, so a typo produces an odd filename rather than losing
+anything.</p>
+
+<h2>When two names collide</h2>
+
+<p>SubTrack refuses to start a queue whose names would destroy a file, and there are exactly two
+ways that can happen — both with a quick fix. See
+<a href="name-conflicts.html">Fix a naming conflict</a>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="destinations.html">Choose where slimmed files are saved</a></li>
+    <li><a href="overrides.html">Override the track plan for one file</a></li>
+    <li><a href="running-a-queue.html">Run a queue and watch its progress</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

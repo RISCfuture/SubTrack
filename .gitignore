@@ -8,6 +8,9 @@ xcuserdata/
 .build/
 Vendor/
 
+# Help book search indexes: built into the app bundle, but a hand-run hiutil leaves one here
+Help/**/*.cshelpindex
+
 # SwiftLint's cache of the remote parent config
 .swiftlint/RemoteConfigCache
 

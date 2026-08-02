@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FFmpeg, licensing, and credits</title>
+  <meta name="AppleTitle" content="FFmpeg, licensing, and credits">
+  <meta name="description" content="Which FFmpeg licence applies to the SubTrack you’re running, where its source is published, and whose work is inside the app.">
+  <meta name="keywords" content="ffmpeg, licence, license, gpl, lgpl, open source, x264, x265, libaom, av1, videotoolbox, attribution, acknowledgements, colophon, source code">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="licensing" id="licensing"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>FFmpeg, licensing, and credits</h1>
+
+<p>Every track SubTrack copies, drops, or converts is handled by FFmpeg. SubTrack is the part that
+decides what should happen; FFmpeg is the part that does it. SubTrack itself is licensed under the
+GNU General Public License, version 2 or later.</p>
+
+<h2>Which FFmpeg licence applies to your copy</h2>
+
+<p>The two versions of SubTrack bundle different FFmpeg builds, and those builds are licensed
+differently.</p>
+
+<ul>
+  <li><strong>Mac App Store — LGPL v2.1+.</strong> The bundled FFmpeg is built with no GPL-licensed
+    components: no libx264, no libx265, no other GPL libraries. Video encoding goes through Apple
+    VideoToolbox instead. This software uses libraries from the FFmpeg project under the
+    LGPLv2.1.</li>
+  <li><strong>Direct download — GPL v2+.</strong> The bundled FFmpeg is built with libx264 and
+    libx265, which are licensed under the GPL v2 or later, so the combined work is distributed under
+    the GPL v2+ as well. This software uses code of the FFmpeg project licensed under the
+    GPLv2+.</li>
+</ul>
+
+<p>libaom, the AV1 encoder, is in both builds — its BSD 2-Clause terms and the Alliance for Open
+Media Patent License 1.0 suit the LGPL build as well as the GPL one.</p>
+
+<h2>Read the notice for the build you’re running</h2>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>About SubTrack</strong>.</li>
+  <li>Click <strong>License…</strong> for the full text, including copyright lines and a link to the
+    licence itself.</li>
+</ol>
+
+<p>The About window doesn’t list both possibilities — it shows the notice belonging to the copy in
+front of you, so what you read there is the licence you’re actually under.</p>
+
+<h2>Where the source is</h2>
+
+<p>SubTrack’s own source is at
+<a href="https://github.com/RISCfuture/SubTrack">github.com/RISCfuture/SubTrack</a>. Each GitHub
+release of the download version carries an FFmpeg sources archive next to the disk image — the
+corresponding source the GPL requires. The repository’s build script pins the exact version of
+FFmpeg, x264, x265, and libaom and builds them from source, so running it reproduces the bundled
+binaries.</p>
+
+<p class="note">FFmpeg source and licence information are also published at
+<a href="https://www.ffmpeg.org">ffmpeg.org</a>.</p>
+
+<h2>Other people’s work in SubTrack</h2>
+
+<p>Beyond FFmpeg, x264, x265, and libaom, SubTrack is built on these Swift packages:</p>
+
+<ul>
+  <li><strong>DockProgress</strong> by Sindre Sorhus — MIT. Queue progress on the Dock icon.</li>
+  <li><strong>GitHubUpdateChecker</strong> — MIT, in the download version only. It brings with it
+    swift-markdown-ui, NetworkImage, swift-cmark, and swift-log.</li>
+  <li><strong>sentry-cocoa</strong> — MIT. Crash reporting.</li>
+  <li><strong>XCUITestKit</strong> — MIT. Used by the tests; not shipped in either version.</li>
+</ul>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+    <li><a href="ffmpeg.html">Use a different FFmpeg build</a></li>
+    <li><a href="privacy-and-data.html">What SubTrack sends, and what it doesn’t</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

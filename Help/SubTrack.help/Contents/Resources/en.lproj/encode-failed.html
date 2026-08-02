@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>If a run starts and then fails</title>
+  <meta name="AppleTitle" content="If a run starts and then fails">
+  <meta name="description" content="FFmpeg launched, worked for a while, and stopped. The usual causes are a full disk, a destination that went away, or damage in the source.">
+  <meta name="keywords" content="ffmpeg, exit code, failed, disk full, unmounted, network share, damaged, verify, output missing streams, retry">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="encode-failed" id="encode-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>If a run starts and then fails</h1>
+
+<p>A different moment and a different problem from a file that was never readable: FFmpeg launched,
+worked for a while, and stopped. The row says SubTrack couldn’t process the video and reports the
+code FFmpeg exited with, which on its own tells you nothing. The real message is in the activity
+log — read it before you guess.</p>
+
+<h2>What it usually is</h2>
+
+<ul>
+  <li><strong>The disk filled up.</strong> Slimming writes a whole new file, so the output needs room
+    alongside the original until the run finishes.</li>
+  <li><strong>The destination went away mid-run</strong> — an external drive unmounted, a network
+    share dropped.</li>
+  <li><strong>A track in the source is damaged.</strong> A rip with a bad patch can inspect cleanly
+    and still fail when FFmpeg reaches the damage.</li>
+</ul>
+
+<p>SubTrack also checks the file it just wrote, so a run can fail at the very end: an output missing
+tracks it should have, or a track with no data in it, is reported as a failure rather than as done.
+That’s a deliberate refusal to hand you a file that’s quietly wrong.</p>
+
+<h2>Try again</h2>
+
+<p>A failed row can be started again. Fix the cause, then choose <strong>Queue</strong> &#9656;
+<strong>Start Selected</strong> (<kbd>⌘Return</kbd>).</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="troubleshooting.html#activity-log">Read the full error in the activity log</a></li>
+    <li><a href="troubleshooting.html">If a file won’t slim</a></li>
+    <li><a href="destinations.html">Choose where slimmed files are saved</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

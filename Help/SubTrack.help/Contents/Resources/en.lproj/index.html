@@ -1,0 +1,125 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SubTrack Help</title>
+  <meta name="AppleTitle" content="SubTrack Help">
+  <meta name="AppleIcon" content="SubTrack.help/Contents/Resources/help-icon.png">
+  <meta name="description" content="How to slim video files with SubTrack: queues, keep rules, presets, and settings.">
+  <meta name="keywords" content="subtrack, help, manual, contents, video, tracks, audio, subtitle, mkv, remux">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="subtrack-help" id="subtrack-help"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>SubTrack Help</h1>
+
+<p>SubTrack drops the audio and subtitle tracks you don’t need and keeps every bit of the ones you
+do. Nothing is re-encoded, so a two-hour Blu-ray rip slims down in seconds at exactly the quality it
+started with.</p>
+
+<div class="start-here">
+  <h2>Start here</h2>
+  <ul>
+    <li><a href="what-subtrack-does.html">Slim videos without re-encoding them</a>
+      <span class="gloss">Copying instead of converting — and why that’s so fast.</span></li>
+    <li><a href="adding-files.html">Add videos to a queue</a>
+      <span class="gloss">Drag in a movie, or a folder full of them.</span></li>
+    <li><a href="running-a-queue.html">Run a queue and watch its progress</a>
+      <span class="gloss">Start, follow along, and read the results.</span></li>
+  </ul>
+</div>
+
+<div class="toc">
+
+<section>
+  <h2>Picking audio and subtitle tracks</h2>
+  <ul>
+    <li><a href="slim-rules.html">Choose which languages to keep</a>
+      <span class="gloss">Languages in priority order, commentary, and tracks with no language tag.</span></li>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a>
+      <span class="gloss">The one case where SubTrack does convert a track.</span></li>
+    <li><a href="overrides.html">Override the track plan for one file</a>
+      <span class="gloss">When a single file needs different treatment from the rest.</span></li>
+    <li><a href="output-names.html">Name the files SubTrack writes</a>
+      <span class="gloss">Tokens, and what the output is called.</span></li>
+    <li><a href="name-conflicts.html">Fix a naming conflict</a>
+      <span class="gloss">The two ways a set of names can collide, and how to break the tie.</span></li>
+    <li><a href="destinations.html">Choose where slimmed files are saved</a>
+      <span class="gloss">Each queue’s own folder, or alongside every source.</span></li>
+    <li><a href="settings-general.html">Set the default destination for new queues</a>
+      <span class="gloss">What a brand-new queue inherits.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Save and reuse presets</h2>
+  <ul>
+    <li><a href="presets.html">Save a set of rules as a preset</a>
+      <span class="gloss">The starters, and saving rules of your own.</span></li>
+    <li><a href="preset-sync.html">Sync presets between your Macs</a>
+      <span class="gloss">How iCloud carries them, and what stays put.</span></li>
+    <li><a href="sync-unavailable.html">If presets aren’t syncing</a>
+      <span class="gloss">Signed out, restricted, or iCloud reporting an error.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Change SubTrack settings</h2>
+  <ul>
+    <li><a href="encoding.html">Set how many files encode at once</a>
+      <span class="gloss">When the limit matters, and when it doesn’t.</span></li>
+    <li><a href="ffmpeg.html">Use a different FFmpeg build</a>
+      <span class="gloss">Which build you’re running, and where it came from.</span></li>
+    <li><a href="custom-ffmpeg.html">Use an FFmpeg build of your own</a>
+      <span class="gloss">When you need an encoder the bundled build hasn’t got.</span></li>
+    <li><a href="supported-formats.html">See what an FFmpeg build supports</a>
+      <span class="gloss">Every container and codec it reads — and the shorter list it writes.</span></li>
+    <li><a href="subtrack-cli.html">Install the <code>subtrack</code> command-line tool</a>
+      <span class="gloss">Slimming files from Terminal.</span></li>
+    <li><a href="cli-install.html">Install the <code>subtrack</code> tool</a>
+      <span class="gloss">Putting it on your <code>PATH</code>, with or without administrator access.</span></li>
+    <li><a href="updates.html">Check for SubTrack updates</a>
+      <span class="gloss">How often, and whether to include prereleases.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Solve problems</h2>
+  <ul>
+    <li><a href="troubleshooting.html">If a file won’t slim</a>
+      <span class="gloss">Which of the four troubles you’re looking at, and the activity log.</span></li>
+    <li><a href="probe-failed.html">If SubTrack can’t read a file</a>
+      <span class="gloss">Inspecting failed before slimming ever started.</span></li>
+    <li><a href="missing-source.html">If the source file is missing</a>
+      <span class="gloss">Moved, unmounted, or a saved permission gone stale.</span></li>
+    <li><a href="encode-failed.html">If a run starts and then fails</a>
+      <span class="gloss">A full disk, a vanished destination, or damage in the source.</span></li>
+    <li><a href="unsupported-codec.html">If a codec can’t be encoded</a>
+      <span class="gloss">The build you’re running has no encoder for the target you picked.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>About SubTrack</h2>
+  <ul>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a>
+      <span class="gloss">What the App Store build can’t do, and why.</span></li>
+    <li><a href="privacy-and-data.html">What SubTrack sends, and what it doesn’t</a>
+      <span class="gloss">Your files stay on your Mac. Here’s everything else.</span></li>
+    <li><a href="credits.html">FFmpeg, licensing, and credits</a>
+      <span class="gloss">Whose work is inside SubTrack.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Still stuck?</h2>
+  <ul>
+    <li><a href="https://github.com/RISCfuture/SubTrack/issues">Report an issue on GitHub</a></li>
+  </ul>
+</section>
+
+</div>
+
+</body>
+</html>

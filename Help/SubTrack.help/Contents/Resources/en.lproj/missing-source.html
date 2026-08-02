@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>If the source file is missing</title>
+  <meta name="AppleTitle" content="If the source file is missing">
+  <meta name="description" content="A queue holds a reference to each file rather than a copy, so a moved, renamed, or unmounted source turns its row red — as does a permission grant that has gone stale.">
+  <meta name="keywords" content="source is missing, moved, renamed, deleted, unmounted, disk, permission, sandbox, bookmark, stale, rescan, re-add">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="missing-source" id="missing-source"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>If the source file is missing</h1>
+
+<p>A queue holds a reference to each file, not a copy of it, and that reference survives quitting
+SubTrack. So a queue you left overnight can wake up to a file that has been moved, renamed, deleted,
+or that lives on a disk nobody has mounted yet. The row turns red and reads <strong>Source is
+missing</strong>.</p>
+
+<p>There’s a less obvious version of the same thing. Adding a file is what grants SubTrack
+permission to reach it, and that grant is saved so it still works after a relaunch. Saved grants go
+stale: the file is exactly where you left it, but the row says the saved reference is no longer
+valid, or that SubTrack doesn’t have permission to open it.</p>
+
+<h2>Restore the file</h2>
+
+<ol>
+  <li>Put the file back — mount the disk, undo the rename, restore it from the Trash.</li>
+  <li>Select the row and choose <strong>Queue</strong> &#9656; <strong>Re-scan Selected</strong>.</li>
+  <li>If it’s still flagged, choose <strong>Queue</strong> &#9656; <strong>Remove Selected</strong>
+    (<kbd>Delete</kbd>) and add the file again.</li>
+</ol>
+
+<p>Step three is the one that clears a stale permission, and it’s why it’s the standing advice:
+adding a file is what grants access, so adding it again grants access again. Removing a row never
+deletes anything from disk.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="troubleshooting.html">If a file won’t slim</a></li>
+    <li><a href="adding-files.html">Add videos to a queue</a></li>
+    <li><a href="destinations.html">Choose where slimmed files are saved</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

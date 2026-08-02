@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>What SubTrack sends, and what it doesn’t</title>
+  <meta name="AppleTitle" content="What SubTrack sends, and what it doesn’t">
+  <meta name="description" content="Your video files never leave your Mac; the only things SubTrack sends are crash reports, preset syncing through your own iCloud, and an update check you can switch off.">
+  <meta name="keywords" content="privacy, data, telemetry, analytics, diagnostics, sentry, crash report, cloudkit, icloud, tracking, offline, upload, opt out, gdpr">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="privacy" id="privacy"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>What SubTrack sends, and what it doesn’t</h1>
+
+<p>Almost nothing leaves your Mac. There are no accounts, no advertising identifiers, and no
+tracking. What follows is the complete list of what does go out, and where each of those things
+goes.</p>
+
+<h2>Your video files never leave your Mac</h2>
+
+<p>Everything SubTrack does to a file — reading its tracks, working out what to keep, writing the
+slimmed copy — happens on your own machine. The FFmpeg bundled inside SubTrack is compiled with
+networking disabled, so it isn’t a matter of the app choosing not to upload anything: that FFmpeg
+contains no network code and cannot open a connection at all. Your files, their names, and their
+contents are never sent anywhere.</p>
+
+<h2>Crash and performance reports go to Sentry</h2>
+
+<p>When SubTrack crashes or runs badly, it sends a report to Sentry, an error-monitoring service, so
+the fault can be found and fixed. A report carries device information, the state the app was in when
+things went wrong, and performance traces.</p>
+
+<p>It is not linked to your identity. SubTrack tells Sentry not to attach your IP address, your
+device name, or anything else of that kind, and there is no account to attach a report to in the
+first place. Reports from debug builds and from automated test runs are discarded before they’re
+sent.</p>
+
+<h2>Presets sync through your own iCloud, and nothing else does</h2>
+
+<p>Saved presets sync between your Macs through CloudKit, in the private iCloud container belonging
+to your Apple Account. That container is yours: the developer cannot read it, and what’s stored there
+is governed by Apple’s privacy policy.</p>
+
+<p>Presets are the only thing that syncs. Your queues, the files you put in them, and your output
+folders are stored on this Mac and go nowhere.</p>
+
+<h2>Turn off the update check</h2>
+
+<p>The version downloaded directly from GitHub asks GitHub’s public list of releases whether a newer
+one exists. That request reveals what any web request reveals to a server — your IP address, mainly —
+and nothing else about you. To stop it:</p>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+    <strong>Updates</strong>.</li>
+  <li>Set <strong>Check for updates</strong> to <strong>Never</strong>.</li>
+</ol>
+
+<p class="note">The Mac App Store version never makes this request — the store keeps it current — so
+it has no <strong>Updates</strong> settings at all.</p>
+
+<h2>The document that governs</h2>
+
+<p>This page is a summary written for people using the app. The
+<a href="https://riscfuture.github.io/SubTrack/privacy.html">SubTrack privacy policy</a> is the
+document that actually governs, and it’s the one to read if you need the exact wording.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="preset-sync.html">Sync presets between your Macs</a></li>
+    <li><a href="updates.html">Check for SubTrack updates</a></li>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
