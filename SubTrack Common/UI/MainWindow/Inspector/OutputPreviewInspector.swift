@@ -74,24 +74,26 @@ private struct OutputTrackTable: View {
   let tracks: [OutputTrack]
 
   var body: some View {
-    // Only Role is left free to take the slack. The pane is 260pt at its
-    // narrowest, and a column with no ceiling claims the width the columns to
-    // its right need — which pushed Role off the edge entirely.
+    // Role is the only column left free to take the slack, and the three ahead
+    // of it are capped so they can't take the width it needs. `Table` lays the
+    // ideal widths out first and clips rather than compressing what won't fit,
+    // so the ideals have to sum under the 260pt the pane is at its narrowest —
+    // otherwise the last column is the one that goes over the edge.
     Table(tracks) {
       TableColumn(LocalizedStringResource("Track", bundle: #bundle)) { TrackNumberCell(track: $0) }
-        .width(38)
+        .width(36)
       TableColumn(LocalizedStringResource("Language", bundle: #bundle)) {
         PreviewCell(track: $0, identifier: "preview.language", text: $0.track.languageName)
       }
-      .width(min: 56, ideal: 74, max: 110)
+      .width(min: 50, ideal: 60, max: 78)
       TableColumn(LocalizedStringResource("Codec", bundle: #bundle)) {
         PreviewCell(track: $0, identifier: "preview.codec", text: $0.track.outputCodecSummary)
       }
-      .width(min: 58, ideal: 82, max: 124)
+      .width(min: 54, ideal: 68, max: 92)
       TableColumn(LocalizedStringResource("Role", bundle: #bundle)) {
         PreviewCell(track: $0, identifier: "preview.role", text: $0.dispositions.displayList)
       }
-      .width(min: 60)
+      .width(min: 54)
     }
     .accessibilityIdentifier("preview.table")
   }
