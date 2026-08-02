@@ -221,8 +221,9 @@ struct CodecArgumentTests {
 struct DispositionArgumentTests {
 
   /**
-   The first kept audio track is flagged the container default; the rest are
-   cleared. Video and subtitle operations contribute no disposition flags.
+   The first kept audio track is flagged the container default; the rest have
+   that one flag taken off them, leaving whatever else they carried. Video and
+   subtitle operations contribute no disposition flags.
    */
   @Test
   func flagsFirstAudioAsDefault() {
@@ -234,7 +235,7 @@ struct DispositionArgumentTests {
     ]
     #expect(
       ProgressReportingProcessor.dispositionArguments(for: operations)
-        == ["-disposition:a:0", "default", "-disposition:a:1", "0"]
+        == ["-disposition:a:0", "+default", "-disposition:a:1", "-default"]
     )
   }
 

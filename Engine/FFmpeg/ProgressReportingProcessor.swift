@@ -58,15 +58,19 @@ final class ProgressReportingProcessor: Processor {
 
   /**
    The `-disposition:a:N` flags that mark the first kept audio track as the
-   container `default` and clear the flag on every other audio track, so a
+   container `default` and take that flag off every other audio track, so a
    language-prioritized output isn't overridden by a `default` flag copied
    from a lower-priority source track. `N` is the output-relative audio index,
    i.e. the track's position among the audio operations in `-map` order.
    Empty when there is no audio; video and subtitle dispositions are untouched.
+
+   `+default` and `-default` add and remove that one flag from whatever the
+   source track carried. A bare `0` would wipe the whole set, and a commentary
+   track kept on purpose would come out of the run with nothing saying so.
    */
   static func dispositionArguments(for operations: [StreamOperation]) -> [String] {
     operations.filter { $0.streamType == .audio }.indices.flatMap { index in
-      ["-disposition:a:\(index)", index == 0 ? "default" : "0"]
+      ["-disposition:a:\(index)", index == 0 ? "+default" : "-default"]
     }
   }
 
