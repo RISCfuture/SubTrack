@@ -43,7 +43,8 @@ public struct SlimRules: Codable, Sendable, Equatable {
   /// Whether to keep audio/subtitle tracks that have no language metadata.
   public var preserveNoLanguages: Bool
 
-  /// Whether to keep non-default audio (commentary, downmixes, etc.).
+  /// Whether to keep non-default audio (commentary, downmixes, etc.) and the
+  /// subtitles flagged as commentary.
   public var includeOtherAudio: Bool
 
   /// Preferred video codecs, in priority order.

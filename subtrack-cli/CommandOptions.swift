@@ -41,7 +41,8 @@ struct CommandOptions {
         --audio-transcode <c>   Codec to transcode non-preferred audio to
         --video-option <opt>    Extra ffmpeg option when transcoding video (repeatable)
         --audio-option <opt>    Extra ffmpeg option when transcoding audio (repeatable)
-        --include-other-audio   Include non-default audio (e.g. commentary)
+        --include-other-audio   Include non-default audio (e.g. commentary) and
+                                the subtitles flagged as commentary
         -d, --dry-run           Print the operations instead of performing them
         --skip-noops            Skip files that would not change
         --suppress-stderr       Discard ffmpeg/ffprobe stderr output

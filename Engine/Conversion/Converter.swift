@@ -61,8 +61,9 @@ public class Converter {
   public var preserveNoLanguages: Bool
 
   /**
-   If `true`, includes audio streams other than the stream with the best
-   codec (e.g., commentary tracks or downmixes).
+   If `true`, includes the audio streams the default slot doesn't claim — such
+   as commentary tracks or downmixes — along with the subtitle streams flagged
+   as commentary, which subtitle that audio.
    */
   public var includeOtherAudio: Bool
 
@@ -74,7 +75,8 @@ public class Converter {
   /**
    The subtitle streams to keep, ordered by the language priority in
    ``languages`` (then by preferred codec within a language), with untagged
-   streams last when ``preserveNoLanguages`` is set.
+   streams last when ``preserveNoLanguages`` is set and commentary left out
+   unless ``includeOtherAudio`` is set.
    */
   private var matchingSubtitleStreams: [SubtitleStream] {
     let comparator = SubtitleComparator(preferredCodecs: subtitlePreferredCodecs)
@@ -92,8 +94,9 @@ public class Converter {
    - Parameter languages: The audio and subtitle languages to filter in.
    - Parameter preserveNoLanguages: If `true`, preserves audio and subtitle
    tracks with no language metadata.
-   - Parameter includeOtherAudio: If `true`, includes audio streams other than
-   the stream with the best codec (e.g., commentary tracks or downmixes).
+   - Parameter includeOtherAudio: If `true`, includes the audio streams the
+   default slot doesn't claim (e.g., commentary tracks or downmixes) along with
+   the subtitle streams flagged as commentary.
    */
   public init(
     container: Container,
@@ -144,7 +147,20 @@ public class Converter {
   }
 
   private func subtitleStreams(language: String?) -> [SubtitleStream] {
-    container.subtitleStreams.filter { $0.language == language }
+    container.subtitleStreams.filter { $0.language == language && !isUnwantedCommentary($0) }
+  }
+
+  /**
+   Whether a subtitle track is commentary that ``includeOtherAudio`` is turned
+   off for — the written counterpart to a commentary audio track, which is of no
+   use once that audio is dropped.
+
+   Only a source that flags the track recognizes it. A remux that names its
+   commentary in the track title alone and flags it nowhere reads here as an
+   ordinary subtitle track, and is kept.
+   */
+  private func isUnwantedCommentary(_ stream: SubtitleStream) -> Bool {
+    !includeOtherAudio && stream.dispositions.contains(.comment)
   }
 
   private func bestDefaultAudioStream(language: String?) -> AudioStream? {

@@ -110,6 +110,35 @@ enum MovieFixture {
   }
 
   /**
+   Two English subtitle tracks where the second is flagged as commentary:
+
+   | Stream | Type     | Codec  | Language | Disposition |
+   |--------|----------|--------|----------|-------------|
+   | 0:0    | video    | h264   | —        | —           |
+   | 0:1    | audio    | ac3    | eng      | default     |
+   | 0:2    | subtitle | subrip | eng      | —           |
+   | 0:3    | subtitle | subrip | eng      | comment     |
+
+   Subtitles are otherwise kept by language alone, so the disposition on 0:3 is
+   the only thing that can set it apart from the ordinary track above it.
+   */
+  static let withCommentarySubtitle: URL = built("commentary-subtitle") { directory, subtitles in
+    [
+      "-f", "lavfi", "-i", "testsrc=size=128x96:rate=10:duration=1",
+      "-f", "lavfi", "-i", "sine=frequency=440:duration=1",
+      "-i", subtitles, "-i", subtitles,
+      "-map", "0:v", "-map", "1:a", "-map", "2:s", "-map", "3:s",
+      "-c:v", "libx264", "-c:a", "ac3", "-c:s", "srt",
+      "-metadata:s:a:0", "language=eng",
+      "-metadata:s:s:0", "language=eng",
+      "-metadata:s:s:1", "language=eng",
+      "-disposition:a:0", "default",
+      "-disposition:s:1", "comment",
+      directory
+    ]
+  }
+
+  /**
    A video, an English audio track, and an English subtitle track whose only cue
    falls outside the video's one second — so the muxed subtitle stream carries no
    packets at all.

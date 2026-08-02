@@ -30,7 +30,9 @@ struct SlimRulesEditor: View {
         .inspectorCheckbox()
         .accessibilityIdentifier("rules.keepUntagged")
       }
-      CaptionedControl("Keep non-default audio such as commentary and downmixes.") {
+      CaptionedControl(
+        "Keep non-default audio such as commentary and downmixes, and the subtitles flagged as commentary."
+      ) {
         Toggle(
           LocalizedStringResource("Include commentary / extra audio", bundle: #bundle),
           isOn: $rules.includeOtherAudio

@@ -113,6 +113,29 @@ struct TrackSelectionPlanTests {
   }
 
   /**
+   A subtitle track flagged as commentary answers to the same setting its audio
+   counterpart does, rather than riding along on language alone.
+   */
+  @Test
+  func commentarySubtitlesFollowTheExtraTrackSetting() throws {
+    #expect(
+      try plan([], of: MovieFixture.withCommentarySubtitle) == [
+        "0:0 (video): copy",
+        "0:1 (audio): copy",
+        "0:2 (subtitle): copy"
+      ]
+    )
+    #expect(
+      try plan(["--include-other-audio"], of: MovieFixture.withCommentarySubtitle) == [
+        "0:0 (video): copy",
+        "0:1 (audio): copy",
+        "0:2 (subtitle): copy",
+        "0:3 (subtitle): copy"
+      ]
+    )
+  }
+
+  /**
    A track whose codec isn't preferred is transcoded to the target codec — the
    fixture's H.264 video stops being acceptable once AV1 is the only preference.
    */
