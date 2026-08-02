@@ -233,11 +233,16 @@ struct MainWindowScreen {
     rowNamed(name).assertHidden("Queue row “\(name)” should be gone.")
   }
 
-  /// Waits for the status bar to report `count` items.
+  /**
+   Waits for the status bar to report `count` items. The summary is pluralized,
+   so a one-item queue reads "1 item" — matching "1 items" would only ever pass
+   against a bar that had lost its plural rule.
+   */
   func assertItemCount(_ count: Int) {
+    let expected = count == 1 ? "1 item" : "\(count) items"
     XCTAssertTrue(
-      statusSummary.waitFor(NSPredicate(format: "value BEGINSWITH %@", "\(count) items")),
-      "Expected the status bar to report \(count) items, got “\(summaryValue)”."
+      statusSummary.waitFor(NSPredicate(format: "value BEGINSWITH %@", expected)),
+      "Expected the status bar to report “\(expected)”, got “\(summaryValue)”."
     )
   }
 }
