@@ -44,6 +44,30 @@ REPO_ROOT = File.expand_path("..", __dir__)
 OUTPUT_DIRECTORY = "build"
 OUTPUT_PATH = File.join(REPO_ROOT, OUTPUT_DIRECTORY)
 
+# The Apple Help book's localized resources. It sits at the repository root, outside every
+# synchronized group, because Xcode has no file type for a ".help" bundle and would try to compile
+# what it found inside one; a build phase dittoes the whole directory into both apps instead. So
+# whatever lands here ships in both editions.
+HELP_BOOK_PATH = File.join(REPO_ROOT, "Help", "SubTrack.help", "Contents", "Resources", "en.lproj")
+
+# Owned outright by Scripts/export-help-screenshots.sh, which empties it before writing. Nothing that
+# is not a generated screenshot may be kept in it.
+HELP_IMAGES_PATH = File.join(HELP_BOOK_PATH, "images")
+
+# Every screenshot the book's articles embed, by slug. The export script files whatever the test run
+# happened to attach; this list is what the articles *require*, which is the check that matters — a
+# capture that quietly stopped happening, because an accessibility identifier moved or a test method
+# was renamed, otherwise leaves last month's image in place and nothing fails.
+#
+# Each slug is written twice, `<slug>.webp` and `<slug>-dark.webp`. The book's stylesheet declares
+# `color-scheme: light dark`, so a light-only capture is the one element on a dark page that fails to
+# adapt — more conspicuously wrong than a page that does not adapt at all. Doubling the set costs
+# nothing once the captures are automated, which is most of the argument for this lane existing.
+HELP_SCREENSHOTS = %w[
+  main-window queue-running add-videos rules-languages rules-codecs track-override
+  output-name preset-menu settings-presets settings-ffmpeg settings-cli problem-queue
+].freeze
+
 # The two editions this app ships. They are separate targets producing separate bundle identifiers
 # from one project, and they sign completely differently: the App Store build is signed for the store
 # and uploaded to App Store Connect, while the download build is signed with Developer ID, notarized,
@@ -144,6 +168,75 @@ platform :mac do
     archive_edition(edition_name: "download", version: options[:version], build: options[:build])
     notarize_and_package
     upload_debug_symbols
+  end
+
+  desc "Regenerate the Help book's screenshots from the UI test harness"
+  lane :help_screenshots do
+    # These images are a build product of the app, not artifacts someone captured once and then had
+    # to remember to recapture — but that only holds while the machine taking them is pinned. A
+    # hosted runner draws to a virtual display that is not 2x, so a CI regeneration would write a
+    # half-size, softly-scaled set over a good one, and nothing about the result would look wrong
+    # until it shipped inside both apps. The suite asserts the rest of the machine's capture
+    # conditions itself and skips when they fail; this is the one that has to be refused before a
+    # single app is launched.
+    UI.user_error!("Screenshots have to be captured on a developer's 2x display, not on CI.") if is_ci
+
+    # Deliberately no ensure_ffmpeg, ensure_signing or ensure_api_key. The -uiTesting harness stubs
+    # the conversion engine and seeds the encoder capabilities outright, so no real ffmpeg is ever
+    # resolved; and a development identity — which any machine that can build this project already
+    # holds — signs a test build perfectly well. Demanding MATCH_PASSWORD and a certificates checkout
+    # is a lot of ceremony to impose on "regenerate the help pictures".
+    #
+    # xcodebuild neither overwrites nor merges a result bundle: an existing one at this path, or even
+    # a plain file there, is a hard failure raised before any testing happens.
+    result_bundle = File.join(OUTPUT_PATH, "help-screenshots.xcresult")
+    FileUtils.rm_rf(result_bundle)
+
+    # Its own derived data, nested a level below build/ for two separate reasons. Both app targets
+    # emit SubTrack.app, so sharing DerivedData with the developer's Xcode session would replace
+    # whatever they last built out from under them; and notarize_and_package globs OUTPUT_PATH/*.app
+    # without recursing, so a build directly in build/ would leave a test build of the app exactly
+    # where the release lane looks for the exported one.
+    #
+    # -resultBundlePath rather than fishing the bundle out of the derived data afterwards: the ones
+    # xcodebuild leaves in Logs/Test/ are timestamped, accumulate, and give the export script no way
+    # to tell this run's captures from last run's.
+    # -project, because `sh` runs from the fastlane directory and xcodebuild looks for something to
+    # build in its own working directory — it has no notion of the project root gym resolves against.
+    sh("xcodebuild", "test",
+       "-project", File.join(REPO_ROOT, XCODEPROJ),
+       "-scheme", "SubTrack (download) UITests",
+       "-destination", "platform=macOS,arch=arm64",
+       "-derivedDataPath", File.join(OUTPUT_PATH, "derived-data", "help-screenshots"),
+       "-resultBundlePath", result_bundle,
+       "-only-testing:SubTrackDownloadUITests/HelpScreenshotUITests")
+
+    # A skip is the failure mode this lane exists to catch, and it is the one xcodebuild reports as
+    # success. Display scale, accent colour, and the four accessibility settings that no per-process
+    # override can reach are asserted inside the suite as XCTSkipUnless, so a machine that cannot take
+    # a faithful capture yields a green run with nothing attached to it. Left unchecked the lane would
+    # sail past that and hand the export script an empty bundle, which owns the image directory.
+    summary = JSON.parse(sh("xcrun", "xcresulttool", "get", "test-results", "summary",
+                            "--path", result_bundle, "--compact", log: false))
+    unless summary["result"] == "Passed" && summary["skippedTests"].to_i.zero?
+      UI.user_error!("The screenshot suite finished #{summary['result']} with " \
+                     "#{summary['skippedTests']} skipped. A skip names the capture precondition " \
+                     "this Mac fails; open #{result_bundle} to read it.")
+    end
+
+    sh(File.join(REPO_ROOT, "Scripts", "export-help-screenshots.sh"), result_bundle,
+       HELP_IMAGES_PATH)
+
+    missing = HELP_SCREENSHOTS.flat_map { |slug| [slug, "#{slug}-dark"] }.reject do |name|
+      File.exist?(File.join(HELP_IMAGES_PATH, "#{name}.webp"))
+    end
+    unless missing.empty?
+      UI.user_error!("The run attached no capture for: #{missing.join(', ')}. The articles embed " \
+                     "every slug in HELP_SCREENSHOTS, so a partial set is a broken book.")
+    end
+
+    UI.success("Wrote #{HELP_SCREENSHOTS.count * 2} screenshots to #{HELP_IMAGES_PATH} — commit " \
+               "them with the article changes.")
   end
 
   desc "Resolve the next build number and write it where CI can read it"

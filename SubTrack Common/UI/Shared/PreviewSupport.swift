@@ -201,7 +201,11 @@
         "index": index, "codec_type": "audio", "codec_name": track.codec,
         "sample_rate": "48000", "channels": track.channels, "bits_per_sample": 0,
         "disposition": ["default": isDefault ? 1 : 0],
-        "tags": ["language": track.language, "BPS": String(track.bitsPerSecond)]
+        "tags": tags(
+          language: track.language,
+          bitsPerSecond: track.bitsPerSecond,
+          title: track.title
+        )
       ]
     }
 
@@ -209,8 +213,21 @@
       [
         "index": index, "codec_type": "subtitle", "codec_name": track.codec,
         "disposition": ["default": 0],
-        "tags": ["language": track.language, "BPS": String(track.bitsPerSecond)]
+        "tags": tags(
+          language: track.language,
+          bitsPerSecond: track.bitsPerSecond,
+          title: track.title
+        )
       ]
+    }
+
+    /// A stream's tags, carrying its own name only when the fixture gives it one.
+    private static func tags(language: String, bitsPerSecond: Int, title: String?)
+      -> [String: String]
+    {
+      var tags = ["language": language, "BPS": String(bitsPerSecond)]
+      if let title { tags["title"] = title }
+      return tags
     }
 
     /**
@@ -282,12 +299,18 @@
       var language: String
       var channels: Int
       var bitsPerSecond: Int = 320_000
+
+      /// The track's own name ("Director's Commentary"), shown as its Title fact.
+      var title: String?
     }
 
     struct SubtitleTrack {
       var codec: String
       var language: String
       var bitsPerSecond: Int = 1_000
+
+      /// The track's own name ("English (SDH)"), shown as its Title fact.
+      var title: String?
     }
   }
 

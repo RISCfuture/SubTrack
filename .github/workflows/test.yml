@@ -121,6 +121,12 @@ jobs:
 
       # XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI hardware doesn't
       # trip element lookups that pass locally.
+      #
+      # HelpScreenshotUITests captures the Help book's images and belongs to `fastlane
+      # help_screenshots`, not to a test run: it launches the app six times and its output is only
+      # meaningful on a developer's 2x display. -skip-testing keeps it out of the run plan entirely.
+      # It also asserts its own capture preconditions and skips on a runner's virtual display, so
+      # deleting this line costs CI time but never turns the suite red.
       - name: Run UI tests
         env:
           XCUITEST_TIMEOUT_MULTIPLIER: "3"
@@ -131,6 +137,7 @@ jobs:
             -destination 'platform=macOS,arch=arm64' \
             -derivedDataPath "$RUNNER_TEMP/dd-ui-download" \
             -resultBundlePath "TestResults-UI-download.xcresult" \
+            -skip-testing:SubTrackDownloadUITests/HelpScreenshotUITests \
             ${{ env.SIGNING }} \
             | xcbeautify --renderer github-actions
 

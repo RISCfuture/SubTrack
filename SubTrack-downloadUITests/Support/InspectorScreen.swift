@@ -9,6 +9,12 @@ import XCUITestKit
  goes through `selectTrack(_:)` first.
  */
 struct InspectorScreen {
+  /// One scroll-wheel push, in points; negative moves the form further down.
+  private static let revealScrollStep = -80.0
+
+  /// How many pushes ``reveal(_:)`` gives the form before it gives up.
+  private static let revealScrollLimit = 20
+
   let app: XCUIApplication
 
   var keepUntaggedToggle: XCUIElement { app.descendant(id: "rules.keepUntagged") }
@@ -43,6 +49,32 @@ struct InspectorScreen {
   /// The languages-to-keep summary in the Rules tab.
   var languagesSummary: XCUIElement { app.descendant(id: "rules.languages") }
   var languagesSummaryValue: String { (languagesSummary.value as? String) ?? "" }
+
+  /**
+   Scrolls the inspector's form until the control identified by `identifier` is
+   on screen. The tabs are taller than the pane, so anything below the section
+   the tab opens on has to be brought into view before it can be driven — or
+   photographed.
+
+   The scroll is aimed at the pane rather than at a scroll view found by type:
+   the wheel event lands wherever the pointer is put, and the form underneath
+   handles it whatever AppKit calls it.
+   */
+  @discardableResult
+  func reveal(_ identifier: String) -> Self {
+    let pane = app.descendant(id: "inspector.pane")
+      .assertExists("The inspector pane isn’t shown.")
+    let target = app.descendant(id: identifier)
+    for _ in 0..<Self.revealScrollLimit {
+      if target.exists, target.isHittable { return self }
+      pane.scroll(byDeltaX: 0, deltaY: Self.revealScrollStep)
+    }
+    XCTAssertTrue(
+      target.exists && target.isHittable,
+      "“\(identifier)” never scrolled into view."
+    )
+    return self
+  }
 
   /// Adds a token to the end of the output-name format by clicking its chip.
   @discardableResult
