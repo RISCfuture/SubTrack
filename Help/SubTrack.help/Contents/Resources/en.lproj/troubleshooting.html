@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>If a file won’t slim</title>
+  <meta name="AppleTitle" content="If a file won’t slim">
+  <meta name="description" content="What each failure in the queue means — an unreadable source, a missing file, a run that failed partway — and where the full error text lives.">
+  <meta name="keywords" content="error, failed, ffprobe, ffmpeg, exit code, unreadable, corrupt, truncated, drm, encrypted, stale, permission, sandbox, bookmark, disk full, activity log, log, red, warning, triangle, bug, report">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="troubleshooting" id="troubleshooting"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>If a file won’t slim</h1>
+
+<p>Most files go from added to done without your help. When one doesn’t, the reason is nearly always
+one of three: the source couldn’t be read at all, the source isn’t where it used to be, or a run
+started and then went wrong.</p>
+
+<figure>
+  <picture>
+    <source srcset="images/problem-queue-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/problem-queue.webp" width="1180" height="620" alt="A queue holding four different troubles at once: a missing source, a codec the build can’t encode, a failed run, and a file whose output would be silent.">
+  </picture>
+  <figcaption>Each trouble names itself under the file it belongs to.</figcaption>
+</figure>
+
+<p>Any row that needs attention shows a warning triangle in the status column. <strong>Point at the
+triangle to read why.</strong> The line under the file name says the same thing, but it truncates to
+the width of the column, and an FFmpeg message is routinely wider than that. If it’s cut off, point
+at it, or open the activity log.</p>
+
+<p class="note">A triangle can also mean the FFmpeg you’re running has no encoder for a codec you
+chose as a transcode target. That one names the codec, and the fix is in
+<a href="unsupported-codec.html">If a codec can’t be encoded</a>.</p>
+
+<h2>Find the one that’s happening</h2>
+
+<ul>
+  <li><a href="probe-failed.html">If SubTrack can’t read a file</a> — it never got as far as
+    slimming, because inspecting the source failed.</li>
+  <li><a href="missing-source.html">If the source file is missing</a> — the file has moved, or the
+    saved permission to reach it has gone stale.</li>
+  <li><a href="encode-failed.html">If a run starts and then fails</a> — FFmpeg launched, worked for
+    a while, and stopped.</li>
+  <li><a href="unsupported-codec.html">If a codec can’t be encoded</a> — the build you’re running
+    has no encoder for a target you chose.</li>
+</ul>
+
+<a name="activity-log" id="activity-log"></a>
+<h2>Read the full error in the activity log</h2>
+
+<p>Choose <strong>Window</strong> &#9656; <strong>Activity Log</strong> (<kbd>⇧⌘L</kbd>).</p>
+
+<p>The log is one plain table: every file in the queue, its status, and the full path of the file it
+writes. It exists mostly for one reason — <strong>this is where the complete, untruncated error text
+lives.</strong> A queue row has a single short line to spare; the log has the whole message.</p>
+
+<p class="note">The log’s columns truncate to their width as well. Point at any cell to read its
+contents in full.</p>
+
+<p>If the message doesn’t match anything on this page, that’s worth knowing about — copy it out of
+the log and <a href="https://github.com/RISCfuture/SubTrack/issues">report an issue on GitHub</a>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="running-a-queue.html#queue-status">Run a queue and watch its progress</a></li>
+    <li><a href="adding-files.html">Add videos to a queue</a></li>
+    <li><a href="supported-formats.html">See what an FFmpeg build supports</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

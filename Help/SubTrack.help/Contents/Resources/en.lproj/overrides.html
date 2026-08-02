@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Override the track plan for one file</title>
+  <meta name="AppleTitle" content="Override the track plan for one file">
+  <meta name="description" content="Read the track plan for a single file and change what happens to individual tracks, without disturbing the rest of the queue.">
+  <meta name="keywords" content="override, track plan, per file, keep, drop, convert, reset, inspector, exception">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-overrides" id="track-overrides"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Override the track plan for one file</h1>
+
+<p>The keep rules apply to the whole queue. When one file needs different treatment — a mislabelled
+track, a documentary where you do want the commentary — you can change that file alone.</p>
+
+<a name="track-plan" id="track-plan"></a>
+<h2>Read the plan</h2>
+
+<ol>
+  <li>Select a file in the queue.</li>
+  <li>Show the inspector (<kbd>⌥⌘I</kbd>) and choose <strong>Override</strong> (<kbd>⌥⌘2</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="images/track-override-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/track-override.webp" width="300" height="792" alt="The Override inspector for one file: a track picker above the selected track’s codec, language, title, and channels, and the controls that include or convert it.">
+  </picture>
+  <figcaption>Every fact about the selected track, and the two controls that change its fate.</figcaption>
+</figure>
+
+<p>The track menu lists every track in the file. Dimmed entries are the ones being dropped; the rest
+are being kept. Choose a track to see what will happen to it and why.</p>
+
+<p>This is also the fastest way to check that your rules are doing what you meant, before you commit
+a whole queue to them.</p>
+
+<h2>Change one track</h2>
+
+<p>Pick a track, then choose what should happen to it — keep it, drop it, or convert it to a
+particular codec.</p>
+
+<p><strong>One thing to know before you do.</strong> Changing a single track promotes the whole file
+to a per-file plan. Every other track is frozen exactly as the rules had it at that moment, and that
+file stops following the queue’s rules from then on. Change the rules afterwards and this file won’t
+follow along.</p>
+
+<p>That’s usually what you want — you singled the file out deliberately — but it does mean an
+override you set early and forgot about will quietly ignore later rule changes.</p>
+
+<a name="override-reset" id="override-reset"></a>
+<h2>Go back to the rules</h2>
+
+<p>Click <strong>Reset to Rules</strong>. The file drops its own plan and follows the queue’s rules
+again, including anything you’ve changed since. The button only appears while a file actually has an
+override, so it doubles as the way to tell whether one is set.</p>
+
+<h2>Give one file a different name</h2>
+
+<p>The same tab sets an output name for this file alone, overriding the queue’s naming format. See
+<a href="output-names.html#output-names">Name the files SubTrack writes</a>.</p>
+
+<p class="note">If you re-scan a file (<strong>Queue</strong> &#9656; <strong>Re-scan
+Selected</strong>) its tracks are read again from disk. An override that referred to a track that’s
+no longer there can’t be honoured, so check the plan after replacing a source file.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="slim-rules.html">Choose which languages to keep</a></li>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+    <li><a href="output-names.html">Name the files SubTrack writes</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

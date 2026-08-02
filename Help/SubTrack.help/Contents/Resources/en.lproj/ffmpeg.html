@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Use a different FFmpeg build</title>
+  <meta name="AppleTitle" content="Use a different FFmpeg build">
+  <meta name="description" content="Check which FFmpeg build SubTrack is running, point it at one of your own, and see everything that build can read and write.">
+  <meta name="keywords" content="ffmpeg, ffprobe, binary, path, homebrew, static build, version, bundled, custom, encoder, decoder, muxer, demuxer, formats, sandbox">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-ffmpeg" id="settings-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Use a different FFmpeg build</h1>
+
+<p>SubTrack does its work by driving FFmpeg, and a signed, self-contained build of it ships inside
+the app. It doesn’t use anything you’ve installed yourself, and there’s nothing to set up. Most
+people never open this pane.</p>
+
+<p>You’d come here for one of two reasons: to see which build you’re actually running, or — in the
+downloadable version — to run a build of your own instead.</p>
+
+<figure>
+  <picture>
+    <source srcset="images/settings-ffmpeg-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/settings-ffmpeg.webp" width="620" height="548" alt="The FFmpeg pane of SubTrack Settings, showing the choice between the built-in build and a custom one, with the resolved build’s version beneath.">
+  </picture>
+  <figcaption>Settings &#9656; FFmpeg names the build in use and what it can do.</figcaption>
+</figure>
+
+<h2>See which build you’re running</h2>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+    <strong>FFmpeg</strong>.</li>
+  <li>Read <strong>Version</strong> under <strong>FFmpeg Information</strong>.</li>
+</ol>
+
+<p>SubTrack gets that version by running the build it resolved, so it’s the truth about what’s
+executing. If a warning appears in place of a version, the build couldn’t be run at all, and nothing
+in the queue will encode until that’s fixed.</p>
+
+<h2>Go further</h2>
+
+<ul>
+  <li><a href="custom-ffmpeg.html">Use an FFmpeg build of your own</a> — when you need an encoder
+    the bundled build doesn’t have.</li>
+  <li><a href="supported-formats.html">See what an FFmpeg build supports</a> — every container and
+    codec the running build reads and writes.</li>
+</ul>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+    <li><a href="credits.html">FFmpeg, licensing, and credits</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

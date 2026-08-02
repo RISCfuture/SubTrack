@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Choose where slimmed files are saved</title>
+  <meta name="AppleTitle" content="Choose where slimmed files are saved">
+  <meta name="description" content="Set the output folder for a queue, or let SubTrack save each slimmed file next to the file it came from.">
+  <meta name="keywords" content="destination, output folder, save, location, next to source, default, general settings">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="destinations" id="destinations"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Choose where slimmed files are saved</h1>
+
+<p>Every queue writes its output somewhere. That somewhere is either a folder you pick, or the folder
+each source file already lives in.</p>
+
+<h2>Set a queue’s destination</h2>
+
+<ol>
+  <li>Select the queue in the sidebar.</li>
+  <li>Click <strong>Change…</strong> in the bar above the queue.</li>
+  <li>Choose a folder and click <strong>Open</strong>.</li>
+</ol>
+
+<p>Every file in that queue is written there, whatever folder it came from. This is what you want
+when you’re collecting the results of a scattered set of sources in one place.</p>
+
+<h2>Save next to each source instead</h2>
+
+<p>A queue with no destination set saves each slimmed file into the same folder as the file it came
+from. A season of episodes stays distributed across its per-season folders instead of being
+flattened into one.</p>
+
+<p>This is the default, and it’s why the destination bar can read <strong>Saves next to each
+source</strong> rather than naming a folder.</p>
+
+<p class="note">Saving next to the source is the arrangement most likely to produce a naming
+conflict, because the output lands in the same folder as the input. If your format produces exactly
+the source’s name, SubTrack will refuse to start rather than overwrite it. See
+<a href="name-conflicts.html">Fix a naming conflict</a>.</p>
+
+<h2>Set the default for new queues</h2>
+
+<p>Every new queue starts with a destination of its own, set once in Settings — see
+<a href="settings-general.html">Set the default destination for new queues</a>. Changing it never
+disturbs a queue that already exists.</p>
+
+<h2>If SubTrack can’t write to a folder</h2>
+
+<p>macOS grants SubTrack access to the folders you choose, and that grant is remembered between
+launches. If a destination becomes unavailable — an external disk that isn’t mounted, a folder that
+was moved or deleted — the run stops rather than writing somewhere unexpected.</p>
+
+<p>Choosing the folder again restores access. If the problem is a source file rather than a
+destination, see <a href="missing-source.html">If the source file is missing</a>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="output-names.html">Name the files SubTrack writes</a></li>
+    <li><a href="adding-files.html#queues">Add videos to a queue</a></li>
+    <li><a href="troubleshooting.html">If a file won’t slim</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

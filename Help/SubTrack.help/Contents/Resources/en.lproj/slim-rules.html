@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Choose which languages to keep</title>
+  <meta name="AppleTitle" content="Choose which languages to keep">
+  <meta name="description" content="Set the languages SubTrack keeps, in priority order, and decide about commentary tracks and tracks with no language tag.">
+  <meta name="keywords" content="language, rules, keep, drop, priority, default track, untagged, commentary, dub, subtitle, audio, iso 639">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="slim-rules" id="slim-rules"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Choose which languages to keep</h1>
+
+<p>The keep rules are the heart of SubTrack. They apply to every file in the queue at once, so you
+describe what you want kept one time rather than per file.</p>
+
+<p>To reach them, show the inspector (<kbd>⌥⌘I</kbd>) and choose <strong>Rules</strong>. The same
+rules appear when you edit a preset in <strong>Settings</strong> &#9656; <strong>Presets</strong>.</p>
+
+<a name="rule-languages" id="rule-languages"></a>
+<h2>Set the languages to keep</h2>
+
+<figure>
+  <picture>
+    <source srcset="images/rules-languages-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/rules-languages.webp" width="346" height="247" alt="The language editor listing English, French, and Japanese in order, each with a drag handle and a remove button, above an Add menu.">
+  </picture>
+  <figcaption>The list is a priority order — drag to rearrange it.</figcaption>
+</figure>
+
+<ol>
+  <li>In the inspector, click the languages control under <strong>Track Selection</strong>.</li>
+  <li>Search for a language and select it to add it to the list.</li>
+  <li>Drag the entries to put them in the order you prefer.</li>
+</ol>
+
+<p>Audio and subtitle tracks in these languages are kept. Everything in any other language is
+dropped.</p>
+
+<p><strong>The order matters, and it does something specific.</strong> The list is a preference
+ranking, and the first language in it becomes the <em>default</em> audio track of the slimmed file —
+the one that plays when you press play without choosing anything. If you keep English and Japanese
+but want Japanese audio to come up first, put Japanese first.</p>
+
+<p class="note">Languages are matched on the tag stored in the file, which uses three-letter ISO
+639-2 codes. A file whose maker tagged a track wrongly will be treated according to the tag, not
+according to what you hear.</p>
+
+<a name="rule-untagged" id="rule-untagged"></a>
+<h2>Decide about tracks with no language</h2>
+
+<p><strong>Keep untagged tracks</strong> governs tracks that carry no language tag at all.</p>
+
+<p>This one setting decides whether some files come out perfect or come out silent. Studio discs tag
+everything, so for Blu-ray rips you can safely leave it off and drop the clutter. But web and
+streaming rips very often carry a single, correctly-encoded audio track with no tag on it — and if
+you drop untagged tracks, that file loses all of its sound.</p>
+
+<p>If you work with rips from mixed sources, leave it on. You’ll keep the occasional track you didn’t
+need; the alternative is a silent film.</p>
+
+<a name="rule-commentary" id="rule-commentary"></a>
+<h2>Decide about commentary and extra audio</h2>
+
+<p><strong>Include commentary / extra audio</strong> governs the non-default audio in a language
+you’re keeping: director commentary, descriptive audio, and alternate downmixes.</p>
+
+<p>Turn it off and you keep one main audio track per language you asked for. Turn it on and you keep
+the extras too. Commentary tracks are usually small next to a main lossless mix, so this rarely costs
+much size — it’s a question of whether you want them.</p>
+
+<h2>Check the result before you run</h2>
+
+<p>Rules describe an intention; the inspector shows the consequence. Select any file and choose
+<strong>Override</strong> in the inspector to see every track it contains and exactly what will
+happen to it — kept, dropped, or converted. If a rule isn’t doing what you expected, that’s where
+you’ll see it.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="overrides.html">Override the track plan for one file</a></li>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+    <li><a href="presets.html">Save a set of rules as a preset</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

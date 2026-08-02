@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fix a naming conflict</title>
+  <meta name="AppleTitle" content="Fix a naming conflict">
+  <meta name="description" content="SubTrack refuses to start a queue whose names would destroy a file. There are exactly two ways that happens, and both have a quick fix.">
+  <meta name="keywords" content="conflict, collide, duplicate, overwrite, same name, start dimmed, blocked, token, number, override">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="name-conflicts" id="name-conflicts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Fix a naming conflict</h1>
+
+<p>SubTrack refuses to start a queue whose names would destroy a file, and there are exactly two
+ways that can happen.</p>
+
+<h2>Two files would be written to the same place</h2>
+
+<p>The format doesn’t distinguish between two sources — most often because they have the same name
+in different folders, like <code>Show.mkv</code> in a Season 1 and a Season 2 folder. Whichever
+finished last would overwrite the other.</p>
+
+<p>Fix it by making the format produce distinct names. Adding <code>{n}</code> is the quickest way;
+giving one file its own name in the <strong>Override</strong> tab is the precise way. Or send the
+queues to different folders.</p>
+
+<h2>A file would overwrite its own source</h2>
+
+<p>The format produces exactly the source’s name, and the output folder is the folder the source is
+in — so SubTrack would be asked to write over the very file it’s reading.</p>
+
+<p>Fix it by adding something to the format, like <code>{name} (slimmed)</code>, or by choosing a
+different output folder. See <a href="destinations.html">Choose where slimmed files are saved</a>.</p>
+
+<p class="note">The warning names the files involved, so you can see which ones collided rather than
+guessing. Start becomes available again the moment no two outputs collide.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="output-names.html">Name the files SubTrack writes</a></li>
+    <li><a href="destinations.html">Choose where slimmed files are saved</a></li>
+    <li><a href="overrides.html">Override the track plan for one file</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

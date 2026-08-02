@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Install the subtrack command-line tool</title>
+  <meta name="AppleTitle" content="Install the subtrack command-line tool">
+  <meta name="description" content="Put the subtrack tool on your PATH from Settings ▸ CLI, and slim files from Terminal or a script.">
+  <meta name="keywords" content="cli, command line, terminal, shell, script, batch, sudo, usr local bin, path, install, flags, arguments, automation, cron">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="subtrack-cli" id="subtrack-cli"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Install the <code>subtrack</code> command-line tool</h1>
+
+<p>SubTrack ships a command-line twin. <code>subtrack</code> runs the same engine the app does, takes
+one file in and writes one file out, and reads its keep rules from flags rather than from the
+inspector. It’s for the work a window is the wrong shape for: slimming over SSH, wiring slimming into
+a script, or looping over a whole library overnight.</p>
+
+<p>It comes with the downloadable version only. The App Store version’s <strong>CLI</strong> pane
+says so and offers nothing to click — see
+<a href="editions.html#editions">Choose between the two versions of SubTrack</a>.</p>
+
+<p><a href="cli-install.html">Install the <code>subtrack</code> tool</a> covers putting it on your
+<code>PATH</code>, including the case where the folder you picked needs administrator access.</p>
+
+<a name="cli-options" id="cli-options"></a>
+<h2>Run it</h2>
+
+<p>A run is <code>subtrack [options] &lt;input&gt; &lt;output&gt;</code> — one source file, one
+destination file.</p>
+
+<p><strong>The tool does not carry FFmpeg with it.</strong> This trips up nearly everyone. The app’s
+bundled FFmpeg stays inside the app bundle; what you installed is only the <code>subtrack</code>
+executable. It looks for <code>ffmpeg</code> and <code>ffprobe</code> on your <code>PATH</code> and
+stops with an error if either is missing. Install FFmpeg yourself — Homebrew’s is fine — or name the
+binaries with <code>--ffmpeg &lt;path&gt;</code> and <code>--ffprobe &lt;path&gt;</code>.</p>
+
+<p>The rest of the options are the inspector’s rules, one flag apiece:</p>
+
+<ul>
+  <li><code>-l</code>, <code>--language &lt;lang&gt;</code> — a language to keep, as a three-letter
+    code. Repeatable; order is priority, and the first one’s audio leads the output. With no
+    <code>-l</code> at all, <code>eng</code> is kept.</li>
+  <li><code>-n</code>, <code>--no-language</code> — keep tracks with no language tag.</li>
+  <li><code>--include-other-audio</code> — keep non-default audio: commentary, descriptive audio,
+    alternate mixes.</li>
+  <li><code>--video-codec</code>, <code>--audio-codec</code>, <code>--subtitle-codec</code> — codecs
+    to copy as they are. Repeatable.</li>
+  <li><code>--video-transcode</code>, <code>--audio-transcode</code> — what a kept track becomes when
+    it isn’t one of those.</li>
+  <li><code>--video-option</code>, <code>--audio-option</code> — an extra FFmpeg option to pass when
+    transcoding. Repeatable.</li>
+  <li><code>-d</code>, <code>--dry-run</code> — print the operations and write nothing.</li>
+  <li><code>--skip-noops</code> — leave a file alone if slimming wouldn’t change it.</li>
+  <li><code>--skip-verify</code> — don’t re-read the output afterwards to check it.</li>
+  <li><code>--suppress-stderr</code> — discard FFmpeg’s own chatter.</li>
+  <li><code>-h</code>, <code>--help</code> — the whole list, printed by the tool itself.</li>
+</ul>
+
+<p class="note">The repeatable flags replace their defaults rather than adding to them. The first
+<code>--audio-codec</code> you pass clears the built-in list, so name every codec you want kept — not
+just the extra one.</p>
+
+<p>Progress is written to standard error as a percentage, which leaves standard output clean for a
+pipe. Try <code>--dry-run</code> before turning a loop loose on a library.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Use a different FFmpeg build</a></li>
+    <li><a href="slim-rules.html">Choose which languages to keep</a></li>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

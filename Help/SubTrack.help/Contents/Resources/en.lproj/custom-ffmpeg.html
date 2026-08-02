@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Use an FFmpeg build of your own</title>
+  <meta name="AppleTitle" content="Use an FFmpeg build of your own">
+  <meta name="description" content="Point SubTrack at your own ffmpeg and ffprobe, what the folder has to contain, and how to undo it if transcodes start failing.">
+  <meta name="keywords" content="custom ffmpeg, ffprobe, folder, homebrew, static build, encoder, built-in, revert, rescan, sandbox, app store">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="custom-ffmpeg" id="custom-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Use an FFmpeg build of your own</h1>
+
+<p>The reason to do this is a specific one: you need an encoder the bundled build doesn’t have.
+Otherwise the bundled build is the better choice — it’s the one SubTrack is tested against, and it
+travels with the app.</p>
+
+<h2>Point SubTrack at a folder</h2>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+    <strong>FFmpeg</strong>.</li>
+  <li>Under <strong>FFmpeg Location</strong>, select <strong>Custom…</strong>.</li>
+  <li>Click <strong>Choose…</strong> and select the folder holding the binaries.</li>
+  <li>Check the indicator underneath. Green — <strong>Found ffmpeg and ffprobe</strong> — means
+    SubTrack can use the folder. Orange — <strong>This folder must contain ffmpeg and
+    ffprobe</strong> — means it can’t.</li>
+</ol>
+
+<p>Both binaries are required, and pointing at a folder holding only one of them is the usual
+mistake. SubTrack reads a file’s tracks with <code>ffprobe</code> and writes the slimmed file with
+<code>ffmpeg</code>.</p>
+
+<h2>If transcodes start failing afterwards</h2>
+
+<p>Builds vary enormously in what they were compiled with, and one that’s missing an encoder the
+bundled build <em>has</em> is a common way to break a queue that worked yesterday. Set
+<strong>FFmpeg Location</strong> back to <strong>Built-in</strong> — that undoes it completely.</p>
+
+<p>After changing builds, select your files and choose <strong>Queue</strong> &#9656;
+<strong>Re-scan Selected</strong>. The track plans on screen were worked out against the previous
+build, and re-scanning recomputes them against the new one.</p>
+
+<p class="note">The App Store version shows a fixed <strong>Built-in</strong> notice here instead of
+the choice. A sandboxed app may not run a binary a user hands it, so this is one of the things that
+version can’t do — see <a href="editions.html#editions">Choose between the two versions of
+SubTrack</a>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Use a different FFmpeg build</a></li>
+    <li><a href="supported-formats.html">See what an FFmpeg build supports</a></li>
+    <li><a href="unsupported-codec.html">If a codec can’t be encoded</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

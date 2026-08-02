@@ -1,0 +1,42 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>See what an FFmpeg build supports</title>
+  <meta name="AppleTitle" content="See what an FFmpeg build supports">
+  <meta name="description" content="The Supported Formats sheet lists every container and codec the running build handles, and marks reading separately from writing.">
+  <meta name="keywords" content="supported formats, containers, codecs, decode, encode, read, write, filter, muxer, demuxer, capabilities">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="supported-formats" id="supported-formats"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>See what an FFmpeg build supports</h1>
+
+<p>Click <strong>Supported Formats</strong> in <strong>Settings</strong> &#9656;
+<strong>FFmpeg</strong>. The sheet lists <strong>Containers</strong>, <strong>Video Codecs</strong>,
+<strong>Audio Codecs</strong>, and <strong>Subtitle Codecs</strong> for the build you’re running,
+each group collapsible and each row naming the format’s identifier and its full name. Type in the
+<strong>Filter</strong> field to narrow every group at once.</p>
+
+<h2>Reading is not writing</h2>
+
+<p>Each row carries two marks, and they mean different things. Containers are marked <strong>Read /
+Write</strong>, codecs <strong>Decode / Encode</strong> — and reading is not writing. A build can
+decode a codec perfectly and be unable to produce a single frame of it. That’s normal: practically
+every build reads more than it writes.</p>
+
+<p>That asymmetry is exactly what’s behind the warning that the current FFmpeg can’t encode a
+transcode target you’ve chosen. Filter for the codec, look at the second mark, and you’ll see it.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Use a different FFmpeg build</a></li>
+    <li><a href="unsupported-codec.html">If a codec can’t be encoded</a></li>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

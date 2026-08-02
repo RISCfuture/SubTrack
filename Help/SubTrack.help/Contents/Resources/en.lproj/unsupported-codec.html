@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>If a codec can’t be encoded</title>
+  <meta name="AppleTitle" content="If a codec can’t be encoded">
+  <meta name="description" content="Deciding to convert is one thing; having the encoder to do it is another. Why the build you’re running may not be able to write the codec you picked.">
+  <meta name="keywords" content="unsupported, encoder, missing, h264, h265, libx264, libx265, app store, licence, videotoolbox, incompatible, blocked">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="unsupported-codec" id="unsupported-codec"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>If a codec can’t be encoded</h1>
+
+<p>Sometimes SubTrack warns that the current FFmpeg can’t encode a codec you’ve chosen as a target.
+Deciding to convert is one thing; having the encoder to do it is another.</p>
+
+<h2>The two reasons</h2>
+
+<ul>
+  <li><strong>You’re running the App Store version.</strong> It bundles an FFmpeg build without the
+    software H.264 and H.265 encoders, because App Store rules don’t permit their licence. Choose a
+    target the build does support, or use the downloadable version — see
+    <a href="editions.html#editions">Choose between the two versions of SubTrack</a>.</li>
+  <li><strong>You pointed SubTrack at your own FFmpeg</strong> and that build was compiled without
+    the encoder. Builds vary enormously in what they include. Switch back to
+    <strong>Built-in</strong> in <strong>Settings</strong> &#9656; <strong>FFmpeg</strong>, or install
+    a build with the encoder you need — see
+    <a href="custom-ffmpeg.html">Use an FFmpeg build of your own</a>.</li>
+</ul>
+
+<p>To see exactly what the FFmpeg you’re running can read and write, open
+<strong>Settings</strong> &#9656; <strong>FFmpeg</strong> and click <strong>Supported
+Formats</strong>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+    <li><a href="supported-formats.html">See what an FFmpeg build supports</a></li>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

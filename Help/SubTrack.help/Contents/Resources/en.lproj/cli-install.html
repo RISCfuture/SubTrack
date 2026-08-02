@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Install the subtrack tool</title>
+  <meta name="AppleTitle" content="Install the subtrack tool">
+  <meta name="description" content="Put the subtrack executable on your PATH from Settings ▸ CLI, and what to do when the folder you chose needs administrator access.">
+  <meta name="keywords" content="install, cli, usr local bin, path, sudo, administrator, password, reveal, not installed, which subtrack">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="cli-install" id="cli-install"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Install the <code>subtrack</code> tool</h1>
+
+<figure>
+  <picture>
+    <source srcset="images/settings-cli-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/settings-cli.webp" width="620" height="548" alt="The CLI pane of SubTrack Settings, offering to install the subtrack tool and naming where it will be written.">
+  </picture>
+  <figcaption>Settings &#9656; CLI installs the tool and reports where it went.</figcaption>
+</figure>
+
+<ol>
+  <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
+    <strong>CLI</strong>.</li>
+  <li>Click <strong>Install…</strong>.</li>
+  <li>Choose a folder that’s already on your <code>PATH</code>. The panel opens at
+    <code>/usr/local/bin</code>; a <code>bin</code> folder in your home directory works just as well
+    and needs no administrator access.</li>
+</ol>
+
+<p>The <strong>Status</strong> row then shows the full path the tool landed at, with a
+<strong>Reveal</strong> button that selects it in the Finder.</p>
+
+<h2>If the folder needs administrator access</h2>
+
+<p>If the folder isn’t writable — which <code>/usr/local/bin</code> usually isn’t — SubTrack doesn’t
+ask for your administrator password. It has no privileged helper to hand one to, and an app asking
+for your password to copy a file is a habit worth not teaching. The pane says <em>That folder needs
+administrator access — run this instead</em> and shows the exact <code>sudo cp</code> command with a
+<strong>Copy</strong> button. Paste that into Terminal and authenticate there, where you can see what
+you’re authorizing. <strong>Copy Install Command</strong> does the same without opening the panel
+first, aimed at <code>/usr/local/bin</code>.</p>
+
+<p class="note">An install you run yourself is a real install, but SubTrack didn’t perform it and
+doesn’t know about it — <strong>Status</strong> goes on saying <strong>Not installed</strong>.
+Confirm that one with <code>which subtrack</code>.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="subtrack-cli.html">Install the subtrack command-line tool</a></li>
+    <li><a href="subtrack-cli.html#cli-options">Run it</a></li>
+    <li><a href="editions.html">Choose between the two versions of SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

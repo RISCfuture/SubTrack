@@ -22,6 +22,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleHelpBookFolder</key>
+	<string>SubTrack.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER).help</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
