@@ -46,10 +46,6 @@ struct InspectorScreen {
   /// The collision warning as reported against this one file.
   var nameConflict: XCUIElement { app.descendant(id: "override.nameConflict") }
 
-  /// The Preview tab's table of the output's tracks, and its kept-of-total line.
-  var previewTable: XCUIElement { app.descendant(id: "preview.table") }
-  var previewSummary: XCUIElement { app.descendant(id: "preview.summary") }
-
   /// The Preview tab's stand-in when the selection isn't one inspectable file.
   var previewNoFileSelected: XCUIElement { app.descendant(id: "preview.noFileSelected") }
 
