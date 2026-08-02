@@ -32,6 +32,7 @@ struct GeneralSettingsTab: View {
     }
     .padding()
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .settingsHelp(.settingsGeneral, accessibilityIdentifier: "settings.generalHelp")
   }
 }
 

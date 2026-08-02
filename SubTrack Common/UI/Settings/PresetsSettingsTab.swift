@@ -40,6 +40,7 @@ struct PresetsSettingsTab: View {
     .onChange(of: env.presets.presets.isEmpty) { _, isEmpty in
       if !isEmpty { selection = selection ?? env.presets.presets.first?.id }
     }
+    .settingsHelp(.presets, accessibilityIdentifier: "settings.presetsHelp")
   }
 
   private var selectedPreset: Preset? {
@@ -77,14 +78,17 @@ private struct PresetSyncNotice: View {
   let reason: SyncUnavailableReason
 
   var body: some View {
-    Text(reason.userMessage)
-      .font(.caption)
-      .foregroundStyle(Color.secondary)
-      .fixedSize(horizontal: false, vertical: true)
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .padding(.horizontal, 8)
-      .padding(.vertical, 6)
-      .accessibilityIdentifier("settings.presetSyncNotice")
+    VStack(alignment: .leading, spacing: 4) {
+      Text(reason.userMessage)
+        .fixedSize(horizontal: false, vertical: true)
+        .accessibilityIdentifier("settings.presetSyncNotice")
+      HelpTopicButton(anchor: .presetSync, accessibilityIdentifier: "settings.presetSyncHelp")
+    }
+    .font(.caption)
+    .foregroundStyle(Color.secondary)
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.horizontal, 8)
+    .padding(.vertical, 6)
   }
 }
 

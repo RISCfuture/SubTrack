@@ -10,11 +10,12 @@ struct RulesInspector: View {
   private var env
 
   var body: some View {
-    InspectorForm {
+    InspectorForm(helpAnchor: .slimRules, helpAccessibilityIdentifier: "rules.help") {
       PresetMenu(expands: true)
     } content: {
       Section {
         OutputNameEditor()
+          .addressableSection("rules.outputNameEditor")
       } header: {
         InspectorSectionHeader(
           title: "Output name",

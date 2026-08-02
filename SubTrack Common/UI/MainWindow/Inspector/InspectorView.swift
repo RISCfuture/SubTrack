@@ -32,6 +32,12 @@ struct InspectorView: View {
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+    // The pane is one addressable element, so a test can frame it — the mode
+    // picker and the tab below it are otherwise siblings with nothing naming
+    // the whole. `.contain` keeps every control inside it a queryable
+    // descendant rather than collapsing them into one.
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier("inspector.pane")
   }
 }
 

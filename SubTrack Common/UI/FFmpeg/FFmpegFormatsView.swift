@@ -134,12 +134,9 @@ private struct CodecDisclosure: View {
  the list with codecs this build can't actually use.
  */
 private struct MissingCodecsLink: View {
-  @Environment(\.openURL)
-  private var openURL
-
   var body: some View {
     Button {
-      openURL(FeatureFlags.fullVersionURL)
+      HelpAnchor.editions.open()
     } label: {
       Label("Missing codecs?", systemImage: "questionmark.circle")
     }

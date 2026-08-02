@@ -13,6 +13,12 @@ struct EmptyStateView: View {
     } actions: {
       Button("Add Files…") { env.queue.ingest(FilePanels.chooseMovies()) }
         .accessibilityIdentifier("queue.emptyState.add")
+      // A question mark asks the user to already suspect what they're missing.
+      // On a first launch the whole window is the question, so the offer is a
+      // sentence — and one that names the answer rather than the affordance.
+      Button("How SubTrack Works") { HelpAnchor.gettingStarted.open() }
+        .buttonStyle(.link)
+        .accessibilityIdentifier("queue.emptyState.help")
     }
     .accessibilityIdentifier("queue.emptyState")
   }

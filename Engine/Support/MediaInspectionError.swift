@@ -75,4 +75,17 @@ extension MediaInspectionError: LocalizedError {
         nil
     }
   }
+
+  /**
+   Every way `ffprobe` can refuse a file reads the same to the person holding
+   it — the file won't open — so they all land on the one page about that.
+   ``noVideoStream`` is the exception: it names the problem and the fix in a
+   sentence, and has nothing left to explain.
+   */
+  public var helpAnchor: String? {
+    switch self {
+      case .noVideoStream: nil
+      default: HelpAnchor.probeFailed.rawValue
+    }
+  }
 }

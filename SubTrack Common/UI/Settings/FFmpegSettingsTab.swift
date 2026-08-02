@@ -17,6 +17,7 @@ struct FFmpegSettingsTab: View {
     }
     .padding()
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .settingsHelp(.settingsFFmpeg, accessibilityIdentifier: "settings.ffmpegHelp")
   }
 }
 

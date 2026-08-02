@@ -6,13 +6,11 @@ import SwiftData
  Store and Developer-ID apps.
  */
 public struct FeatureFlags: Sendable {
-  /**
-   The page explaining the downloadable, full-featured build, linked from every
-   control gated off in the App Store build.
-   */
-  public static let fullVersionURL = URL(
-    string: "https://riscfuture.github.io/SubTrack/#get-it"
-  )!
+  /// The project's site, linked from the Help menu.
+  public static let websiteURL = URL(string: "https://riscfuture.github.io/SubTrack/")!
+
+  /// Where to report a problem, linked from the Help menu.
+  public static let issuesURL = URL(string: "https://github.com/RISCfuture/SubTrack/issues")!
 
   /// Whether the bundled `ffmpeg` provides the full (GPL) codec set.
   public var fullCodecSet: Bool

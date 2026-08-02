@@ -24,7 +24,7 @@ final class CLIInstaller {
   )
 
   /// The current install status, updated by ``install()`` and ``refreshStatus()``.
-  internal(set) var status: Status = .unknown
+  var status: Status = .unknown
 
   /// The embedded CLI shipped in the app bundle's Resources, if present.
   let embeddedCLI_URL: URL? = Bundle.main.url(forResource: "subtrack", withExtension: nil)
@@ -64,7 +64,7 @@ final class CLIInstaller {
    */
   func install() {
     guard let source = embeddedCLI_URL else {
-      status = .failed(CLIInstallError.toolMissingFromBundle.userMessage)
+      status = .describing(CLIInstallError.toolMissingFromBundle)
       return
     }
     guard let folder = chooseInstallFolder() else { return }
@@ -82,7 +82,7 @@ final class CLIInstaller {
           command: Self.installCommand(source: source, destinationDirectory: folder)
         )
       } else {
-        status = .failed(error.userMessage)
+        status = .describing(error)
       }
     }
   }
@@ -187,8 +187,21 @@ final class CLIInstaller {
     case installed(path: String)
     /// The chosen folder isn't writable; run `command` with `sudo` instead.
     case needsElevation(command: String)
-    /// The install failed for a reason other than permissions.
-    case failed(String)
+    /**
+     The install failed for a reason other than permissions: what to tell the
+     user, and the help topic the failure named, for the failures the manual
+     covers.
+     */
+    case failed(String, HelpAnchor?)
+
+    /**
+     The failure `error` describes — its message and whichever page explains
+     it — so the status row can offer help without knowing which error it is
+     looking at.
+     */
+    static func describing(_ error: some Error) -> Self {
+      .failed(error.userMessage, error.helpTopic)
+    }
   }
 }
 

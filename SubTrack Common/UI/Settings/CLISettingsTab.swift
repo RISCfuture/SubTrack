@@ -47,6 +47,7 @@ struct CLISettingsTab: View {
       }
     }
     .formStyle(.grouped)
+    .settingsHelp(.commandLineTool, accessibilityIdentifier: "settings.cliHelp")
     .onAppear { installer.refreshStatus() }
   }
 }
@@ -71,10 +72,15 @@ struct CLIStatusRow: View {
             Button("Reveal") { installer.revealInFinder() }
               .accessibilityIdentifier("settings.cliReveal")
           }
-        case .failed(let message):
-          Label(message, systemImage: "exclamationmark.triangle.fill")
-            .foregroundStyle(.orange)
-            .font(.callout)
+        case let .failed(message, help):
+          VStack(alignment: .leading, spacing: 2) {
+            Label(message, systemImage: "exclamationmark.triangle.fill")
+              .foregroundStyle(.orange)
+              .font(.callout)
+            if let help {
+              HelpTopicButton(anchor: help, accessibilityIdentifier: "settings.cliStatusHelp")
+            }
+          }
         default:
           Text("Not installed").foregroundStyle(.secondary)
       }
@@ -147,7 +153,9 @@ struct CLIElevationCallout: View {
       CLIStatusRow(
         installer: {
           let installer = CLIInstaller()
-          installer.status = .failed("Couldn’t write to /usr/local/bin")
+          installer.status = .describing(
+            CLIInstallError.copyFailed(detail: "Couldn’t write to /usr/local/bin")
+          )
           return installer
         }()
       )

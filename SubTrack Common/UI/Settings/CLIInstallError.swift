@@ -46,4 +46,16 @@ extension CLIInstallError: LocalizedError {
         nil
     }
   }
+
+  /**
+   ``toolMissingFromBundle`` means this copy of the app was built wrong, which
+   no amount of documentation helps with; the other two are the ordinary
+   install troubles the manual walks through.
+   */
+  public var helpAnchor: String? {
+    switch self {
+      case .toolMissingFromBundle: nil
+      case .copyFailed, .permissionDenied: HelpAnchor.cliInstall.rawValue
+    }
+  }
 }
