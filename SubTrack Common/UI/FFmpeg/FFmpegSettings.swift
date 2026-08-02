@@ -9,6 +9,29 @@ public enum FFmpegLocationMode: String, Sendable, CaseIterable {
   case custom
 }
 
+/// What a folder offered as a custom FFmpeg location turned out to hold.
+public enum FFmpegFolderStatus: Sendable, Equatable {
+  /// No folder has been chosen yet.
+  case notChosen
+  /// Neither tool is there — most often the wrong folder entirely.
+  case missingBoth
+  /// `ffprobe` is there but `ffmpeg` isn't.
+  case missingFFmpeg
+  /// `ffmpeg` is there but `ffprobe` isn't.
+  case missingFFprobe
+  /// Both tools are present and runnable.
+  case complete
+
+  init(hasFFmpeg: Bool, hasFFprobe: Bool) {
+    switch (hasFFmpeg, hasFFprobe) {
+      case (true, true): self = .complete
+      case (true, false): self = .missingFFprobe
+      case (false, true): self = .missingFFmpeg
+      case (false, false): self = .missingBoth
+    }
+  }
+}
+
 /**
  Reads the user's FFmpeg-location preference and builds the matching locator.
  The read side is `UserDefaults`-based so the engine can resolve it off the
@@ -83,17 +106,14 @@ public final class FFmpegSettingsStore {
    */
   public var onChange: (@MainActor () -> Void)?
 
-  /// Whether the custom folder actually contains runnable `ffmpeg` + `ffprobe`.
-  public var customIsValid: Bool {
-    guard !customDirectory.isEmpty else { return false }
+  /// What the chosen custom folder turned out to hold.
+  public var customStatus: FFmpegFolderStatus {
+    guard !customDirectory.isEmpty else { return .notChosen }
     let base = URL(filePath: customDirectory, directoryHint: .isDirectory)
-    let fileManager = FileManager.default
-    return fileManager.isExecutableFile(
-      atPath: base.appending(path: "ffmpeg").path(percentEncoded: false)
+    return FFmpegFolderStatus(
+      hasFFmpeg: FFmpegTools.isRunnable(FFmpegTools.ffmpeg, in: base),
+      hasFFprobe: FFmpegTools.isRunnable(FFmpegTools.ffprobe, in: base)
     )
-      && fileManager.isExecutableFile(
-        atPath: base.appending(path: "ffprobe").path(percentEncoded: false)
-      )
   }
 
   /// Creates a store seeded with the location mode and folder last chosen in Settings.

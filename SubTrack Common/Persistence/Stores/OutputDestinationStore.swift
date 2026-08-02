@@ -1,22 +1,16 @@
 import Foundation
-import os
 
 /**
- Persists the user's chosen output folder as a security-scoped bookmark.
+ Persists the user's chosen output folder as a bookmark.
 
- The bookmark is created and resolved `.withSecurityScope` so the folder
- stays writable across launches; a stale bookmark is transparently recreated.
- This is the app-wide default that seeds each new queue's own
- ``QueueDestination``, which is what a run actually takes write access from.
+ The bookmark is security-scoped in the sandboxed build, so the folder stays
+ writable across launches; a stale bookmark is transparently recreated. This
+ is the app-wide default that seeds each new queue's own ``QueueDestination``,
+ which is what a run actually takes write access from.
  */
 @MainActor
 @Observable
 public final class OutputDestinationStore {
-  private static let logger = Logger(
-    subsystem: Bundle.main.bundleIdentifier ?? "SubTrack",
-    category: "bookmarks"
-  )
-
   /// The current destination folder, if one has been chosen and resolved.
   public private(set) var destinationURL: URL?
 
@@ -57,9 +51,7 @@ public final class OutputDestinationStore {
   private func refreshStaleBookmark(for url: URL) {
     let didStart = url.startAccessingSecurityScopedResource()
     defer { if didStart { url.stopAccessingSecurityScopedResource() } }
-    if !didStart {
-      Self.logger.error("\(FileAccessError.accessDenied(url: url).userMessage, privacy: .public)")
-    }
+    SecurityScopedBookmark.logDeniedScope(didStart: didStart, to: url)
     persistBookmark(for: url)
   }
 

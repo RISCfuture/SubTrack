@@ -95,6 +95,19 @@ public struct FFmpegVersionInfo: Sendable, Equatable {
   /// Normalized `libav*` version strings, e.g. `libavcodec 60.31.102`.
   public var libraryVersions: [String]
 
+  /**
+   The numeric components of ``version``, for ordering one build against
+   another: `8.1.2` and `n7.1` and `6.1.1-tessus` all reduce to their release
+   numbers. Empty for a git snapshot (`N-113579-g4a134eb14f`), whose version
+   names no release and which therefore sorts behind every numbered build.
+   */
+  public var comparableVersion: [UInt] {
+    let numbered = version.hasPrefix("n") ? version.dropFirst() : version[...]
+    return numbered.prefix { $0.isNumber || $0 == "." }
+      .split(separator: ".")
+      .compactMap { UInt($0) }
+  }
+
   public init(
     version: String,
     bannerLine: String,

@@ -34,9 +34,11 @@ public struct ScopedAccess: Sendable {
  Create/resolve primitives for `.withSecurityScope` bookmarks, shared by the
  stores that persist source and destination access across launches.
 
- A bookmark is created and resolved with `.withSecurityScope` (a no-op on
- platforms without AppKit) so the resource stays reachable after relaunch; a
- stale bookmark is reported for the caller to recreate.
+ A sandboxed build creates and resolves these `.withSecurityScope`, so the
+ resource stays reachable after relaunch; a stale bookmark is reported for the
+ caller to recreate. The unsandboxed build has no scope to ask for and writes
+ plain bookmarks, which read the same either way — as do the scoped ones the
+ sandboxed 1.0 wrote before it.
  */
 enum SecurityScopedBookmark {
   private static let logger = Logger(
@@ -44,20 +46,15 @@ enum SecurityScopedBookmark {
     category: "bookmarks"
   )
 
+  /// The sandbox is what gives a scope meaning; outside one there is none to take.
+  private static var isScoped: Bool { ProcessInfo.processInfo.isSandboxed }
+
   static var creationOptions: URL.BookmarkCreationOptions {
-    #if canImport(AppKit)
-      [.withSecurityScope]
-    #else
-      []
-    #endif
+    isScoped ? [.withSecurityScope] : []
   }
 
   static var resolutionOptions: URL.BookmarkResolutionOptions {
-    #if canImport(AppKit)
-      [.withSecurityScope]
-    #else
-      []
-    #endif
+    isScoped ? [.withSecurityScope] : []
   }
 
   /**
@@ -88,14 +85,21 @@ enum SecurityScopedBookmark {
     guard let resolved = resolve(bookmark) else { return nil }
     let url = resolved.url
     let didStart = url.startAccessingSecurityScopedResource()
-    if !didStart {
-      logger.error("\(FileAccessError.accessDenied(url: url).userMessage, privacy: .public)")
-    }
+    logDeniedScope(didStart: didStart, to: url)
     let access = ScopedAccess(resolvedURL: url) {
       if didStart { url.stopAccessingSecurityScopedResource() }
     }
     // Recreated under the grant just opened, which is what makes it succeed.
     return (access, resolved.isStale ? data(for: url) : nil)
+  }
+
+  /**
+   Reports a refused scope grant. Outside the sandbox every grant is refused
+   and none is needed, so only a sandboxed build has anything to say.
+   */
+  static func logDeniedScope(didStart: Bool, to url: URL) {
+    guard isScoped, !didStart else { return }
+    logger.error("\(FileAccessError.accessDenied(url: url).userMessage, privacy: .public)")
   }
 
   /**

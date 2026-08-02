@@ -50,6 +50,9 @@ final class SettingsUITests: XCTestCase {
     settings.showTab("FFmpeg")
     settings.click("settings.ffmpegModeCustom")
 
+    // Offered alongside Choose…, but not exercised: what it finds depends on
+    // what this Mac happens to have installed.
+    settings.assertVisible("settings.ffmpegAutoDetect")
     settings.assertVisible("settings.ffmpegChoose")
     settings.click("settings.ffmpegChoose")
 

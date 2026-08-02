@@ -3,8 +3,8 @@
   <meta charset="utf-8">
   <title>Use an FFmpeg build of your own</title>
   <meta name="AppleTitle" content="Use an FFmpeg build of your own">
-  <meta name="description" content="Point SubTrack at your own ffmpeg and ffprobe, what the folder has to contain, and how to undo it if transcodes start failing.">
-  <meta name="keywords" content="custom ffmpeg, ffprobe, folder, homebrew, static build, encoder, built-in, revert, rescan, sandbox, app store">
+  <meta name="description" content="Point SubTrack at your own ffmpeg and ffprobe, let it find one for you, what the folder has to contain, and how to undo it if transcodes start failing.">
+  <meta name="keywords" content="custom ffmpeg, ffprobe, folder, auto-detect, homebrew, macports, static build, encoder, built-in, revert, rescan, sandbox, app store">
   <meta name="robots" content="index, anchor">
   <link rel="stylesheet" href="subtrack-help.css">
 </head>
@@ -23,15 +23,27 @@ travels with the app.</p>
   <li>Choose <strong>SubTrack</strong> &#9656; <strong>Settings</strong> (<kbd>⌘,</kbd>) and click
     <strong>FFmpeg</strong>.</li>
   <li>Under <strong>FFmpeg Location</strong>, select <strong>Custom…</strong>.</li>
-  <li>Click <strong>Choose…</strong> and select the folder holding the binaries.</li>
-  <li>Check the indicator underneath. Green — <strong>Found ffmpeg and ffprobe</strong> — means
-    SubTrack can use the folder. Orange — <strong>This folder must contain ffmpeg and
-    ffprobe</strong> — means it can’t.</li>
+  <li>Click <strong>Auto-detect</strong> to have SubTrack find one for you, or <strong>Choose…</strong>
+    to select the folder holding the binaries yourself.</li>
+  <li>Check under <strong>FFmpeg Information</strong> that the version shown is the build you
+    meant. An orange warning above it — <strong>This folder must contain ffmpeg and
+    ffprobe</strong> — means SubTrack can’t use the folder; nothing there means it can.</li>
 </ol>
 
 <p>Both binaries are required, and pointing at a folder holding only one of them is the usual
 mistake. SubTrack reads a file’s tracks with <code>ffprobe</code> and writes the slimmed file with
-<code>ffmpeg</code>.</p>
+<code>ffmpeg</code>, and the warning names whichever one is missing.</p>
+
+<h2>Let SubTrack find one</h2>
+
+<p><strong>Auto-detect</strong> looks where a Mac usually keeps an FFmpeg — Homebrew on either
+prefix (<code>/opt/homebrew/bin</code> or <code>/usr/local/bin</code>), MacPorts
+(<code>/opt/local/bin</code>), and <code>/usr/bin</code> — runs each one it finds, and picks the
+newest. Between two builds of the same version it takes the one offering more encoders.</p>
+
+<p>It doesn’t consult your shell’s <code>PATH</code>: an app launched from the Finder doesn’t
+inherit it, so the answer would be for an environment you never see. If your build lives somewhere
+else, use <strong>Choose…</strong>.</p>
 
 <h2>If transcodes start failing afterwards</h2>
 

@@ -455,6 +455,7 @@
 				01ECAF77300CC0B1003C1729 /* Copy ffmpeg */,
 				01ECAF83300CC0B1003C1729 /* Embed CLI */,
 				01F0A1000000000000000005 /* Build Help Book */,
+				01F0A1000000000000000006 /* Unsandbox Embedded Executables */,
 				01F0A1000000000000000002 /* Upload Debug Symbols to Sentry */,
 			);
 			buildRules = (
@@ -739,6 +740,40 @@
 				"  [ -f \"${APP}/${helper}\" ] || continue",
 				"  codesign --force --sign \"${IDENTITY}\" \\",
 				"    --entitlements \"${SRCROOT}/SubTrack-MAS/Helpers.entitlements\" \\",
+				"    --options runtime \\",
+				"    \"${APP}/${helper}\" || exit 1",
+				"done",
+				"",
+			);
+		};
+		01F0A1000000000000000006 /* Unsandbox Embedded Executables */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			name = "Unsandbox Embedded Executables";
+			shellPath = /bin/sh;
+			shellScript = (
+				"# This edition is not sandboxed, so nothing it embeds may claim to inherit a sandbox:",
+				"# `com.apple.security.inherit` makes libsystem_secinit abort the child at launch with",
+				"# \"Process is not in an inherited sandbox\", which reaches the user as a crash the moment",
+				"# FFmpeg Location is set back to Built-in.",
+				"#",
+				"# Code-Sign-On-Copy already signs these with no entitlements, which is what this build wants —",
+				"# but only when it copies. Both editions build SubTrack.app to the same products directory, so",
+				"# an App Store build in the same derived data re-signs these very files with `inherit` (see the",
+				"# App Store target's Sandbox Embedded Executables phase), and the next incremental build here",
+				"# finds its copy up to date and ships them as they were left. Re-signing unconditionally is what",
+				"# makes the bundle this target's own regardless of what last occupied the path.",
+				"if [ \"${CODE_SIGNING_ALLOWED}\" = \"NO\" ]; then",
+				"  echo \"note: code signing disabled; leaving embedded executables unsigned\"",
+				"  exit 0",
+				"fi",
+				"",
+				"IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY:-${CODE_SIGN_IDENTITY}}\"",
+				"APP=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"",
+				"",
+				"for helper in Helpers/ffmpeg Helpers/ffprobe Resources/subtrack; do",
+				"  [ -f \"${APP}/${helper}\" ] || continue",
+				"  codesign --force --sign \"${IDENTITY}\" \\",
 				"    --options runtime \\",
 				"    \"${APP}/${helper}\" || exit 1",
 				"done",
@@ -1215,23 +1250,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readwrite;
-				ENABLE_FILE_ACCESS_MOVIES_FOLDER = readwrite;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
-				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SubTrack-download-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SubTrack;
@@ -1264,23 +1286,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_FILE_ACCESS_DOWNLOADS_FOLDER = readwrite;
-				ENABLE_FILE_ACCESS_MOVIES_FOLDER = readwrite;
+				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
-				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
-				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
-				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
-				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
-				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
-				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
-				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SubTrack-download-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SubTrack;

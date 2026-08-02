@@ -83,12 +83,14 @@ private struct BuiltInOnlyNotice: View {
 }
 
 /**
- The chosen custom folder, a button to change it, and whether that folder
+ The chosen custom folder, the two ways to change it, and whether that folder
  actually holds the two binaries.
  */
 private struct CustomFFmpegFolderPicker: View {
   @Environment(AppEnvironment.self)
   private var env
+  @State private var isDetecting = false
+  @State private var detectionFoundNothing = false
 
   var body: some View {
     let settings = env.ffmpegSettings
@@ -103,25 +105,72 @@ private struct CustomFFmpegFolderPicker: View {
         .lineLimit(1)
         .truncationMode(.middle)
         Spacer(minLength: 0)
+        if isDetecting { ProgressView().controlSize(.small) }
+        Button(LocalizedStringResource("Auto-detect", bundle: #bundle)) { detect() }
+          .accessibilityIdentifier("settings.ffmpegAutoDetect")
         Button(LocalizedStringResource("Choose…", bundle: #bundle)) { chooseFolder() }
           .accessibilityIdentifier("settings.ffmpegChoose")
       }
-      Label(
-        settings.customIsValid
-          ? String(localized: "Found ffmpeg and ffprobe", bundle: #bundle)
-          : String(localized: "This folder must contain ffmpeg and ffprobe", bundle: #bundle),
-        systemImage: settings.customIsValid
-          ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
-      )
-      .foregroundStyle(settings.customIsValid ? .green : .orange)
-      .font(.callout)
-      .accessibilityIdentifier("settings.ffmpegCustomStatus")
+      .disabled(isDetecting)
+      FFmpegFolderProblemLabel(status: settings.customStatus)
+      if detectionFoundNothing {
+        Text("Couldn’t find another ffmpeg in the usual places.", bundle: #bundle)
+          .font(.callout)
+          .foregroundStyle(.secondary)
+          .accessibilityIdentifier("settings.ffmpegAutoDetectResult")
+      }
     }
   }
 
   private func chooseFolder() {
+    detectionFoundNothing = false
     if let url = FilePanels.chooseFolder() {
       env.ffmpegSettings.customDirectory = url.path(percentEncoded: false)
+    }
+  }
+
+  /// Adopts the best `ffmpeg` already installed, leaving the choice alone when there is none.
+  private func detect() {
+    isDetecting = true
+    detectionFoundNothing = false
+    Task {
+      defer { isDetecting = false }
+      guard let best = await FFmpegDiscovery.best() else {
+        detectionFoundNothing = true
+        return
+      }
+      env.ffmpegSettings.customDirectory = best.directory.path(percentEncoded: false)
+    }
+  }
+}
+
+/**
+ What the chosen folder is short of, and nothing at all when it can serve —
+ the version below already says which build is in use, so a second line
+ confirming the folder is fine only takes up room.
+ */
+private struct FFmpegFolderProblemLabel: View {
+  let status: FFmpegFolderStatus
+
+  var body: some View {
+    if let problem {
+      Label(problem, systemImage: "exclamationmark.triangle.fill")
+        .foregroundStyle(.orange)
+        .font(.callout)
+        .accessibilityIdentifier("settings.ffmpegCustomStatus")
+    }
+  }
+
+  private var problem: String? {
+    switch status {
+      case .complete, .notChosen:
+        nil
+      case .missingFFmpeg:
+        String(localized: "This folder contains ffprobe but not ffmpeg", bundle: #bundle)
+      case .missingFFprobe:
+        String(localized: "This folder contains ffmpeg but not ffprobe", bundle: #bundle)
+      case .missingBoth:
+        String(localized: "This folder must contain ffmpeg and ffprobe", bundle: #bundle)
     }
   }
 }
@@ -217,6 +266,18 @@ extension FFmpegCapabilitiesStore.State {
     }
     .padding()
     .frame(width: 480, height: 260, alignment: .topLeading)
+  }
+
+  #Preview("FFmpeg Folder Problems — states") {
+    VStack(alignment: .leading, spacing: 12) {
+      // .complete and .notChosen render nothing, so neither appears here.
+      FFmpegFolderProblemLabel(status: .missingFFprobe)
+      FFmpegFolderProblemLabel(status: .missingFFmpeg)
+      FFmpegFolderProblemLabel(status: .missingBoth)
+      Spacer()
+    }
+    .padding()
+    .frame(width: 480, height: 160, alignment: .topLeading)
   }
 
   #Preview("FFmpeg Tab — App Store (gated)") {

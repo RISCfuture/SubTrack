@@ -3,9 +3,9 @@ import SwiftData
 import SwiftUI
 
 /**
- The Developer-ID / notarized build: sandboxed, bundling a full `ffmpeg` with
- the complete codec set. Differs from the App Store build only in the
- injected dependencies.
+ The Developer-ID / notarized build: unsandboxed, so it can run an `ffmpeg`
+ the user points it at, and bundling a full `ffmpeg` with the complete codec
+ set. Differs from the App Store build only in the injected dependencies.
  */
 @main
 struct SubTrackApp: App {
@@ -31,6 +31,9 @@ struct SubTrackApp: App {
         return
       }
     #endif
+    // Ahead of every defaults read and the model container: 1.0 was sandboxed,
+    // and its data has to be in the unsandboxed locations before either looks.
+    ContainerMigration.run()
     // Sited after the preview and UI-test guards so neither reaches the network.
     CrashReporting.start(isAppStoreBuild: featureFlags.isAppStoreBuild)
     let updates = GitHubUpdates()
