@@ -86,20 +86,24 @@ struct TrackSelectionPlanTests {
 
   /**
    Commentary and other extra audio is left out by default, and taken along on
-   request. Both tracks here are English, so it is the disposition rather than
-   the language that decides — the second is kept only when asked for.
+   request. Both tracks are English in either fixture, and one fixture flags its
+   commentary nowhere at all — the way a disc remux usually ships — so neither
+   language nor disposition is what decides.
    */
-  @Test
-  func extraAudioIsExcludedUnlessAskedFor() throws {
+  @Test(
+    "Extra audio is excluded unless asked for",
+    arguments: [MovieFixture.withCommentary, MovieFixture.withUnflaggedCommentary]
+  )
+  func extraAudioIsExcludedUnlessAskedFor(_ movie: URL) throws {
     #expect(
-      try plan([], of: MovieFixture.withCommentary) == [
+      try plan([], of: movie) == [
         "0:0 (video): copy",
         "0:1 (audio): copy",
         "0:3 (subtitle): copy"
       ]
     )
     #expect(
-      try plan(["--include-other-audio"], of: MovieFixture.withCommentary) == [
+      try plan(["--include-other-audio"], of: movie) == [
         "0:0 (video): copy",
         "0:1 (audio): copy",
         "0:2 (audio): copy",

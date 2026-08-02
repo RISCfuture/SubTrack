@@ -131,9 +131,11 @@ public class Converter {
    ``includeOtherAudio`` is set.
    */
   private func audioOperations(language: String?) -> [StreamOperation] {
-    var streams = [AudioStream]()
-    if let bestDefault = bestDefaultAudioStream(language: language) { streams.append(bestDefault) }
-    if includeOtherAudio { streams += otherAudioStreams(language: language) }
+    let bestDefault = bestDefaultAudioStream(language: language)
+    var streams = bestDefault.map { [$0] } ?? []
+    if includeOtherAudio {
+      streams += otherAudioStreams(language: language, besides: bestDefault)
+    }
     return streams.map { operation(forStream: $0) }
   }
 
@@ -161,17 +163,21 @@ public class Converter {
     .sorted(using: comparator).first
   }
 
-  private func otherAudioStreams(language: String?) -> [AudioStream] {
+  /**
+   Every audio stream for `language` apart from `chosen` — the tracks a viewer
+   switches to deliberately, such as commentary, a described soundtrack, or a
+   downmix.
+
+   What makes a track extra is that the default slot did not claim it, not the
+   dispositions it carries. A disc remux routinely names its commentary in the
+   track title and flags it nowhere, so judging by disposition alone would drop
+   exactly the tracks this setting exists to keep.
+   */
+  private func otherAudioStreams(language: String?, besides chosen: AudioStream?) -> [AudioStream] {
     let comparator = AudioComparator(preferredCodecs: audioPreferredCodecs)
-    return container.audioStreams.filter { stream in
-      if stream.language != language { return false }
-      if stream.dispositions.isEmpty { return false }
-      if stream.dispositions.contains(.default) { return false }
-      if stream.dispositions.contains(.dub) { return false }
-      if stream.dispositions.contains(.original) { return false }
-      return true
-    }
-    .sorted(using: comparator)
+    return container.audioStreams
+      .filter { $0.language == language && $0.index != chosen?.index }
+      .sorted(using: comparator)
   }
 
   private func operation(forStream stream: VideoStream) -> StreamOperation {

@@ -56,9 +56,8 @@ enum MovieFixture {
    | 0:2    | audio    | ac3    | eng      | comment     |
    | 0:3    | subtitle | subrip | eng      | —           |
 
-   The disposition is what makes 0:2 "other" audio — a track is judged extra by
-   carrying a disposition that is none of default, dub, or original, not by its
-   language.
+   Both tracks are English, so what makes 0:2 "other" audio is that the default
+   slot went to 0:1 rather than anything about its language.
    */
   static let withCommentary: URL = built("commentary") { directory, subtitles in
     [
@@ -73,6 +72,39 @@ enum MovieFixture {
       "-metadata:s:s:0", "language=eng",
       "-disposition:a:0", "default",
       "-disposition:a:1", "comment",
+      directory
+    ]
+  }
+
+  /**
+   Two English audio tracks where the second is commentary but carries no
+   disposition flags at all:
+
+   | Stream | Type     | Codec  | Language | Disposition |
+   |--------|----------|--------|----------|-------------|
+   | 0:0    | video    | h264   | —        | —           |
+   | 0:1    | audio    | ac3    | eng      | default     |
+   | 0:2    | audio    | ac3    | eng      | *none*      |
+   | 0:3    | subtitle | subrip | eng      | —           |
+
+   This is the layout a disc remux usually ships: the extra tracks announce
+   themselves in their titles and are flagged nowhere, so what makes 0:2 extra is
+   that the default slot did not claim it.
+   */
+  static let withUnflaggedCommentary: URL = built("unflagged-commentary") { directory, subtitles in
+    [
+      "-f", "lavfi", "-i", "testsrc=size=128x96:rate=10:duration=1",
+      "-f", "lavfi", "-i", "sine=frequency=440:duration=1",
+      "-f", "lavfi", "-i", "sine=frequency=880:duration=1",
+      "-i", subtitles,
+      "-map", "0:v", "-map", "1:a", "-map", "2:a", "-map", "3:s",
+      "-c:v", "libx264", "-c:a", "ac3", "-c:s", "srt",
+      "-metadata:s:a:0", "language=eng",
+      "-metadata:s:a:1", "language=eng",
+      "-metadata:s:a:1", "title=Commentary by Director",
+      "-metadata:s:s:0", "language=eng",
+      "-disposition:a:0", "default",
+      "-disposition:a:1", "0",
       directory
     ]
   }
