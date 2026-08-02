@@ -24,7 +24,7 @@ struct FullVersionHelpLink: View {
     .buttonStyle(.plain)
     .foregroundStyle(.secondary)
     .help("Available in the downloadable version of SubTrack. Click to learn more.")
-    .accessibilityLabel("Why is this unavailable?")
+    .accessibilityLabel(Text("Why is this unavailable?", bundle: #bundle))
     .accessibilityIdentifier("settings.fullVersionHelp")
   }
 }

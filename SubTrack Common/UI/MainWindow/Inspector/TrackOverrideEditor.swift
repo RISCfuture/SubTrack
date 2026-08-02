@@ -9,13 +9,13 @@ struct TrackOverrideEditor: View {
   @Binding var action: TrackAction
 
   var body: some View {
-    Toggle("Include in output", isOn: isIncluded)
+    Toggle(LocalizedStringResource("Include in output", bundle: #bundle), isOn: isIncluded)
       .inspectorCheckbox()
       .accessibilityIdentifier("override.include")
 
     if action != .drop {
-      Picker("Convert to…", selection: target) {
-        Text("Keep original").tag(String?.none)
+      Picker(LocalizedStringResource("Convert to…", bundle: #bundle), selection: target) {
+        Text("Keep original", bundle: #bundle).tag(String?.none)
         ForEach(targets) { target in
           Text(target.menuTitle).tag(String?.some(target.codec))
         }

@@ -170,33 +170,45 @@ extension FileTrackSelection {
   // hidden on a VideoToolbox-only (LGPL) build — whereas the family name `hevc`
   // is aliased onto `hevc_videotoolbox` and would mislabel VideoToolbox as x265.
   private static let videoTargetCatalog = [
-    ConversionTarget(codec: "libx265", displayName: String(localized: "HEVC (x265)")),
-    ConversionTarget(codec: "libx264", displayName: String(localized: "H.264 (x264)")),
+    ConversionTarget(
+      codec: "libx265",
+      displayName: String(localized: "HEVC (x265)", bundle: #bundle)
+    ),
+    ConversionTarget(
+      codec: "libx264",
+      displayName: String(localized: "H.264 (x264)", bundle: #bundle)
+    ),
     ConversionTarget(
       codec: "hevc_videotoolbox",
-      displayName: String(localized: "HEVC (VideoToolbox)")
+      displayName: String(localized: "HEVC (VideoToolbox)", bundle: #bundle)
     ),
     ConversionTarget(
       codec: "h264_videotoolbox",
-      displayName: String(localized: "H.264 (VideoToolbox)")
+      displayName: String(localized: "H.264 (VideoToolbox)", bundle: #bundle)
     )
   ]
 
   private static let audioTargetCatalog = [
-    ConversionTarget(codec: "aac", displayName: String(localized: "AAC")),
-    ConversionTarget(codec: "ac3", displayName: String(localized: "AC-3")),
-    ConversionTarget(codec: "eac3", displayName: String(localized: "E-AC-3")),
-    ConversionTarget(codec: "flac", displayName: String(localized: "FLAC")),
-    ConversionTarget(codec: "alac", displayName: String(localized: "ALAC")),
-    ConversionTarget(codec: "libopus", displayName: String(localized: "Opus")),
-    ConversionTarget(codec: "truehd", displayName: String(localized: "TrueHD")),
-    ConversionTarget(codec: "dts", displayName: String(localized: "DTS"))
+    ConversionTarget(codec: "aac", displayName: String(localized: "AAC", bundle: #bundle)),
+    ConversionTarget(codec: "ac3", displayName: String(localized: "AC-3", bundle: #bundle)),
+    ConversionTarget(codec: "eac3", displayName: String(localized: "E-AC-3", bundle: #bundle)),
+    ConversionTarget(codec: "flac", displayName: String(localized: "FLAC", bundle: #bundle)),
+    ConversionTarget(codec: "alac", displayName: String(localized: "ALAC", bundle: #bundle)),
+    ConversionTarget(codec: "libopus", displayName: String(localized: "Opus", bundle: #bundle)),
+    ConversionTarget(codec: "truehd", displayName: String(localized: "TrueHD", bundle: #bundle)),
+    ConversionTarget(codec: "dts", displayName: String(localized: "DTS", bundle: #bundle))
   ]
 
   private static let subtitleTargetCatalog = [
-    ConversionTarget(codec: "srt", displayName: String(localized: "SubRip (SRT)")),
-    ConversionTarget(codec: "ass", displayName: String(localized: "Advanced SubStation (ASS)")),
-    ConversionTarget(codec: "mov_text", displayName: String(localized: "MP4 Timed Text"))
+    ConversionTarget(codec: "srt", displayName: String(localized: "SubRip (SRT)", bundle: #bundle)),
+    ConversionTarget(
+      codec: "ass",
+      displayName: String(localized: "Advanced SubStation (ASS)", bundle: #bundle)
+    ),
+    ConversionTarget(
+      codec: "mov_text",
+      displayName: String(localized: "MP4 Timed Text", bundle: #bundle)
+    )
   ]
 
   /**

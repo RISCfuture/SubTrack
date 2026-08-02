@@ -34,10 +34,12 @@ struct CLISettingsTab: View {
         Section {
           CLIStatusRow(installer: installer)
           HStack {
-            Button("Install…") { installer.install() }
+            Button(LocalizedStringResource("Install…", bundle: #bundle)) { installer.install() }
               .accessibilityIdentifier("settings.cliInstall")
-            Button("Copy Install Command") { installer.copyInstallCommand() }
-              .accessibilityIdentifier("settings.cliCopyCommand")
+            Button(LocalizedStringResource("Copy Install Command", bundle: #bundle)) {
+              installer.copyInstallCommand()
+            }
+            .accessibilityIdentifier("settings.cliCopyCommand")
           }
           .disabled(installer.embeddedCLI_URL == nil)
         }
@@ -69,8 +71,10 @@ struct CLIStatusRow: View {
               .lineLimit(1)
               .truncationMode(.middle)
               .textSelection(.enabled)
-            Button("Reveal") { installer.revealInFinder() }
-              .accessibilityIdentifier("settings.cliReveal")
+            Button(LocalizedStringResource("Reveal", bundle: #bundle)) {
+              installer.revealInFinder()
+            }
+            .accessibilityIdentifier("settings.cliReveal")
           }
         case let .failed(message, help):
           VStack(alignment: .leading, spacing: 2) {
@@ -82,7 +86,7 @@ struct CLIStatusRow: View {
             }
           }
         default:
-          Text("Not installed").foregroundStyle(.secondary)
+          Text("Not installed", bundle: #bundle).foregroundStyle(.secondary)
       }
     }
   }
@@ -98,9 +102,15 @@ struct CLIElevationCallout: View {
 
   var body: some View {
     Section {
-      Label("That folder needs administrator access — run this instead.", systemImage: "lock")
-        .font(.callout)
-        .foregroundStyle(.secondary)
+      Label(
+        LocalizedStringResource(
+          "That folder needs administrator access — run this instead.",
+          bundle: #bundle
+        ),
+        systemImage: "lock"
+      )
+      .font(.callout)
+      .foregroundStyle(.secondary)
       LabeledContent("Command") {
         HStack {
           Text(command)
@@ -108,7 +118,7 @@ struct CLIElevationCallout: View {
             .lineLimit(1)
             .truncationMode(.middle)
             .textSelection(.enabled)
-          Button("Copy", action: copy)
+          Button(LocalizedStringResource("Copy", bundle: #bundle), action: copy)
             .accessibilityIdentifier("settings.cliCopyElevation")
         }
       }

@@ -21,26 +21,32 @@ enum FFmpegToolError: Error, Sendable {
 
 extension FFmpegToolError: LocalizedError {
   public var errorDescription: String? {
-    String(localized: "There’s a problem with FFmpeg.")
+    String(localized: "There’s a problem with FFmpeg.", bundle: #bundle)
   }
 
   public var failureReason: String? {
     switch self {
       case .executableNotFound(let name):
-        String(localized: "The “\(name)” executable couldn’t be found.")
+        String(localized: "The “\(name)” executable couldn’t be found.", bundle: #bundle)
       case .unsupportedEncoder(let codec):
-        String(localized: "The “\(codec)” encoder isn’t available in this build.")
+        String(localized: "The “\(codec)” encoder isn’t available in this build.", bundle: #bundle)
       case .probeUnavailable(let detail):
-        String(localized: "FFmpeg couldn’t be run: \(detail)")
+        String(localized: "FFmpeg couldn’t be run: \(detail)", bundle: #bundle)
     }
   }
 
   public var recoverySuggestion: String? {
     switch self {
       case .executableNotFound, .probeUnavailable:
-        String(localized: "Set the FFmpeg location in Settings, or install it on your PATH.")
+        String(
+          localized: "Set the FFmpeg location in Settings, or install it on your PATH.",
+          bundle: #bundle
+        )
       case .unsupportedEncoder:
-        String(localized: "Choose a supported codec, or use the downloadable version of SubTrack.")
+        String(
+          localized: "Choose a supported codec, or use the downloadable version of SubTrack.",
+          bundle: #bundle
+        )
     }
   }
 

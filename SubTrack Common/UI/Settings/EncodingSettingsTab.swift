@@ -15,7 +15,10 @@ struct EncodingSettingsTab: View {
   var body: some View {
     @Bindable var queue = env.queue
     Form {
-      Picker("Simultaneous encodes", selection: $queue.maxConcurrent) {
+      Picker(
+        LocalizedStringResource("Simultaneous encodes", bundle: #bundle),
+        selection: $queue.maxConcurrent
+      ) {
         ForEach(Self.concurrencyChoices, id: \.self) { choice in
           Text(choice, format: .number).tag(choice)
         }
@@ -25,8 +28,8 @@ struct EncodingSettingsTab: View {
         HStack(spacing: 6) {
           Text(
             env.featureFlags.fullCodecSet
-              ? String(localized: "Full (all codecs)")
-              : String(localized: "App Store (VideoToolbox)")
+              ? String(localized: "Full (all codecs)", bundle: #bundle)
+              : String(localized: "App Store (VideoToolbox)", bundle: #bundle)
           )
           .foregroundStyle(.secondary)
           if env.featureFlags.isAppStoreBuild { FullVersionHelpLink() }

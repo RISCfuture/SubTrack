@@ -39,7 +39,7 @@ struct LanguagePickerButton: View {
 
   private var summary: String {
     languages.isEmpty
-      ? String(localized: "None")
+      ? String(localized: "None", bundle: #bundle)
       : languages.map { LanguageCatalog.name(for: $0) ?? $0 }.joined(separator: ", ")
   }
 }

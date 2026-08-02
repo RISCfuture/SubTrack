@@ -28,10 +28,12 @@ struct QueueSidebarView: View {
       titleVisibility: .visible,
       presenting: pendingDeletion
     ) { coordinator in
-      Button("Delete Queue", role: .destructive) { env.workspace.deleteQueue(coordinator.id) }
-      Button("Cancel", role: .cancel) {}
+      Button(LocalizedStringResource("Delete Queue", bundle: #bundle), role: .destructive) {
+        env.workspace.deleteQueue(coordinator.id)
+      }
+      Button(LocalizedStringResource("Cancel", bundle: #bundle), role: .cancel) {}
     } message: { _ in
-      Text("This queue has unfinished work that will be cancelled.")
+      Text("This queue has unfinished work that will be cancelled.", bundle: #bundle)
     }
   }
 
@@ -59,7 +61,7 @@ struct QueueSidebarView: View {
   }
 
   private var deletionTitle: String {
-    String(localized: "Delete “\(pendingDeletion?.name ?? "")”?")
+    String(localized: "Delete “\(pendingDeletion?.name ?? "")”?", bundle: #bundle)
   }
 
   /// Creates the queue sidebar view.
@@ -73,8 +75,12 @@ private struct QueueSidebarRowMenu: View {
   let coordinator: QueueCoordinator
 
   var body: some View {
-    Button("Rename") { beginQueueRename(coordinator, in: env) }
-    Button("Delete", role: .destructive) { requestQueueDeletion(coordinator, in: env) }
+    Button(LocalizedStringResource("Rename", bundle: #bundle)) {
+      beginQueueRename(coordinator, in: env)
+    }
+    Button(LocalizedStringResource("Delete", bundle: #bundle), role: .destructive) {
+      requestQueueDeletion(coordinator, in: env)
+    }
   }
 }
 
@@ -93,7 +99,7 @@ private struct NewQueueBar: View {
         Button {
           env.workspace.newQueue(name: env.workspace.nextQueueName())
         } label: {
-          Label("New Queue", systemImage: "plus")
+          Label(LocalizedStringResource("New Queue", bundle: #bundle), systemImage: "plus")
         }
         .buttonStyle(.borderless)
         .labelStyle(.iconOnly)

@@ -22,7 +22,10 @@ struct FFmpegFormatsSheet: View {
             )
           case .unavailable(let reason):
             ContentUnavailableView {
-              Label("FFmpeg Unavailable", systemImage: "exclamationmark.triangle")
+              Label(
+                LocalizedStringResource("FFmpeg Unavailable", bundle: #bundle),
+                systemImage: "exclamationmark.triangle"
+              )
             } description: {
               Text(reason)
             } actions: {
@@ -40,7 +43,7 @@ struct FFmpegFormatsSheet: View {
           HelpTopicLink(anchor: .supportedFormats, accessibilityIdentifier: "formats.help")
         }
         ToolbarItem(placement: .confirmationAction) {
-          Button("Done") { dismiss() }
+          Button(LocalizedStringResource("Done", bundle: #bundle)) { dismiss() }
         }
       }
     }

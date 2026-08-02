@@ -43,7 +43,7 @@ extension PlannedTrack {
   var pickerTitle: String {
     let described = [String(index), typeName, languageName, stream.codecName]
       .joined(separator: " · ")
-    return isIncluded ? described : String(localized: "\(described) (skipped)")
+    return isIncluded ? described : String(localized: "\(described) (skipped)", bundle: #bundle)
   }
 
   /**
@@ -52,10 +52,10 @@ extension PlannedTrack {
    */
   var facts: [TrackFact] {
     [
-      TrackFact(name: String(localized: "Type"), value: typeName),
-      TrackFact(name: String(localized: "Codec"), value: codecDescription),
-      TrackFact(name: String(localized: "Language"), value: languageName),
-      stream.title.map { TrackFact(name: String(localized: "Title"), value: $0) }
+      TrackFact(name: String(localized: "Type", bundle: #bundle), value: typeName),
+      TrackFact(name: String(localized: "Codec", bundle: #bundle), value: codecDescription),
+      TrackFact(name: String(localized: "Language", bundle: #bundle), value: languageName),
+      stream.title.map { TrackFact(name: String(localized: "Title", bundle: #bundle), value: $0) }
     ].compactMap(\.self) + mediaFacts + tagFacts
   }
 
@@ -63,9 +63,9 @@ extension PlannedTrack {
 
   private var typeName: String {
     switch type {
-      case .video: String(localized: "Video")
-      case .audio: String(localized: "Audio")
-      case .subtitle: String(localized: "Subtitle")
+      case .video: String(localized: "Video", bundle: #bundle)
+      case .audio: String(localized: "Audio", bundle: #bundle)
+      case .subtitle: String(localized: "Subtitle", bundle: #bundle)
     }
   }
 
@@ -75,7 +75,7 @@ extension PlannedTrack {
    */
   private var codecDescription: String {
     guard let profile else { return stream.codecName }
-    return String(localized: "\(stream.codecName) (\(profile))")
+    return String(localized: "\(stream.codecName) (\(profile))", bundle: #bundle)
   }
 
   private var profile: String? {
@@ -91,7 +91,9 @@ extension PlannedTrack {
    raw tag when the catalog doesn't recognize it.
    */
   private var languageName: String {
-    guard let language = stream.language else { return String(localized: "Untagged") }
+    guard let language = stream.language else {
+      return String(localized: "Untagged", bundle: #bundle)
+    }
     return LanguageCatalog.name(for: language) ?? language
   }
 
@@ -115,9 +117,10 @@ extension PlannedTrack {
       .formatted(.list(type: .and))
     return [
       stream.bitsPerSecond.map {
-        TrackFact(name: String(localized: "Bit rate"), value: Self.bitRate($0))
+        TrackFact(name: String(localized: "Bit rate", bundle: #bundle), value: Self.bitRate($0))
       },
-      flags.isEmpty ? nil : TrackFact(name: String(localized: "Flags"), value: flags)
+      flags.isEmpty
+        ? nil : TrackFact(name: String(localized: "Flags", bundle: #bundle), value: flags)
     ].compactMap(\.self)
   }
 
@@ -129,7 +132,10 @@ extension PlannedTrack {
     let kilobits = Measurement(value: Double(bitsPerSecond), unit: UnitInformationStorage.bits)
       .converted(to: .kilobits)
       .value
-    return String(localized: "\(kilobits, format: .number.precision(.fractionLength(0))) kbps")
+    return String(
+      localized: "\(kilobits, format: .number.precision(.fractionLength(0))) kbps",
+      bundle: #bundle
+    )
   }
 }
 
@@ -137,16 +143,21 @@ extension VideoStream {
   fileprivate var facts: [TrackFact] {
     [
       TrackFact(
-        name: String(localized: "Dimensions"),
+        name: String(localized: "Dimensions", bundle: #bundle),
         // Grouping separators are for quantities; a frame size reads as a pair
         // of identifiers, and "1,920 × 1,080" looks like a typo.
         value: String(
           localized:
-            "\(width, format: .number.grouping(.never)) × \(height, format: .number.grouping(.never))"
+            "\(width, format: .number.grouping(.never)) × \(height, format: .number.grouping(.never))",
+          bundle: #bundle
         )
       ),
-      pixelFormat.map { TrackFact(name: String(localized: "Pixel format"), value: $0) },
-      fieldOrder.map { TrackFact(name: String(localized: "Scan"), value: $0.displayName) }
+      pixelFormat.map {
+        TrackFact(name: String(localized: "Pixel format", bundle: #bundle), value: $0)
+      },
+      fieldOrder.map {
+        TrackFact(name: String(localized: "Scan", bundle: #bundle), value: $0.displayName)
+      }
     ].compactMap(\.self)
   }
 }
@@ -155,14 +166,17 @@ extension AudioStream {
   fileprivate var facts: [TrackFact] {
     [
       TrackFact(
-        name: String(localized: "Channels"),
+        name: String(localized: "Channels", bundle: #bundle),
         value: channelCount.formatted(.number)
       ),
-      TrackFact(name: String(localized: "Sample rate"), value: sampleRateDescription),
+      TrackFact(
+        name: String(localized: "Sample rate", bundle: #bundle),
+        value: sampleRateDescription
+      ),
       bitsPerSample > 0
         ? TrackFact(
-          name: String(localized: "Bit depth"),
-          value: String(localized: "\(bitsPerSample, format: .number)-bit")
+          name: String(localized: "Bit depth", bundle: #bundle),
+          value: String(localized: "\(bitsPerSample, format: .number)-bit", bundle: #bundle)
         )
         : nil
     ].compactMap(\.self)
@@ -184,8 +198,8 @@ extension VideoStream.FieldOrder {
    */
   fileprivate var displayName: String {
     switch self {
-      case .progressive: String(localized: "Progressive")
-      case .tt, .bb, .tb, .bt: String(localized: "Interlaced")
+      case .progressive: String(localized: "Progressive", bundle: #bundle)
+      case .tt, .bb, .tb, .bt: String(localized: "Interlaced", bundle: #bundle)
     }
   }
 }
@@ -195,25 +209,25 @@ extension Disposition {
   /// The flag's name as the inspector lists it.
   fileprivate var displayName: String {
     switch self {
-      case .default: String(localized: "Default")
-      case .dub: String(localized: "Dubbed")
-      case .original: String(localized: "Original")
-      case .comment: String(localized: "Commentary")
-      case .lyrics: String(localized: "Lyrics")
-      case .karaoke: String(localized: "Karaoke")
-      case .forced: String(localized: "Forced")
-      case .hearingImpaired: String(localized: "Hearing impaired")
-      case .visualImpaired: String(localized: "Visually impaired")
-      case .cleanEffects: String(localized: "Clean effects")
-      case .attachedPic: String(localized: "Cover art")
-      case .timedThumbnails: String(localized: "Timed thumbnails")
-      case .nonDiegetic: String(localized: "Non-diegetic")
-      case .captions: String(localized: "Captions")
-      case .descriptions: String(localized: "Descriptions")
-      case .metadata: String(localized: "Metadata")
-      case .dependent: String(localized: "Dependent")
-      case .stillImage: String(localized: "Still image")
-      case .multilayer: String(localized: "Multilayer")
+      case .default: String(localized: "Default", bundle: #bundle)
+      case .dub: String(localized: "Dubbed", bundle: #bundle)
+      case .original: String(localized: "Original", bundle: #bundle)
+      case .comment: String(localized: "Commentary", bundle: #bundle)
+      case .lyrics: String(localized: "Lyrics", bundle: #bundle)
+      case .karaoke: String(localized: "Karaoke", bundle: #bundle)
+      case .forced: String(localized: "Forced", bundle: #bundle)
+      case .hearingImpaired: String(localized: "Hearing impaired", bundle: #bundle)
+      case .visualImpaired: String(localized: "Visually impaired", bundle: #bundle)
+      case .cleanEffects: String(localized: "Clean effects", bundle: #bundle)
+      case .attachedPic: String(localized: "Cover art", bundle: #bundle)
+      case .timedThumbnails: String(localized: "Timed thumbnails", bundle: #bundle)
+      case .nonDiegetic: String(localized: "Non-diegetic", bundle: #bundle)
+      case .captions: String(localized: "Captions", bundle: #bundle)
+      case .descriptions: String(localized: "Descriptions", bundle: #bundle)
+      case .metadata: String(localized: "Metadata", bundle: #bundle)
+      case .dependent: String(localized: "Dependent", bundle: #bundle)
+      case .stillImage: String(localized: "Still image", bundle: #bundle)
+      case .multilayer: String(localized: "Multilayer", bundle: #bundle)
     }
   }
 }
@@ -260,7 +274,7 @@ extension Disposition {
     TrackFactsView(
       facts: previewTrack(.audio).facts + [
         TrackFact(
-          name: String(localized: "Title"),
+          name: String(localized: "Title", bundle: #bundle),
           value: "Commentary with the director, the cinematographer, and the second-unit crew"
         )
       ]

@@ -27,7 +27,7 @@ struct TranscodeTargetMenu: View {
           Image(systemName: "exclamationmark.triangle.fill")
             .foregroundStyle(.orange)
             .help("The current FFmpeg may not be able to encode this codec.")
-            .accessibilityLabel("Codec may not be supported")
+            .accessibilityLabel(Text("Codec may not be supported", bundle: #bundle))
         }
       }
       .popover(isPresented: $showingCustom) {
@@ -72,14 +72,14 @@ private struct TranscodeTargetMenuContent: View {
         Label(codec, systemImage: "checkmark")
       }
       Divider()
-      Button("Other…", action: chooseOther)
+      Button(LocalizedStringResource("Other…", bundle: #bundle), action: chooseOther)
     }
     .fixedSize()
   }
 
   private var menuLabel: String {
     if let target = targets.first(where: { $0.codec == codec }) { return target.displayName }
-    return codec.isEmpty ? String(localized: "None") : codec
+    return codec.isEmpty ? String(localized: "None", bundle: #bundle) : codec
   }
 
   /// Whether the current value is a custom codec not present in the catalog.
@@ -103,15 +103,17 @@ private struct CustomCodecPopover: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text("Custom codec").font(.subheadline)
+      Text("Custom codec", bundle: #bundle).font(.subheadline)
       TextField("codec", text: $draft)
         .textFieldStyle(.roundedBorder)
         .frame(width: Self.codecFieldWidth)
       HStack {
         Spacer()
-        Button("Cancel", action: cancel)
-        Button("Set") { commit(draft.trimmingCharacters(in: .whitespaces)) }
-          .keyboardShortcut(.defaultAction)
+        Button(LocalizedStringResource("Cancel", bundle: #bundle), action: cancel)
+        Button(LocalizedStringResource("Set", bundle: #bundle)) {
+          commit(draft.trimmingCharacters(in: .whitespaces))
+        }
+        .keyboardShortcut(.defaultAction)
       }
     }
     .padding()

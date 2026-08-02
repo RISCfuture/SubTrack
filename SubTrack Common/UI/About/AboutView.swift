@@ -35,11 +35,11 @@ private struct AboutContent: View {
       Image(nsImage: NSApplication.shared.applicationIconImage)
         .resizable()
         .frame(width: 96, height: 96)
-        .accessibilityLabel("SubTrack app icon")
+        .accessibilityLabel(Text("SubTrack app icon", bundle: #bundle))
 
       VStack(spacing: 4) {
         Text(info.name).font(.title2).bold()
-        Text("Version \(info.version) (\(info.build))")
+        Text("Version \(info.version) (\(info.build))", bundle: #bundle)
           .font(.callout)
           .foregroundStyle(.secondary)
         Text(info.copyright)
@@ -59,7 +59,7 @@ private struct AboutContent: View {
       .frame(maxHeight: 120)
 
       HStack {
-        Button("License…") { showingLicense = true }
+        Button(LocalizedStringResource("License…", bundle: #bundle)) { showingLicense = true }
           .accessibilityIdentifier("about.license")
         Link("FFmpeg.org", destination: URL(string: "https://www.ffmpeg.org")!)
       }

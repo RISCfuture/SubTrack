@@ -27,27 +27,32 @@ public enum VideoProcessingError: Error, Sendable {
 
 extension VideoProcessingError: LocalizedError {
   public var errorDescription: String? {
-    String(localized: "Couldn’t process the video.")
+    String(localized: "Couldn’t process the video.", bundle: #bundle)
   }
 
   public var failureReason: String? {
     switch self {
       case .launchFailed(let detail):
-        String(localized: "ffmpeg couldn’t be started: \(detail)")
+        String(localized: "ffmpeg couldn’t be started: \(detail)", bundle: #bundle)
       case .encodeFailed(let exitCode):
-        String(localized: "ffmpeg exited with code \(exitCode, format: .number.grouping(.never)).")
+        String(
+          localized: "ffmpeg exited with code \(exitCode, format: .number.grouping(.never)).",
+          bundle: #bundle
+        )
       case let .outputMissingStreams(type, expected, found):
         String(
           localized:
-            "Expected the \(type.displayName) output to contain \(expected) streams, but found \(found)."
+            "Expected the \(type.displayName) output to contain \(expected) streams, but found \(found).",
+          bundle: #bundle
         )
       case let .outputStreamEmpty(streamIndex, codec):
         String(
           localized:
-            "Output stream \(streamIndex, format: .number.grouping(.never)) (\(codec)) contains no packets."
+            "Output stream \(streamIndex, format: .number.grouping(.never)) (\(codec)) contains no packets.",
+          bundle: #bundle
         )
       case .cancelled:
-        String(localized: "Processing was cancelled.")
+        String(localized: "Processing was cancelled.", bundle: #bundle)
     }
   }
 
@@ -69,9 +74,9 @@ extension StreamOperation.StreamType {
   /// The name of this kind of stream as it reads inside user-facing prose.
   fileprivate var displayName: String {
     switch self {
-      case .video: String(localized: "video")
-      case .audio: String(localized: "audio")
-      case .subtitle: String(localized: "subtitle")
+      case .video: String(localized: "video", bundle: #bundle)
+      case .audio: String(localized: "audio", bundle: #bundle)
+      case .subtitle: String(localized: "subtitle", bundle: #bundle)
     }
   }
 }

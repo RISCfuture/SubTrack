@@ -32,18 +32,21 @@ private struct FFmpegLocationSection: View {
   var body: some View {
     @Bindable var settings = env.ffmpegSettings
     VStack(alignment: .leading, spacing: 8) {
-      Text("FFmpeg Location")
+      Text("FFmpeg Location", bundle: #bundle)
       if env.featureFlags.isAppStoreBuild {
         BuiltInOnlyNotice()
       } else {
         // Each option carries its own identifier: SwiftUI gives every radio
         // button the Picker's own identifier as well, so the Picker's can't
         // select one.
-        Picker("FFmpeg Location", selection: $settings.mode) {
-          Text("Built-in")
+        Picker(
+          LocalizedStringResource("FFmpeg Location", bundle: #bundle),
+          selection: $settings.mode
+        ) {
+          Text("Built-in", bundle: #bundle)
             .tag(FFmpegLocationMode.builtIn)
             .accessibilityIdentifier("settings.ffmpegModeBuiltIn")
-          Text("Custom…")
+          Text("Custom…", bundle: #bundle)
             .tag(FFmpegLocationMode.custom)
             .accessibilityIdentifier("settings.ffmpegModeCustom")
         }
@@ -69,10 +72,10 @@ private struct BuiltInOnlyNotice: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack(spacing: 6) {
-        Text("Built-in").foregroundStyle(.secondary)
+        Text("Built-in", bundle: #bundle).foregroundStyle(.secondary)
         FullVersionHelpLink()
       }
-      Text("Using a custom ffmpeg is available in the downloadable version.")
+      Text("Using a custom ffmpeg is available in the downloadable version.", bundle: #bundle)
         .font(.callout)
         .foregroundStyle(.secondary)
     }
@@ -93,20 +96,20 @@ private struct CustomFFmpegFolderPicker: View {
       HStack(spacing: 12) {
         Text(
           settings.customDirectory.isEmpty
-            ? String(localized: "Not chosen")
+            ? String(localized: "Not chosen", bundle: #bundle)
             : settings.customDirectory
         )
         .foregroundStyle(settings.customDirectory.isEmpty ? .secondary : .primary)
         .lineLimit(1)
         .truncationMode(.middle)
         Spacer(minLength: 0)
-        Button("Choose…") { chooseFolder() }
+        Button(LocalizedStringResource("Choose…", bundle: #bundle)) { chooseFolder() }
           .accessibilityIdentifier("settings.ffmpegChoose")
       }
       Label(
         settings.customIsValid
-          ? String(localized: "Found ffmpeg and ffprobe")
-          : String(localized: "This folder must contain ffmpeg and ffprobe"),
+          ? String(localized: "Found ffmpeg and ffprobe", bundle: #bundle)
+          : String(localized: "This folder must contain ffmpeg and ffprobe", bundle: #bundle),
         systemImage: settings.customIsValid
           ? "checkmark.circle.fill" : "exclamationmark.triangle.fill"
       )
@@ -134,12 +137,12 @@ private struct FFmpegInformationSection: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text("FFmpeg Information")
+      Text("FFmpeg Information", bundle: #bundle)
       FFmpegVersionRow(state: env.capabilities.state)
       Button {
         showingFormats = true
       } label: {
-        Text("Supported Formats")
+        Text("Supported Formats", bundle: #bundle)
       }
       .accessibilityIdentifier("settings.ffmpegFormats")
       .disabled(!env.capabilities.state.isLoaded)
@@ -165,11 +168,11 @@ struct FFmpegVersionRow: View {
       case .idle, .loading:
         HStack {
           ProgressView().controlSize(.small)
-          Text("Reading version…").foregroundStyle(.secondary)
+          Text("Reading version…", bundle: #bundle).foregroundStyle(.secondary)
         }
       case .loaded(let capabilities):
         LabeledContent("Version") {
-          Text(capabilities.version?.version ?? String(localized: "Unknown"))
+          Text(capabilities.version?.version ?? String(localized: "Unknown", bundle: #bundle))
             .foregroundStyle(.secondary)
             .textSelection(.enabled)
         }

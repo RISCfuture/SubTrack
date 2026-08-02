@@ -21,11 +21,17 @@ extension SyncUnavailableReason {
   public var userMessage: String {
     switch self {
       case .noAccount:
-        String(localized: "Presets aren’t syncing — no iCloud account is signed in.")
+        String(
+          localized: "Presets aren’t syncing — no iCloud account is signed in.",
+          bundle: #bundle
+        )
       case .restricted:
-        String(localized: "Presets aren’t syncing — iCloud is unavailable on this Mac.")
+        String(
+          localized: "Presets aren’t syncing — iCloud is unavailable on this Mac.",
+          bundle: #bundle
+        )
       case .failed:
-        String(localized: "Presets aren’t syncing — iCloud reported an error.")
+        String(localized: "Presets aren’t syncing — iCloud reported an error.", bundle: #bundle)
     }
   }
 }

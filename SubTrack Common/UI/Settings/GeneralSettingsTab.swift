@@ -10,24 +10,27 @@ struct GeneralSettingsTab: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text("Default destination")
+      Text("Default destination", bundle: #bundle)
       HStack(spacing: 12) {
         Text(
           env.defaultDestination.destinationURL?.path(percentEncoded: false)
-            ?? String(localized: "Next to each source")
+            ?? String(localized: "Next to each source", bundle: #bundle)
         )
         .foregroundStyle(.secondary)
         .lineLimit(1)
         .truncationMode(.middle)
         Spacer(minLength: 0)
-        Button("Change Destination…") {
+        Button(LocalizedStringResource("Change Destination…", bundle: #bundle)) {
           if let url = FilePanels.chooseDestination() { env.defaultDestination.setDestination(url) }
         }
         .accessibilityIdentifier("settings.generalDestination")
       }
-      Text("New queues start here. Each queue’s own destination is set from its window.")
-        .font(.callout)
-        .foregroundStyle(.secondary)
+      Text(
+        "New queues start here. Each queue’s own destination is set from its window.",
+        bundle: #bundle
+      )
+      .font(.callout)
+      .foregroundStyle(.secondary)
       Spacer()
     }
     .padding()

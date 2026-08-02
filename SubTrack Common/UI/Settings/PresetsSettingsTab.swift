@@ -29,7 +29,7 @@ struct PresetsSettingsTab: View {
         ContentUnavailableView(
           "No Preset Selected",
           systemImage: "slider.horizontal.3",
-          description: Text("Select a preset to edit its rules.")
+          description: Text("Select a preset to edit its rules.", bundle: #bundle)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
       }

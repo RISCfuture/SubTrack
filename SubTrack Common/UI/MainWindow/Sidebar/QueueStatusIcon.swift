@@ -17,15 +17,15 @@ struct QueueStatusIcon: View {
           .progressViewStyle(.circular)
           .controlSize(.small)
           .tint(.secondary)
-          .accessibilityLabel("Encoding")
+          .accessibilityLabel(Text("Encoding", bundle: #bundle))
       case .attention:
         Image(systemName: "exclamationmark.triangle.fill")
           .foregroundStyle(.orange)
-          .accessibilityLabel("Needs attention")
+          .accessibilityLabel(Text("Needs attention", bundle: #bundle))
       case .done:
         Image(systemName: "checkmark.circle.fill")
           .foregroundStyle(.secondary)
-          .accessibilityLabel("All done")
+          .accessibilityLabel(Text("All done", bundle: #bundle))
       case .idle:
         EmptyView()
     }

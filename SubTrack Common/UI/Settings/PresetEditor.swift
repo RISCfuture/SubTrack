@@ -46,7 +46,7 @@ struct PresetEditor: View {
         Button {
           isConfirmingDelete = true
         } label: {
-          Text("Delete Preset").foregroundStyle(.red)
+          Text("Delete Preset", bundle: #bundle).foregroundStyle(.red)
         }
         .accessibilityIdentifier("settings.deletePreset")
       }
@@ -57,10 +57,10 @@ struct PresetEditor: View {
       isPresented: $isConfirmingDelete,
       titleVisibility: .visible
     ) {
-      Button("Delete", role: .destructive) { delete() }
-      Button("Cancel", role: .cancel) {}
+      Button(LocalizedStringResource("Delete", bundle: #bundle), role: .destructive) { delete() }
+      Button(LocalizedStringResource("Cancel", bundle: #bundle), role: .cancel) {}
     } message: {
-      Text("Queues already using these rules keep them.")
+      Text("Queues already using these rules keep them.", bundle: #bundle)
     }
   }
 

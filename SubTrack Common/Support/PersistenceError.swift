@@ -26,19 +26,22 @@ enum PersistenceError: Error, Sendable {
 
 extension PersistenceError: LocalizedError {
   public var errorDescription: String? {
-    String(localized: "Couldn’t access your saved data.")
+    String(localized: "Couldn’t access your saved data.", bundle: #bundle)
   }
 
   public var failureReason: String? {
     switch self {
       case .storeUnavailable(let detail):
-        String(localized: "The data store couldn’t be opened: \(detail)")
+        String(localized: "The data store couldn’t be opened: \(detail)", bundle: #bundle)
       case .saveFailed(let detail):
-        String(localized: "Your changes couldn’t be saved: \(detail)")
+        String(localized: "Your changes couldn’t be saved: \(detail)", bundle: #bundle)
       case .fetchFailed(let detail):
-        String(localized: "Saved data couldn’t be loaded: \(detail)")
+        String(localized: "Saved data couldn’t be loaded: \(detail)", bundle: #bundle)
       case .dataCorrupt(let detail):
-        String(localized: "Some saved data was unreadable and was reset: \(detail)")
+        String(
+          localized: "Some saved data was unreadable and was reset: \(detail)",
+          bundle: #bundle
+        )
     }
   }
 }

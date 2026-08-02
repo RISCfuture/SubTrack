@@ -11,9 +11,12 @@ struct InspectorView: View {
   var body: some View {
     @Bindable var ui = env.ui
     VStack(spacing: 0) {
-      Picker("Inspector Mode", selection: $ui.inspectorMode) {
-        Text("Rules").tag(InspectorMode.rules)
-        Text("Override").tag(InspectorMode.override)
+      Picker(
+        LocalizedStringResource("Inspector Mode", bundle: #bundle),
+        selection: $ui.inspectorMode
+      ) {
+        Text("Rules", bundle: #bundle).tag(InspectorMode.rules)
+        Text("Override", bundle: #bundle).tag(InspectorMode.override)
       }
       .pickerStyle(.segmented)
       .labelsHidden()

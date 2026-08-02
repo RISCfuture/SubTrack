@@ -23,13 +23,19 @@ struct SlimRulesEditor: View {
         LanguagePickerButton(languages: $rules.languages)
       }
       CaptionedControl("Keep tracks that have no language metadata.") {
-        Toggle("Keep untagged tracks", isOn: $rules.preserveNoLanguages)
-          .inspectorCheckbox()
-          .accessibilityIdentifier("rules.keepUntagged")
+        Toggle(
+          LocalizedStringResource("Keep untagged tracks", bundle: #bundle),
+          isOn: $rules.preserveNoLanguages
+        )
+        .inspectorCheckbox()
+        .accessibilityIdentifier("rules.keepUntagged")
       }
       CaptionedControl("Keep non-default audio such as commentary and downmixes.") {
-        Toggle("Include commentary / extra audio", isOn: $rules.includeOtherAudio)
-          .inspectorCheckbox()
+        Toggle(
+          LocalizedStringResource("Include commentary / extra audio", bundle: #bundle),
+          isOn: $rules.includeOtherAudio
+        )
+        .inspectorCheckbox()
       }
     }
 

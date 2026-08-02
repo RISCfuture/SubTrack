@@ -257,7 +257,7 @@ private struct CodeRow: View {
           .foregroundStyle(.secondary)
           .draggable(id.uuidString)
           .help("Drag to reorder")
-          .accessibilityLabel("Reorder")
+          .accessibilityLabel(Text("Reorder", bundle: #bundle))
       }
       TextField(placeholder, text: $text)
         .textFieldStyle(.plain)
@@ -275,10 +275,10 @@ private struct CodeRow: View {
         .foregroundStyle(.orange)
         .help(warningHelp)
         .opacity(showsWarning ? 1 : 0)
-        .accessibilityLabel("Unrecognized code")
+        .accessibilityLabel(Text("Unrecognized code", bundle: #bundle))
         .accessibilityHidden(!showsWarning)
       Button(action: onRemove) {
-        Label("Remove", systemImage: "minus.circle.fill")
+        Label(LocalizedStringResource("Remove", bundle: #bundle), systemImage: "minus.circle.fill")
       }
       .buttonStyle(.borderless)
       .labelStyle(.iconOnly)
@@ -318,9 +318,9 @@ private struct AddCodeBar: View {
           Button(action.title, action: action.action)
         }
         if !knownValues.isEmpty || !extraActions.isEmpty { Divider() }
-        Button("Other", action: onAddBlank)
+        Button(LocalizedStringResource("Other", bundle: #bundle), action: onAddBlank)
       } label: {
-        Label("Add", systemImage: "plus")
+        Label(LocalizedStringResource("Add", bundle: #bundle), systemImage: "plus")
       }
       .menuStyle(.borderlessButton)
       .fixedSize()

@@ -79,10 +79,11 @@ struct OutputNameEditor: View {
    */
   private var preview: String {
     guard let item = env.queue.items.first else {
-      return String(localized: "Names look like “\(naming.sampleFileName)”")
+      return String(localized: "Names look like “\(naming.sampleFileName)”", bundle: #bundle)
     }
     return String(
-      localized: "\(item.displayName) → \(naming.fileName(for: item.sourceURL, position: 1))"
+      localized: "\(item.displayName) → \(naming.fileName(for: item.sourceURL, position: 1))",
+      bundle: #bundle
     )
   }
 

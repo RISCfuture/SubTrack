@@ -50,13 +50,13 @@ struct StatusCell: View {
 
   private var helpText: String {
     switch item.status {
-      case .waiting: String(localized: "Waiting")
-      case .probing: String(localized: "Inspecting")
-      case .ready: String(localized: "Ready")
-      case .running: String(localized: "Encoding")
-      case .done: String(localized: "Done")
-      case .cancelled: String(localized: "Cancelled")
-      case .missing: String(localized: "Source is missing")
+      case .waiting: String(localized: "Waiting", bundle: #bundle)
+      case .probing: String(localized: "Inspecting", bundle: #bundle)
+      case .ready: String(localized: "Ready", bundle: #bundle)
+      case .running: String(localized: "Encoding", bundle: #bundle)
+      case .done: String(localized: "Done", bundle: #bundle)
+      case .cancelled: String(localized: "Cancelled", bundle: #bundle)
+      case .missing: String(localized: "Source is missing", bundle: #bundle)
       case .incompatible(let reason): reason
       case .failed(let message): message
     }

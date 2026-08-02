@@ -11,20 +11,20 @@ struct ActivityLogView: View {
 
   var body: some View {
     Table(env.queue.items) {
-      TableColumn("File") { item in
+      TableColumn(LocalizedStringResource("File", bundle: #bundle)) { item in
         Text(item.displayName)
           .lineLimit(1)
           .truncationMode(.middle)
           .help(item.displayName)
       }
-      TableColumn("Status") { item in
+      TableColumn(LocalizedStringResource("Status", bundle: #bundle)) { item in
         Text(statusText(item))
           .foregroundStyle(color(item))
           .lineLimit(1)
           .truncationMode(.tail)
           .help(statusText(item))
       }
-      TableColumn("Output") { item in
+      TableColumn(LocalizedStringResource("Output", bundle: #bundle)) { item in
         Text(item.outputURL.path(percentEncoded: false))
           .foregroundStyle(.secondary)
           .lineLimit(1)
@@ -37,18 +37,19 @@ struct ActivityLogView: View {
 
   private func statusText(_ item: QueueItem) -> String {
     switch item.status {
-      case .waiting: String(localized: "Waiting")
-      case .probing: String(localized: "Inspecting")
-      case .ready: String(localized: "Ready")
+      case .waiting: String(localized: "Waiting", bundle: #bundle)
+      case .probing: String(localized: "Inspecting", bundle: #bundle)
+      case .ready: String(localized: "Ready", bundle: #bundle)
       case .running:
         String(
-          localized: "Encoding \(item.progress, format: .percent.precision(.fractionLength(0)))"
+          localized: "Encoding \(item.progress, format: .percent.precision(.fractionLength(0)))",
+          bundle: #bundle
         )
-      case .done: String(localized: "Done")
-      case .cancelled: String(localized: "Cancelled")
-      case .missing: String(localized: "Source is missing")
+      case .done: String(localized: "Done", bundle: #bundle)
+      case .cancelled: String(localized: "Cancelled", bundle: #bundle)
+      case .missing: String(localized: "Source is missing", bundle: #bundle)
       case .incompatible(let reason): reason
-      case .failed(let message): String(localized: "Failed: \(message)")
+      case .failed(let message): String(localized: "Failed: \(message)", bundle: #bundle)
     }
   }
 

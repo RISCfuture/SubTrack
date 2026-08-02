@@ -168,13 +168,19 @@ public final class QueueItem: Identifiable {
     guard let container else { return nil }
     var parts = [String]()
     if !container.videoStreams.isEmpty {
-      parts.append(String(localized: "\(container.videoStreams.count, format: .number)V"))
+      parts.append(
+        String(localized: "\(container.videoStreams.count, format: .number)V", bundle: #bundle)
+      )
     }
     if !container.audioStreams.isEmpty {
-      parts.append(String(localized: "\(container.audioStreams.count, format: .number)A"))
+      parts.append(
+        String(localized: "\(container.audioStreams.count, format: .number)A", bundle: #bundle)
+      )
     }
     if !container.subtitleStreams.isEmpty {
-      parts.append(String(localized: "\(container.subtitleStreams.count, format: .number)S"))
+      parts.append(
+        String(localized: "\(container.subtitleStreams.count, format: .number)S", bundle: #bundle)
+      )
     }
     return parts.isEmpty ? nil : parts.joined(separator: " ")
   }

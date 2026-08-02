@@ -46,11 +46,14 @@ struct PresetMenu: View {
     .alert("Save Preset", isPresented: $isNaming) {
       TextField("Preset name", text: $draftName)
         .accessibilityIdentifier("presetName")
-      Button("Cancel", role: .cancel) {}
-      Button("Save") { save(named: draftName) }
+      Button(LocalizedStringResource("Cancel", bundle: #bundle), role: .cancel) {}
+      Button(LocalizedStringResource("Save", bundle: #bundle)) { save(named: draftName) }
         .disabled(trimmedDraftName.isEmpty)
     } message: {
-      Text("Save the current rules and output name under a name you can apply to any queue.")
+      Text(
+        "Save the current rules and output name under a name you can apply to any queue.",
+        bundle: #bundle
+      )
     }
   }
 
@@ -60,7 +63,10 @@ struct PresetMenu: View {
 
   /// Opens the name prompt on a suggestion the user can accept or type over.
   private func beginNaming() {
-    draftName = String(localized: "My Preset \(env.presets.presets.count + 1, format: .number)")
+    draftName = String(
+      localized: "My Preset \(env.presets.presets.count + 1, format: .number)",
+      bundle: #bundle
+    )
     isNaming = true
   }
 
@@ -107,7 +113,7 @@ private struct PresetMenuControl: View {
         }
       }
       Divider()
-      Button("Save Current as Preset…") { beginNaming() }
+      Button(LocalizedStringResource("Save Current as Preset…", bundle: #bundle)) { beginNaming() }
     } label: {
       Label(activeName, systemImage: "slider.horizontal.3")
     }
@@ -124,7 +130,7 @@ private struct PresetMenuControl: View {
   }
 
   private var activeName: String {
-    activePreset?.name ?? String(localized: "(New Preset)")
+    activePreset?.name ?? String(localized: "(New Preset)", bundle: #bundle)
   }
 }
 

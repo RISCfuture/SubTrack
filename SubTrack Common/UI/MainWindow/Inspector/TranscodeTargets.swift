@@ -26,6 +26,7 @@ extension ConversionTarget {
    encoder is when the build told us.
    */
   var menuTitle: String {
-    summary.isEmpty ? displayName : String(localized: "\(displayName) (\(summary))")
+    summary.isEmpty
+      ? displayName : String(localized: "\(displayName) (\(summary))", bundle: #bundle)
   }
 }

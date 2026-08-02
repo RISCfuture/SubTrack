@@ -141,8 +141,11 @@ final class CLIInstaller {
     panel.canChooseDirectories = true
     panel.canCreateDirectories = true
     panel.directoryURL = Self.defaultDestination
-    panel.prompt = String(localized: "Install")
-    panel.message = String(localized: "Choose a folder on your PATH to install subtrack")
+    panel.prompt = String(localized: "Install", bundle: #bundle)
+    panel.message = String(
+      localized: "Choose a folder on your PATH to install subtrack",
+      bundle: #bundle
+    )
     return panel.runModal() == .OK ? panel.url : nil
   }
 

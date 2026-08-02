@@ -26,48 +26,97 @@ extension HelpAnchor {
   var accessibilityLabel: String {
     switch self {
       case .gettingStarted:
-        String(localized: "Read how SubTrack works", comment: "Help button label")
+        String(localized: "Read how SubTrack works", bundle: #bundle, comment: "Help button label")
       case .slimRules:
-        String(localized: "Help with keep rules", comment: "Help button label")
+        String(localized: "Help with keep rules", bundle: #bundle, comment: "Help button label")
       case .trackOverrides:
-        String(localized: "Help with per-file overrides", comment: "Help button label")
+        String(
+          localized: "Help with per-file overrides",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .settingsGeneral:
-        String(localized: "Help with output destinations", comment: "Help button label")
+        String(
+          localized: "Help with output destinations",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .presets:
-        String(localized: "Help with presets", comment: "Help button label")
+        String(localized: "Help with presets", bundle: #bundle, comment: "Help button label")
       case .presetSync:
-        String(localized: "Help with preset syncing", comment: "Help button label")
+        String(localized: "Help with preset syncing", bundle: #bundle, comment: "Help button label")
       case .settingsEncoding:
-        String(localized: "Help with encoding settings", comment: "Help button label")
+        String(
+          localized: "Help with encoding settings",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .settingsFFmpeg:
-        String(localized: "Help with FFmpeg settings", comment: "Help button label")
+        String(
+          localized: "Help with FFmpeg settings",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .supportedFormats:
-        String(localized: "Help with supported formats", comment: "Help button label")
+        String(
+          localized: "Help with supported formats",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .commandLineTool:
-        String(localized: "Help with the command-line tool", comment: "Help button label")
+        String(
+          localized: "Help with the command-line tool",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .settingsUpdates:
-        String(localized: "Help with update checks", comment: "Help button label")
+        String(localized: "Help with update checks", bundle: #bundle, comment: "Help button label")
       case .editions:
-        String(localized: "Help with the two editions of SubTrack", comment: "Help button label")
+        String(
+          localized: "Help with the two editions of SubTrack",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .nameConflicts:
-        String(localized: "Help with output name conflicts", comment: "Help button label")
+        String(
+          localized: "Help with output name conflicts",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .unsupportedCodec:
-        String(localized: "Help with unsupported codecs", comment: "Help button label")
+        String(
+          localized: "Help with unsupported codecs",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .troubleshooting:
-        String(localized: "Help with a failed file", comment: "Help button label")
+        String(localized: "Help with a failed file", bundle: #bundle, comment: "Help button label")
       case .customFFmpeg:
-        String(localized: "Help with choosing an FFmpeg build", comment: "Help button label")
+        String(
+          localized: "Help with choosing an FFmpeg build",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .cliInstall:
         String(
           localized: "Help with installing the command-line tool",
+          bundle: #bundle,
           comment: "Help button label"
         )
       case .probeFailed:
-        String(localized: "Help with unreadable files", comment: "Help button label")
+        String(
+          localized: "Help with unreadable files",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .missingSource:
-        String(localized: "Help with missing source files", comment: "Help button label")
+        String(
+          localized: "Help with missing source files",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .encodeFailed:
-        String(localized: "Help with failed encodes", comment: "Help button label")
+        String(localized: "Help with failed encodes", bundle: #bundle, comment: "Help button label")
     }
   }
 

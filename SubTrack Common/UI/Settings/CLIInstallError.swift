@@ -22,17 +22,17 @@ enum CLIInstallError: Error, Sendable {
 
 extension CLIInstallError: LocalizedError {
   public var errorDescription: String? {
-    String(localized: "Couldn’t install the command-line tool.")
+    String(localized: "Couldn’t install the command-line tool.", bundle: #bundle)
   }
 
   public var failureReason: String? {
     switch self {
       case .toolMissingFromBundle:
-        String(localized: "This build doesn’t include the subtrack tool.")
+        String(localized: "This build doesn’t include the subtrack tool.", bundle: #bundle)
       case .copyFailed(let detail):
-        String(localized: "The tool couldn’t be copied: \(detail)")
+        String(localized: "The tool couldn’t be copied: \(detail)", bundle: #bundle)
       case .permissionDenied(let path):
-        String(localized: "SubTrack doesn’t have permission to write to \(path).")
+        String(localized: "SubTrack doesn’t have permission to write to \(path).", bundle: #bundle)
     }
   }
 
@@ -40,7 +40,8 @@ extension CLIInstallError: LocalizedError {
     switch self {
       case .permissionDenied:
         String(
-          localized: "Choose a folder you can write to, or authenticate to install for all users."
+          localized: "Choose a folder you can write to, or authenticate to install for all users.",
+          bundle: #bundle
         )
       default:
         nil

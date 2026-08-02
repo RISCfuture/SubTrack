@@ -14,15 +14,15 @@ public enum OutputNameToken: String, Codable, CaseIterable, Sendable {
   /// The token's name in the format editor.
   public var title: String {
     switch self {
-      case .originalName: String(localized: "Original Name")
-      case .sequenceNumber: String(localized: "Number")
+      case .originalName: String(localized: "Original Name", bundle: #bundle)
+      case .sequenceNumber: String(localized: "Number", bundle: #bundle)
     }
   }
 
   /// A stand-in shown when the format is previewed against no real file.
   public var sample: String {
     switch self {
-      case .originalName: String(localized: "Movie")
+      case .originalName: String(localized: "Movie", bundle: #bundle)
       case .sequenceNumber: "1"
     }
   }
@@ -85,7 +85,7 @@ public struct OutputNameFormat: Sendable, Equatable {
    */
   public var sampleFileName: String {
     let base = Self.sanitize(render { $0.sample })
-    return base.isEmpty ? String(localized: "Movie.mkv") : "\(base).mkv"
+    return base.isEmpty ? String(localized: "Movie.mkv", bundle: #bundle) : "\(base).mkv"
   }
 
   public init(template: String) {
@@ -307,14 +307,19 @@ public enum OutputNameConflict: Hashable, Sendable {
     switch self {
       case let .duplicateOutputs(name, sources):
         String(
-          localized: "\(sources.count, format: .number) files would all be saved as “\(name)”."
+          localized: "\(sources.count, format: .number) files would all be saved as “\(name)”.",
+          bundle: #bundle
         )
       case .overwritesSource(let sources) where sources.count == 1:
-        String(localized: "“\(sources[0].lastPathComponent)” would overwrite its own source file.")
+        String(
+          localized: "“\(sources[0].lastPathComponent)” would overwrite its own source file.",
+          bundle: #bundle
+        )
       case .overwritesSource(let sources):
         String(
           localized:
-            "\(sources.count, format: .number) files would overwrite their own source files."
+            "\(sources.count, format: .number) files would overwrite their own source files.",
+          bundle: #bundle
         )
     }
   }

@@ -8,10 +8,14 @@ struct QueueToolbar: ToolbarContent {
   var body: some ToolbarContent {
     ToolbarItem(placement: .navigation) {
       Menu {
-        Button("Add Files…") { env.queue.ingest(FilePanels.chooseMovies()) }
-        Button("Add Folder…") { if let url = FilePanels.chooseFolder() { env.queue.ingest([url]) } }
+        Button(LocalizedStringResource("Add Files…", bundle: #bundle)) {
+          env.queue.ingest(FilePanels.chooseMovies())
+        }
+        Button(LocalizedStringResource("Add Folder…", bundle: #bundle)) {
+          if let url = FilePanels.chooseFolder() { env.queue.ingest([url]) }
+        }
       } label: {
-        Label("Add", systemImage: "plus")
+        Label(LocalizedStringResource("Add", bundle: #bundle), systemImage: "plus")
       } primaryAction: {
         env.queue.ingest(FilePanels.chooseMovies())
       }
@@ -22,7 +26,7 @@ struct QueueToolbar: ToolbarContent {
       Button {
         env.queue.startAll()
       } label: {
-        Label("Start All", systemImage: "play.fill")
+        Label(LocalizedStringResource("Start All", bundle: #bundle), systemImage: "play.fill")
       }
       .disabled(!canStart)
       .accessibilityIdentifier("toolbar.startAll")
@@ -30,7 +34,7 @@ struct QueueToolbar: ToolbarContent {
       Button {
         env.queue.cancelAll()
       } label: {
-        Label("Cancel", systemImage: "stop.fill")
+        Label(LocalizedStringResource("Cancel", bundle: #bundle), systemImage: "stop.fill")
       }
       .disabled(!env.queue.isRunning)
       .accessibilityIdentifier("toolbar.cancel")
@@ -44,7 +48,10 @@ struct QueueToolbar: ToolbarContent {
       Button {
         env.ui.inspectorVisible.toggle()
       } label: {
-        Label("Toggle Inspector", systemImage: "sidebar.trailing")
+        Label(
+          LocalizedStringResource("Toggle Inspector", bundle: #bundle),
+          systemImage: "sidebar.trailing"
+        )
       }
       .accessibilityIdentifier("toolbar.toggleInspector")
     }

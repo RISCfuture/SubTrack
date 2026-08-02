@@ -58,16 +58,22 @@ private struct QueueFileCommands: Commands {
 
   var body: some Commands {
     CommandGroup(after: .newItem) {
-      Button("New Queue") {
+      Button(LocalizedStringResource("New Queue", bundle: #bundle)) {
         environment.workspace.newQueue(name: environment.workspace.nextQueueName())
       }
       .keyboardShortcut("n", modifiers: .command)
-      Button("Rename Queue…") { beginQueueRename(environment.queue, in: environment) }
-      Button("Delete Queue") { requestQueueDeletion(environment.queue, in: environment) }
+      Button(LocalizedStringResource("Rename Queue…", bundle: #bundle)) {
+        beginQueueRename(environment.queue, in: environment)
+      }
+      Button(LocalizedStringResource("Delete Queue", bundle: #bundle)) {
+        requestQueueDeletion(environment.queue, in: environment)
+      }
       Divider()
-      Button("Add Files…") { environment.queue.ingest(FilePanels.chooseMovies()) }
-        .keyboardShortcut("o", modifiers: .command)
-      Button("Add Folder…") {
+      Button(LocalizedStringResource("Add Files…", bundle: #bundle)) {
+        environment.queue.ingest(FilePanels.chooseMovies())
+      }
+      .keyboardShortcut("o", modifiers: .command)
+      Button(LocalizedStringResource("Add Folder…", bundle: #bundle)) {
         if let url = FilePanels.chooseFolder() { environment.queue.ingest([url]) }
       }
       .keyboardShortcut("o", modifiers: [.command, .shift])
@@ -81,22 +87,28 @@ private struct QueueRunCommands: Commands {
 
   var body: some Commands {
     CommandMenu("Queue") {
-      Button("Start All") { queue.startAll() }
+      Button(LocalizedStringResource("Start All", bundle: #bundle)) { queue.startAll() }
         .keyboardShortcut("r", modifiers: .command)
         .disabled(!canStartAll)
-      Button("Start Selected") { queue.start(queue.selection) }
-        .keyboardShortcut(.return, modifiers: .command)
-        .disabled(!canStartSelection)
-      Button("Re-scan Selected") { queue.rescan(queue.selection) }
-        .disabled(queue.selection.isEmpty)
+      Button(LocalizedStringResource("Start Selected", bundle: #bundle)) {
+        queue.start(queue.selection)
+      }
+      .keyboardShortcut(.return, modifiers: .command)
+      .disabled(!canStartSelection)
+      Button(LocalizedStringResource("Re-scan Selected", bundle: #bundle)) {
+        queue.rescan(queue.selection)
+      }
+      .disabled(queue.selection.isEmpty)
       Divider()
-      Button("Cancel All") { queue.cancelAll() }
+      Button(LocalizedStringResource("Cancel All", bundle: #bundle)) { queue.cancelAll() }
         .keyboardShortcut(".", modifiers: .command)
         .disabled(!queue.isRunning)
-      Button("Remove Selected") { queue.remove(queue.selection) }
-        .keyboardShortcut(.delete, modifiers: [])
-        .disabled(queue.selection.isEmpty)
-      Button("Clear Completed") { queue.clearCompleted() }
+      Button(LocalizedStringResource("Remove Selected", bundle: #bundle)) {
+        queue.remove(queue.selection)
+      }
+      .keyboardShortcut(.delete, modifiers: [])
+      .disabled(queue.selection.isEmpty)
+      Button(LocalizedStringResource("Clear Completed", bundle: #bundle)) { queue.clearCompleted() }
     }
   }
 
@@ -120,12 +132,18 @@ private struct InspectorCommands: Commands {
 
   var body: some Commands {
     CommandGroup(after: .sidebar) {
-      Button("Toggle Inspector") { ui.inspectorVisible.toggle() }
-        .keyboardShortcut("i", modifiers: [.command, .option])
-      Button("Inspector: Rules") { ui.inspectorMode = .rules }
-        .keyboardShortcut("1", modifiers: [.command, .option])
-      Button("Inspector: Override") { ui.inspectorMode = .override }
-        .keyboardShortcut("2", modifiers: [.command, .option])
+      Button(LocalizedStringResource("Toggle Inspector", bundle: #bundle)) {
+        ui.inspectorVisible.toggle()
+      }
+      .keyboardShortcut("i", modifiers: [.command, .option])
+      Button(LocalizedStringResource("Inspector: Rules", bundle: #bundle)) {
+        ui.inspectorMode = .rules
+      }
+      .keyboardShortcut("1", modifiers: [.command, .option])
+      Button(LocalizedStringResource("Inspector: Override", bundle: #bundle)) {
+        ui.inspectorMode = .override
+      }
+      .keyboardShortcut("2", modifiers: [.command, .option])
     }
   }
 }
@@ -136,7 +154,9 @@ private struct AboutMenuButton: View {
   private var openWindow
 
   var body: some View {
-    Button("About SubTrack") { openWindow(id: SubTrackWindowID.about) }
+    Button(LocalizedStringResource("About SubTrack", bundle: #bundle)) {
+      openWindow(id: SubTrackWindowID.about)
+    }
   }
 }
 
@@ -148,7 +168,7 @@ private struct UpdateMenuButton: View {
   let updates: any UpdateChecking
 
   var body: some View {
-    Button("Check for Updates…") {
+    Button(LocalizedStringResource("Check for Updates…", bundle: #bundle)) {
       Task { await updates.checkForUpdatesAndShowUI() }
     }
     .disabled(!updates.canCheckForUpdates)

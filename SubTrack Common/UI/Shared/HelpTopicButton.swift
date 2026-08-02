@@ -22,7 +22,7 @@ struct HelpTopicButton: View {
   let accessibilityIdentifier: String
 
   var body: some View {
-    Button("Get help with this.") { anchor.open() }
+    Button(LocalizedStringResource("Get help with this.", bundle: #bundle)) { anchor.open() }
       .buttonStyle(.link)
       .font(.caption)
       .accessibilityIdentifier(accessibilityIdentifier)

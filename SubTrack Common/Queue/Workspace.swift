@@ -91,8 +91,10 @@ public final class Workspace {
   public static func defaultQueueName(existingNames: some Sequence<String>) -> String {
     let used = Set(existingNames)
     var number = 1
-    while used.contains(String(localized: "Queue \(number, format: .number)")) { number += 1 }
-    return String(localized: "Queue \(number, format: .number)")
+    while used.contains(String(localized: "Queue \(number, format: .number)", bundle: #bundle)) {
+      number += 1
+    }
+    return String(localized: "Queue \(number, format: .number)", bundle: #bundle)
   }
 
   /**

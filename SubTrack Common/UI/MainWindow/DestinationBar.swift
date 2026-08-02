@@ -16,13 +16,13 @@ struct DestinationBar: View {
       } icon: {
         Image(systemName: "folder")
       }
-      Text("· names look like “\(env.queue.settings.naming.sampleFileName)”")
+      Text("· names look like “\(env.queue.settings.naming.sampleFileName)”", bundle: #bundle)
         .font(.footnote)
         .foregroundStyle(.tertiary)
         .lineLimit(1)
         .truncationMode(.middle)
       Spacer()
-      Button("Change…") { chooseDestination() }
+      Button(LocalizedStringResource("Change…", bundle: #bundle)) { chooseDestination() }
         .accessibilityIdentifier("destination.change")
     }
     .windowBarInsets()
@@ -30,7 +30,7 @@ struct DestinationBar: View {
 
   private var destinationLabel: String {
     env.destination.destinationURL?.path(percentEncoded: false)
-      ?? String(localized: "Saves next to each source")
+      ?? String(localized: "Saves next to each source", bundle: #bundle)
   }
 
   private func chooseDestination() {

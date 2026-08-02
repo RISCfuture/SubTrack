@@ -20,7 +20,7 @@ struct OverrideInspector: View {
       ContentUnavailableView(
         "No File Selected",
         systemImage: "circle.slash",
-        description: Text("Select a single file to override it.")
+        description: Text("Select a single file to override it.", bundle: #bundle)
       )
       .accessibilityIdentifier("override.noFileSelected")
     }
@@ -46,7 +46,7 @@ private struct UninspectedFileView: View {
       case .waiting, .probing:
         VStack {
           ProgressView().controlSize(.small)
-          Text("Inspecting “\(item.displayName)”…")
+          Text("Inspecting “\(item.displayName)”…", bundle: #bundle)
             .foregroundStyle(.secondary)
             .multilineTextAlignment(.center)
         }
@@ -56,7 +56,10 @@ private struct UninspectedFileView: View {
         ContentUnavailableView(
           "Source Missing",
           systemImage: "questionmark.folder",
-          description: Text("“\(item.displayName)” is no longer where it was added from.")
+          description: Text(
+            "“\(item.displayName)” is no longer where it was added from.",
+            bundle: #bundle
+          )
         )
         .accessibilityIdentifier("override.sourceMissing")
       case .failed(let reason):
@@ -70,7 +73,7 @@ private struct UninspectedFileView: View {
         ContentUnavailableView(
           "Not Inspected",
           systemImage: "questionmark.square.dashed",
-          description: Text("Re-scan “\(item.displayName)” to read its tracks.")
+          description: Text("Re-scan “\(item.displayName)” to read its tracks.", bundle: #bundle)
         )
         .accessibilityIdentifier("override.notInspected")
     }
@@ -97,7 +100,7 @@ private struct FileOverrideEditor: View {
   var body: some View {
     InspectorForm(helpAnchor: .trackOverrides, helpAccessibilityIdentifier: "override.help") {
       VStack(alignment: .leading, spacing: 4) {
-        Picker("Track", selection: trackSelection) {
+        Picker(LocalizedStringResource("Track", bundle: #bundle), selection: trackSelection) {
           ForEach(plan.tracks) { track in
             Text(track.pickerTitle)
               // Concrete colors, not the `.primary`/`.secondary` hierarchy: inside an
@@ -138,8 +141,10 @@ private struct FileOverrideEditor: View {
           )
 
           if item.selection != nil {
-            Button("Reset to Rules") { item.selection = nil }
-              .accessibilityIdentifier("override.reset")
+            Button(LocalizedStringResource("Reset to Rules", bundle: #bundle)) {
+              item.selection = nil
+            }
+            .accessibilityIdentifier("override.reset")
           }
         }
       }

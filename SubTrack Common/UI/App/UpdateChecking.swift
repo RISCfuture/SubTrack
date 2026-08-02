@@ -19,10 +19,10 @@ public enum UpdateCheckCadence: String, CaseIterable, Identifiable, Sendable {
   /// The picker label for this cadence.
   public var label: String {
     switch self {
-      case .hourly: String(localized: "Hourly")
-      case .daily: String(localized: "Daily")
-      case .weekly: String(localized: "Weekly")
-      case .never: String(localized: "Never")
+      case .hourly: String(localized: "Hourly", bundle: #bundle)
+      case .daily: String(localized: "Daily", bundle: #bundle)
+      case .weekly: String(localized: "Weekly", bundle: #bundle)
+      case .never: String(localized: "Never", bundle: #bundle)
     }
   }
 }

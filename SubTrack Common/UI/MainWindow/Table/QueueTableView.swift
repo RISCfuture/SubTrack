@@ -10,21 +10,27 @@ struct QueueTableView: View {
     Table(of: QueueItem.self, selection: $queue.selection) {
       TableColumn("") { StatusCell(item: $0) }
         .width(28)
-      TableColumn("Name") {
+      TableColumn(LocalizedStringResource("Name", bundle: #bundle)) {
         NameCell(item: $0, audioWarning: env.queue.audioLossWarning(for: $0))
       }
       .width(min: 180, ideal: 300)
-      TableColumn("Input Tracks") { MetricCell(text: $0.managedTrackCount?.formatted(.number)) }
-        .width(min: 55, ideal: 70, max: 70)
-      TableColumn("Output Tracks") { OutputTracksCell(item: $0) }
-        .width(min: 55, ideal: 80, max: 80)
-      TableColumn("Input Size") {
+      TableColumn(LocalizedStringResource("Input Tracks", bundle: #bundle)) {
+        MetricCell(text: $0.managedTrackCount?.formatted(.number))
+      }
+      .width(min: 55, ideal: 70, max: 70)
+      TableColumn(LocalizedStringResource("Output Tracks", bundle: #bundle)) {
+        OutputTracksCell(item: $0)
+      }
+      .width(min: 55, ideal: 80, max: 80)
+      TableColumn(LocalizedStringResource("Input Size", bundle: #bundle)) {
         MetricCell(text: $0.sourceByteCount?.formatted(.byteCount(style: .file)))
       }
       .width(min: 65, ideal: 85, max: 85)
-      TableColumn("Output Size") { OutputSizeCell(item: $0) }
-        .width(min: 65, ideal: 95, max: 95)
-      TableColumn("Destination") { item in
+      TableColumn(LocalizedStringResource("Output Size", bundle: #bundle)) {
+        OutputSizeCell(item: $0)
+      }
+      .width(min: 65, ideal: 95, max: 95)
+      TableColumn(LocalizedStringResource("Destination", bundle: #bundle)) { item in
         Text(item.outputURL.lastPathComponent)
           .foregroundStyle(.secondary)
           .lineLimit(1)
@@ -65,17 +71,23 @@ private struct QueueRowMenu: View {
 
   var body: some View {
     if !ids.isEmpty {
-      Button("Start") { env.queue.start(ids) }
+      Button(LocalizedStringResource("Start", bundle: #bundle)) { env.queue.start(ids) }
         .disabled(!selectedItems.contains(where: \.status.isStartable))
-      Button("Cancel") { env.queue.cancel(ids) }
+      Button(LocalizedStringResource("Cancel", bundle: #bundle)) { env.queue.cancel(ids) }
         .disabled(!selectedItems.contains(where: \.status.isActive))
-      Button("Re-scan") { env.queue.rescan(ids) }
+      Button(LocalizedStringResource("Re-scan", bundle: #bundle)) { env.queue.rescan(ids) }
         .disabled(!selectedItems.contains(where: \.status.isRescannable))
       Divider()
-      Button("Reveal Output in Finder") { reveal(selectedItems.map(\.outputURL)) }
-      Button("Reveal Source in Finder") { reveal(selectedItems.map(\.sourceURL)) }
+      Button(LocalizedStringResource("Reveal Output in Finder", bundle: #bundle)) {
+        reveal(selectedItems.map(\.outputURL))
+      }
+      Button(LocalizedStringResource("Reveal Source in Finder", bundle: #bundle)) {
+        reveal(selectedItems.map(\.sourceURL))
+      }
       Divider()
-      Button("Remove", role: .destructive) { env.queue.remove(ids) }
+      Button(LocalizedStringResource("Remove", bundle: #bundle), role: .destructive) {
+        env.queue.remove(ids)
+      }
     }
   }
 

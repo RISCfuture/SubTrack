@@ -38,7 +38,7 @@ enum MediaInspectionError: Error, Sendable {
 
 extension MediaInspectionError: LocalizedError {
   public var errorDescription: String? {
-    String(localized: "Couldn’t read the video file.")
+    String(localized: "Couldn’t read the video file.", bundle: #bundle)
   }
 
   public var failureReason: String? {
@@ -47,30 +47,38 @@ extension MediaInspectionError: LocalizedError {
         if let detail {
           String(
             localized:
-              "ffprobe exited with code \(exitCode, format: .number.grouping(.never)): \(detail)"
+              "ffprobe exited with code \(exitCode, format: .number.grouping(.never)): \(detail)",
+            bundle: #bundle
           )
         } else {
           String(
-            localized: "ffprobe exited with code \(exitCode, format: .number.grouping(.never))."
+            localized: "ffprobe exited with code \(exitCode, format: .number.grouping(.never)).",
+            bundle: #bundle
           )
         }
       case .noData(let url):
-        String(localized: "ffprobe returned no data for “\(url.lastPathComponent)”.")
+        String(
+          localized: "ffprobe returned no data for “\(url.lastPathComponent)”.",
+          bundle: #bundle
+        )
       case .noVideoStream(let filename):
-        String(localized: "“\(filename)” doesn’t contain a video track.")
+        String(localized: "“\(filename)” doesn’t contain a video track.", bundle: #bundle)
       case .unknownStreamType(let type):
-        String(localized: "The stream type “\(type)” isn’t recognized.")
+        String(localized: "The stream type “\(type)” isn’t recognized.", bundle: #bundle)
       case .malformedMetadata(let field):
-        String(localized: "The “\(field)” value reported by ffprobe couldn’t be read.")
+        String(
+          localized: "The “\(field)” value reported by ffprobe couldn’t be read.",
+          bundle: #bundle
+        )
       case .decodingFailed(let detail):
-        String(localized: "The ffprobe output couldn’t be decoded: \(detail)")
+        String(localized: "The ffprobe output couldn’t be decoded: \(detail)", bundle: #bundle)
     }
   }
 
   public var recoverySuggestion: String? {
     switch self {
       case .noVideoStream:
-        String(localized: "Choose a file that contains a video track.")
+        String(localized: "Choose a file that contains a video track.", bundle: #bundle)
       default:
         nil
     }

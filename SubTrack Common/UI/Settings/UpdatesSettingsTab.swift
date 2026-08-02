@@ -10,27 +10,32 @@ struct UpdatesSettingsTab: View {
 
   var body: some View {
     Form {
-      Picker("Check for updates", selection: cadence) {
+      Picker(LocalizedStringResource("Check for updates", bundle: #bundle), selection: cadence) {
         ForEach(UpdateCheckCadence.allCases) { choice in
           Text(choice.label).tag(choice)
         }
       }
       .accessibilityIdentifier("settings.updateCadence")
-      Toggle("Include prerelease versions", isOn: includesPrereleases)
-        .accessibilityIdentifier("settings.updatePrereleases")
+      Toggle(
+        LocalizedStringResource("Include prerelease versions", bundle: #bundle),
+        isOn: includesPrereleases
+      )
+      .accessibilityIdentifier("settings.updatePrereleases")
       LabeledContent("Last checked") {
         LastCheckedLabel(date: updates.lastCheckDate)
       }
       HStack {
-        Button("Check Now") {
+        Button(LocalizedStringResource("Check Now", bundle: #bundle)) {
           Task { await updates.checkForUpdatesAndShowUI() }
         }
         .disabled(!updates.canCheckForUpdates)
         .accessibilityIdentifier("settings.checkForUpdates")
         Spacer(minLength: 0)
-        Button("Reset Skipped Versions") { updates.resetSkippedVersions() }
-          .disabled(!updates.hasSkippedVersions)
-          .accessibilityIdentifier("settings.resetSkippedVersions")
+        Button(LocalizedStringResource("Reset Skipped Versions", bundle: #bundle)) {
+          updates.resetSkippedVersions()
+        }
+        .disabled(!updates.hasSkippedVersions)
+        .accessibilityIdentifier("settings.resetSkippedVersions")
       }
     }
     .formStyle(.grouped)

@@ -75,7 +75,12 @@
               continuation.yield(.finished)
             case .fail:
               continuation.yield(
-                .failed(String(localized: "The conversion failed. (Stubbed UI-test failure.)"))
+                .failed(
+                  String(
+                    localized: "The conversion failed. (Stubbed UI-test failure.)",
+                    bundle: #bundle
+                  )
+                )
               )
           }
           continuation.finish()

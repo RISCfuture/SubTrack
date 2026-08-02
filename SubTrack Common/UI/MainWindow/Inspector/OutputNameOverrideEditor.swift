@@ -12,11 +12,11 @@ struct OutputNameOverrideEditor: View {
 
   var body: some View {
     InspectorGroup {
-      Picker("File name", selection: usesCustomName) {
-        Text("Use default name")
+      Picker(LocalizedStringResource("File name", bundle: #bundle), selection: usesCustomName) {
+        Text("Use default name", bundle: #bundle)
           .tag(false)
           .accessibilityIdentifier("override.useDefaultName")
-        Text("Use custom name:")
+        Text("Use custom name:", bundle: #bundle)
           .tag(true)
           .accessibilityIdentifier("override.useCustomName")
       }
@@ -34,7 +34,7 @@ struct OutputNameOverrideEditor: View {
         .disabled(item.customName == nil)
         .accessibilityIdentifier("override.customName")
 
-      Text("Saves as “\(item.outputURL.lastPathComponent)”")
+      Text("Saves as “\(item.outputURL.lastPathComponent)”", bundle: #bundle)
         .font(.caption)
         .foregroundStyle(.secondary)
         .lineLimit(1)

@@ -15,9 +15,10 @@ struct FFmpegAcknowledgement: Sendable, Equatable {
         SubTrack bundles FFmpeg, built under the GNU Lesser General Public License, version 2.1 or \
         later (LGPL v2.1+), with no GPL-licensed components. Video encoding uses Apple \
         VideoToolbox. This software uses libraries from the FFmpeg project under the LGPLv2.1.
-        """
+        """,
+      bundle: #bundle
     ),
-    licenseTitle: String(localized: "FFmpeg — LGPL v2.1+"),
+    licenseTitle: String(localized: "FFmpeg — LGPL v2.1+", bundle: #bundle),
     licenseBody: String(
       localized: """
         FFmpeg is free software licensed under the GNU Lesser General Public License (LGPL) \
@@ -32,7 +33,8 @@ struct FFmpegAcknowledgement: Sendable, Equatable {
         The full text of the GNU LGPL v2.1 is available at \
         https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html. FFmpeg source and license \
         information are available at https://www.ffmpeg.org.
-        """
+        """,
+      bundle: #bundle
     )
   )
 
@@ -43,9 +45,10 @@ struct FFmpegAcknowledgement: Sendable, Equatable {
         SubTrack bundles FFmpeg built with libx264 and libx265, licensed under the GNU General \
         Public License, version 2 or later (GPL v2+). This software uses code of the FFmpeg \
         project licensed under the GPLv2+.
-        """
+        """,
+      bundle: #bundle
     ),
-    licenseTitle: String(localized: "FFmpeg — GPL v2+ (with libx264 + libx265)"),
+    licenseTitle: String(localized: "FFmpeg — GPL v2+ (with libx264 + libx265)", bundle: #bundle),
     licenseBody: String(
       localized: """
         The FFmpeg build bundled with this copy of SubTrack is configured with libx264 and \
@@ -61,7 +64,8 @@ struct FFmpegAcknowledgement: Sendable, Equatable {
         The full text of the GNU GPL v2 is available at \
         https://www.gnu.org/licenses/old-licenses/gpl-2.0.html. FFmpeg source and license \
         information are available at https://www.ffmpeg.org.
-        """
+        """,
+      bundle: #bundle
     )
   )
 
@@ -101,7 +105,10 @@ struct AppInfo: Sendable, Equatable {
    */
   private static var fallbackCopyright: String {
     let year = Calendar.current.component(.year, from: .now)
-    return String(localized: "Copyright © \(year, format: .number.grouping(.never))")
+    return String(
+      localized: "Copyright © \(year, format: .number.grouping(.never))",
+      bundle: #bundle
+    )
   }
 
   var name: String

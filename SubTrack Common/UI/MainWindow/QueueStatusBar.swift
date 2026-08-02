@@ -28,9 +28,14 @@ struct QueueStatusBar: View {
    */
   private var summary: String {
     let queue = env.queue
-    var groups = [String(localized: "\(queue.items.count) items · \(queue.activeCount) encoding")]
+    var groups = [
+      String(
+        localized: "\(queue.items.count) items · \(queue.activeCount) encoding",
+        bundle: #bundle
+      )
+    ]
     if queue.slimmedCount > 0 {
-      groups.append(String(localized: "slimmed \(queue.slimmedCount) file"))
+      groups.append(String(localized: "slimmed \(queue.slimmedCount) file", bundle: #bundle))
     }
     return groups.joined(separator: " · ")
   }
@@ -48,7 +53,7 @@ private struct OverallProgressBar: View {
     ProgressView(value: fraction)
       .progressViewStyle(.linear)
       .frame(width: width)
-      .accessibilityLabel("Overall progress")
+      .accessibilityLabel(Text("Overall progress", bundle: #bundle))
       .accessibilityIdentifier("status.overallProgress")
   }
 }

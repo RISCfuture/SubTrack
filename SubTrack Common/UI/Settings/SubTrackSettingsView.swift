@@ -12,18 +12,32 @@ struct SubTrackSettingsView: View {
   var body: some View {
     TabView {
       GeneralSettingsTab()
-        .tabItem { Label("General", systemImage: "gearshape") }
+        .tabItem {
+          Label(LocalizedStringResource("General", bundle: #bundle), systemImage: "gearshape")
+        }
       PresetsSettingsTab()
-        .tabItem { Label("Presets", systemImage: "slider.horizontal.3") }
+        .tabItem {
+          Label(
+            LocalizedStringResource("Presets", bundle: #bundle),
+            systemImage: "slider.horizontal.3"
+          )
+        }
       EncodingSettingsTab()
-        .tabItem { Label("Encoding", systemImage: "cpu") }
+        .tabItem { Label(LocalizedStringResource("Encoding", bundle: #bundle), systemImage: "cpu") }
       FFmpegSettingsTab()
-        .tabItem { Label("FFmpeg", image: .ffmpegMark) }
+        .tabItem { Label(LocalizedStringResource("FFmpeg", bundle: #bundle), image: .ffmpegMark) }
       CLISettingsTab()
-        .tabItem { Label("CLI", systemImage: "apple.terminal") }
+        .tabItem {
+          Label(LocalizedStringResource("CLI", bundle: #bundle), systemImage: "apple.terminal")
+        }
       if let updates = env.updates {
         UpdatesSettingsTab(updates: updates)
-          .tabItem { Label("Updates", systemImage: "arrow.down.circle") }
+          .tabItem {
+            Label(
+              LocalizedStringResource("Updates", bundle: #bundle),
+              systemImage: "arrow.down.circle"
+            )
+          }
       }
     }
     // Sized for the Presets tab's list-and-editor split; the others are content

@@ -21,7 +21,7 @@ struct LicenseSheet: View {
       .navigationTitle(acknowledgement.licenseTitle)
       .toolbar {
         ToolbarItem(placement: .confirmationAction) {
-          Button("Done") { dismiss() }
+          Button(LocalizedStringResource("Done", bundle: #bundle)) { dismiss() }
         }
       }
     }

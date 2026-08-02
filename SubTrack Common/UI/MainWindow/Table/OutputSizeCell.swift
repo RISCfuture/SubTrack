@@ -21,6 +21,7 @@ struct OutputSizeCell: View {
     guard size.isEstimate else { return byteCount }
     return String(
       localized: "~\(byteCount)",
+      bundle: #bundle,
       comment: "An estimated output file size, e.g. “~1.2 GB”. The argument is the formatted size."
     )
   }
@@ -33,10 +34,12 @@ struct OutputSizeCell: View {
   #Preview("Output Size Cell") {
     let environment = PreviewSupport.environment(items: PreviewSupport.everyStatusItems())
     return Table(of: QueueItem.self) {
-      TableColumn("Name") { Text($0.displayName) }
+      TableColumn(LocalizedStringResource("Name", bundle: #bundle)) { Text($0.displayName) }
         .width(min: 140)
-      TableColumn("Output Size") { OutputSizeCell(item: $0) }
-        .width(min: 65, ideal: 95, max: 95)
+      TableColumn(LocalizedStringResource("Output Size", bundle: #bundle)) {
+        OutputSizeCell(item: $0)
+      }
+      .width(min: 65, ideal: 95, max: 95)
     } rows: {
       ForEach(environment.queue.items) { TableRow($0) }
     }

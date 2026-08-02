@@ -96,7 +96,7 @@ struct InspectorSectionHeader: View {
       Text(title)
       Image(systemName: "info.circle")
         .foregroundStyle(.secondary)
-        .accessibilityLabel("About this section")
+        .accessibilityLabel(Text("About this section", bundle: #bundle))
         .onHover { showingHelp = $0 }
         .popover(isPresented: $showingHelp, arrowEdge: .bottom) {
           Text(help)

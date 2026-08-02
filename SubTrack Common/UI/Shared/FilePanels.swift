@@ -33,8 +33,8 @@ enum FilePanels {
     panel.allowsMultipleSelection = true
     panel.canChooseFiles = true
     panel.canChooseDirectories = false
-    panel.prompt = String(localized: "Add")
-    panel.message = String(localized: "Choose video files to slim")
+    panel.prompt = String(localized: "Add", bundle: #bundle)
+    panel.message = String(localized: "Choose video files to slim", bundle: #bundle)
     return panel.runModal() == .OK ? panel.urls : []
   }
 
@@ -43,8 +43,8 @@ enum FilePanels {
     panel.allowsMultipleSelection = false
     panel.canChooseFiles = false
     panel.canChooseDirectories = true
-    panel.prompt = String(localized: "Add")
-    panel.message = String(localized: "Choose a folder of videos")
+    panel.prompt = String(localized: "Add", bundle: #bundle)
+    panel.message = String(localized: "Choose a folder of videos", bundle: #bundle)
     return panel.runModal() == .OK ? panel.url : nil
   }
 
@@ -54,8 +54,8 @@ enum FilePanels {
     panel.canChooseFiles = false
     panel.canChooseDirectories = true
     panel.canCreateDirectories = true
-    panel.prompt = String(localized: "Choose")
-    panel.message = String(localized: "Choose where slimmed files are saved")
+    panel.prompt = String(localized: "Choose", bundle: #bundle)
+    panel.message = String(localized: "Choose where slimmed files are saved", bundle: #bundle)
     return panel.runModal() == .OK ? panel.url : nil
   }
 }

@@ -80,7 +80,7 @@ struct NameCell: View {
 
   private var subtitle: String? {
     switch item.status {
-      case .missing: String(localized: "Source is missing")
+      case .missing: String(localized: "Source is missing", bundle: #bundle)
       case .incompatible(let reason): reason
       case .failed(let message): message
       default: item.sourceURL.deletingLastPathComponent().path(percentEncoded: false)
@@ -102,7 +102,7 @@ struct NameCell: View {
       ]
     let environment = PreviewSupport.environment(items: items)
     return Table(of: QueueItem.self) {
-      TableColumn("Name") {
+      TableColumn(LocalizedStringResource("Name", bundle: #bundle)) {
         NameCell(item: $0, audioWarning: environment.queue.audioLossWarning(for: $0))
       }
     } rows: {

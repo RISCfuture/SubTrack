@@ -23,7 +23,7 @@ struct EditableSummary: View {
         .truncationMode(.middle)
         .foregroundStyle(.secondary)
         .accessibilityIdentifier(accessibilityIdentifier)
-      Button("Edit", action: edit)
+      Button(LocalizedStringResource("Edit", bundle: #bundle), action: edit)
         .accessibilityIdentifier("\(accessibilityIdentifier).edit")
     }
   }

@@ -31,36 +31,49 @@ public enum FileAccessError: Error, Sendable {
 
 extension FileAccessError: LocalizedError {
   public var errorDescription: String? {
-    String(localized: "Couldn’t access that location.")
+    String(localized: "Couldn’t access that location.", bundle: #bundle)
   }
 
   public var failureReason: String? {
     switch self {
       case .sourceMissing(let url):
-        String(localized: "“\(url.lastPathComponent)” is missing or was moved.")
+        String(localized: "“\(url.lastPathComponent)” is missing or was moved.", bundle: #bundle)
       case .bookmarkFailed(let url):
-        String(localized: "The saved reference to “\(url.lastPathComponent)” is no longer valid.")
+        String(
+          localized: "The saved reference to “\(url.lastPathComponent)” is no longer valid.",
+          bundle: #bundle
+        )
       case .accessDenied(let url):
-        String(localized: "SubTrack doesn’t have permission to open “\(url.lastPathComponent)”.")
+        String(
+          localized: "SubTrack doesn’t have permission to open “\(url.lastPathComponent)”.",
+          bundle: #bundle
+        )
       case .outputFolderNotWritable(let url):
         String(
-          localized: "SubTrack doesn’t have permission to save into “\(url.lastPathComponent)”."
+          localized: "SubTrack doesn’t have permission to save into “\(url.lastPathComponent)”.",
+          bundle: #bundle
         )
       case .destinationUnavailable:
-        String(localized: "The output folder isn’t available.")
+        String(localized: "The output folder isn’t available.", bundle: #bundle)
     }
   }
 
   public var recoverySuggestion: String? {
     switch self {
       case .sourceMissing:
-        String(localized: "Restore the file, or remove it from the queue and add it again.")
+        String(
+          localized: "Restore the file, or remove it from the queue and add it again.",
+          bundle: #bundle
+        )
       case .bookmarkFailed, .accessDenied:
-        String(localized: "Add the file to the queue again to restore access.")
+        String(localized: "Add the file to the queue again to restore access.", bundle: #bundle)
       case .outputFolderNotWritable:
-        String(localized: "Choose an output folder, or add the enclosing folder to the queue.")
+        String(
+          localized: "Choose an output folder, or add the enclosing folder to the queue.",
+          bundle: #bundle
+        )
       case .destinationUnavailable:
-        String(localized: "Choose the output folder again.")
+        String(localized: "Choose the output folder again.", bundle: #bundle)
     }
   }
 

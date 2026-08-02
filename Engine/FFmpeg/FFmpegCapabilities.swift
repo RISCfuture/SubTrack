@@ -324,7 +324,10 @@ struct FFmpegProbe: Sendable {
   func run() async -> FFmpegProbeOutcome {
     guard FileManager.default.isExecutableFile(atPath: ffmpegURL.path(percentEncoded: false)) else {
       return .unavailable(
-        String(localized: "No runnable ffmpeg at “\(ffmpegURL.path(percentEncoded: false))”")
+        String(
+          localized: "No runnable ffmpeg at “\(ffmpegURL.path(percentEncoded: false))”",
+          bundle: #bundle
+        )
       )
     }
     do {
@@ -357,7 +360,8 @@ struct FFmpegProbe: Sendable {
     guard process.terminationStatus == 0 else {
       throw FFmpegToolError.probeUnavailable(
         detail: String(
-          localized: "ffmpeg exited with code \(process.terminationStatus, format: .number)."
+          localized: "ffmpeg exited with code \(process.terminationStatus, format: .number).",
+          bundle: #bundle
         )
       )
     }

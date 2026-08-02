@@ -24,7 +24,7 @@ struct TokenizedTextField: NSViewRepresentable {
     field.font = .preferredFont(forTextStyle: .body)
     field.lineBreakMode = .byTruncatingTail
     field.setAccessibilityIdentifier(accessibilityIdentifier)
-    field.setAccessibilityLabel(String(localized: "Output name format"))
+    field.setAccessibilityLabel(String(localized: "Output name format", bundle: #bundle))
     context.coordinator.push(segments, into: field)
     return field
   }

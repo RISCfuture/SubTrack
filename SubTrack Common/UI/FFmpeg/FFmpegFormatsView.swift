@@ -52,7 +52,7 @@ struct FFmpegFormatsView: View {
       }
       .padding()
     }
-    .searchable(text: $searchText, prompt: Text("Filter"))
+    .searchable(text: $searchText, prompt: Text("Filter", bundle: #bundle))
     .navigationTitle("Supported Formats")
   }
 
@@ -138,7 +138,10 @@ private struct MissingCodecsLink: View {
     Button {
       HelpAnchor.editions.open()
     } label: {
-      Label("Missing codecs?", systemImage: "questionmark.circle")
+      Label(
+        LocalizedStringResource("Missing codecs?", bundle: #bundle),
+        systemImage: "questionmark.circle"
+      )
     }
     .buttonStyle(.link)
     .help(
@@ -187,7 +190,7 @@ private struct FormatDisclosure: View {
       FormatTable(entries: entries, supportTitle: supportTitle)
         .padding(.top, 4)
     } label: {
-      Text("\(Text(title)) (\(entries.count))")
+      Text("\(Text(title)) (\(entries.count))", bundle: #bundle)
         .font(.headline)
         .monospacedDigit()
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -227,9 +230,9 @@ private struct FormatTableHeader: View {
 
   var body: some View {
     FormatColumns {
-      Text("Identifier")
+      Text("Identifier", bundle: #bundle)
     } name: {
-      Text("Name")
+      Text("Name", bundle: #bundle)
     } support: {
       Text(supportTitle)
     }
@@ -343,23 +346,23 @@ private enum Capability {
 
   var title: String {
     switch self {
-      case .decode: String(localized: "Decode")
-      case .encode: String(localized: "Encode")
-      case .read: String(localized: "Read")
-      case .write: String(localized: "Write")
+      case .decode: String(localized: "Decode", bundle: #bundle)
+      case .encode: String(localized: "Encode", bundle: #bundle)
+      case .read: String(localized: "Read", bundle: #bundle)
+      case .write: String(localized: "Write", bundle: #bundle)
     }
   }
 
   func accessibilityLabel(identifier: String, isActive: Bool) -> String {
     switch (self, isActive) {
-      case (.decode, true): String(localized: "Decodes \(identifier)")
-      case (.decode, false): String(localized: "Does not decode \(identifier)")
-      case (.encode, true): String(localized: "Encodes \(identifier)")
-      case (.encode, false): String(localized: "Does not encode \(identifier)")
-      case (.read, true): String(localized: "Reads \(identifier)")
-      case (.read, false): String(localized: "Does not read \(identifier)")
-      case (.write, true): String(localized: "Writes \(identifier)")
-      case (.write, false): String(localized: "Does not write \(identifier)")
+      case (.decode, true): String(localized: "Decodes \(identifier)", bundle: #bundle)
+      case (.decode, false): String(localized: "Does not decode \(identifier)", bundle: #bundle)
+      case (.encode, true): String(localized: "Encodes \(identifier)", bundle: #bundle)
+      case (.encode, false): String(localized: "Does not encode \(identifier)", bundle: #bundle)
+      case (.read, true): String(localized: "Reads \(identifier)", bundle: #bundle)
+      case (.read, false): String(localized: "Does not read \(identifier)", bundle: #bundle)
+      case (.write, true): String(localized: "Writes \(identifier)", bundle: #bundle)
+      case (.write, false): String(localized: "Does not write \(identifier)", bundle: #bundle)
     }
   }
 }

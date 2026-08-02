@@ -35,7 +35,10 @@ struct PreferredCodecEditor: View {
           isKnown: { isDecodable($0) },
           warningHelp: "This codec isn’t in the current FFmpeg build’s decodable list.",
           knownValues: addableCodecs.map {
-            CodeChoice(title: String(localized: "\($0.name) — \($0.summary)"), code: $0.name)
+            CodeChoice(
+              title: String(localized: "\($0.name) — \($0.summary)", bundle: #bundle),
+              code: $0.name
+            )
           }
         )
       }
@@ -43,7 +46,7 @@ struct PreferredCodecEditor: View {
   }
 
   private var summary: String {
-    codecs.isEmpty ? String(localized: "None") : codecs.joined(separator: ", ")
+    codecs.isEmpty ? String(localized: "None", bundle: #bundle) : codecs.joined(separator: ", ")
   }
 
   /// The decodable codecs from the probe (may be empty).

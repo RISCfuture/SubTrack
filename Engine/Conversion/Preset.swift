@@ -33,22 +33,22 @@ public struct Preset: Identifiable, Sendable, Equatable, Codable {
   public static let starters: [Self] = [
     Self(
       id: UUID(uuidString: "00000000-0000-0000-0000-0000000000E1")!,
-      name: String(localized: "Blu-ray Rip — English Only"),
+      name: String(localized: "Blu-ray Rip — English Only", bundle: #bundle),
       rules: SlimRules(languages: ["eng"])
     ),
     Self(
       id: UUID(uuidString: "00000000-0000-0000-0000-0000000000E2")!,
-      name: String(localized: "Blu-ray Rip — English + Commentary"),
+      name: String(localized: "Blu-ray Rip — English + Commentary", bundle: #bundle),
       rules: SlimRules(languages: ["eng"], includeOtherAudio: true)
     ),
     Self(
       id: UUID(uuidString: "00000000-0000-0000-0000-0000000000E4")!,
-      name: String(localized: "Blu-ray Rip — Keep Untagged Tracks"),
+      name: String(localized: "Blu-ray Rip — Keep Untagged Tracks", bundle: #bundle),
       rules: SlimRules(languages: ["eng"], preserveNoLanguages: true, includeOtherAudio: true)
     ),
     Self(
       id: UUID(uuidString: "00000000-0000-0000-0000-0000000000E5")!,
-      name: String(localized: "Web / YouTube Rip — English Only"),
+      name: String(localized: "Web / YouTube Rip — English Only", bundle: #bundle),
       rules: SlimRules(
         languages: ["eng"],
         // A YouTube download often tags no language at all, and dropping the
@@ -60,7 +60,7 @@ public struct Preset: Identifiable, Sendable, Equatable, Codable {
     ),
     Self(
       id: UUID(uuidString: "00000000-0000-0000-0000-0000000000E6")!,
-      name: String(localized: "Streaming Service Rip — English Only"),
+      name: String(localized: "Streaming Service Rip — English Only", bundle: #bundle),
       rules: SlimRules(
         languages: ["eng"],
         // Service rips carry many languages and tag them inconsistently, so an

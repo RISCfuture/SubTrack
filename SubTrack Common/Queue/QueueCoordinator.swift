@@ -894,7 +894,10 @@ extension QueueCoordinator {
     else {
       return nil
     }
-    return String(localized: "The “\(codec)” encoder isn’t available in the current FFmpeg")
+    return String(
+      localized: "The “\(codec)” encoder isn’t available in the current FFmpeg",
+      bundle: #bundle
+    )
   }
 
   /**
@@ -941,7 +944,8 @@ extension QueueCoordinator {
       localized: """
         Output would have no audio. The source’s audio (\(languages)) isn’t kept by the current \
         rules.
-        """
+        """,
+      bundle: #bundle
     )
   }
 
@@ -956,7 +960,7 @@ extension QueueCoordinator {
       let name =
         stream.language.flatMap(LanguageCatalog.name(for:))
         ?? stream.language
-        ?? String(localized: "untagged")
+        ?? String(localized: "untagged", bundle: #bundle)
       return seen.insert(name).inserted ? name : nil
     }
     return names.formatted(.list(type: .and))

@@ -26,7 +26,7 @@ struct IngestProgressSheet: View {
         .frame(maxWidth: .infinity, alignment: .leading)
       HStack {
         Spacer()
-        Button("Cancel", role: .cancel) { onCancel() }
+        Button(LocalizedStringResource("Cancel", bundle: #bundle), role: .cancel) { onCancel() }
           .accessibilityIdentifier("ingest.cancel")
       }
     }
@@ -37,8 +37,8 @@ struct IngestProgressSheet: View {
 
   private var title: String {
     switch progress.phase {
-      case .scanning: String(localized: "Finding movies…")
-      case .adding: String(localized: "Adding to the queue…")
+      case .scanning: String(localized: "Finding movies…", bundle: #bundle)
+      case .adding: String(localized: "Adding to the queue…", bundle: #bundle)
     }
   }
 }
@@ -55,7 +55,7 @@ private struct IngestProgressBar: View {
       ProgressView(value: fraction) {
         EmptyView()
       } currentValueLabel: {
-        Text("\(progress.completed, format: .number) of \(total, format: .number)")
+        Text("\(progress.completed, format: .number) of \(total, format: .number)", bundle: #bundle)
       }
     } else {
       ProgressView()
