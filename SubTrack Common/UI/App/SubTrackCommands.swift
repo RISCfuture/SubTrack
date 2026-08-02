@@ -12,6 +12,7 @@ struct SubTrackCommands: Commands {
   let environment: AppEnvironment?
 
   var body: some Commands {
+    HelpWebCommands()
     if let environment {
       CommandGroup(replacing: .appInfo) {
         AboutMenuButton()
@@ -24,6 +25,26 @@ struct SubTrackCommands: Commands {
       QueueFileCommands(environment: environment)
       QueueRunCommands(environment: environment)
       InspectorCommands(ui: environment.ui)
+    }
+  }
+}
+
+/**
+ The Help menu's outbound links, beneath the "SubTrack Help" item SwiftUI
+ supplies — which AppKit points at the bundled help book once
+ `CFBundleHelpBookFolder` and `CFBundleHelpBookName` are set, so nothing here
+ replaces `.help`.
+
+ These are the two things the help book deliberately isn't: the current site,
+ and somewhere to report a problem. They sit outside the environment check
+ because neither needs one.
+ */
+private struct HelpWebCommands: Commands {
+  var body: some Commands {
+    CommandGroup(after: .help) {
+      Divider()
+      Link("SubTrack Website", destination: FeatureFlags.websiteURL)
+      Link("Report an Issue…", destination: FeatureFlags.issuesURL)
     }
   }
 }

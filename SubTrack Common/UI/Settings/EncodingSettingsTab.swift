@@ -34,6 +34,7 @@ struct EncodingSettingsTab: View {
       }
     }
     .formStyle(.grouped)
+    .settingsHelp(.settingsEncoding, accessibilityIdentifier: "settings.encodingHelp")
   }
 }
 

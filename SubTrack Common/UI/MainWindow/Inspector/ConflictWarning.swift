@@ -22,6 +22,7 @@ struct ConflictWarning: View {
           .lineLimit(1)
           .truncationMode(.head)
       }
+      HelpTopicButton(anchor: .nameConflicts, accessibilityIdentifier: "conflict.help")
     }
   }
 

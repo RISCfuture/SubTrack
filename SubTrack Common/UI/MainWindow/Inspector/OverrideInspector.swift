@@ -95,7 +95,7 @@ private struct FileOverrideEditor: View {
   @State private var pickedTrack: UInt?
 
   var body: some View {
-    InspectorForm {
+    InspectorForm(helpAnchor: .trackOverrides, helpAccessibilityIdentifier: "override.help") {
       VStack(alignment: .leading, spacing: 4) {
         Picker("Track", selection: trackSelection) {
           ForEach(plan.tracks) { track in
@@ -195,12 +195,18 @@ private struct UnsupportedCodecWarning: View {
   let codec: String
 
   var body: some View {
-    Label(
-      "The current FFmpeg can’t encode “\(codec)”. Choose a different codec, or switch to Built-in in Settings ▸ FFmpeg.",
-      systemImage: "exclamationmark.triangle.fill"
-    )
-    .foregroundStyle(.orange)
-    .font(.caption)
+    // The fix is a paragraph, not a clause — which build to switch to depends
+    // on which one is resolved — so the message states the problem and the
+    // page beneath it states the remedy.
+    VStack(alignment: .leading, spacing: 2) {
+      Label(
+        "The current FFmpeg can’t encode “\(codec)”.",
+        systemImage: "exclamationmark.triangle.fill"
+      )
+      .foregroundStyle(.orange)
+      .font(.caption)
+      HelpTopicButton(anchor: .unsupportedCodec, accessibilityIdentifier: "override.codecHelp")
+    }
   }
 }
 

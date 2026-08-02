@@ -16,4 +16,20 @@ extension Error {
     if let suggestion = error.localizedRecoverySuggestion { parts.append(suggestion) }
     return parts.joined(separator: " ")
   }
+
+  /**
+   The help-book topic explaining this failure, for the errors the book has a
+   page about.
+
+   Bridging through `NSError` picks up `LocalizedError`'s `helpAnchor` — the
+   slot Foundation already reserves for exactly this, and the one AppKit reads
+   to put a Help button on a presented error — so an error says which page
+   explains it in the same place it says what went wrong.
+
+   `nil` for anything the book doesn't cover, which is most of them. Offering
+   help that lands on a general page is worse than offering none.
+   */
+  var helpTopic: HelpAnchor? {
+    (self as NSError).helpAnchor.flatMap(HelpAnchor.init(rawValue:))
+  }
 }

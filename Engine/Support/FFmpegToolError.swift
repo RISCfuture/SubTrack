@@ -43,4 +43,11 @@ extension FFmpegToolError: LocalizedError {
         String(localized: "Choose a supported codec, or use the downloadable version of SubTrack.")
     }
   }
+
+  public var helpAnchor: String? {
+    switch self {
+      case .executableNotFound, .probeUnavailable: HelpAnchor.customFFmpeg.rawValue
+      case .unsupportedEncoder: HelpAnchor.unsupportedCodec.rawValue
+    }
+  }
 }

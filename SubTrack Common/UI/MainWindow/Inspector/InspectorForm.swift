@@ -1,24 +1,47 @@
 import SwiftUI
 
 /**
+ The margins the inspector's header row sits in, which its help button shares
+ so the two line up against the same edge.
+ */
+private enum InspectorHeaderInsets {
+  static let horizontal: Double = 12
+  static let vertical: Double = 8
+}
+
+/**
  The shape both inspector tabs share: the dropdown that picks what the tab is
- about, sitting full-width above the form rather than inside it, and the form
- of small controls describing whatever it picked.
+ about, sitting full-width above the form rather than inside it, the help
+ button for whatever the tab as a whole is about, and the form of small
+ controls describing whatever the dropdown picked.
 
  `controlSize` is the density control — it propagates through the environment
  and brings every toggle, picker, button, and field in the tab down a step,
- labels included, without freezing a type size the system should own.
+ labels included, without freezing a type size the system should own. The help
+ button rides that down with everything else.
  */
 struct InspectorForm<Header: View, Content: View>: View {
+  /// What the tab as a whole is about, for the help button beside its header.
+  let helpAnchor: HelpAnchor
+
+  /// Tells the two tabs' otherwise identical help buttons apart.
+  let helpAccessibilityIdentifier: String
+
   @ViewBuilder let header: Header
   @ViewBuilder let content: Content
 
   var body: some View {
     VStack(spacing: 0) {
-      header
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
+      HStack(spacing: 8) {
+        header
+          .frame(maxWidth: .infinity)
+        HelpTopicLink(
+          anchor: helpAnchor,
+          accessibilityIdentifier: helpAccessibilityIdentifier
+        )
+      }
+      .padding(.horizontal, InspectorHeaderInsets.horizontal)
+      .padding(.vertical, InspectorHeaderInsets.vertical)
       Divider()
       Form { content }
         .formStyle(.grouped)
@@ -122,7 +145,7 @@ extension View {
 
 #if DEBUG
   #Preview("Inspector Form") {
-    InspectorForm {
+    InspectorForm(helpAnchor: .slimRules, helpAccessibilityIdentifier: "preview.rulesHelp") {
       Menu("Preset — Everyday") {
         Button("Everyday") {}
       }

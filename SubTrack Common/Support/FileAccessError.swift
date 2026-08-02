@@ -63,4 +63,17 @@ extension FileAccessError: LocalizedError {
         String(localized: "Choose the output folder again.")
     }
   }
+
+  /**
+   Split by which end of the job went missing: a source the queue can no
+   longer reach, or a destination it can no longer write into.
+   */
+  public var helpAnchor: String? {
+    switch self {
+      case .sourceMissing, .bookmarkFailed, .accessDenied:
+        HelpAnchor.missingSource.rawValue
+      case .outputFolderNotWritable, .destinationUnavailable:
+        HelpAnchor.settingsGeneral.rawValue
+    }
+  }
 }

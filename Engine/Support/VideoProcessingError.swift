@@ -50,6 +50,19 @@ extension VideoProcessingError: LocalizedError {
         String(localized: "Processing was cancelled.")
     }
   }
+
+  /**
+   A failure to launch is a problem with the `ffmpeg` build itself; the rest
+   are a run that started and then went wrong. Cancelling is neither.
+   */
+  public var helpAnchor: String? {
+    switch self {
+      case .launchFailed: HelpAnchor.customFFmpeg.rawValue
+      case .encodeFailed, .outputMissingStreams, .outputStreamEmpty:
+        HelpAnchor.encodeFailed.rawValue
+      case .cancelled: nil
+    }
+  }
 }
 
 extension StreamOperation.StreamType {

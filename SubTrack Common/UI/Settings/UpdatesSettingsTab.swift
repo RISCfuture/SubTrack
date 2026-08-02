@@ -34,6 +34,7 @@ struct UpdatesSettingsTab: View {
       }
     }
     .formStyle(.grouped)
+    .settingsHelp(.settingsUpdates, accessibilityIdentifier: "settings.updatesHelp")
   }
 
   @MainActor private var cadence: Binding<UpdateCheckCadence> {

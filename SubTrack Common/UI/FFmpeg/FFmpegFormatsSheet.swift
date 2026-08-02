@@ -21,16 +21,24 @@ struct FFmpegFormatsSheet: View {
               showsFullVersionLink: showsFullVersionLink
             )
           case .unavailable(let reason):
-            ContentUnavailableView(
-              "FFmpeg Unavailable",
-              systemImage: "exclamationmark.triangle",
-              description: Text(reason)
-            )
+            ContentUnavailableView {
+              Label("FFmpeg Unavailable", systemImage: "exclamationmark.triangle")
+            } description: {
+              Text(reason)
+            } actions: {
+              HelpTopicButton(
+                anchor: .customFFmpeg,
+                accessibilityIdentifier: "formats.unavailableHelp"
+              )
+            }
           case .idle, .loading:
             ProgressView("Reading ffmpeg…")
         }
       }
       .toolbar {
+        ToolbarItem {
+          HelpTopicLink(anchor: .supportedFormats, accessibilityIdentifier: "formats.help")
+        }
         ToolbarItem(placement: .confirmationAction) {
           Button("Done") { dismiss() }
         }

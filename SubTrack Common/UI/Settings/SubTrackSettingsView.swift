@@ -27,8 +27,11 @@ struct SubTrackSettingsView: View {
       }
     }
     // Sized for the Presets tab's list-and-editor split; the others are content
-    // that happily fills whatever it is given.
-    .frame(width: 620, height: 420)
+    // that happily fills whatever it is given. The height carries the editor
+    // plus the help row every pane insets at its bottom — take that row's space
+    // back out and the editor is squeezed enough to push its last control out
+    // of reach.
+    .frame(width: 620, height: 460)
   }
 }
 
