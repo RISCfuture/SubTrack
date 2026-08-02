@@ -16,10 +16,23 @@ struct OutputPreviewInspector: View {
 
 /// One file's plan: what it comes to, and the tracks it comes to it by.
 private struct FileOutputPreview: View {
+  /// Enough rows to read a plan by before the divider has been moved.
+  private static let minimumListHeight = 120.0
+
+  /// Enough of the detail to show a section and a half, so it reads as scrollable.
+  private static let minimumDetailHeight = 150.0
+
   @Environment(AppEnvironment.self)
   private var env
   let item: QueueItem
   let container: Container
+
+  /**
+   The track the detail pane is describing, or `nil` before one has been
+   picked — in which case it falls back to the first track in output order, so
+   the pane is never blank and switching files never leaves it empty.
+   */
+  @State private var pickedTrack: UInt?
 
   var body: some View {
     let tracks = outputTracks
@@ -35,7 +48,17 @@ private struct FileOutputPreview: View {
       }
       .frame(maxWidth: .infinity, alignment: .leading)
     } content: {
-      OutputTrackTable(tracks: tracks)
+      // Split rather than stacked: how much room the list needs depends on the
+      // file, and a fourteen-track remux and a two-track rip want it divided
+      // differently.
+      VSplitView {
+        OutputTrackTable(tracks: tracks, selection: selection(in: tracks))
+          .frame(minHeight: Self.minimumListHeight)
+        if let track = selectedTrack(in: tracks) {
+          OutputTrackDetail(track: track)
+            .frame(minHeight: Self.minimumDetailHeight)
+        }
+      }
     }
   }
 
@@ -45,6 +68,17 @@ private struct FileOutputPreview: View {
    */
   private var outputTracks: [OutputTrack] {
     TrackPlan(container: container, selection: item.selection, rules: env.rules.rules).outputTracks
+  }
+
+  private func selectedTrack(in tracks: [OutputTrack]) -> OutputTrack? {
+    tracks.first { $0.id == pickedTrack } ?? tracks.first
+  }
+
+  private func selection(in tracks: [OutputTrack]) -> Binding<UInt?> {
+    Binding(
+      get: { selectedTrack(in: tracks)?.id },
+      set: { pickedTrack = $0 }
+    )
   }
 }
 
@@ -73,13 +107,16 @@ private struct OutputPreviewSummary: View {
 private struct OutputTrackTable: View {
   let tracks: [OutputTrack]
 
+  /// Which track the detail pane below is describing.
+  @Binding var selection: UInt?
+
   var body: some View {
     // Role is the only column left free to take the slack, and the three ahead
     // of it are capped so they can't take the width it needs. `Table` lays the
     // ideal widths out first and clips rather than compressing what won't fit,
     // so the ideals have to sum under the 260pt the pane is at its narrowest —
     // otherwise the last column is the one that goes over the edge.
-    Table(tracks) {
+    Table(tracks, selection: $selection) {
       TableColumn(LocalizedStringResource("Track", bundle: #bundle)) { TrackNumberCell(track: $0) }
         .width(36)
       TableColumn(LocalizedStringResource("Language", bundle: #bundle)) {
@@ -140,14 +177,14 @@ extension View {
    the pane is too narrow to spend two lines on one field, so what doesn't fit
    goes to the tooltip, which carries every fact the columns can't.
 
-   Concrete colors rather than the `.primary`/`.secondary` hierarchy: inside an
-   inspector SwiftUI resolves the hierarchy's second level to the primary label
-   color, so a dropped row would read exactly like a kept one.
+   The `.primary`/`.secondary` hierarchy rather than concrete colors, because a
+   row here can be selected: `Table` inverts the hierarchy against the
+   selection highlight, where a fixed label color would stay dark on it.
    */
   fileprivate func previewRowStyle(_ track: OutputTrack) -> some View {
     lineLimit(1)
       .truncationMode(.tail)
-      .foregroundStyle(track.track.isIncluded ? Color.primary : Color.secondary)
+      .foregroundStyle(track.track.isIncluded ? .primary : .secondary)
       .help(track.track.factsSummary)
   }
 }

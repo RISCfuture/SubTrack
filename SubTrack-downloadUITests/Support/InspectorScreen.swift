@@ -54,6 +54,18 @@ struct InspectorScreen {
   var languagesSummaryValue: String { (languagesSummary.value as? String) ?? "" }
 
   /**
+   Points the Preview tab's detail pane at the track at `streamIndex` by
+   clicking its row, which is what a reader does to it.
+   */
+  @discardableResult
+  func selectPreviewTrack(_ streamIndex: Int) -> Self {
+    app.staticTexts["preview.language.\(streamIndex)"]
+      .assertExists("Track \(streamIndex) has no row in the preview table.")
+      .click()
+    return self
+  }
+
+  /**
    Where the track at `streamIndex` lands in the output, as the Preview tab
    shows it: a position, or an em dash for a track the run drops. Addressed by
    source stream index, which is stable however the plan reorders the rows.

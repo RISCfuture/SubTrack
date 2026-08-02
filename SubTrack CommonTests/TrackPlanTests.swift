@@ -19,7 +19,8 @@ private let probeJSON = """
       {"index":2,"codec_name":"ac3","codec_type":"audio","sample_rate":"48000","channels":6,
        "bits_per_sample":0,"disposition":{},"tags":{"language":"eng"}},
       {"index":3,"codec_name":"ac3","codec_type":"audio","sample_rate":"48000","channels":2,
-       "bits_per_sample":0,"disposition":{"comment":1},"tags":{"language":"eng"}},
+       "bits_per_sample":0,"disposition":{"comment":1},
+       "tags":{"language":"eng","ENCODER":"Lavc60.3.100 ac3","BPS":"192000"}},
       {"index":4,"codec_name":"subrip","codec_type":"subtitle","disposition":{"forced":1},
        "tags":{"language":"eng"}}
     ],
@@ -106,5 +107,44 @@ struct OutputTrackTests {
 
     #expect(subtitle.dispositions == [.forced])
     #expect(dropped.dispositions == [.default, .dub])
+  }
+
+  /**
+   The detail pane's last section is the container's tags exactly as the probe
+   read them. Nothing is filtered, because a release's own tags are the facts
+   no list of named rows can predict.
+   */
+  @Test
+  func listsEveryTagTheProbeRead() throws {
+    let commentary = try #require(rulesPlan.outputTracks.first { $0.track.id == 3 })
+    let facts = commentary.detailSections.flatMap(\.facts)
+
+    for (name, value) in commentary.track.stream.tags {
+      #expect(
+        facts.contains { $0.name == name && $0.value == value },
+        "The detail pane dropped the “\(name)” tag."
+      )
+    }
+  }
+
+  /**
+   A converted track names the arguments its transcode runs under — the one
+   part of the plan that is neither the codec nor visible anywhere else.
+   */
+  @Test
+  func namesTheArgumentsATranscodeRunsUnder() throws {
+    let selection = FileTrackSelection(choices: [
+      TrackChoice(
+        streamIndex: 0,
+        streamType: .video,
+        action: .convert(codec: "hevc", options: ["-preset", "veryslow"])
+      )
+    ])
+    let plan = TrackPlan(container: container, selection: selection, rules: rules)
+    let video = try #require(plan.outputTracks.first { $0.track.id == 0 })
+    let facts = video.detailSections.flatMap(\.facts)
+
+    #expect(facts.contains { $0.value == "-preset veryslow" })
+    #expect(facts.contains { $0.value.contains("hevc") }, "The target codec should be named.")
   }
 }

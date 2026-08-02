@@ -145,13 +145,17 @@ final class HelpScreenshotUITests: XCTestCase {
    The same file's whole plan. Taken after ``captureTrackOverride(_:of:in:)``,
    so the skipped track it left behind is in shot as a dimmed row — which is
    what the article's "dimmed rows are the ones being dropped" is pointing at.
+
+   The lossless English track is selected because the detail pane below is half
+   the shot, and an audio track is what fills it: a title, a channel layout, a
+   sample rate, and a bit rate where a subtitle has none of them.
    */
   private func capturePreviewTab(
     _ app: XCUIApplication,
     of window: MainWindowScreen,
     in appearance: SubTrack.Appearance
   ) {
-    window.showPreview()
+    window.showPreview().selectPreviewTrack(1)
     parkPointer(in: app)
     capture(slug("track-preview", in: appearance), of: window.inspectorPane)
   }

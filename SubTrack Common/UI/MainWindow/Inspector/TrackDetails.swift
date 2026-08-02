@@ -53,8 +53,10 @@ extension PlannedTrack {
    output will be in.
    */
   var outputCodecSummary: String {
-    guard let shape else { return outputCodecName }
-    return String(localized: "\(outputCodecName) \(shape)", bundle: #bundle)
+    // Joined rather than localized: both halves are localized already, and a
+    // key of "%@ %@" tells a translator nothing and collides with every other
+    // two-value join in the catalog.
+    [outputCodecName, shape].compactMap(\.self).joined(separator: " ")
   }
 
   /**
@@ -196,8 +198,16 @@ extension VideoStream {
   fileprivate var shapeName: String {
     let lines = height.formatted(.number.grouping(.never))
     return fieldOrder == nil || fieldOrder == .progressive
-      ? String(localized: "\(lines)p", bundle: #bundle)
-      : String(localized: "\(lines)i", bundle: #bundle)
+      ? String(
+        localized: "\(lines)p",
+        bundle: #bundle,
+        comment: "A progressive frame height, e.g. “1080p”. The argument is the number of lines."
+      )
+      : String(
+        localized: "\(lines)i",
+        bundle: #bundle,
+        comment: "An interlaced frame height, e.g. “1080i”. The argument is the number of lines."
+      )
   }
 
   fileprivate var facts: [TrackFact] {
@@ -234,7 +244,12 @@ extension AudioStream {
       case 2: String(localized: "Stereo", bundle: #bundle)
       case 6: "5.1"
       case 8: "7.1"
-      default: String(localized: "\(channelCount, format: .number)ch", bundle: #bundle)
+      default:
+        String(
+          localized: "\(channelCount, format: .number)ch",
+          bundle: #bundle,
+          comment: "A channel count with no common name, e.g. “7ch”."
+        )
     }
   }
 
@@ -242,7 +257,12 @@ extension AudioStream {
     [
       TrackFact(
         name: String(localized: "Channels", bundle: #bundle),
-        value: channelCount.formatted(.number)
+        value: String(
+          localized: "\(channelCount, format: .number) (\(channelLayoutName))",
+          bundle: #bundle,
+          comment:
+            "An audio channel count and the layout it makes, e.g. “6 (5.1)”. The first argument is the count, the second its name."
+        )
       ),
       TrackFact(
         name: String(localized: "Sample rate", bundle: #bundle),
@@ -253,7 +273,10 @@ extension AudioStream {
           name: String(localized: "Bit depth", bundle: #bundle),
           value: String(localized: "\(bitsPerSample, format: .number)-bit", bundle: #bundle)
         )
-        : nil
+        : nil,
+      sampleFormat.map {
+        TrackFact(name: String(localized: "Sample format", bundle: #bundle), value: $0)
+      }
     ].compactMap(\.self)
   }
 

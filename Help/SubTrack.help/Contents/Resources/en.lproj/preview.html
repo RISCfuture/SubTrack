@@ -25,9 +25,9 @@ will carry them, and every track it’s dropping.</p>
 <figure>
   <picture>
     <source srcset="images/track-preview-dark.webp" media="(prefers-color-scheme: dark)">
-    <img src="images/track-preview.webp" width="300" height="792" alt="The Preview inspector for one file: a table of the output’s tracks numbered in order, with their language, codec, and role, and the dropped tracks dimmed beneath them.">
+    <img src="images/track-preview.webp" width="300" height="792" alt="The Preview inspector for one file: a table of the output’s tracks numbered in order with their language, codec, and role, the dropped tracks dimmed among them, and a detail pane below listing everything known about the selected track.">
   </picture>
-  <figcaption>The output, track by track. Dimmed rows are the ones being dropped.</figcaption>
+  <figcaption>The output, track by track, and everything known about the one you select.</figcaption>
 </figure>
 
 <p>Dimmed rows, and the ones with a dash where a number would be, are the tracks being dropped —
@@ -69,11 +69,27 @@ language order decides which audio track the slimmed file leads with, so the fir
 the output is marked default and the others aren’t — whatever the source said. Every other role is
 carried through untouched.</p>
 
-<h2>Hover a row for the rest</h2>
+<a name="track-detail" id="track-detail"></a>
+<h2>Select a track for everything else</h2>
 
-<p>The pane is narrow, so the columns show what distinguishes one track from another and no more.
-Hold the pointer over any row to see everything the scan read: the track’s own title, bit rate,
-sample rate, bit depth, and encoding profile.</p>
+<p>The columns show what distinguishes one track from another and no more. Select any row and the
+pane below it lists <em>everything</em> known about that track, in three groups:</p>
+
+<ul>
+  <li><strong>Output</strong> — where it lands, whether it’s copied, converted, or dropped, the
+    codec it ends up in, and the flags it comes out carrying.</li>
+  <li><strong>Track</strong> — what the file says it is: its stream index, codec and profile,
+    language, title, frame size or channel layout, sample rate, bit depth, and bit rate.</li>
+  <li><strong>Metadata</strong> — every tag the scan read, verbatim and unfiltered. This is where a
+    release’s own notes turn up, and it’s worth reading when a track isn’t behaving the way its
+    language and codec suggest it should.</li>
+</ul>
+
+<p>Drag the divider to give either the list or the detail more room, and select any value to copy
+it.</p>
+
+<p class="note">Both the list and the detail scroll. A remux with a dozen subtitle tracks won’t fit
+a narrow inspector, and neither will the metadata some encoders write.</p>
 
 <p class="note">If you re-scan a file (<strong>Queue</strong> &#9656; <strong>Re-scan
 Selected</strong>) the tab says so while it reads the tracks again, and the plan on screen is the old
