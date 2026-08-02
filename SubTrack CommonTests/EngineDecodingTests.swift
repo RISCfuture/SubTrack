@@ -117,7 +117,9 @@ struct ConverterTests {
 
     let operation = try #require(try converter.operations().first)
     #expect(operation.kind == .convert(codec: "hevc_videotoolbox", arguments: ["-q:v", "60"]))
-    #expect(operation.codecArgument == ["-c:v", "hevc_videotoolbox", "-q:v", "60"])
+    #expect(
+      operation.codecArgument(outputIndex: 0) == ["-c:v:0", "hevc_videotoolbox", "-q:v", "60"]
+    )
   }
 
   /**
@@ -180,6 +182,38 @@ struct ConverterTests {
     #expect(audio.last?.action == .drop)
     // The kept tracks lead the file's stream operations, in priority order.
     #expect(selection.operations().filter { $0.streamType == .audio }.map(\.streamIndex) == [3, 2])
+  }
+}
+
+@Suite
+struct CodecArgumentTests {
+
+  /**
+   Each kept track is numbered against the output's streams of its own type, so
+   a plan that copies one audio track and converts another says so per track. A
+   per-type `-c:a` would emit both `copy` and the target codec, and FFMPEG would
+   apply only the last of them — to both tracks.
+   */
+  @Test
+  func numbersEachTrackWithinItsOwnType() {
+    let operations = [
+      StreamOperation(streamIndex: 0, streamType: .video, kind: .copy),
+      StreamOperation(streamIndex: 3, streamType: .audio, kind: .copy),
+      StreamOperation(
+        streamIndex: 2,
+        streamType: .audio,
+        kind: .convert(codec: "eac3", arguments: [])
+      ),
+      StreamOperation(streamIndex: 6, streamType: .subtitle, kind: .copy)
+    ]
+    #expect(
+      ProgressReportingProcessor.codecArguments(for: operations) == [
+        "-c:v:0", "copy",
+        "-c:a:0", "copy",
+        "-c:a:1", "eac3",
+        "-c:s:0", "copy"
+      ]
+    )
   }
 }
 

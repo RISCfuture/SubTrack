@@ -40,6 +40,23 @@ final class ProgressReportingProcessor: Processor {
   }
 
   /**
+   The `-c:x:N` flags for `operations`, each numbered by its position among the
+   output's streams of its own type — i.e. its `-map` order within that type.
+
+   Numbering here rather than on the operation itself is what keeps a mixed
+   plan honest: only the whole list knows where a given track lands among its
+   own kind.
+   */
+  static func codecArguments(for operations: [StreamOperation]) -> [String] {
+    var writtenPerType = [StreamOperation.StreamType: Int]()
+    return operations.flatMap { operation in
+      let outputIndex = writtenPerType[operation.streamType, default: 0]
+      writtenPerType[operation.streamType] = outputIndex + 1
+      return operation.codecArgument(outputIndex: outputIndex)
+    }
+  }
+
+  /**
    The `-disposition:a:N` flags that mark the first kept audio track as the
    container `default` and clear the flag on every other audio track, so a
    language-prioritized output isn't overridden by a `default` flag copied
@@ -100,8 +117,8 @@ final class ProgressReportingProcessor: Processor {
 
   /// The full `ffmpeg` argument vector for this conversion.
   private func arguments(outputURL: URL) -> [String] {
-    let convertArguments = (operations.map(\.codecArgument) + operations.map(\.mapArgument))
-      .removingDuplicates().flatMap(\.self)
+    let convertArguments =
+      Self.codecArguments(for: operations) + operations.flatMap(\.mapArgument)
     return ["-y", "-i", inputURL.path(percentEncoded: false)] + convertArguments
       + Self.dispositionArguments(for: operations)
       + ["-progress", "pipe:1", "-nostats", outputURL.path(percentEncoded: false)]
