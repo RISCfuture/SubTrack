@@ -597,7 +597,8 @@
               codec: "ac3",
               language: "eng",
               channels: 6,
-              title: "Director’s Commentary"
+              title: "Director’s Commentary",
+              roles: [.comment]
             ),
             PreviewSupport.AudioTrack(codec: "dts", language: "fra", channels: 6),
             PreviewSupport.AudioTrack(codec: "ac3", language: "deu", channels: 6),
@@ -605,8 +606,17 @@
             PreviewSupport.AudioTrack(codec: "ac3", language: "ita", channels: 6)
           ],
           subtitles: [
-            PreviewSupport.SubtitleTrack(codec: "subrip", language: "eng", title: "English (SDH)"),
-            PreviewSupport.SubtitleTrack(codec: "hdmv_pgs_subtitle", language: "eng"),
+            PreviewSupport.SubtitleTrack(
+              codec: "subrip",
+              language: "eng",
+              title: "English (SDH)",
+              roles: [.hearingImpaired]
+            ),
+            PreviewSupport.SubtitleTrack(
+              codec: "hdmv_pgs_subtitle",
+              language: "eng",
+              roles: [.forced]
+            ),
             PreviewSupport.SubtitleTrack(codec: "subrip", language: "fra"),
             PreviewSupport.SubtitleTrack(codec: "subrip", language: "deu"),
             PreviewSupport.SubtitleTrack(codec: "subrip", language: "spa"),

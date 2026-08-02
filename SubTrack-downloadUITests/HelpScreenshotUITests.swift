@@ -66,6 +66,7 @@ final class HelpScreenshotUITests: XCTestCase {
     captureRulesArticles(inspector, of: window, in: appearance)
     capturePresetMenu(app, of: mainWindow, in: appearance)
     captureTrackOverride(app, of: window, in: appearance)
+    capturePreviewTab(app, of: window, in: appearance)
   }
 
   /**
@@ -138,6 +139,21 @@ final class HelpScreenshotUITests: XCTestCase {
     override.selectTrack(1)
     parkPointer(in: app)
     capture(slug("track-override", in: appearance), of: window.inspectorPane)
+  }
+
+  /**
+   The same file's whole plan. Taken after ``captureTrackOverride(_:of:in:)``,
+   so the skipped track it left behind is in shot as a dimmed row — which is
+   what the article's "dimmed rows are the ones being dropped" is pointing at.
+   */
+  private func capturePreviewTab(
+    _ app: XCUIApplication,
+    of window: MainWindowScreen,
+    in appearance: SubTrack.Appearance
+  ) {
+    window.showPreview()
+    parkPointer(in: app)
+    capture(slug("track-preview", in: appearance), of: window.inspectorPane)
   }
 
   // MARK: - Adding and Settings articles

@@ -54,12 +54,13 @@ public final class RulesModel {
 }
 
 /**
- The inspector panel's mode: the queue-wide preset, or the selected file's own
- overrides.
+ The inspector panel's mode: the queue-wide preset, the selected file's own
+ overrides, or what that file's run comes to.
  */
 public enum InspectorMode: Sendable, CaseIterable {
   case rules
   case `override`
+  case preview
 }
 
 /// Transient, window-level UI state shared between the views and menu commands.

@@ -46,9 +46,27 @@ struct InspectorScreen {
   /// The collision warning as reported against this one file.
   var nameConflict: XCUIElement { app.descendant(id: "override.nameConflict") }
 
+  /// The Preview tab's table of the output's tracks, and its kept-of-total line.
+  var previewTable: XCUIElement { app.descendant(id: "preview.table") }
+  var previewSummary: XCUIElement { app.descendant(id: "preview.summary") }
+
+  /// The Preview tab's stand-in when the selection isn't one inspectable file.
+  var previewNoFileSelected: XCUIElement { app.descendant(id: "preview.noFileSelected") }
+
   /// The languages-to-keep summary in the Rules tab.
   var languagesSummary: XCUIElement { app.descendant(id: "rules.languages") }
   var languagesSummaryValue: String { (languagesSummary.value as? String) ?? "" }
+
+  /**
+   Where the track at `streamIndex` lands in the output, as the Preview tab
+   shows it: a position, or an em dash for a track the run drops. Addressed by
+   source stream index, which is stable however the plan reorders the rows.
+   */
+  func previewPosition(ofTrack streamIndex: Int) -> String {
+    let cell = app.staticTexts["preview.number.\(streamIndex)"]
+      .assertExists("Track \(streamIndex) has no row in the preview table.")
+    return (cell.value as? String) ?? ""
+  }
 
   /**
    Scrolls the inspector's form until the control identified by `identifier` is

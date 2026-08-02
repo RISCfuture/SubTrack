@@ -6,76 +6,9 @@ import SwiftUI
  preset for this one file.
  */
 struct OverrideInspector: View {
-  @Environment(AppEnvironment.self)
-  private var env
-
   var body: some View {
-    if let item = selectedItem {
-      if let container = item.container {
-        FileOverrideEditor(item: item, container: container)
-      } else {
-        UninspectedFileView(item: item)
-      }
-    } else {
-      ContentUnavailableView(
-        "No File Selected",
-        systemImage: "circle.slash",
-        description: Text("Select a single file to override it.", bundle: #bundle)
-      )
-      .accessibilityIdentifier("override.noFileSelected")
-    }
-  }
-
-  private var selectedItem: QueueItem? {
-    guard env.queue.selection.count == 1, let id = env.queue.selection.first else { return nil }
-    return env.queue.items.first { $0.id == id }
-  }
-}
-
-/**
- Why the selected file has no tracks to describe yet. Each state names what
- the file is actually doing — a file waiting its turn behind a hundred others
- is not the same as no file being selected, and the tab must not read as
- though nothing is chosen.
- */
-private struct UninspectedFileView: View {
-  let item: QueueItem
-
-  var body: some View {
-    switch item.status {
-      case .waiting, .probing:
-        VStack {
-          ProgressView().controlSize(.small)
-          Text("Inspecting “\(item.displayName)”…", bundle: #bundle)
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
-        }
-        .padding()
-        .accessibilityIdentifier("override.inspecting")
-      case .missing:
-        ContentUnavailableView(
-          "Source Missing",
-          systemImage: "questionmark.folder",
-          description: Text(
-            "“\(item.displayName)” is no longer where it was added from.",
-            bundle: #bundle
-          )
-        )
-        .accessibilityIdentifier("override.sourceMissing")
-      case .failed(let reason):
-        ContentUnavailableView(
-          "Couldn’t Inspect File",
-          systemImage: "exclamationmark.triangle",
-          description: Text(reason)
-        )
-        .accessibilityIdentifier("override.probeFailed")
-      default:
-        ContentUnavailableView(
-          "Not Inspected",
-          systemImage: "questionmark.square.dashed",
-          description: Text("Re-scan “\(item.displayName)” to read its tracks.", bundle: #bundle)
-        )
-        .accessibilityIdentifier("override.notInspected")
+    SelectedFileGate(identifierPrefix: "override") { item, container in
+      FileOverrideEditor(item: item, container: container)
     }
   }
 }

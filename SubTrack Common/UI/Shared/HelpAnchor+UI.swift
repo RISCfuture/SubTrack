@@ -35,6 +35,12 @@ extension HelpAnchor {
           bundle: #bundle,
           comment: "Help button label"
         )
+      case .trackPreview:
+        String(
+          localized: "Help with reading a file’s track plan",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .settingsGeneral:
         String(
           localized: "Help with output destinations",

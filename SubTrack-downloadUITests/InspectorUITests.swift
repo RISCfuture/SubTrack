@@ -164,8 +164,48 @@ final class InspectorUITests: XCTestCase {
     window.showTabFromPicker("Override").noFileSelected
       .assertExists("The Override tab should be showing.")
 
+    window.showTabFromPicker("Preview").previewNoFileSelected
+      .assertExists("The Preview tab should be showing.")
+
     window.showTabFromPicker("Rules").keepUntaggedToggle
       .assertExists("The Rules tab should be showing.")
+  }
+
+  /**
+   The Preview tab is a view of the output, not of the file: dropping a track
+   has to take that track's position away and close the numbering up over it,
+   or the positions would describe a file the run never writes.
+   */
+  func testPreviewRenumbersTheOutputAroundADroppedTrack() {
+    let app = SubTrack.launch(state: .oneReadyItem)
+    let window = MainWindowScreen(app: app).waitUntilLoaded()
+    window.rowNamed("Interstellar.mkv").click()
+
+    // The fixture's English audio (stream 1) and English subtitle (stream 3) are
+    // both kept by the default rules, the subtitle behind the audio.
+    let inspector = window.showPreview()
+    let audioPosition = inspector.previewPosition(ofTrack: 1)
+    XCTAssertNotEqual(audioPosition, "—", "The English audio should start out in the output.")
+    XCTAssertNotEqual(
+      inspector.previewPosition(ofTrack: 3),
+      audioPosition,
+      "The English subtitle should start out behind it."
+    )
+
+    window.showOverride().selectTrack(1)
+    inspector.toggleInclude()
+    window.showPreview()
+
+    XCTAssertEqual(
+      inspector.previewPosition(ofTrack: 1),
+      "—",
+      "A dropped track should still be listed, with no position in the output."
+    )
+    XCTAssertEqual(
+      inspector.previewPosition(ofTrack: 3),
+      audioPosition,
+      "The tracks behind it should move up into the gap."
+    )
   }
 
   func testToolbarButtonHidesAndShowsTheInspector() {

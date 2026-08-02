@@ -47,6 +47,17 @@ extension PlannedTrack {
   }
 
   /**
+   The codec the output will hold this track in, qualified by the shape of what
+   it carries: "ac3 5.1", "h264 1080p", "subrip". A converted track names its
+   target behind an arrow, because that — not the source's codec — is what the
+   output will be in.
+   */
+  var outputCodecSummary: String {
+    guard let shape else { return outputCodecName }
+    return String(localized: "\(outputCodecName) \(shape)", bundle: #bundle)
+  }
+
+  /**
    Everything the probe knows about this track, in the order the tab lists it:
    what it is, how it is tagged, and what shape its media takes.
    */
@@ -59,15 +70,43 @@ extension PlannedTrack {
     ].compactMap(\.self) + mediaFacts + tagFacts
   }
 
-  private var index: UInt { stream.index }
+  /**
+   Every fact about the track as one block, for a tooltip over a row too narrow
+   to hold them. What the columns had to leave out is here.
+   */
+  var factsSummary: String {
+    facts.map { "\($0.name): \($0.value)" }.joined(separator: "\n")
+  }
 
-  private var typeName: String {
+  var typeName: String {
     switch type {
       case .video: String(localized: "Video", bundle: #bundle)
       case .audio: String(localized: "Audio", bundle: #bundle)
       case .subtitle: String(localized: "Subtitle", bundle: #bundle)
     }
   }
+
+  /// The glyph standing in for ``typeName`` where a column is too narrow for the word.
+  var typeSymbolName: String {
+    switch type {
+      case .video: "film"
+      case .audio: "waveform"
+      case .subtitle: "captions.bubble"
+    }
+  }
+
+  /**
+   The track's language named in the user's own language, falling back to the
+   raw tag when the catalog doesn't recognize it.
+   */
+  var languageName: String {
+    guard let language = stream.language else {
+      return String(localized: "Untagged", bundle: #bundle)
+    }
+    return LanguageCatalog.name(for: language) ?? language
+  }
+
+  private var index: UInt { stream.index }
 
   /**
    The codec, qualified by its encoding profile when the probe reported one
@@ -86,15 +125,23 @@ extension PlannedTrack {
     }
   }
 
+  /// The codec the run leaves this track in: its target when converting, its own otherwise.
+  private var outputCodecName: String {
+    guard case let .convert(codec, _) = action else { return stream.codecName }
+    return String(localized: "→ \(codec)", bundle: #bundle)
+  }
+
   /**
-   The track's language named in the user's own language, falling back to the
-   raw tag when the catalog doesn't recognize it.
+   The shape of what the track carries, in the one measure that distinguishes
+   tracks worth telling apart: a frame height for video, a channel layout for
+   audio. Subtitles have none.
    */
-  private var languageName: String {
-    guard let language = stream.language else {
-      return String(localized: "Untagged", bundle: #bundle)
+  private var shape: String? {
+    switch stream {
+      case let video as VideoStream: video.shapeName
+      case let audio as AudioStream: audio.channelLayoutName
+      default: nil
     }
-    return LanguageCatalog.name(for: language) ?? language
   }
 
   /// The facts particular to the kind of media the track carries.
@@ -111,10 +158,7 @@ extension PlannedTrack {
    densely it is encoded, and how a player should treat it.
    */
   private var tagFacts: [TrackFact] {
-    let flags = stream.dispositions
-      .map(\.displayName)
-      .sorted()
-      .formatted(.list(type: .and))
+    let flags = stream.dispositions.displayList
     return [
       stream.bitsPerSecond.map {
         TrackFact(name: String(localized: "Bit rate", bundle: #bundle), value: Self.bitRate($0))
@@ -140,6 +184,22 @@ extension PlannedTrack {
 }
 
 extension VideoStream {
+
+  /**
+   The frame as a viewer names it — "1080p", "1080i" — rather than as a pair of
+   pixel counts. Height and scan are what distinguish one release from another;
+   width follows from the aspect ratio.
+
+   A stream with no `field_order` tag is read as progressive, which is what an
+   untagged modern release almost always is.
+   */
+  fileprivate var shapeName: String {
+    let lines = height.formatted(.number.grouping(.never))
+    return fieldOrder == nil || fieldOrder == .progressive
+      ? String(localized: "\(lines)p", bundle: #bundle)
+      : String(localized: "\(lines)i", bundle: #bundle)
+  }
+
   fileprivate var facts: [TrackFact] {
     [
       TrackFact(
@@ -163,6 +223,21 @@ extension VideoStream {
 }
 
 extension AudioStream {
+
+  /**
+   The channel count as a listener names it, which is what tells a main mix
+   from the stereo downmix beside it in the same language.
+   */
+  fileprivate var channelLayoutName: String {
+    switch channelCount {
+      case 1: String(localized: "Mono", bundle: #bundle)
+      case 2: String(localized: "Stereo", bundle: #bundle)
+      case 6: "5.1"
+      case 8: "7.1"
+      default: String(localized: "\(channelCount, format: .number)ch", bundle: #bundle)
+    }
+  }
+
   fileprivate var facts: [TrackFact] {
     [
       TrackFact(
@@ -204,10 +279,37 @@ extension VideoStream.FieldOrder {
   }
 }
 
+extension Set<Disposition> {
+
+  /**
+   The flags as one phrase, most decisive first. A narrow column truncates, and
+   what it truncates away should be what nobody decides a track's fate on —
+   which is why this is ranked rather than alphabetical.
+   */
+  var displayList: String {
+    sorted { ($0.decisionRank, $0.displayName) < ($1.decisionRank, $1.displayName) }
+      .map(\.displayName)
+      .formatted(.list(type: .and))
+  }
+}
+
 extension Disposition {
 
+  /**
+   The flags a keep-or-drop decision actually turns on, in the order they
+   matter. Everything absent from this list sorts after all of them.
+   */
+  private static let decisionOrder: [Self] = [
+    .default, .forced, .comment, .hearingImpaired, .visualImpaired, .descriptions, .captions,
+    .original, .dub
+  ]
+
+  fileprivate var decisionRank: Int {
+    Self.decisionOrder.firstIndex(of: self) ?? Self.decisionOrder.count
+  }
+
   /// The flag's name as the inspector lists it.
-  fileprivate var displayName: String {
+  var displayName: String {
     switch self {
       case .default: String(localized: "Default", bundle: #bundle)
       case .dub: String(localized: "Dubbed", bundle: #bundle)

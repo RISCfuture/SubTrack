@@ -36,6 +36,9 @@ enum HelpAnchor: String, Sendable {
   /// One file's own track-by-track departures from the queue's rules.
   case trackOverrides = "track-overrides"
 
+  /// Reading one file's whole plan: the tracks its run writes, and what it drops.
+  case trackPreview = "track-preview"
+
   /// Where slimmed files are written, and the default new queues inherit.
   case settingsGeneral = "settings-general"
 

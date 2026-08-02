@@ -169,6 +169,8 @@ struct MainWindowScreen {
   func showRules() -> InspectorScreen { switchInspector(key: "1") }
   @discardableResult
   func showOverride() -> InspectorScreen { switchInspector(key: "2") }
+  @discardableResult
+  func showPreview() -> InspectorScreen { switchInspector(key: "3") }
 
   @discardableResult
   func toggleInspector() -> Self {

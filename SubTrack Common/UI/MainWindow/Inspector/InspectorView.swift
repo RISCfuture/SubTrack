@@ -17,6 +17,7 @@ struct InspectorView: View {
       ) {
         Text("Rules", bundle: #bundle).tag(InspectorMode.rules)
         Text("Override", bundle: #bundle).tag(InspectorMode.override)
+        Text("Preview", bundle: #bundle).tag(InspectorMode.preview)
       }
       .pickerStyle(.segmented)
       .labelsHidden()
@@ -31,6 +32,7 @@ struct InspectorView: View {
         switch ui.inspectorMode {
           case .rules: RulesInspector()
           case .override: OverrideInspector()
+          case .preview: OutputPreviewInspector()
         }
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)

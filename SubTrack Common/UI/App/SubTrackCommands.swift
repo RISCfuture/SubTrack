@@ -144,6 +144,10 @@ private struct InspectorCommands: Commands {
         ui.inspectorMode = .override
       }
       .keyboardShortcut("2", modifiers: [.command, .option])
+      Button(LocalizedStringResource("Inspector: Preview", bundle: #bundle)) {
+        ui.inspectorMode = .preview
+      }
+      .keyboardShortcut("3", modifiers: [.command, .option])
     }
   }
 }

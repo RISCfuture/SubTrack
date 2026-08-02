@@ -10,21 +10,23 @@ private enum InspectorHeaderInsets {
 }
 
 /**
- The shape both inspector tabs share: the dropdown that picks what the tab is
- about, sitting full-width above the form rather than inside it, the help
- button for whatever the tab as a whole is about, and the form of small
- controls describing whatever the dropdown picked.
+ The shape every inspector tab shares: the control that picks what the tab is
+ about, sitting full-width above the tab's body rather than inside it, the help
+ button for whatever the tab as a whole is about, and the body itself.
 
  `controlSize` is the density control — it propagates through the environment
  and brings every toggle, picker, button, and field in the tab down a step,
  labels included, without freezing a type size the system should own. The help
  button rides that down with everything else.
+
+ Most tabs describe a thing with small controls and want ``InspectorForm``.
+ This is for the ones whose body is not a form.
  */
-struct InspectorForm<Header: View, Content: View>: View {
+struct InspectorPane<Header: View, Content: View>: View {
   /// What the tab as a whole is about, for the help button beside its header.
   let helpAnchor: HelpAnchor
 
-  /// Tells the two tabs' otherwise identical help buttons apart.
+  /// Tells the tabs' otherwise identical help buttons apart.
   let helpAccessibilityIdentifier: String
 
   @ViewBuilder let header: Header
@@ -43,10 +45,33 @@ struct InspectorForm<Header: View, Content: View>: View {
       .padding(.horizontal, InspectorHeaderInsets.horizontal)
       .padding(.vertical, InspectorHeaderInsets.vertical)
       Divider()
+      content
+    }
+    .controlSize(.small)
+  }
+}
+
+/// An ``InspectorPane`` whose body is a form of small controls.
+struct InspectorForm<Header: View, Content: View>: View {
+  /// What the tab as a whole is about, for the help button beside its header.
+  let helpAnchor: HelpAnchor
+
+  /// Tells the tabs' otherwise identical help buttons apart.
+  let helpAccessibilityIdentifier: String
+
+  @ViewBuilder let header: Header
+  @ViewBuilder let content: Content
+
+  var body: some View {
+    InspectorPane(
+      helpAnchor: helpAnchor,
+      helpAccessibilityIdentifier: helpAccessibilityIdentifier
+    ) {
+      header
+    } content: {
       Form { content }
         .formStyle(.grouped)
     }
-    .controlSize(.small)
   }
 }
 

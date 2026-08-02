@@ -200,7 +200,7 @@
       [
         "index": index, "codec_type": "audio", "codec_name": track.codec,
         "sample_rate": "48000", "channels": track.channels, "bits_per_sample": 0,
-        "disposition": ["default": isDefault ? 1 : 0],
+        "disposition": dispositions(track.roles, isDefault: isDefault),
         "tags": tags(
           language: track.language,
           bitsPerSecond: track.bitsPerSecond,
@@ -212,13 +212,22 @@
     private static func streamDictionary(for track: SubtitleTrack, index: Int) -> [String: Any] {
       [
         "index": index, "codec_type": "subtitle", "codec_name": track.codec,
-        "disposition": ["default": 0],
+        "disposition": dispositions(track.roles),
         "tags": tags(
           language: track.language,
           bitsPerSecond: track.bitsPerSecond,
           title: track.title
         )
       ]
+    }
+
+    /// A stream's disposition flags in the shape `ffprobe` reports them: every flag, set or clear.
+    private static func dispositions(_ roles: Set<Disposition>, isDefault: Bool = false)
+      -> [String: UInt8]
+    {
+      var flags = Dictionary(uniqueKeysWithValues: roles.map { ($0.rawValue, UInt8(1)) })
+      flags["default"] = isDefault || roles.contains(.default) ? 1 : 0
+      return flags
     }
 
     /// A stream's tags, carrying its own name only when the fixture gives it one.
@@ -302,6 +311,13 @@
 
       /// The track's own name ("Director's Commentary"), shown as its Title fact.
       var title: String?
+
+      /**
+       What the track is tagged as being for — `comment`, `dub`, and the rest.
+       Leave `default` out of it: the fixture puts that on the first audio track
+       itself, the way a container does.
+       */
+      var roles: Set<Disposition> = []
     }
 
     struct SubtitleTrack {
@@ -311,6 +327,9 @@
 
       /// The track's own name ("English (SDH)"), shown as its Title fact.
       var title: String?
+
+      /// What the track is tagged as being for — `forced`, `hearing_impaired`, and the rest.
+      var roles: Set<Disposition> = []
     }
   }
 

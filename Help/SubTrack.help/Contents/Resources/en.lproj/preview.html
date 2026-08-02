@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Read the whole plan for one file</title>
+  <meta name="AppleTitle" content="Read the whole plan for one file">
+  <meta name="description" content="See every track a file’s run will write, in the order the output carries them, and which tracks are being dropped.">
+  <meta name="keywords" content="preview, plan, output, tracks, order, role, default, commentary, forced, dropped, inspector">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-preview" id="track-preview"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Read the whole plan for one file</h1>
+
+<p>Before you commit a queue to your rules, it’s worth seeing what one file actually comes to. The
+<strong>Preview</strong> tab is that view: every track the run will write, in the order the output
+will carry them, and every track it’s dropping.</p>
+
+<ol>
+  <li>Select a file in the queue.</li>
+  <li>Show the inspector (<kbd>⌥⌘I</kbd>) and choose <strong>Preview</strong> (<kbd>⌥⌘3</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="images/track-preview-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/track-preview.webp" width="300" height="792" alt="The Preview inspector for one file: a table of the output’s tracks numbered in order, with their language, codec, and role, and the dropped tracks dimmed beneath them.">
+  </picture>
+  <figcaption>The output, track by track. Dimmed rows are the ones being dropped.</figcaption>
+</figure>
+
+<p>Dimmed rows, and the ones with a dash where a number would be, are the tracks being dropped —
+they’re listed so you can see what you’re losing, not because they’ll be in the file.</p>
+
+<p>Nothing here can be changed. It’s the consequence of your rules and any override you’ve set; to
+change it, see <a href="overrides.html#track-overrides">Override the track plan for one file</a>.</p>
+
+<a name="track-roles" id="track-roles"></a>
+<h2>What the columns tell you</h2>
+
+<p><strong>Track</strong> is where the track lands in the output, numbered from one, with an icon for
+what kind it is. A dash means it isn’t in the output at all.</p>
+
+<p><strong>Codec</strong> is the format the output will hold the track in, and the shape of what it
+carries — <code>ac3 5.1</code>, <code>h264 1080p</code>. An arrow (<code>→ aac</code>) means the track
+is being converted, not copied.</p>
+
+<p><strong>Role</strong> is what the track is <em>for</em>, which is usually what decides whether you
+want it:</p>
+
+<ul>
+  <li><strong>Default</strong> — the track a player reaches for on its own.</li>
+  <li><strong>Forced</strong> — subtitles for foreign dialogue only, not the whole film.</li>
+  <li><strong>Commentary</strong> — a talk track over the feature.</li>
+  <li><strong>Hearing impaired</strong> — subtitles carrying sound as well as speech (often called
+    SDH).</li>
+  <li><strong>Visually impaired</strong> and <strong>Descriptions</strong> — narration of what’s on
+    screen.</li>
+  <li><strong>Dubbed</strong> and <strong>Original</strong> — whether the audio is the language the
+    film was shot in.</li>
+</ul>
+
+<p>These come from how the file was tagged, so a mislabelled track shows the label it carries rather
+than what it really is. That’s exactly the case the Override tab exists for.</p>
+
+<p class="note"><strong>Default</strong> is the one role SubTrack assigns rather than reads. Your
+language order decides which audio track the slimmed file leads with, so the first audio track in
+the output is marked default and the others aren’t — whatever the source said. Every other role is
+carried through untouched.</p>
+
+<h2>Hover a row for the rest</h2>
+
+<p>The pane is narrow, so the columns show what distinguishes one track from another and no more.
+Hold the pointer over any row to see everything the scan read: the track’s own title, bit rate,
+sample rate, bit depth, and encoding profile.</p>
+
+<p class="note">If you re-scan a file (<strong>Queue</strong> &#9656; <strong>Re-scan
+Selected</strong>) the tab says so while it reads the tracks again, and the plan on screen is the old
+one until it finishes.</p>
+
+<div class="seealso">
+  <h2>See also</h2>
+  <ul>
+    <li><a href="overrides.html">Override the track plan for one file</a></li>
+    <li><a href="slim-rules.html">Choose which languages to keep</a></li>
+    <li><a href="preferred-codecs.html">Set preferred codecs and transcode targets</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
