@@ -46,6 +46,10 @@ what kind it is. A dash means it isn’t in the output at all.</p>
 carries — <code>ac3 5.1</code>, <code>h264 1080p</code>. An arrow (<code>→ aac</code>) means the track
 is being converted, not copied.</p>
 
+<p><strong>Title</strong> is the track’s own name, where its maker gave it one — “Director’s
+Commentary”, “English (SDH)”, “Dolby TrueHD 7.1”. It’s often the quickest way to tell two tracks in
+the same language apart, and it’s blank for the many tracks that carry no name at all.</p>
+
 <p><strong>Role</strong> is what the track is <em>for</em>, which is usually what decides whether you
 want it:</p>
 
@@ -76,8 +80,9 @@ carried through untouched.</p>
 pane below it lists <em>everything</em> known about that track, in three groups:</p>
 
 <ul>
-  <li><strong>Output</strong> — where it lands, whether it’s copied, converted, or dropped, the
-    codec it ends up in, and the flags it comes out carrying.</li>
+  <li><strong>Output</strong> — the codec the track ends up in, and the flags it comes out
+    carrying. Where it lands and whether it’s kept are the list’s own columns, so they aren’t
+    repeated here.</li>
   <li><strong>Track</strong> — what the file says it is: its stream index, codec and profile,
     language, title, frame size or channel layout, sample rate, bit depth, and bit rate.</li>
   <li><strong>Metadata</strong> — every tag the scan read, verbatim and unfiltered. This is where a

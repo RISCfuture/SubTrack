@@ -111,26 +111,34 @@ private struct OutputTrackTable: View {
   @Binding var selection: UInt?
 
   var body: some View {
-    // Role is the only column left free to take the slack, and the three ahead
-    // of it are capped so they can't take the width it needs. `Table` lays the
-    // ideal widths out first and clips rather than compressing what won't fit,
-    // so the ideals have to sum under the 260pt the pane is at its narrowest —
-    // otherwise the last column is the one that goes over the edge.
+    // Title is the only column left free to take the slack, because it is the
+    // one with no bound on how long it runs; the rest are capped so they can't
+    // take the width it needs. `Table` lays the ideal widths out first and
+    // clips rather than compressing what won't fit, so the ideals — plus the
+    // padding and divider each column carries — have to sum under the width
+    // the pane is at its narrowest, or the last column goes over the edge.
     Table(tracks, selection: $selection) {
+      // Each column is at least as wide as its own heading: a truncated value
+      // is a fact you can go and read below, but a truncated heading is the
+      // table failing to say what it is showing.
       TableColumn(LocalizedStringResource("Track", bundle: #bundle)) { TrackNumberCell(track: $0) }
-        .width(36)
+        .width(40)
       TableColumn(LocalizedStringResource("Language", bundle: #bundle)) {
         PreviewCell(track: $0, identifier: "preview.language", text: $0.track.languageName)
       }
-      .width(min: 50, ideal: 60, max: 78)
+      .width(min: 44, ideal: 60, max: 80)
       TableColumn(LocalizedStringResource("Codec", bundle: #bundle)) {
         PreviewCell(track: $0, identifier: "preview.codec", text: $0.track.outputCodecSummary)
       }
-      .width(min: 54, ideal: 68, max: 92)
+      .width(min: 42, ideal: 46, max: 84)
+      TableColumn(LocalizedStringResource("Title", bundle: #bundle)) {
+        PreviewCell(track: $0, identifier: "preview.title", text: $0.track.title)
+      }
+      .width(min: 44, ideal: 52)
       TableColumn(LocalizedStringResource("Role", bundle: #bundle)) {
         PreviewCell(track: $0, identifier: "preview.role", text: $0.dispositions.displayList)
       }
-      .width(min: 54)
+      .width(min: 40, ideal: 44, max: 88)
     }
     .accessibilityIdentifier("preview.table")
   }

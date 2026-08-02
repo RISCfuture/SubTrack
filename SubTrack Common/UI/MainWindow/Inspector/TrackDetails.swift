@@ -98,6 +98,13 @@ extension PlannedTrack {
   }
 
   /**
+   The track's own name, empty when the container gave it none. Left empty
+   rather than dashed: a column of em dashes across the untitled tracks reads
+   as missing data, when a track simply having no name is the normal case.
+   */
+  var title: String { stream.title ?? "" }
+
+  /**
    The track's language named in the user's own language, falling back to the
    raw tag when the catalog doesn't recognize it.
    */

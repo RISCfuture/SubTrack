@@ -21,7 +21,12 @@ struct QueueWindowView: View {
     .toolbar { QueueToolbar() }
     .inspector(isPresented: $ui.inspectorVisible) {
       InspectorView()
-        .inspectorColumnWidth(min: 260, ideal: 300, max: 420)
+        // Wide enough for the Preview tab's five columns to stand side by side.
+        // The Rules and Override tabs were comfortable at 300, but a table of
+        // tracks is the widest thing the pane holds, and `Table` lays its
+        // columns out at their ideal widths and lets the last one overhang
+        // rather than compressing them — so the table's needs set the floor.
+        .inspectorColumnWidth(min: 320, ideal: 360, max: 480)
     }
     .dropDestination(for: URL.self) { urls, _ in
       env.queue.ingest(urls)

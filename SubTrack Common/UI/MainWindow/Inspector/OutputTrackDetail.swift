@@ -21,11 +21,7 @@ struct OutputTrackDetail: View {
     Form {
       ForEach(track.detailSections) { section in
         Section(section.name) {
-          ForEach(section.facts) { fact in
-            LabeledContent(fact.name, value: fact.value)
-              .lineLimit(1)
-              .truncationMode(.middle)
-          }
+          TrackFactsView(facts: section.facts)
         }
       }
     }
@@ -51,11 +47,13 @@ extension OutputTrack {
     ].compactMap(\.self)
   }
 
-  /// What the run does with the track, and what it leaves in the output.
+  /**
+   What the run leaves in the output. Where the track lands and whether it is
+   copied, converted, or dropped are the list's own columns, so repeating them
+   here would only spend rows on what is already on screen.
+   */
   private var outputFacts: [TrackFact] {
     [
-      TrackFact(name: String(localized: "Position", bundle: #bundle), value: positionDescription),
-      TrackFact(name: String(localized: "Plan", bundle: #bundle), value: planDescription),
       TrackFact(
         name: String(localized: "Codec", bundle: #bundle),
         value: track.outputCodecSummary
@@ -105,19 +103,6 @@ extension OutputTrack {
       name: String(localized: "Metadata", bundle: #bundle),
       facts: tags.sorted { $0.key < $1.key }.map { TrackFact(name: $0.key, value: $0.value) }
     )
-  }
-
-  private var positionDescription: String {
-    guard let number else { return String(localized: "Not in the output", bundle: #bundle) }
-    return String(localized: "Track \(number, format: .number)", bundle: #bundle)
-  }
-
-  private var planDescription: String {
-    switch track.action {
-      case .copy: String(localized: "Copied as it is", bundle: #bundle)
-      case let .convert(codec, _): String(localized: "Converted to \(codec)", bundle: #bundle)
-      case .drop: String(localized: "Dropped", bundle: #bundle)
-    }
   }
 
   /// The arguments the transcode runs under, `nil` when the track isn't converted.
