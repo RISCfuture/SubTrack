@@ -2,10 +2,11 @@
 #
 # Builds self-contained static ffmpeg/ffprobe binaries for bundling in the app.
 #
-# Hermetic: every dependency is fetched from a pinned upstream source and built
-# from scratch — nothing is taken from Homebrew or the system. The resulting
-# binaries statically link the FFmpeg (and, for `full`, x264/x265) libraries and
-# dynamically link only macOS system frameworks (incl. VideoToolbox / AudioToolbox).
+# Hermetic: anything macOS does not provide is fetched from a pinned upstream source
+# and built from scratch, never taken from Homebrew. The resulting binaries statically
+# link the FFmpeg (and, for `full`, x264/x265) libraries, and dynamically link only what
+# the OS itself ships: its frameworks (incl. VideoToolbox / AudioToolbox) and the
+# SDK's system libraries (libSystem, libc++, libz, libbz2).
 #
 # Variants:
 #   lgpl  (default) — App-Store-safe: no GPL/nonfree; VideoToolbox transcoding.
@@ -193,6 +194,14 @@ fi
 cd "${SRC_DIR}"
 make distclean >/dev/null 2>&1 || true
 
+# --disable-autodetect turns off every library FFmpeg would otherwise find on its own,
+# which is what keeps this build hermetic — but the two compression libraries have to
+# come back. Matroska tracks may carry their frames compressed (mkvmerge does this to PGS
+# subtitles), and a demuxer without the matching library hands those frames on still
+# compressed: the subtitles then reach the muxer as unparseable bytes with no timestamps
+# and land in the output as empty tracks. zlib is what current muxers write and bzlib what
+# older ones did; Matroska's other two modes, LZO and header stripping, are built in and
+# need no flag. Both resolve to SDK libraries, so the binaries stay self-contained.
 ./configure \
   --prefix="${SRC_DIR}/install" \
   --disable-shared --enable-static \
@@ -200,6 +209,7 @@ make distclean >/dev/null 2>&1 || true
   --disable-doc --disable-debug --disable-network --disable-x86asm \
   --disable-autodetect --disable-sdl2 --disable-xlib --disable-libxcb \
   --enable-videotoolbox --enable-audiotoolbox \
+  --enable-zlib --enable-bzlib \
   "${license_flags[@]}" \
   --arch="${ARCH}" \
   --extra-cflags="${extra_cflags}" \
