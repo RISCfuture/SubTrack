@@ -381,6 +381,7 @@
 				01ECAECE300C9E09003C1729 /* Frameworks */,
 				01ECAECF300C9E09003C1729 /* Resources */,
 				01ECAF52300CA2B3003C1729 /* Embed Frameworks */,
+				01F0A1000000000000000007 /* Build Bundled ffmpeg */,
 				01ECAF76300CC0B1003C1729 /* Copy ffmpeg */,
 				01ECAF82300CC0B1003C1729 /* Embed CLI */,
 				01F0A1000000000000000004 /* Build Help Book */,
@@ -452,6 +453,7 @@
 				01ECAF07300CA189003C1729 /* Frameworks */,
 				01ECAF08300CA189003C1729 /* Resources */,
 				01ECAF5B300CA2D6003C1729 /* Embed Frameworks */,
+				01F0A1000000000000000008 /* Build Bundled ffmpeg */,
 				01ECAF77300CC0B1003C1729 /* Copy ffmpeg */,
 				01ECAF83300CC0B1003C1729 /* Embed CLI */,
 				01F0A1000000000000000005 /* Build Help Book */,
@@ -746,40 +748,6 @@
 				"",
 			);
 		};
-		01F0A1000000000000000006 /* Unsandbox Embedded Executables */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			name = "Unsandbox Embedded Executables";
-			shellPath = /bin/sh;
-			shellScript = (
-				"# This edition is not sandboxed, so nothing it embeds may claim to inherit a sandbox:",
-				"# `com.apple.security.inherit` makes libsystem_secinit abort the child at launch with",
-				"# \"Process is not in an inherited sandbox\", which reaches the user as a crash the moment",
-				"# FFmpeg Location is set back to Built-in.",
-				"#",
-				"# Code-Sign-On-Copy already signs these with no entitlements, which is what this build wants —",
-				"# but only when it copies. Both editions build SubTrack.app to the same products directory, so",
-				"# an App Store build in the same derived data re-signs these very files with `inherit` (see the",
-				"# App Store target's Sandbox Embedded Executables phase), and the next incremental build here",
-				"# finds its copy up to date and ships them as they were left. Re-signing unconditionally is what",
-				"# makes the bundle this target's own regardless of what last occupied the path.",
-				"if [ \"${CODE_SIGNING_ALLOWED}\" = \"NO\" ]; then",
-				"  echo \"note: code signing disabled; leaving embedded executables unsigned\"",
-				"  exit 0",
-				"fi",
-				"",
-				"IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY:-${CODE_SIGN_IDENTITY}}\"",
-				"APP=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"",
-				"",
-				"for helper in Helpers/ffmpeg Helpers/ffprobe Resources/subtrack; do",
-				"  [ -f \"${APP}/${helper}\" ] || continue",
-				"  codesign --force --sign \"${IDENTITY}\" \\",
-				"    --options runtime \\",
-				"    \"${APP}/${helper}\" || exit 1",
-				"done",
-				"",
-			);
-		};
 		01F0A1000000000000000004 /* Build Help Book */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -823,6 +791,76 @@
 				"  \"${PRODUCT_BUNDLE_IDENTIFIER}.help\" \\",
 				"  \"${DERIVED_FILE_DIR}\" \\",
 				"  \"${SRCROOT}/Engine/Support/HelpAnchor.swift\"",
+				"",
+			);
+		};
+		01F0A1000000000000000006 /* Unsandbox Embedded Executables */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			name = "Unsandbox Embedded Executables";
+			shellPath = /bin/sh;
+			shellScript = (
+				"# This edition is not sandboxed, so nothing it embeds may claim to inherit a sandbox:",
+				"# `com.apple.security.inherit` makes libsystem_secinit abort the child at launch with",
+				"# \"Process is not in an inherited sandbox\", which reaches the user as a crash the moment",
+				"# FFmpeg Location is set back to Built-in.",
+				"#",
+				"# Code-Sign-On-Copy already signs these with no entitlements, which is what this build wants —",
+				"# but only when it copies. Both editions build SubTrack.app to the same products directory, so",
+				"# an App Store build in the same derived data re-signs these very files with `inherit` (see the",
+				"# App Store target's Sandbox Embedded Executables phase), and the next incremental build here",
+				"# finds its copy up to date and ships them as they were left. Re-signing unconditionally is what",
+				"# makes the bundle this target's own regardless of what last occupied the path.",
+				"if [ \"${CODE_SIGNING_ALLOWED}\" = \"NO\" ]; then",
+				"  echo \"note: code signing disabled; leaving embedded executables unsigned\"",
+				"  exit 0",
+				"fi",
+				"",
+				"IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY:-${CODE_SIGN_IDENTITY}}\"",
+				"APP=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}\"",
+				"",
+				"for helper in Helpers/ffmpeg Helpers/ffprobe Resources/subtrack; do",
+				"  [ -f \"${APP}/${helper}\" ] || continue",
+				"  codesign --force --sign \"${IDENTITY}\" \\",
+				"    --options runtime \\",
+				"    \"${APP}/${helper}\" || exit 1",
+				"done",
+				"",
+			);
+		};
+		01F0A1000000000000000007 /* Build Bundled ffmpeg */ = {
+			isa = PBXShellScriptBuildPhase;
+			name = "Build Bundled ffmpeg";
+			outputPaths = (
+				"$(SRCROOT)/Vendor/ffmpeg-lgpl/ffmpeg",
+				"$(SRCROOT)/Vendor/ffmpeg-lgpl/ffprobe",
+			);
+			shellPath = /bin/sh;
+			shellScript = (
+				"# What Copy ffmpeg embeds is a git-ignored build product, so a fresh checkout has none and that",
+				"# phase fails on a missing input. fastlane builds the binaries before it archives; Product >",
+				"# Archive runs no such step, and this phase is what supplies it.",
+				"#",
+				"# Declaring the binaries as outputs is what orders Copy ffmpeg after this phase, and what lets",
+				"# Xcode skip it altogether once they exist — so the long build from pinned sources happens only",
+				"# on a checkout that lacks them. Deleting Vendor/ is what asks for a rebuild; see the upgrade",
+				"# notes in the script for why a version bump alone does not.",
+				"\"${SRCROOT}/Scripts/build-ffmpeg.sh\" lgpl",
+				"",
+			);
+		};
+		01F0A1000000000000000008 /* Build Bundled ffmpeg */ = {
+			isa = PBXShellScriptBuildPhase;
+			name = "Build Bundled ffmpeg";
+			outputPaths = (
+				"$(SRCROOT)/Vendor/ffmpeg-full/ffmpeg",
+				"$(SRCROOT)/Vendor/ffmpeg-full/ffprobe",
+			);
+			shellPath = /bin/sh;
+			shellScript = (
+				"# The App Store target's phase of this name explains the arrangement. This edition takes the",
+				"# `full` variant, whose x264/x265/aom builds make that first run considerably the longer one.",
+				"\"${SRCROOT}/Scripts/build-ffmpeg.sh\" full",
 				"",
 			);
 		};
@@ -1082,7 +1120,7 @@
 		01ECAEF3300C9E0A003C1729 /* Debug configuration for PBXNativeTarget "SubTrack (MAS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SubTrack-MAS/SubTrack-MAS.entitlements";
@@ -1129,7 +1167,7 @@
 		01ECAEF4300C9E0A003C1729 /* Release configuration for PBXNativeTarget "SubTrack (MAS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SubTrack-MAS/SubTrack-MAS.entitlements";
@@ -1240,7 +1278,7 @@
 		01ECAF29300CA18A003C1729 /* Debug configuration for PBXNativeTarget "SubTrack (download)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SubTrack-download/SubTrack-download.entitlements";
@@ -1276,7 +1314,7 @@
 		01ECAF2A300CA18A003C1729 /* Release configuration for PBXNativeTarget "SubTrack (download)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SubTrack-download/SubTrack-download.entitlements";

@@ -66,11 +66,14 @@ SubTrack is written in Swift 6 and requires macOS 26.4.
 
 ## Development
 
-### Build FFmpeg first
+### Bundled FFmpeg
 
-The app bundles its own FFmpeg, and the binaries are **not** checked in. Build both
-variants before building either app target, or the app will come out with no
-`Contents/Helpers` and every probe will fail:
+The app bundles its own FFmpeg, and the binaries are **not** checked in. Each app target's
+**Build Bundled ffmpeg** phase builds the variant that edition ships before the phase that
+copies it in, so a fresh clone needs no preparation — but the first build of a checkout
+spends a long time in that phase, compiling from pinned upstream sources over the network.
+Run either variant ahead of time to get that out of the way, or to rebuild after deleting
+`Vendor/`:
 
 ```sh
 Scripts/build-ffmpeg.sh lgpl   # for SubTrack (MAS)

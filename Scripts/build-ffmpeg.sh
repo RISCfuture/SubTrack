@@ -36,8 +36,8 @@
 #      confirm the new binaries run and self-contain (otool -L shows only
 #      /usr/lib and /System).
 #
-# Requirements: curl, tar, git, make, clang (Xcode CLT). CMake is fetched (pinned)
-# when needed, so it need not be installed.
+# Requirements: curl, tar, git, make, clang (Xcode CLT). CMake and pkgconf are fetched
+# (pinned) when needed, so neither need be installed.
 set -euo pipefail
 
 FFMPEG_VERSION="8.1.2"
@@ -45,6 +45,7 @@ X264_COMMIT="b35605ace3ddf7c1a5d67a2eb553f034aef41d55" # videolan/x264 stable
 X265_TAG="4.2"
 AOM_TAG="v3.14.1"
 CMAKE_VERSION="3.30.5"
+PKGCONF_VERSION="3.0.5"
 # arm64 on Apple Silicon. The app targets pin ARCHS to arm64 to match: a universal app
 # bundling a single-slice helper would ship an Intel slice that cannot run ffmpeg at all.
 # Going universal means adding an x86_64 slice here and lipo'ing, then dropping that pin.
@@ -85,6 +86,36 @@ fetch_cmake() {
     curl -L -o "${CACHE_DIR}/cmake.tar.gz" \
       "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-macos-universal.tar.gz"
     tar -xzf "${CACHE_DIR}/cmake.tar.gz" -C "${CACHE_DIR}"
+  fi
+  echo "${bin}"
+}
+
+# Builds the pinned pkgconf, cached under .build. FFmpeg resolves --enable-libaom and the two
+# --enable-libx26x flags only through pkg-config, and macOS ships none, so without this the build
+# works solely where Homebrew's happens to be on PATH. Xcode sanitizes PATH down to /usr/local/bin
+# and the system directories, which is exactly where it is not — so a build phase that calls this
+# script would fail on a machine where running it from a shell succeeds.
+#
+# Its release tarballs carry a pregenerated configure, so this needs no autotools or meson — the
+# same clang and make everything else here uses. Deliberately ignores any pkg-config already on
+# PATH, for the reason fetch_cmake does.
+fetch_pkgconf() {
+  local src="${CACHE_DIR}/pkgconf-${PKGCONF_VERSION}"
+  local prefix="${CACHE_DIR}/pkgconf-install"
+  local bin="${prefix}/bin/pkgconf"
+  if [[ ! -x "${bin}" ]]; then
+    echo "==> Building pkgconf ${PKGCONF_VERSION}" >&2
+    if [[ ! -d "${src}" ]]; then
+      curl -L -o "${CACHE_DIR}/pkgconf.tar.xz" \
+        "https://distfiles.dereferenced.org/pkgconf/pkgconf-${PKGCONF_VERSION}.tar.xz"
+      tar -xJf "${CACHE_DIR}/pkgconf.tar.xz" -C "${CACHE_DIR}"
+    fi
+    (
+      cd "${src}"
+      ./configure --prefix="${prefix}" >/dev/null
+      make -j"${JOBS}" >/dev/null
+      make install >/dev/null
+    ) >&2
   fi
   echo "${bin}"
 }
@@ -179,6 +210,7 @@ if [[ "${VARIANT}" == "full" ]]; then
 fi
 
 export PKG_CONFIG_PATH="${DEPS}/lib/pkgconfig"
+pkgconf_bin="$(fetch_pkgconf)"
 # Static-only deps prefix ⇒ the linker links the .a files statically.
 extra_cflags="${CFLAGS_COMMON} -I${DEPS}/include"
 extra_ldflags="${CFLAGS_COMMON} -L${DEPS}/lib"
@@ -211,6 +243,7 @@ make distclean >/dev/null 2>&1 || true
   --enable-videotoolbox --enable-audiotoolbox \
   --enable-zlib --enable-bzlib \
   "${license_flags[@]}" \
+  --pkg-config="${pkgconf_bin}" \
   --arch="${ARCH}" \
   --extra-cflags="${extra_cflags}" \
   --extra-ldflags="${extra_ldflags}"
