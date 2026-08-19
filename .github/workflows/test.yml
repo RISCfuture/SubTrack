@@ -70,6 +70,56 @@ jobs:
           path: TestResults-Unit.xcresult
           if-no-files-found: ignore
 
+  # DocC downgrades a symbol link it can't resolve, a stale `- Parameter` name, or an empty landing
+  # page to a warning and still writes the archive; --warnings-as-errors promotes all of them so a
+  # doc comment that has drifted from the code fails the build.
+  #
+  # DocC has no strictness build setting of its own, so that flag rides on OTHER_DOCC_FLAGS, which
+  # the project sets on each of its own targets' build configurations. Passing it on the command
+  # line here would reach every Swift package in the graph too, and a dependency's DocC warnings
+  # are not this project's to fix; scoped to the first-party targets, they stay warnings.
+  docs:
+    name: Documentation
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/vendored-ffmpeg
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
+            ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      # One derived-data directory for all four schemes: both app editions and the CLI build on the
+      # framework, so a shared one compiles it once. The archives are throwaway — nothing publishes
+      # them, and the exit status is the whole point.
+      - name: Build documentation
+        run: |
+          set -o pipefail
+          for scheme in "SubTrack Common" "SubTrack (MAS)" "SubTrack (download)" "subtrack"; do
+            echo "::group::Document $scheme"
+            xcodebuild docbuild \
+              -project SubTrack.xcodeproj \
+              -scheme "$scheme" \
+              -destination 'platform=macOS,arch=arm64' \
+              -derivedDataPath "$RUNNER_TEMP/dd-docs" \
+              CODE_SIGNING_ALLOWED=NO \
+              | xcbeautify --renderer github-actions
+            echo "::endgroup::"
+          done
+
   # These tests drive the real subtrack binary against the real Vendor/ffmpeg-full build, generating
   # their movie fixtures at run time rather than committing them.
   cli:

@@ -77,7 +77,7 @@ public struct TrackChoice: Codable, Sendable, Equatable, Identifiable {
 
 /**
  An explicit, per-file selection of tracks that overrides the global rules.
- The inspector edits this; the engine turns it into ``Operation``s.
+ The inspector edits this; the engine turns it into ``StreamOperation``s.
  */
 public struct FileTrackSelection: Codable, Sendable, Equatable {
   public var choices: [TrackChoice]

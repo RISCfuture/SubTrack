@@ -7,7 +7,7 @@ import SubTrack_Common
  GitHub Releases API.
 
  Only this target links the checker. The App Store build is kept current by the
- store, so it injects no ``UpdateChecking`` at all and both surfaces disappear.
+ store, so it injects no `UpdateChecking` at all and both surfaces disappear.
  */
 @MainActor
 final class GitHubUpdates: UpdateChecking {

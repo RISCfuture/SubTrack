@@ -1,7 +1,7 @@
 import Foundation
 
 /**
- Given a ``Container``, generates a list of conversion ``Operation``s
+ Given a ``Container``, generates a list of conversion ``StreamOperation``s
  according to the parameters of this instance.
  */
 public class Converter {

@@ -18,7 +18,7 @@ public struct SlimRules: Codable, Sendable, Equatable {
 
   /**
    The video preferred-codec list that omits `av1`.
-   ``repairedPreferredCodecs(_:)`` adds `av1` to a stored list matching it
+   `repairedPreferredCodecs(_:)` adds `av1` to a stored list matching it
    exactly.
    */
   private static let preAV1PreferredCodecs = ["hevc", "h264"]
@@ -101,7 +101,7 @@ public struct SlimRules: Codable, Sendable, Equatable {
    callers' `try?` would swallow the whole record.
 
    Two stored values are also corrected on the way in; see
-   ``repairedConversionOptions(_:)`` and ``repairedPreferredCodecs(_:)``.
+   `repairedConversionOptions(_:)` and `repairedPreferredCodecs(_:)`.
    */
   public init(from decoder: any Decoder) throws {
     let values = try decoder.container(keyedBy: CodingKeys.self)
