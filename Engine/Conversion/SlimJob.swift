@@ -1,7 +1,7 @@
 import Foundation
 
 /**
- A single unit of work for the ``ConversionEngine``: slim `input` into
+ A single unit of work for the `ConversionEngine`: slim `input` into
  `output`. Exactly one of `selection` (an explicit per-file override) or
  `rules` (rule-derived operations) drives the work; `selection` wins when set.
  */
@@ -54,7 +54,7 @@ public struct SlimJob: Sendable, Identifiable {
   }
 }
 
-/// Events streamed from the ``ConversionEngine`` as a ``SlimJob`` runs.
+/// Events streamed from the `ConversionEngine` as a ``SlimJob`` runs.
 public enum JobEvent: Sendable {
 
   /// `ffprobe` has started reading the source.

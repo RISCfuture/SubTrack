@@ -24,6 +24,7 @@ public enum MovieFileFinder {
    Expands `urls` into the movie files the queue accepts, recursing into
    folders.
 
+   - Parameter urls: The dropped or chosen files and folders to walk.
    - Parameter onProgress: Called periodically with the running count of
      movie files found so far. Runs on whatever thread the walk is on.
    */

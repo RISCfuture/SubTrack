@@ -192,8 +192,12 @@ public final class AppEnvironment {
   public var destination: QueueDestination { workspace.selectedCoordinator.settings.destination }
 
   /**
+   - Parameter modelContainer: The SwiftData container backing presets, queues,
+     and bookmarks.
+   - Parameter featureFlags: Which surfaces this build exposes, so App Store and
+     downloadable shells share one environment.
    - Parameter engine: The conversion engine each queue's coordinator drives.
-     Defaults to the real `ffmpeg`-backed ``ConversionEngine``; UI tests inject
+     Defaults to the real `ffmpeg`-backed `ConversionEngine`; UI tests inject
      a deterministic stub through this seam.
    - Parameter updates: The update checker backing the Check for Updates
      command and the Settings ▸ Updates tab. Only the downloadable build passes

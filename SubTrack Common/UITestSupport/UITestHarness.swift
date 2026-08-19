@@ -5,8 +5,8 @@
   /**
    Builds the app's dependency graph for UI tests, replacing everything a test
    can't drive from outside the process: the on-disk store becomes in-memory,
-   the `ffmpeg` engine becomes a deterministic ``StubConversionEngine``, and the
-   out-of-process ``FilePanels`` become handlers that return generated fixture
+   the `ffmpeg` engine becomes a deterministic `StubConversionEngine`, and the
+   out-of-process `FilePanels` become handlers that return generated fixture
    files. All of it is gated on the ``AppEnvironment/isRunningUITests`` launch
    argument, so the production path is untouched, and the whole file is compiled
    out of release builds.
@@ -26,7 +26,7 @@
      that really holds `ffmpeg` and `ffprobe`; otherwise it returns one that
      holds neither.
 
-   ``ScreenshotStaging`` reads `UITEST_SCREENSHOTS`, `UITEST_APPEARANCE`, and
+   `ScreenshotStaging` reads `UITEST_SCREENSHOTS`, `UITEST_APPEARANCE`, and
    `UITEST_WINDOW_SIZE` for the AppKit staging the Help book's screenshots need.
    */
   @MainActor
@@ -115,7 +115,7 @@
      fixtures, installs the file-panel handlers and the stub engine, then seeds
      the requested launch state.
 
-     ``ScreenshotStaging/install()`` runs first because this is called from
+     `ScreenshotStaging.install()` runs first because this is called from
      `SubTrackApp.init()`, before AppKit has made a window — the only moment at
      which the appearance can be pinned ahead of anything being drawn.
      */
@@ -241,7 +241,7 @@
     // MARK: - Panel handlers
 
     /**
-     Points every ``FilePanels`` prompt at a fixture, so "Add Files…", "Add
+     Points every `FilePanels` prompt at a fixture, so "Add Files…", "Add
      Folder…", and "Change Destination…" resolve without an `NSOpenPanel`.
      */
     private static func installFilePanels() {
@@ -382,7 +382,7 @@
 
     /**
      The fixture files the harness generates and hands back through
-     ``FilePanels``, all inside the app's own sandbox container so the sandboxed
+     `FilePanels`, all inside the app's own sandbox container so the sandboxed
      app can read them and write output beside them without any user-granted
      access.
      */

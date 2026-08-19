@@ -199,7 +199,7 @@ public final class QueueCoordinator: Identifiable {
    grant from the drop, open panel, or folder enumeration is still live —
    neither can be minted later, so an item added without them can never write.
 
-   The loop yields every ``ingestChunkSize`` files so the window keeps drawing
+   The loop yields every `ingestChunkSize` files so the window keeps drawing
    while a season's worth of bookmarks are minted. Cancelling stops the loop
    but keeps the rows already added: they are valid entries, and discarding
    them would throw away bookmarks that cannot be minted again.
@@ -539,8 +539,8 @@ public final class QueueCoordinator: Identifiable {
    Re-probes the given items, refreshing each cached container. On success a
    finished item settles back to ``QueueItemState/done`` so its savings
    survive, and everything else lands in ``QueueItemState/ready`` (or
-   ``QueueItemState/incompatible``); a probe that fails settles into
-   ``QueueItemState/failed`` or ``QueueItemState/missing`` as it does
+   ``QueueItemState/incompatible(_:)``); a probe that fails settles into
+   ``QueueItemState/failed(_:)`` or ``QueueItemState/missing`` as it does
    anywhere else. Items being probed or encoded are skipped.
    */
   public func rescan(_ ids: Set<UUID>) {

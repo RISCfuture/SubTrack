@@ -1154,6 +1154,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-MAS";
 				PRODUCT_MODULE_NAME = SubTrackMAS;
 				PRODUCT_NAME = SubTrack;
@@ -1201,6 +1202,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-MAS";
 				PRODUCT_MODULE_NAME = SubTrackMAS;
 				PRODUCT_NAME = SubTrack;
@@ -1257,6 +1259,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
@@ -1269,6 +1272,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
@@ -1301,6 +1305,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download";
 				PRODUCT_MODULE_NAME = SubTrackDownload;
 				PRODUCT_NAME = SubTrack;
@@ -1337,6 +1342,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download";
 				PRODUCT_MODULE_NAME = SubTrackDownload;
 				PRODUCT_NAME = SubTrack;
@@ -1408,6 +1414,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-Common";
@@ -1444,6 +1451,7 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-Common";

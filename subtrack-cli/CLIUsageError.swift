@@ -8,7 +8,7 @@ import Foundation
  share a ``recoverySuggestion`` pointing at `--help`.
 
  Requesting `--help` is normal control flow, not an error; it's modelled by
- ``CommandOptions/ParseResult/help(_:)`` rather than a case here.
+ ``ParseResult/help(_:)`` rather than a case here.
  */
 enum CLIUsageError: Error {
 
