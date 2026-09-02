@@ -229,7 +229,15 @@ public final class AppEnvironment {
     // access, and is seeded with the default preset and app-default destination;
     // the workspace and persistence layer own their lifecycle. Hydration
     // overrides the seeded settings for a queue restored from the store.
-    let workspace = Workspace { id, name, sortIndex in
+    // Announcing a finished run reaches outside the process twice over — a
+    // system authorization prompt no UI test can dismiss, and a notification
+    // center that raises in a bundle-less process. Previews and UI tests run
+    // with nothing listening; the unit-test bundle never builds an environment
+    // at all.
+    let notifier =
+      Self.isRunningInXcodePreview || Self.isRunningUITests ? nil : CompletionNotifier()
+
+    let workspace = Workspace(reporting: notifier) { id, name, sortIndex in
       let settings = QueueSettings(destinationBookmark: defaultDestination.bookmarkData)
       if let preset = presets.presets.first { settings.rules.apply(preset) }
       return QueueCoordinator(

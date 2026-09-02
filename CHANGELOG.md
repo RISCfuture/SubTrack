@@ -10,6 +10,8 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
 - Encoding holds off idle sleep. An overnight batch now runs to the end instead
   of stopping when the Mac sleeps.
+- A notification when a queue finishes, so a run measured in tens of minutes is
+  one you can walk away from.
 
 ### Changed
 

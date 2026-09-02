@@ -67,6 +67,22 @@ public final class QueueCoordinator: Identifiable {
    */
   public var onPersistableChange: @MainActor () -> Void = {}
 
+  /**
+   Fired whenever ``hasEncodeWorkInFlight`` may have changed, so a ``Workspace``
+   can tell when the app as a whole starts and stops encoding. Fired on the
+   possibility of a change rather than on a confirmed one — the reader compares
+   against its own last answer.
+   */
+  public var onEncodeActivityChanged: @MainActor () -> Void = {}
+
+  /**
+   Fired as each run settles, with what that run came to. Only `runItem(_:)`
+   reaches this, so a probe, a re-scan, or a revalidation settling an item never
+   looks like a run — which is what makes a rolled-up summary count only the
+   files a run actually touched.
+   */
+  public var onRunSettled: @MainActor (QueueRunOutcome) -> Void = { _ in }
+
   private let engine: any ConversionEngineProtocol
   private let governor: EncodeGovernor
   private let makeBookmark: @MainActor (URL) -> Data?
@@ -279,8 +295,10 @@ public final class QueueCoordinator: Identifiable {
   /// Removes items, cancelling any in-flight work.
   public func remove(_ ids: Set<UUID>) {
     for id in ids {
+      // A cancelled run clears its own entry and releases its slot as it
+      // unwinds, so the entry stays until then: dropping it here leaves the
+      // queue looking idle while `ffmpeg` is still stopping.
       runTasks[id]?.cancel()
-      runTasks[id] = nil
       pending.removeAll { $0 == id }
       monitors[id] = nil
     }
@@ -289,6 +307,7 @@ public final class QueueCoordinator: Identifiable {
     selection.subtract(ids)
     refreshOutputNames()
     onPersistableChange()
+    onEncodeActivityChanged()
   }
 
   /// Removes all finished items.
@@ -352,6 +371,7 @@ public final class QueueCoordinator: Identifiable {
         settle(item, .cancelled)
       }
     }
+    onEncodeActivityChanged()
   }
 
   /// Cancels everything.
@@ -382,6 +402,7 @@ public final class QueueCoordinator: Identifiable {
         governor.release()
       }
     }
+    onEncodeActivityChanged()
   }
 
   /**
@@ -396,6 +417,7 @@ public final class QueueCoordinator: Identifiable {
     item.status = state
     if state != .ready { pending.removeAll { $0 == item.id } }
     onPersistableChange()
+    onEncodeActivityChanged()
   }
 
   /**
@@ -465,12 +487,52 @@ public final class QueueCoordinator: Identifiable {
       } catch {
         settleAfterRun(item, failedWith: error)
       }
+      // Reported here, where the item's status and its freshly-stat'd output
+      // size are both current, and where nothing but a run can reach.
+      if let outcome = runOutcome(for: item) { onRunSettled(outcome) }
       runTasks[item.id] = nil
       // Releasing the slot wakes every waiting coordinator (including this one)
       // to start whatever the global limit now allows.
       governor.release()
+      // `release` pumps every waiting coordinator synchronously, so any queue
+      // that could take the freed slot has already claimed it. That makes this
+      // the first point at which the app can truthfully be seen to have
+      // stopped encoding — checking any earlier reads this run as still in
+      // flight, and any later would race the next item.
+      onEncodeActivityChanged()
     }
     runTasks[item.id] = task
+  }
+
+  /**
+   What `item`'s just-settled run came to, or `nil` when it didn't land in a
+   state a run produces — which a re-probe racing the run can leave behind.
+
+   Sizes and the output path are read only for a run that finished: neither
+   ``resetForRun(_:)`` nor a failure clears ``QueueItem/outputByteCount``, so an
+   item re-run after an earlier success still holds the earlier run's number.
+   */
+  private func runOutcome(for item: QueueItem) -> QueueRunOutcome? {
+    let result: QueueRunOutcome.Result
+    switch item.status {
+      case .done: result = .finished
+      case .failed: result = .failed
+      case .cancelled: result = .cancelled
+      default: return nil
+    }
+    let finished = result == .finished
+    return QueueRunOutcome(
+      result: result,
+      bytesSaved: finished ? bytesSaved(for: item) : nil,
+      outputURL: finished ? item.outputURL : nil
+    )
+  }
+
+  /// What slimming `item` saved, or `nil` when either size is unknown.
+  private func bytesSaved(for item: QueueItem) -> Int? {
+    guard let sourceByteCount = item.sourceByteCount, let outputByteCount = item.outputByteCount
+    else { return nil }
+    return sourceByteCount - outputByteCount
   }
 
   /**
@@ -689,6 +751,29 @@ extension QueueCoordinator {
 
   /// Whether any item is probing or encoding.
   public var isRunning: Bool { !runTasks.isEmpty || items.contains { $0.status == .probing } }
+
+  /**
+   Whether this queue has encoding in flight or waiting on the global limit —
+   the queue's share of the answer to "is the app still working?", which
+   ``Workspace`` sums across every queue to know when a run has ended.
+
+   Unlike ``isRunning`` this ignores probing on its own, so the probes a launch
+   or an inspector re-scan kicks off never read as a run. A *pending* item being
+   re-probed still counts, because it will come back `.ready` and run.
+
+   The pending side mirrors `pump()`'s own predicate rather than just testing
+   for an empty queue: `pump` never removes an id whose item isn't startable,
+   and `settle(_:_:)` prunes one only when it lands somewhere other than
+   `.ready`, so a bare `!pending.isEmpty` would leave a stranded id claiming the
+   app is forever busy.
+   */
+  public var hasEncodeWorkInFlight: Bool {
+    if !runTasks.isEmpty { return true }
+    return pending.contains { id in
+      guard let item = item(id) else { return false }
+      return item.status.isStartable || item.status == .probing
+    }
+  }
 
   /// Number of items currently encoding.
   public var activeCount: Int { items.count { $0.status == .running } }
