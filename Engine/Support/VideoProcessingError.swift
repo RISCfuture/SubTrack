@@ -9,6 +9,9 @@ import Foundation
  */
 public enum VideoProcessingError: Error, Sendable {
 
+  /// The output volume hasn't room for the file the run would write.
+  case insufficientSpace(required: Int, available: Int)
+
   /// `ffmpeg` couldn't be launched.
   case launchFailed(detail: String)
 
@@ -32,6 +35,14 @@ extension VideoProcessingError: LocalizedError {
 
   public var failureReason: String? {
     switch self {
+      case let .insufficientSpace(required, available):
+        String(
+          localized: """
+            The output folder has \(available.formatted(.byteCount(style: .file))) free, but the \
+            slimmed file needs about \(required.formatted(.byteCount(style: .file))).
+            """,
+          bundle: #bundle
+        )
       case .launchFailed(let detail):
         String(localized: "ffmpeg couldn’t be started: \(detail)", bundle: #bundle)
       case .encodeFailed(let exitCode):
@@ -57,13 +68,31 @@ extension VideoProcessingError: LocalizedError {
   }
 
   /**
+   Only running out of room names something the user can go and do. The rest
+   are the run itself going wrong, where there is nothing to suggest beyond
+   reading what went wrong.
+   */
+  public var recoverySuggestion: String? {
+    switch self {
+      case .insufficientSpace:
+        String(
+          localized: "Free up space on the volume, or choose another output folder.",
+          bundle: #bundle
+        )
+      case .launchFailed, .encodeFailed, .outputMissingStreams, .outputStreamEmpty, .cancelled:
+        nil
+    }
+  }
+
+  /**
    A failure to launch is a problem with the `ffmpeg` build itself; the rest
-   are a run that started and then went wrong. Cancelling is neither.
+   are a run that couldn't finish, which is what the disk-space topic covers.
+   Cancelling is neither.
    */
   public var helpAnchor: String? {
     switch self {
       case .launchFailed: HelpAnchor.customFFmpeg.rawValue
-      case .encodeFailed, .outputMissingStreams, .outputStreamEmpty:
+      case .insufficientSpace, .encodeFailed, .outputMissingStreams, .outputStreamEmpty:
         HelpAnchor.encodeFailed.rawValue
       case .cancelled: nil
     }
