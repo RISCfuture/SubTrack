@@ -371,6 +371,31 @@ struct WorkspacePersistenceTests {
     #expect(governor.activeCount == 1)
   }
 
+  @Test
+  func governorHoldsOffIdleSleepWhileEncoding() async throws {
+    let context = try makeContext()
+    let governor = EncodeGovernor()
+    let (workspace, _) = launch(
+      context,
+      engine: StubEngine(container: try sampleContainer(), holdUntilCancelled: true),
+      governor: governor
+    )
+    let coordinator = workspace.selectedCoordinator
+    await coordinator.add([URL(filePath: "/tmp/sleep-1.mkv")])
+    await waitUntil { coordinator.items.first?.status == .ready }
+
+    // An idle queue holds nothing; a slot in flight holds the activity…
+    #expect(!governor.isHoldingActivity)
+    coordinator.startAll()
+    await waitUntil { governor.activeCount == 1 }
+    #expect(governor.isHoldingActivity)
+
+    // …and the last slot to free hands it back, so nothing outlives the run.
+    coordinator.cancelAll()
+    await waitUntil { governor.activeCount == 0 }
+    #expect(!governor.isHoldingActivity)
+  }
+
   // MARK: - Write-through discipline
 
   @Test
