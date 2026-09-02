@@ -12,6 +12,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   of stopping when the Mac sleeps.
 - A notification when a queue finishes, so a run measured in tens of minutes is
   one you can walk away from.
+- Queue columns can be hidden. Right-click the table header to drop the metrics
+  you don't read; the width goes back to Name, which is the column with
+  variable-length content.
 
 ### Changed
 
