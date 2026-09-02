@@ -15,6 +15,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - Queue columns can be hidden. Right-click the table header to drop the metrics
   you don't read; the width goes back to Name, which is the column with
   variable-length content.
+- Undo takes back the destructive queue edits. Remove Selected, Clear Completed,
+  and drag-reordering are all undoable, and an item comes back with the track
+  overrides you set by hand rather than needing a re-probe.
 
 ### Changed
 

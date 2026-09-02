@@ -48,6 +48,21 @@ public final class Workspace {
    */
   public var onCoordinatorCreated: @MainActor (QueueCoordinator) -> Void = { _ in }
 
+  /**
+   The undo manager of the window the queues are shown in, or `nil` before one
+   has appeared. Handed to every queue — the ones already here and every one
+   made later — so a destructive edit can be taken back however it was made.
+
+   The fan-out is not redundant with the assignment in
+   ``makeCoordinator(id:name:sortIndex:)``: launch hydration builds every
+   persisted queue long before there is a window to ask.
+   */
+  @ObservationIgnored public weak var undoManager: UndoManager? {
+    didSet {
+      for coordinator in coordinators { coordinator.undoManager = undoManager }
+    }
+  }
+
   private let coordinatorFactory: @MainActor (UUID, String, Int) -> QueueCoordinator
 
   /// Told when the app starts and stops encoding, or `nil` when nothing is listening.
@@ -131,6 +146,14 @@ public final class Workspace {
     if reporter != nil {
       coordinator.onEncodeActivityChanged = { [weak self] in self?.updateRunActivity() }
       coordinator.onRunSettled = { [weak self] in self?.tally.record($0) }
+    }
+    // Unconditional, unlike the run hooks above: an undo is a UI event, not
+    // something a run reports, and a workspace with no reporter still has a
+    // sidebar the user is looking at.
+    coordinator.undoManager = undoManager
+    coordinator.onUndoAppliedChange = { [weak self, weak coordinator] in
+      guard let coordinator else { return }
+      self?.selectQueue(coordinator.id)
     }
     coordinators.append(coordinator)
     onCoordinatorCreated(coordinator)

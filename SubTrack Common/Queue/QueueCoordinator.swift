@@ -83,6 +83,27 @@ public final class QueueCoordinator: Identifiable {
    */
   public var onRunSettled: @MainActor (QueueRunOutcome) -> Void = { _ in }
 
+  /**
+   The undo manager of the window this queue is shown in, or `nil` when it is
+   shown in none — every preview, and every test that doesn't ask for undo,
+   where the destructive edits here simply aren't undoable. Set by
+   ``Workspace``, which hands the same manager to every queue it owns, so a
+   removal registers its undo wherever it was asked for: the Queue menu, a
+   row's context menu, or a drag.
+
+   Weak, because the window owns it. Its registered actions hold this
+   coordinator *unowned*, which is why ``teardown()`` withdraws them.
+   */
+  @ObservationIgnored public weak var undoManager: UndoManager?
+
+  /**
+   Fired as an undo or redo lands, so a ``Workspace`` can bring the affected
+   queue forward. The undo stack is window-wide but a queue is not: without
+   this, taking back a removal made in one queue would refill a queue the user
+   isn't looking at.
+   */
+  public var onUndoAppliedChange: @MainActor () -> Void = {}
+
   private let engine: any ConversionEngineProtocol
   private let governor: EncodeGovernor
   private let makeBookmark: @MainActor (URL) -> Data?
@@ -172,13 +193,20 @@ public final class QueueCoordinator: Identifiable {
   }
 
   /**
-   Cancels in-flight work and detaches from the governor. Call when the queue
-   is deleted so its pump callback and monitors don't linger.
+   Cancels in-flight work, detaches from the governor, and withdraws this
+   queue's undo actions. Call when the queue is deleted so its pump callback
+   and monitors don't linger.
+
+   Withdrawing matters for more than tidiness: the undo stack holds this
+   coordinator unowned and its removed items strongly, so actions left behind
+   would resurrect a queue nobody can see, write it through to persistence,
+   and eventually invoke against a released target.
    */
   public func teardown() {
     cancelAll()
     governor.unregister(id)
     monitors.removeAll()
+    undoManager?.removeAllActions(withTarget: self)
   }
 
   // MARK: - Mutating the queue
@@ -297,12 +325,32 @@ public final class QueueCoordinator: Identifiable {
     ffmpegLocationChanged()
   }
 
-  /// Removes items, cancelling any in-flight work.
+  /// Removes items, cancelling any in-flight work. Undoable.
   public func remove(_ ids: Set<UUID>) {
+    removeItems(ids, named: .removeFromQueue)
+  }
+
+  /// Removes all finished items. Undoable, as a single edit.
+  public func clearCompleted() {
+    removeItems(Set(items.filter { $0.status == .done }.map(\.id)), named: .clearCompleted)
+  }
+
+  /**
+   The body of both removals, taking the name the edit is offered back under —
+   the one thing Remove and Clear Completed disagree about.
+   */
+  private func removeItems(_ ids: Set<UUID>, named name: QueueEditName) {
+    // Registered first: the rows the items occupy and the selection they are
+    // part of are exactly what undo has to restore, and the removal below
+    // destroys both.
+    registerRestore(of: ids, named: name)
     for id in ids {
-      // A cancelled run clears its own entry and releases its slot as it
-      // unwinds, so the entry stays until then: dropping it here leaves the
-      // queue looking idle while `ffmpeg` is still stopping.
+      // The task handle is left in place, exactly as ``cancel(_:)`` leaves it:
+      // a cancelled run is still unwinding, and holding its handle is the only
+      // thing stopping ``enqueue(_:)`` starting a second run over the top of
+      // one that hasn't stopped — which undoing the removal puts back within
+      // reach. Dropping it here would also leave the queue looking idle while
+      // `ffmpeg` is still stopping. The run's own unwind clears it.
       runTasks[id]?.cancel()
       pending.removeAll { $0 == id }
       monitors[id] = nil
@@ -315,16 +363,12 @@ public final class QueueCoordinator: Identifiable {
     onEncodeActivityChanged()
   }
 
-  /// Removes all finished items.
-  public func clearCompleted() {
-    remove(Set(items.filter { $0.status == .done }.map(\.id)))
-  }
-
   /**
    Reorders the given items to sit immediately before `targetID`, so the
    queue order (and thus the run order used by ``startAll()``) matches the
    table. Only reorderable items move; a drop onto a moving item, an unknown
-   target, or a set with nothing reorderable is ignored.
+   target, a set with nothing reorderable, or a drop that lands every row back
+   where it already was is ignored. Undoable.
    */
   public func moveItems(_ ids: Set<UUID>, before targetID: UUID) {
     let movingIDs = Set(items.filter { ids.contains($0.id) && $0.status.isReorderable }.map(\.id))
@@ -334,6 +378,14 @@ public final class QueueCoordinator: Identifiable {
     var remaining = items.filter { !movingIDs.contains($0.id) }
     guard let insertionIndex = remaining.firstIndex(where: { $0.id == targetID }) else { return }
     remaining.insert(contentsOf: moving, at: insertionIndex)
+    // Sited past every guard above and past the rebuilt order itself, so a drop
+    // the queue ignores registers nothing and Undo never offers back an edit
+    // that didn't happen. The order has to be compared rather than reasoned
+    // about: dropping a row onto the one below it passes every guard and then
+    // rebuilds the order it started from, which is exactly how an
+    // insert-before model reads a row dragged down by one.
+    guard remaining.map(\.id) != items.map(\.id) else { return }
+    registerOrderRestore()
     items = remaining
     refreshOutputNames()
     onPersistableChange()
@@ -1133,5 +1185,198 @@ extension QueueCoordinator {
    */
   private func readyOrIncompatible(_ item: QueueItem) -> QueueItemState {
     incompatibilityReason(item).map(QueueItemState.incompatible) ?? .ready
+  }
+}
+
+// MARK: - Undo
+
+/**
+ What an undoable queue edit is called, registered as the undo action's name.
+
+ SwiftUI's stock Edit menu labels its items a flat “Undo”/“Redo” rather than
+ reading the name back, so this is not on screen today. It is registered
+ regardless: it is what ``UndoManager/undoActionName`` answers, and it is what
+ keeps a redone Clear Completed from describing itself as a plain removal.
+ */
+private enum QueueEditName {
+  case removeFromQueue
+  case clearCompleted
+  case reorderQueue
+
+  var localized: String {
+    switch self {
+      case .removeFromQueue: String(localized: "Remove from Queue", bundle: #bundle)
+      case .clearCompleted: String(localized: "Clear Completed", bundle: #bundle)
+      case .reorderQueue: String(localized: "Reorder Queue", bundle: #bundle)
+    }
+  }
+}
+
+extension QueueCoordinator {
+
+  /**
+   Registers the undo that puts `ids` back where they sit now. Registering
+   nothing when nothing matches is what keeps a Clear Completed with nothing
+   finished from consuming the user's ⌘Z.
+
+   The items themselves are captured, not a description of them: ``QueueItem``
+   has no id-taking initializer, and its security-scoped bookmarks were minted
+   from a transient grant that is long gone, so a rebuilt item could never read
+   its source or write beside it again.
+   */
+  private func registerRestore(of ids: Set<UUID>, named name: QueueEditName) {
+    let removals = items.enumerated()
+      .filter { ids.contains($1.id) }
+      .map { RemovedItem(item: $1, index: $0) }
+    guard !removals.isEmpty else { return }
+    let priorSelection = selection
+    registerUndo(named: name) { coordinator in
+      coordinator.restore(removals, selection: priorSelection, named: name)
+    }
+  }
+
+  /// Registers the removal that redoes a restore, under the same action name.
+  private func registerRemoval(of ids: Set<UUID>, named name: QueueEditName) {
+    registerUndo(named: name) { coordinator in
+      coordinator.removeItems(ids, named: name)
+    }
+  }
+
+  /**
+   Registers the undo that puts the queue back in the order it is in now.
+
+   ``moveItems(_:before:)`` is not its own inverse — one drop can gather rows
+   from three places and land them together, and no second drop separates them
+   again — so undo restores the whole order rather than moving anything back.
+   */
+  private func registerOrderRestore() {
+    let order = items.map(\.id)
+    registerUndo(named: .reorderQueue) { coordinator in
+      coordinator.restoreOrder(order)
+    }
+  }
+
+  /**
+   Registers `body` as the way back from the edit about to be made.
+
+   Every registration goes through here, so ``onUndoAppliedChange`` fires for a
+   redo as much as an undo: a redo is registered by this same path while the
+   manager is undoing, which is also the whole of how redo works here. Guarding
+   a registration on ``UndoManager/isUndoing`` would make redo a dead end.
+   */
+  private func registerUndo(
+    named name: QueueEditName,
+    _ body: @escaping @MainActor (QueueCoordinator) -> Void
+  ) {
+    guard let undoManager else { return }
+    undoManager.registerUndo(withTarget: self) { coordinator in
+      body(coordinator)
+      coordinator.onUndoAppliedChange()
+    }
+    undoManager.setActionName(name.localized)
+  }
+
+  /**
+   Puts removed items back in the rows they came out of, re-arms their source
+   monitors, restores the selection they were part of, and registers the
+   removal that redoes the edit.
+   */
+  private func restore(
+    _ removals: [RemovedItem],
+    selection restoredSelection: Set<UUID>,
+    named name: QueueEditName
+  ) {
+    registerRemoval(of: Set(removals.map(\.item.id)), named: name)
+    for removal in removals.sorted(by: { $0.index < $1.index }) {
+      // Skipped when the queue already holds the source: ``add(_:)`` allows one
+      // row per source, and a file re-added by hand while this removal sat on
+      // the undo stack would otherwise come back twice — two rows claiming one
+      // output path, which ``outputNameConflicts`` answers by refusing to start
+      // anything in the queue at all.
+      guard
+        !items.contains(where: {
+          $0.id == removal.item.id || $0.sourceURL == removal.item.sourceURL
+        })
+      else { continue }
+      // Clamped, because the queue can have shrunk since — items added and
+      // removed again while this removal sat on the undo stack.
+      items.insert(removal.item, at: min(removal.index, items.count))
+      settleForRestore(removal.item)
+      startMonitoring(removal.item)
+    }
+    selection = restoredSelection.filter { id in items.contains { $0.id == id } }
+    refreshOutputNames()
+    onPersistableChange()
+    onEncodeActivityChanged()
+  }
+
+  /**
+   Brings a restored item back to a state something is still driving.
+
+   A run the removal cancelled reads as cancelled. The run's own unwind settles
+   it the same way — the task holds the item rather than looking it up — but a
+   restored row must never be seen running with nothing behind it. Nothing
+   partial comes back with it: a run stages its output elsewhere and commits it
+   atomically, so a cancelled run left no file at ``QueueItem/outputURL``, and
+   ``QueueItem/outputByteCount`` is only ever written by a run that finished.
+
+   An item still waiting on a probe is queued for a fresh one, because the
+   removal dropped the one it had, and nothing else would ever move it on. One
+   whose probe is already *in flight* is left alone: that probe holds the item
+   directly and settles it whatever the queue does.
+
+   Everything else is revalidated, because nothing watched its source while it
+   sat on the undo stack and re-arming the monitor cannot recover the gap: the
+   watch opens the source file itself, so a row whose source vanished meanwhile
+   comes back reading `ready` and fails inside the engine rather than showing
+   as missing. This is the restore's counterpart to the
+   ``postHydrationRefresh()`` that follows ``hydrate(_:)``.
+
+   Settling here rather than after ``refreshOutputNames()`` is deliberate:
+   ``QueueItemState/running`` keeps its output path, so a row still marked as
+   running would miss the renumbering that put it back.
+   */
+  private func settleForRestore(_ item: QueueItem) {
+    switch item.status {
+      case .running:
+        item.status = .cancelled
+        revalidate(item)
+      case .waiting:
+        enqueueProbe(item)
+      case .probing:
+        guard !activeProbes.contains(item.id) else { break }
+        item.status = .waiting
+        enqueueProbe(item)
+      default:
+        revalidate(item)
+    }
+  }
+
+  /**
+   Rearranges the queue into the `order` an undone or redone drag recorded, and
+   registers the order it found as the way back.
+
+   Rows added since are left at the end in the order they arrived and ids no
+   longer queued are skipped, so a restore can never lose one. The tiebreak on
+   position is load-bearing: `sorted(by:)` is not stable, and every added row
+   shares one fallback rank.
+   */
+  private func restoreOrder(_ order: [UUID]) {
+    registerOrderRestore()
+    let rank = Dictionary(uniqueKeysWithValues: order.enumerated().map { ($1, $0) })
+    items = items.enumerated()
+      .sorted {
+        (rank[$0.element.id] ?? order.count + $0.offset)
+          < (rank[$1.element.id] ?? order.count + $1.offset)
+      }
+      .map(\.element)
+    refreshOutputNames()
+    onPersistableChange()
+  }
+
+  /// An item a removal lifted out of the queue, and the row it sat in.
+  private struct RemovedItem {
+    let item: QueueItem
+    let index: Int
   }
 }
