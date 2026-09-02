@@ -7,6 +7,14 @@ import SwiftUI
 struct QueueWindowView: View {
   @Environment(AppEnvironment.self)
   private var env
+  /**
+   The window's undo manager, which the queues register their destructive edits
+   with. Read here rather than in ``SubTrackCommands`` because the environment
+   value is nil inside `Commands` — a menu lives outside any window — and the
+   Queue menu is where two of the three undoable edits are invoked.
+   */
+  @Environment(\.undoManager)
+  private var undoManager
   @State private var dropTargeted = false
 
   var body: some View {
@@ -38,6 +46,9 @@ struct QueueWindowView: View {
       if dropTargeted { DropOverlay() }
     }
     .onOpenURL { env.queue.ingest([$0]) }
+    .onChange(of: undoManager, initial: true) { _, undoManager in
+      env.workspace.undoManager = undoManager
+    }
     .sheet(isPresented: ingestSheetPresented) {
       if let progress = env.queue.ingestProgress {
         IngestProgressSheet(progress: progress) { progress.cancel() }

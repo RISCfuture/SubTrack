@@ -157,6 +157,36 @@ struct QueueCoordinatorTests {
     )
   }
 
+  /**
+   A coordinator wired to a fresh undo manager, and that manager.
+
+   Event grouping is off because it closes a group when the main run loop next
+   spins, which a unit test can neither promise nor await; every edit here is
+   grouped explicitly by ``undoably(_:_:)`` instead.
+   */
+  private func makeUndoableCoordinator(
+    _ engine: any ConversionEngineProtocol
+  ) -> (QueueCoordinator, UndoManager) {
+    let coordinator = makeCoordinator(engine)
+    let undoManager = UndoManager()
+    undoManager.groupsByEvent = false
+    coordinator.undoManager = undoManager
+    return (coordinator, undoManager)
+  }
+
+  /**
+   Runs one edit as its own undo group, standing in for the window's grouping.
+
+   For edits that register something. An empty group is still pushed, so an
+   edit expected to register nothing is called bare — which is also the sharper
+   assertion, since the stack then has to stay empty.
+   */
+  private func undoably(_ undoManager: UndoManager, _ edit: () -> Void) {
+    undoManager.beginUndoGrouping()
+    edit()
+    undoManager.endUndoGrouping()
+  }
+
   private func waitUntil(
     _ timeout: Duration = .seconds(3),
     _ condition: @MainActor () -> Bool
@@ -349,7 +379,9 @@ struct QueueCoordinatorTests {
 
   @Test
   func reorderMovesStartableItemsButNotFinished() async throws {
-    let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
+    let (coordinator, undoManager) = makeUndoableCoordinator(
+      StubEngine(container: try sampleContainer())
+    )
     let urls = try SourceFixtures.make((0..<3).map { "reorder-\($0).mkv" })
     await coordinator.add(urls)
     await waitUntil {
@@ -362,17 +394,195 @@ struct QueueCoordinatorTests {
     coordinator.start([ids[0]])
     await waitUntil { coordinator.items.first(where: { $0.id == ids[0] })?.status == .done }
 
-    // Ready items reorder, and the finished item keeps its slot.
-    coordinator.moveItems([ids[2]], before: ids[1])
-    #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1]])
-
     // A finished item is ignored, leaving the order untouched.
     coordinator.moveItems([ids[0]], before: ids[2])
-    #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1]])
+    #expect(coordinator.items.map(\.id) == ids)
 
     // Dropping onto a moving item is a no-op.
     coordinator.moveItems([ids[2]], before: ids[2])
+    #expect(coordinator.items.map(\.id) == ids)
+
+    // So is a drop that rebuilds the order the queue already had — which is how
+    // an insert-before model reads a row dragged down by one.
+    coordinator.moveItems([ids[1]], before: ids[2])
+    #expect(coordinator.items.map(\.id) == ids)
+
+    // Neither drop left anything to take back — a reorder that didn't happen
+    // must not consume the user's ⌘Z.
+    #expect(!undoManager.canUndo)
+
+    // Ready items reorder, and the finished item keeps its slot.
+    undoably(undoManager) { coordinator.moveItems([ids[2]], before: ids[1]) }
     #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1]])
+    #expect(undoManager.undoActionName == "Reorder Queue")
+
+    // Restored from a whole-order snapshot: `moveItems` is not its own inverse.
+    undoManager.undo()
+    #expect(coordinator.items.map(\.id) == ids)
+
+    undoManager.redo()
+    #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1]])
+  }
+
+  /**
+   The whole of an undone removal: the rows come back where they were rather
+   than appended, as the very same objects — which is what carries the
+   bookmarks and the hand-set overrides a re-add could never recover — with the
+   selection they were part of and the numbering their absence had shifted.
+   */
+  @Test
+  func undoPutsRemovedItemsBackWhereTheyWere() async throws {
+    let (coordinator, undoManager) = makeUndoableCoordinator(
+      StubEngine(container: try sampleContainer())
+    )
+    coordinator.settings.editNaming(OutputNameFormat(template: "{name} {n}"))
+    await coordinator.add(try SourceFixtures.make((0..<3).map { "undo-\($0).mkv" }))
+    await waitUntil {
+      coordinator.items.count == 3 && coordinator.items.allSatisfy { $0.status == .ready }
+    }
+
+    let ids = coordinator.items.map(\.id)
+    let middle = coordinator.items[1]
+    coordinator.setCustomName("hand-named", for: middle)
+    coordinator.selection = [ids[0], ids[1]]
+
+    undoably(undoManager) { coordinator.remove([ids[1]]) }
+    #expect(coordinator.items.map(\.id) == [ids[0], ids[2]])
+    #expect(coordinator.selection == [ids[0]])
+    #expect(coordinator.items[1].outputURL.lastPathComponent == "undo-2 2.mkv")
+    #expect(undoManager.undoActionName == "Remove from Queue")
+
+    undoManager.undo()
+    #expect(coordinator.items.map(\.id) == ids)
+    #expect(coordinator.items[1] === middle)
+    #expect(coordinator.items[1].customName == "hand-named")
+    #expect(coordinator.selection == [ids[0], ids[1]])
+    #expect(coordinator.items[2].outputURL.lastPathComponent == "undo-2 3.mkv")
+
+    undoManager.redo()
+    #expect(coordinator.items.map(\.id) == [ids[0], ids[2]])
+    #expect(coordinator.selection == [ids[0]])
+
+    // A torn-down queue takes its actions with it: the stack holds the
+    // coordinator unowned, so one left behind is a crash waiting for a ⌘Z.
+    coordinator.teardown()
+    #expect(!undoManager.canUndo)
+    #expect(!undoManager.canRedo)
+  }
+
+  /**
+   An item removed mid-run comes back settled and restartable, never running —
+   and not restartable *yet*, for as long as the run it interrupted is still
+   unwinding and a second one would land on top of it.
+   */
+  @Test
+  func undoBringsBackARemovedRunningItemSettled() async throws {
+    let (coordinator, undoManager) = makeUndoableCoordinator(
+      StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
+    )
+    await coordinator.add([try SourceFixtures.make("interrupted.mkv")])
+    await waitUntil { coordinator.items.first?.status == .ready }
+
+    coordinator.startAll()
+    await waitUntil { coordinator.items.first?.status == .running }
+    let id = try #require(coordinator.items.first?.id)
+
+    undoably(undoManager) { coordinator.remove([id]) }
+    undoManager.undo()
+
+    #expect(coordinator.items.first?.status == .cancelled)
+    #expect(coordinator.items.first?.status.isStartable == true)
+
+    // Nothing has suspended since the removal, so the cancelled run cannot have
+    // finished unwinding — and starting the row it belongs to must not put a
+    // second encode over the top of it.
+    coordinator.startAll()
+    #expect(coordinator.items.first?.status == .cancelled)
+
+    await waitUntil { !coordinator.hasEncodeWorkInFlight }
+    #expect(!coordinator.hasEncodeWorkInFlight)
+    #expect(coordinator.items.first?.status == .cancelled)
+  }
+
+  /**
+   Clear Completed is one named undo over the finished items alone, and none at
+   all when nothing has finished — an edit that did nothing must not swallow the
+   user's ⌘Z, nor rename the edit sitting under it.
+   */
+  @Test
+  func clearCompletedIsOneNamedUndoAndNothingWhenEmpty() async throws {
+    let (coordinator, undoManager) = makeUndoableCoordinator(
+      StubEngine(container: try sampleContainer())
+    )
+    await coordinator.add(try SourceFixtures.make(["cleared.mkv", "kept.mkv"]))
+    await waitUntil {
+      coordinator.items.count == 2 && coordinator.items.allSatisfy { $0.status == .ready }
+    }
+
+    coordinator.clearCompleted()
+    #expect(!undoManager.canUndo)
+
+    let ids = coordinator.items.map(\.id)
+    coordinator.start([ids[0]])
+    await waitUntil { coordinator.items.first?.status == .done }
+
+    undoably(undoManager) { coordinator.clearCompleted() }
+    #expect(coordinator.items.map(\.id) == [ids[1]])
+    #expect(undoManager.undoActionName == "Clear Completed")
+
+    undoManager.undo()
+    #expect(coordinator.items.map(\.id) == ids)
+    // Back as `done`, not merely present: the savings and slimmed-file rollups
+    // both count finished items, and would quietly lose this one otherwise.
+    #expect(coordinator.items.first?.status == .done)
+    #expect(coordinator.slimmedCount == 1)
+  }
+
+  /**
+   A restored item is watched again. Nothing else in the app observes whether a
+   source monitor was installed, so a removal that drops one and an undo that
+   fails to re-arm it are invisible until a file vanishes unnoticed.
+   */
+  @Test
+  func aRestoredItemIsWatchedAgain() async throws {
+    let (coordinator, undoManager) = makeUndoableCoordinator(
+      StubEngine(container: try sampleContainer())
+    )
+    let source = try SourceFixtures.make("watched.mkv")
+    await coordinator.add([source])
+    await waitUntil { coordinator.items.first?.status == .ready }
+
+    let id = try #require(coordinator.items.first?.id)
+    undoably(undoManager) { coordinator.remove([id]) }
+    undoManager.undo()
+    #expect(coordinator.items.count == 1)
+
+    try FileManager.default.removeItem(at: source)
+    await waitUntil { coordinator.items.first?.status == .missing }
+    #expect(coordinator.items.first?.status == .missing)
+  }
+
+  /**
+   A row whose source vanished while it sat on the undo stack comes back
+   missing. Re-arming the monitor cannot find this on its own — the watch opens
+   the source file, and there is nothing left to open — so an unchecked restore
+   would show `ready` and fail inside the engine on the next run instead.
+   */
+  @Test
+  func aRestoredItemWhoseSourceVanishedComesBackMissing() async throws {
+    let (coordinator, undoManager) = makeUndoableCoordinator(
+      StubEngine(container: try sampleContainer())
+    )
+    let source = try SourceFixtures.make("vanished.mkv")
+    await coordinator.add([source])
+    await waitUntil { coordinator.items.first?.status == .ready }
+
+    let id = try #require(coordinator.items.first?.id)
+    undoably(undoManager) { coordinator.remove([id]) }
+    try FileManager.default.removeItem(at: source)
+    undoManager.undo()
+
+    #expect(coordinator.items.first?.status == .missing)
   }
 
   /**
