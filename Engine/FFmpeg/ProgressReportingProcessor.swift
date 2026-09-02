@@ -74,14 +74,26 @@ final class ProgressReportingProcessor: Processor {
     }
   }
 
-  /// Runs the conversion, delivering progress via `onProgress`.
+  /**
+   Runs the conversion, delivering progress via `onProgress`.
+
+   `ffmpeg` writes into a staging file beside the destination, which is moved
+   into place only once the run has exited cleanly and verified. The
+   destination therefore ends up either untouched or complete — never holding
+   the truncated remains of a cancelled or failed run, and never losing a good
+   earlier file to a retry that goes wrong.
+   */
   func process(
     outputURL: URL,
     onProgress: @escaping @Sendable (ConversionProgress) -> Void
   ) async throws {
+    let staged = StagedOutput(destination: outputURL)
+    defer { staged?.discard() }
+    let writeURL = staged?.url ?? outputURL
+
     let running = RunningProcess()
     let process = running.process
-    let stdout = configure(process, writingTo: outputURL)
+    let stdout = configure(process, writingTo: writeURL)
 
     let duration = totalDuration
     let readHandle = stdout.fileHandleForReading, writeHandle = stdout.fileHandleForWriting
@@ -113,10 +125,14 @@ final class ProgressReportingProcessor: Processor {
       guard process.terminationStatus == 0 else {
         throw VideoProcessingError.encodeFailed(exitCode: process.terminationStatus)
       }
-      if verifyOutput { try await verify(outputURL: outputURL) }
+      if verifyOutput { try await verify(outputURL: writeURL) }
     } onCancel: {
       running.terminate()
     }
+
+    // Reaching here means `ffmpeg` exited zero and the output holds what was
+    // planned, which is the whole precondition for publishing it.
+    try staged?.commit()
   }
 
   /// The full `ffmpeg` argument vector for this conversion.
@@ -174,6 +190,88 @@ final class ProgressReportingProcessor: Processor {
         codec: stream.codecName
       )
     }
+  }
+}
+
+/**
+ The file a run writes into, and the move that publishes it once the run has
+ proven itself.
+
+ The staging directory is an item-replacement directory chosen for the
+ destination, so it sits on the destination's own volume and the commit is a
+ rename rather than a copy. Foundation puts it in the process's temporary
+ directory when the destination is on the boot volume, and in the
+ destination's own folder otherwise — on a network share, say. Both are
+ already reachable by a sandboxed run: the first is the app's container, and
+ the second is inside the folder whose scoped access the run holds in order to
+ write the output at all.
+
+ The staged file keeps the destination's name because `ffmpeg` picks its muxer
+ from the extension.
+ */
+private struct StagedOutput {
+
+  /// Where `ffmpeg` writes.
+  let url: URL
+
+  private let directory: URL
+  private let destination: URL
+
+  /**
+   Prepares a staging directory for `destination`, or fails when one can't be
+   had — a destination that names no ordinary file, or a folder that won't take
+   a new directory. A run that can't stage writes straight to its destination
+   instead, which is worth more than refusing to run at all.
+   */
+  init?(destination: URL) {
+    guard
+      let directory = try? FileManager.default.url(
+        for: .itemReplacementDirectory,
+        in: .userDomainMask,
+        appropriateFor: destination,
+        create: true
+      )
+    else { return nil }
+
+    self.directory = directory
+    self.destination = destination
+    self.url = directory.appending(
+      path: destination.lastPathComponent,
+      directoryHint: .notDirectory
+    )
+  }
+
+  /**
+   Moves the staged file onto the destination.
+
+   `replaceItemAt` needs something to replace and fails when the destination
+   doesn't exist yet, which is the ordinary case for a first run — hence the
+   two paths. A file appearing in the window between the check and the move
+   makes `moveItem` throw, which fails the run without destroying anything.
+
+   The replacement takes the new file's own dates and permissions: this is a
+   freshly produced encode rather than a new revision of what was there.
+   */
+  func commit() throws {
+    let fileManager = FileManager.default
+    if fileManager.fileExists(atPath: destination.path(percentEncoded: false)) {
+      _ = try fileManager.replaceItemAt(
+        destination,
+        withItemAt: url,
+        backupItemName: nil,
+        options: [.usingNewMetadataOnly]
+      )
+    } else {
+      try fileManager.moveItem(at: url, to: destination)
+    }
+  }
+
+  /**
+   Removes the staging directory and anything still in it. Safe to call after
+   a commit, which leaves the directory empty rather than gone.
+   */
+  func discard() {
+    try? FileManager.default.removeItem(at: directory)
   }
 }
 
