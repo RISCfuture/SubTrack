@@ -9,6 +9,9 @@ import Foundation
  */
 public enum VideoProcessingError: Error, Sendable {
 
+  /// The output volume hasn't room for the file the run would write.
+  case insufficientSpace(required: Int, available: Int)
+
   /// `ffmpeg` couldn't be launched.
   case launchFailed(detail: String)
 
@@ -39,6 +42,14 @@ extension VideoProcessingError: LocalizedError {
 
   public var failureReason: String? {
     switch self {
+      case let .insufficientSpace(required, available):
+        String(
+          localized: """
+            The output folder has \(available.formatted(.byteCount(style: .file))) free, but the \
+            slimmed file needs about \(required.formatted(.byteCount(style: .file))).
+            """,
+          bundle: #bundle
+        )
       case .launchFailed(let detail):
         String(localized: "ffmpeg couldn’t be started: \(detail)", bundle: #bundle)
       case .encodeFailed(let exitCode):
@@ -69,26 +80,39 @@ extension VideoProcessingError: LocalizedError {
   }
 
   /**
-   Only a failed commit leaves the user something to act on: the encode
-   survived, and its path is the one thing standing between them and it.
+   Running out of room and a finished encode left in staging each name
+   something the user can go and do. The rest are the run itself going wrong,
+   where there is nothing to suggest beyond reading what went wrong.
    */
   public var recoverySuggestion: String? {
-    guard case .outputCommitFailed(let stagedURL?, _) = self else { return nil }
-    return String(
-      localized: "The finished file is at “\(stagedURL.path(percentEncoded: false))”.",
-      bundle: #bundle
-    )
+    switch self {
+      case .insufficientSpace:
+        String(
+          localized: "Free up space on the volume, or choose another output folder.",
+          bundle: #bundle
+        )
+      case .outputCommitFailed(let stagedURL?, _):
+        String(
+          localized: "The finished file is at “\(stagedURL.path(percentEncoded: false))”.",
+          bundle: #bundle
+        )
+      case .launchFailed, .encodeFailed, .outputMissingStreams, .outputStreamEmpty, .cancelled,
+        .outputCommitFailed(nil, _):
+        nil
+    }
   }
 
   /**
    A failure to launch is a problem with the `ffmpeg` build itself; the rest
-   are a run that started and then went wrong. Cancelling, and a finished
-   encode the file system wouldn't take, are neither.
+   are a run that couldn't produce a file, which is what the failed-run topic
+   covers — including the section on being refused before `ffmpeg` starts.
+   Cancelling, and a finished encode the file system wouldn't take, are
+   neither.
    */
   public var helpAnchor: String? {
     switch self {
       case .launchFailed: HelpAnchor.customFFmpeg.rawValue
-      case .encodeFailed, .outputMissingStreams, .outputStreamEmpty:
+      case .insufficientSpace, .encodeFailed, .outputMissingStreams, .outputStreamEmpty:
         HelpAnchor.encodeFailed.rawValue
       case .outputCommitFailed, .cancelled: nil
     }
