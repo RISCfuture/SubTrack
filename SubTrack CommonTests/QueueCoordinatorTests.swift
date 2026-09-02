@@ -4,7 +4,7 @@ import Testing
 import SubTrack_Common
 
 @MainActor
-@Suite
+@Suite(.sourceFixtures)
 struct QueueCoordinatorTests {
 
   private func sampleContainer() throws -> Container {
@@ -175,29 +175,10 @@ struct QueueCoordinatorTests {
     #expect(!coordinator.isRunning)
   }
 
-  /**
-   A real, empty `.mkv` file for tests that route through
-   ``QueueCoordinator/ingest(_:)``, which — unlike ``QueueCoordinator/add(_:)``
-   — resolves paths through `MovieFileFinder` and so requires the source to
-   actually exist on disk.
-   */
-  private func makeTemporaryMovieFile() throws -> URL {
-    let file = URL(fileURLWithPath: NSTemporaryDirectory())
-      .appending(path: "subtrack-\(UUID().uuidString).mkv", directoryHint: .notDirectory)
-    try Data("x".utf8).write(to: file)
-    return file
-  }
-
-  /// Real temporary `.mkv` files, since `ingest` filters to paths that exist.
-  private func makeTemporaryMovieFiles(_ count: Int) throws -> [URL] {
-    try (0..<count).map { _ in try makeTemporaryMovieFile() }
-  }
-
   @Test
   func ingestAddsEachSourceOnce() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
-    let url = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: url) }
+    let url = try SourceFixtures.make("ingest-once.mkv")
     await coordinator.ingestAsync([url, url])
     await coordinator.ingestAsync([url])
 
@@ -214,8 +195,7 @@ struct QueueCoordinatorTests {
    */
   @Test
   func ingestClearsItsProgressWhenDone() async throws {
-    let url = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: url) }
+    let url = try SourceFixtures.make("ingest-progress.mkv")
 
     let observer = IngestProgressObserver()
     let coordinator = QueueCoordinator(
@@ -244,8 +224,7 @@ struct QueueCoordinatorTests {
     engine.probeDelay = .milliseconds(50)
     let coordinator = makeCoordinator(engine)
 
-    let urls = try makeTemporaryMovieFiles(20)
-    defer { for url in urls { try? FileManager.default.removeItem(at: url) } }
+    let urls = try SourceFixtures.make((1...20).map { "ingest-bounded-\($0).mkv" })
     await coordinator.ingestAsync(urls)
 
     // Guards against the whole test passing vacuously on an empty queue.
@@ -257,7 +236,7 @@ struct QueueCoordinatorTests {
   @Test
   func addProbesFileToReady() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-a.mkv")])
+    await coordinator.add([try SourceFixtures.make("a.mkv")])
 
     await waitUntil { coordinator.items.first?.status == .ready }
     let item = try #require(coordinator.items.first)
@@ -269,7 +248,7 @@ struct QueueCoordinatorTests {
   @Test
   func runsItemToCompletion() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-b.mkv")])
+    await coordinator.add([try SourceFixtures.make("b.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     coordinator.startAll()
@@ -288,10 +267,7 @@ struct QueueCoordinatorTests {
   @Test
   func changingTheNameFormatRenamesOnlyPendingItems() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
-    await coordinator.add([
-      URL(filePath: "/tmp/nonexistent-format-a.mkv"),
-      URL(filePath: "/tmp/nonexistent-format-b.mkv")
-    ])
+    await coordinator.add(try SourceFixtures.make(["format-a.mkv", "format-b.mkv"]))
     await waitUntil { coordinator.items.allSatisfy { $0.status == .ready } }
 
     coordinator.start([coordinator.items[0].id])
@@ -301,35 +277,28 @@ struct QueueCoordinatorTests {
     coordinator.settings.editNaming(OutputNameFormat(template: "{name} [{n}]"))
 
     #expect(coordinator.items[0].outputURL == finishedOutput)
-    #expect(coordinator.items[1].outputURL.lastPathComponent == "nonexistent-format-b [2].mkv")
+    #expect(coordinator.items[1].outputURL.lastPathComponent == "format-b [2].mkv")
   }
 
   @Test
   func namingOneFileLeavesTheOthersNumberingAlone() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     coordinator.settings.editNaming(OutputNameFormat(template: "{name} [{n}]"))
-    await coordinator.add([
-      URL(filePath: "/tmp/nonexistent-named-a.mkv"),
-      URL(filePath: "/tmp/nonexistent-named-b.mkv"),
-      URL(filePath: "/tmp/nonexistent-named-c.mkv")
-    ])
+    await coordinator.add(try SourceFixtures.make(["named-a.mkv", "named-b.mkv", "named-c.mkv"]))
     await waitUntil { coordinator.items.allSatisfy { $0.status == .ready } }
 
     coordinator.setCustomName("Middle", for: coordinator.items[1])
 
     #expect(coordinator.items[1].outputURL.lastPathComponent == "Middle.mkv")
     // The named file keeps its turn, so the third file is still the third.
-    #expect(coordinator.items[2].outputURL.lastPathComponent == "nonexistent-named-c [3].mkv")
+    #expect(coordinator.items[2].outputURL.lastPathComponent == "named-c [3].mkv")
   }
 
   @Test
   func twoFilesGivenTheSameNameConflict() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     coordinator.settings.destination.setDestination(URL(filePath: "/tmp/nonexistent-out"))
-    await coordinator.add([
-      URL(filePath: "/tmp/nonexistent-clash-a.mkv"),
-      URL(filePath: "/tmp/nonexistent-clash-b.mkv")
-    ])
+    await coordinator.add(try SourceFixtures.make(["clash-a.mkv", "clash-b.mkv"]))
     await waitUntil { coordinator.items.allSatisfy { $0.status == .ready } }
 
     for item in coordinator.items { coordinator.setCustomName("Same", for: item) }
@@ -346,7 +315,7 @@ struct QueueCoordinatorTests {
 
   @Test
   func aNameConflictKeepsTheQueueFromStarting() async throws {
-    let source = URL(filePath: "/tmp/nonexistent-clash.mkv")
+    let source = try SourceFixtures.make("clash.mkv")
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     await coordinator.add([source])
     await waitUntil { coordinator.items.first?.status == .ready }
@@ -364,7 +333,7 @@ struct QueueCoordinatorTests {
     let coordinator = makeCoordinator(
       StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     )
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-c.mkv")])
+    await coordinator.add([try SourceFixtures.make("c.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     coordinator.startAll()
@@ -381,7 +350,7 @@ struct QueueCoordinatorTests {
   @Test
   func reorderMovesStartableItemsButNotFinished() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
-    let urls = (0..<3).map { URL(filePath: "/tmp/nonexistent-reorder-\($0).mkv") }
+    let urls = try SourceFixtures.make((0..<3).map { "reorder-\($0).mkv" })
     await coordinator.add(urls)
     await waitUntil {
       coordinator.items.count == 3 && coordinator.items.allSatisfy { $0.status == .ready }
@@ -422,7 +391,7 @@ struct QueueCoordinatorTests {
       makeBookmark: { _ in Data("bookmark".utf8) },
       beginSourceAccess: { _ in ScopedAccess(resolvedURL: resolved) {} }
     )
-    await coordinator.add([URL(filePath: "/tmp/subtrack-original-source.mkv")])
+    await coordinator.add([try SourceFixtures.make("original-source.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     // The bookmark is captured at add time...
@@ -534,8 +503,7 @@ struct QueueCoordinatorTests {
    */
   @Test
   func runFailsUpFrontWhenTheOutputVolumeHasNoRoom() async throws {
-    let source = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: source) }
+    let source = try SourceFixtures.make("no-room.mkv")
     let coordinator = makeCoordinator(
       StubEngine(container: try bitRatedContainer()),
       availableCapacity: { _ in 1_000_000 }
@@ -563,8 +531,7 @@ struct QueueCoordinatorTests {
    */
   @Test
   func runProceedsWhenTheVolumeWontReportItsFreeSpace() async throws {
-    let source = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: source) }
+    let source = try SourceFixtures.make("unreported-capacity.mkv")
     let coordinator = makeCoordinator(
       StubEngine(container: try bitRatedContainer()),
       availableCapacity: { _ in nil }
@@ -584,8 +551,7 @@ struct QueueCoordinatorTests {
    */
   @Test
   func runProceedsWhenTheOutputSizeCannotBeProjected() async throws {
-    let source = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: source) }
+    let source = try SourceFixtures.make("unprojectable-size.mkv")
     let coordinator = makeCoordinator(
       StubEngine(container: try fiveStreamContainer()),
       availableCapacity: { _ in 0 }
@@ -601,11 +567,7 @@ struct QueueCoordinatorTests {
 
   @Test
   func revalidateMarksMissingThenRecovers() async throws {
-    let directory = URL(fileURLWithPath: NSTemporaryDirectory())
-      .appending(path: "subtrack-queue-\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let file = directory.appending(path: "clip.mkv", directoryHint: .notDirectory)
-    try Data("x".utf8).write(to: file)
+    let file = try SourceFixtures.make("clip.mkv")
 
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     await coordinator.add([file])
@@ -619,8 +581,6 @@ struct QueueCoordinatorTests {
     try Data("x".utf8).write(to: file)
     coordinator.revalidate(item)
     #expect(item.status == .ready)
-
-    try? FileManager.default.removeItem(at: directory)
   }
 
   /**
@@ -632,7 +592,7 @@ struct QueueCoordinatorTests {
   func rescanRefreshesContainerAndKeepsFinishedItemsDone() async throws {
     let engine = StubEngine(container: try sampleContainer())
     let coordinator = makeCoordinator(engine)
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-rescan.mkv")])
+    await coordinator.add([try SourceFixtures.make("rescan.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     coordinator.startAll()
@@ -658,7 +618,7 @@ struct QueueCoordinatorTests {
     let coordinator = makeCoordinator(
       StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     )
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-rescan-busy.mkv")])
+    await coordinator.add([try SourceFixtures.make("rescan-busy.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     coordinator.startAll()
@@ -682,7 +642,7 @@ struct QueueCoordinatorTests {
   func cancelDuringRescanPreservesFinishedItem() async throws {
     let engine = StubEngine(container: try sampleContainer())
     let coordinator = makeCoordinator(engine)
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-rescan-cancel.mkv")])
+    await coordinator.add([try SourceFixtures.make("rescan-cancel.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     coordinator.startAll()
@@ -708,13 +668,8 @@ struct QueueCoordinatorTests {
    */
   @Test
   func startRecoversRescannedPendingItemAfterFailure() async throws {
-    let directory = URL(fileURLWithPath: NSTemporaryDirectory())
-      .appending(path: "subtrack-queue-\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let fileA = directory.appending(path: "a.mkv", directoryHint: .notDirectory)
-    let fileB = directory.appending(path: "b.mkv", directoryHint: .notDirectory)
-    try Data("x".utf8).write(to: fileA)
-    try Data("x".utf8).write(to: fileB)
+    let sources = try SourceFixtures.make(["a.mkv", "b.mkv"])
+    let (fileA, fileB) = (sources[0], sources[1])
 
     let engine = StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     let coordinator = makeCoordinator(engine)
@@ -756,7 +711,6 @@ struct QueueCoordinatorTests {
     // Release the stub's 30-second hold so the task doesn't outlive the test.
     coordinator.cancelAll()
     await waitUntil { !coordinator.isRunning }
-    try? FileManager.default.removeItem(at: directory)
   }
 
   /**
@@ -768,14 +722,8 @@ struct QueueCoordinatorTests {
    */
   @Test
   func aPrunedPendingItemLeavesNoEncodeWorkInFlight() async throws {
-    let directory = URL(fileURLWithPath: NSTemporaryDirectory())
-      .appending(path: "subtrack-queue-\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let fileA = directory.appending(path: "a.mkv", directoryHint: .notDirectory)
-    let fileB = directory.appending(path: "b.mkv", directoryHint: .notDirectory)
-    try Data("x".utf8).write(to: fileA)
-    try Data("x".utf8).write(to: fileB)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let sources = try SourceFixtures.make(["a.mkv", "b.mkv"])
+    let (fileA, fileB) = (sources[0], sources[1])
 
     let engine = StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     let coordinator = makeCoordinator(engine)
@@ -809,7 +757,7 @@ struct QueueCoordinatorTests {
       StubEngine(container: try sampleContainer()),
       probeCapabilities: { await capabilities.value }
     )
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-incompat.mkv")])
+    await coordinator.add([try SourceFixtures.make("incompat.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
     let item = try #require(coordinator.items.first)
 
@@ -838,7 +786,7 @@ struct QueueCoordinatorTests {
     let coordinator = makeCoordinator(
       StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     )
-    await coordinator.add((1...4).map { URL(filePath: "/tmp/nonexistent-progress-\($0).mkv") })
+    await coordinator.add(try SourceFixtures.make((1...4).map { "progress-\($0).mkv" }))
     await waitUntil { coordinator.items.count == 4 }
     let items = coordinator.items
 
@@ -861,7 +809,7 @@ struct QueueCoordinatorTests {
   @Test
   func trackCountsFollowThePlanUntilTheRunReportsItsOwn() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try fiveStreamContainer()))
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-tracks.mkv")])
+    await coordinator.add([try SourceFixtures.make("tracks.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
     let item = try #require(coordinator.items.first)
     #expect(item.managedTrackCount == 5)
@@ -884,8 +832,7 @@ struct QueueCoordinatorTests {
   @Test
   func warnsWhenEveryAudioTrackWouldBeDropped() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try chineseAudioContainer()))
-    let file = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: file) }
+    let file = try SourceFixtures.make("audio-dropped.mkv")
     await coordinator.ingestAsync([file])
     try await waitUntilSettled(coordinator)
     let item = try #require(coordinator.items.first)
@@ -897,8 +844,7 @@ struct QueueCoordinatorTests {
   @Test
   func doesNotWarnWhenAudioSurvives() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
-    let file = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: file) }
+    let file = try SourceFixtures.make("audio-kept.mkv")
     await coordinator.ingestAsync([file])
     try await waitUntilSettled(coordinator)
     let item = try #require(coordinator.items.first)
@@ -909,8 +855,7 @@ struct QueueCoordinatorTests {
   @Test
   func doesNotWarnWhenTheSourceHasNoAudio() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try silentContainer()))
-    let file = try makeTemporaryMovieFile()
-    defer { try? FileManager.default.removeItem(at: file) }
+    let file = try SourceFixtures.make("silent.mkv")
     await coordinator.ingestAsync([file])
     try await waitUntilSettled(coordinator)
     let item = try #require(coordinator.items.first)
@@ -921,7 +866,7 @@ struct QueueCoordinatorTests {
   @Test
   func outputSizeMovesFromPlanToProjectionToMeasurement() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try bitRatedContainer()))
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-output-size.mkv")])
+    await coordinator.add([try SourceFixtures.make("output-size.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
     let item = try #require(coordinator.items.first)
     item.sourceByteCount = 66_000_000
@@ -945,7 +890,7 @@ struct QueueCoordinatorTests {
   @Test
   func outputSizeIsUnknownWhenADroppedTrackHasNoBitRate() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try fiveStreamContainer()))
-    await coordinator.add([URL(filePath: "/tmp/nonexistent-no-bit-rates.mkv")])
+    await coordinator.add([try SourceFixtures.make("no-bit-rates.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
     let item = try #require(coordinator.items.first)
     item.sourceByteCount = 5_000
