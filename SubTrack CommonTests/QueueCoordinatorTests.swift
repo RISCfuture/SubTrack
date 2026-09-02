@@ -659,6 +659,49 @@ struct QueueCoordinatorTests {
     try? FileManager.default.removeItem(at: directory)
   }
 
+  /**
+   The same pruning seen from the workspace's side. A failed re-scan drops a
+   waiting item from the run queue through a path that never pumps, so a queue
+   that judged itself busy by whether `pending` was empty would stay busy for
+   good — and, since that is how the app knows a run has ended, would never
+   announce another run for the rest of the session.
+   */
+  @Test
+  func aPrunedPendingItemLeavesNoEncodeWorkInFlight() async throws {
+    let directory = URL(fileURLWithPath: NSTemporaryDirectory())
+      .appending(path: "subtrack-queue-\(UUID().uuidString)", directoryHint: .isDirectory)
+    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+    let fileA = directory.appending(path: "a.mkv", directoryHint: .notDirectory)
+    let fileB = directory.appending(path: "b.mkv", directoryHint: .notDirectory)
+    try Data("x".utf8).write(to: fileA)
+    try Data("x".utf8).write(to: fileB)
+    defer { try? FileManager.default.removeItem(at: directory) }
+
+    let engine = StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
+    let coordinator = makeCoordinator(engine)
+    coordinator.maxConcurrent = 1
+    await coordinator.add([fileA, fileB])
+    await waitUntil {
+      coordinator.items.count == 2 && coordinator.items.allSatisfy { $0.status == .ready }
+    }
+    let itemA = try #require(coordinator.items.first { $0.sourceURL == fileA })
+    let itemB = try #require(coordinator.items.first { $0.sourceURL == fileB })
+
+    // A takes the only slot; B waits its turn, then a failed re-scan prunes it.
+    coordinator.start([itemA.id])
+    await waitUntil { itemA.status == .running }
+    coordinator.start([itemB.id])
+    engine.probeFails = true
+    coordinator.rescan([itemB.id])
+    await waitUntil {
+      if case .failed = itemB.status { return true }; return false
+    }
+
+    coordinator.cancel([itemA.id])
+    await waitUntil { !coordinator.hasEncodeWorkInFlight }
+    #expect(!coordinator.hasEncodeWorkInFlight)
+  }
+
   @Test
   func incompatibleWhenBuildLacksEncoderThenRecovers() async throws {
     let capabilities = CapabilityProvider(.videoToolboxOnly)
