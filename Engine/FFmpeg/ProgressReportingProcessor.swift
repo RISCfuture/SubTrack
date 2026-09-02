@@ -74,49 +74,69 @@ final class ProgressReportingProcessor: Processor {
     }
   }
 
-  /// Runs the conversion, delivering progress via `onProgress`.
+  /**
+   Runs the conversion, delivering progress via `onProgress`.
+
+   `ffmpeg` writes into a staging file, which is moved onto the destination
+   only once the run has exited cleanly and verified. The destination
+   therefore ends up either untouched or complete — never holding the
+   truncated remains of a cancelled or failed run, and never losing a good
+   earlier file to a retry that goes wrong.
+   */
   func process(
     outputURL: URL,
     onProgress: @escaping @Sendable (ConversionProgress) -> Void
   ) async throws {
+    let staged = StagedOutput(destination: outputURL)
+    let writeURL = staged?.url ?? outputURL
+
     let running = RunningProcess()
     let process = running.process
-    let stdout = configure(process, writingTo: outputURL)
+    let stdout = configure(process, writingTo: writeURL)
 
     let duration = totalDuration
     let readHandle = stdout.fileHandleForReading, writeHandle = stdout.fileHandleForWriting
 
-    try await withTaskCancellationHandler {
-      // Reads only local, Sendable-transferable values (never `self`), so the
-      // non-Sendable processor is not sent into the child task.
-      async let reading: Void = {
-        var parser = ProgressParser(totalDuration: duration)
-        for try await line in readHandle.bytes.lines {
-          if let progress = parser.consume(line: line) { onProgress(progress) }
+    do {
+      try await withTaskCancellationHandler {
+        // Reads only local, Sendable-transferable values (never `self`), so the
+        // non-Sendable processor is not sent into the child task.
+        async let reading: Void = {
+          var parser = ProgressParser(totalDuration: duration)
+          for try await line in readHandle.bytes.lines {
+            if let progress = parser.consume(line: line) { onProgress(progress) }
+          }
+        }()
+
+        do {
+          try await process.runUntilExit()
+        } catch {
+          // Nothing spawned, so close the write end here too — the reader above
+          // would otherwise wait forever for an EOF no child can deliver.
+          try? writeHandle.close()
+          if Task.isCancelled { throw VideoProcessingError.cancelled }
+          throw VideoProcessingError.launchFailed(detail: error.userMessage)
         }
-      }()
-
-      do {
-        try await process.runUntilExit()
-      } catch {
-        // Nothing spawned, so close the write end here too — the reader above
-        // would otherwise wait forever for an EOF no child can deliver.
+        // Close the parent's copy of the write end so the reader sees EOF.
         try? writeHandle.close()
-        if Task.isCancelled { throw VideoProcessingError.cancelled }
-        throw VideoProcessingError.launchFailed(detail: error.userMessage)
-      }
-      // Close the parent's copy of the write end so the reader sees EOF.
-      try? writeHandle.close()
-      try await reading
+        try await reading
 
-      if Task.isCancelled { throw VideoProcessingError.cancelled }
-      guard process.terminationStatus == 0 else {
-        throw VideoProcessingError.encodeFailed(exitCode: process.terminationStatus)
+        if Task.isCancelled { throw VideoProcessingError.cancelled }
+        guard process.terminationStatus == 0 else {
+          throw VideoProcessingError.encodeFailed(exitCode: process.terminationStatus)
+        }
+        if verifyOutput { try await verify(outputURL: writeURL) }
+      } onCancel: {
+        running.terminate()
       }
-      if verifyOutput { try await verify(outputURL: outputURL) }
-    } onCancel: {
-      running.terminate()
+    } catch {
+      staged?.discard()
+      throw error
     }
+
+    // Reaching here means `ffmpeg` exited zero and the output holds what was
+    // planned, which is the whole precondition for publishing it.
+    try staged?.commit()
   }
 
   /// The full `ffmpeg` argument vector for this conversion.
@@ -174,6 +194,136 @@ final class ProgressReportingProcessor: Processor {
         codec: stream.codecName
       )
     }
+  }
+}
+
+/**
+ The file a run writes into, and the move that publishes it once the run has
+ proven itself.
+
+ The staging directory sits on the destination's own volume, so the commit is
+ a rename rather than a copy. The staged file keeps the destination's name
+ because `ffmpeg` picks its muxer from the extension.
+ */
+private struct StagedOutput {
+
+  /// Where `ffmpeg` writes.
+  let url: URL
+
+  private let directory: URL
+  private let destination: URL
+
+  /**
+   The staged file, when a failed move has left it behind. `replaceItemAt`
+   makes no promise about the replacement it was handed once it throws, so
+   whether there is still a file to point the user at is a question to ask
+   rather than assume.
+   */
+  private var survivingStagedFile: URL? {
+    FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) ? url : nil
+  }
+
+  /**
+   Prepares a staging directory for `destination`, or fails when one can't be
+   had — a destination that names no ordinary file, or a folder that won't take
+   a new directory. A run that can't stage writes straight to its destination
+   instead, which is worth more than refusing to run at all.
+   */
+  init?(destination: URL) {
+    guard let directory = Self.makeStagingDirectory(for: destination) else { return nil }
+
+    self.directory = directory
+    self.destination = destination
+    self.url = directory.appending(
+      path: destination.lastPathComponent,
+      directoryHint: .notDirectory
+    )
+  }
+
+  /**
+   Foundation's item-replacement directory where the run can have one, and a
+   directory inside the destination's own folder where it can't.
+
+   The item-replacement directory is the better home of the two: it is on the
+   destination's volume, and the system clears it away after a crash. It is
+   only dependably available for a boot-volume destination, though, where
+   Foundation places it in the process's temporary directory. Elsewhere it goes
+   to the volume root, which a sandboxed run holding a bookmark for the
+   destination *folder* has no access to — so on an external drive or a network
+   share, staging inside that folder is the one place the run is certain to
+   reach.
+   */
+  private static func makeStagingDirectory(for destination: URL) -> URL? {
+    let fileManager = FileManager.default
+    if let replacement = try? fileManager.url(
+      for: .itemReplacementDirectory,
+      in: .userDomainMask,
+      appropriateFor: destination,
+      create: true
+    ) {
+      return replacement
+    }
+
+    let inDestinationFolder = destination.deletingLastPathComponent()
+      .appending(path: ".SubTrack-\(UUID().uuidString)", directoryHint: .isDirectory)
+    do {
+      try fileManager.createDirectory(at: inDestinationFolder, withIntermediateDirectories: false)
+      return inDestinationFolder
+    } catch {
+      return nil
+    }
+  }
+
+  /**
+   Moves the staged file onto the destination and clears the staging directory
+   away.
+
+   `replaceItemAt` needs something to replace and fails when the destination
+   doesn't exist yet, which is the ordinary case for a first run — hence the
+   two paths. A file appearing in the window between the check and the move
+   makes `moveItem` throw, which fails the run without destroying anything.
+
+   The replacement takes the new file's own dates and permissions: this is a
+   freshly produced encode rather than a new revision of what was there.
+
+   A move that fails leaves the staged file where it is and names it in the
+   error. The run has a verified encode in hand by this point, and a
+   destination gone read-only, full, or absent is worth reporting without also
+   throwing the work away.
+   */
+  func commit() throws {
+    do {
+      try moveOntoDestination()
+    } catch {
+      throw VideoProcessingError.outputCommitFailed(
+        stagedURL: survivingStagedFile,
+        detail: error.userMessage
+      )
+    }
+    discard()
+  }
+
+  private func moveOntoDestination() throws {
+    let fileManager = FileManager.default
+    if fileManager.fileExists(atPath: destination.path(percentEncoded: false)) {
+      _ = try fileManager.replaceItemAt(
+        destination,
+        withItemAt: url,
+        backupItemName: nil,
+        options: [.usingNewMetadataOnly]
+      )
+    } else {
+      try fileManager.moveItem(at: url, to: destination)
+    }
+  }
+
+  /**
+   Removes the staging directory and whatever is still in it — the partial file
+   a failed or cancelled run left behind, or the finished one a commit has
+   already moved out.
+   */
+  func discard() {
+    try? FileManager.default.removeItem(at: directory)
   }
 }
 
