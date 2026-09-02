@@ -89,6 +89,7 @@ public final class QueueCoordinator: Identifiable {
   private let beginSourceAccess: @MainActor (QueueItem) -> ScopedAccess
   private let beginOutputFolderAccess: @MainActor (QueueItem) -> ScopedAccess
   private let probeCapabilities: @Sendable () async -> EncoderCapabilities?
+  private let availableCapacity: @MainActor (URL) -> Int?
 
   private var runTasks: [UUID: Task<Void, Never>] = [:]
   private var pending: [UUID] = []
@@ -123,6 +124,8 @@ public final class QueueCoordinator: Identifiable {
      the folder an item's output is written into.
    - Parameter probeCapabilities: Reads what the currently-resolved `ffmpeg` can
      encode, or `nil` when it can't be asked.
+   - Parameter availableCapacity: Reads how much room a folder's volume has for
+     a file the user is waiting on, or `nil` when the volume won't say.
    - Parameter onPersistableChange: Fired on the structural and settled changes
      that should be written through to persistence.
    */
@@ -137,6 +140,7 @@ public final class QueueCoordinator: Identifiable {
     beginSourceAccess: @escaping @MainActor (QueueItem) -> ScopedAccess = { _ in .none },
     beginOutputFolderAccess: @escaping @MainActor (QueueItem) -> ScopedAccess = { _ in .none },
     probeCapabilities: @escaping @Sendable () async -> EncoderCapabilities? = { nil },
+    availableCapacity: @escaping @MainActor (URL) -> Int? = \.availableCapacityForImportantUsage,
     onPersistableChange: @escaping @MainActor () -> Void = {}
   ) {
     self.id = id
@@ -149,6 +153,7 @@ public final class QueueCoordinator: Identifiable {
     self.beginSourceAccess = beginSourceAccess
     self.beginOutputFolderAccess = beginOutputFolderAccess
     self.probeCapabilities = probeCapabilities
+    self.availableCapacity = availableCapacity
     self.onPersistableChange = onPersistableChange
     settings.onChange = { [weak self] in self?.settingsDidChange() }
     governor.register(id) { [weak self] in self?.pump() }
@@ -464,6 +469,30 @@ public final class QueueCoordinator: Identifiable {
     }
   }
 
+  /**
+   Throws before `ffmpeg` is spawned when the output volume plainly hasn't room
+   for the file the run would write, so filling a disk reads as itself rather
+   than as an opaque ``VideoProcessingError/encodeFailed(exitCode:)``.
+
+   Additive, and deliberately easy to satisfy: every unknown lets the run
+   proceed. The projection is `nil` for a transcode and for any plan whose
+   dropped tracks declare no bit rate, and the volume reports no capacity at
+   all over SMB or NFS — a likely destination for this app. A false refusal
+   would be worse than the bad error message this replaces, so `ffmpeg`'s own
+   out-of-space failure remains the backstop rather than this.
+
+   Concurrent runs each ask independently, so several admitted together can
+   still overrun a volume that had room for any one of them.
+   */
+  private func checkOutputFolderHasRoom(_ item: QueueItem) throws {
+    let folder = item.outputURL.deletingLastPathComponent()
+    guard let required = estimatedOutputByteCount(for: item),
+      let available = availableCapacity(folder),
+      required > available
+    else { return }
+    throw VideoProcessingError.insufficientSpace(required: required, available: available)
+  }
+
   private func runItem(_ item: QueueItem) {
     resetForRun(item)
     let engine = engine
@@ -482,6 +511,7 @@ public final class QueueCoordinator: Identifiable {
       defer { sourceAccess.release(); outputAccess.release() }
       do {
         try checkOutputFolderIsWritable(item)
+        try checkOutputFolderHasRoom(item)
         for try await event in engine.run(job) { apply(event, to: item) }
         settleAfterRun(item)
       } catch {

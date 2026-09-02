@@ -20,6 +20,8 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   destination untouched, where before it could leave a truncated file under the
   finished output name — and re-running over a good file no longer destroys it
   before there is anything to replace it with.
+- Running out of room on the output volume is reported as such, before `ffmpeg`
+  starts, instead of arriving as `ffmpeg exited with code 1`.
 
 ## 1.0
 

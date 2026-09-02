@@ -140,11 +140,21 @@ struct QueueCoordinatorTests {
     ])
   }
 
+  /**
+   The volume is reported as unmeasurable by default, so every test that isn't
+   about the space preflight takes the same fail-open path an SMB destination
+   would.
+   */
   private func makeCoordinator(
     _ engine: any ConversionEngineProtocol,
-    probeCapabilities: @escaping @Sendable () async -> EncoderCapabilities? = { nil }
+    probeCapabilities: @escaping @Sendable () async -> EncoderCapabilities? = { nil },
+    availableCapacity: @escaping @MainActor (URL) -> Int? = { _ in nil }
   ) -> QueueCoordinator {
-    QueueCoordinator(engine: engine, probeCapabilities: probeCapabilities)
+    QueueCoordinator(
+      engine: engine,
+      probeCapabilities: probeCapabilities,
+      availableCapacity: availableCapacity
+    )
   }
 
   private func waitUntil(
@@ -497,6 +507,96 @@ struct QueueCoordinatorTests {
       item.status == .failed(FileAccessError.outputFolderNotWritable(url: folder).userMessage)
     )
     #expect(item.progress == 0)
+  }
+
+  /**
+   A queued item whose plan drops the French tracks. Given
+   ``bitRatedContainer()`` its projected output is the 61,185,000 bytes
+   ``outputSizeMovesFromPlanToProjectionToMeasurement`` pins, which is the
+   number the space preflight compares against.
+   */
+  private func makeSlimmableItem(
+    _ coordinator: QueueCoordinator,
+    source: URL
+  ) async throws -> QueueItem {
+    await coordinator.add([source])
+    await waitUntil { coordinator.items.first?.status == .ready }
+    let item = try #require(coordinator.items.first)
+    item.sourceByteCount = 66_000_000
+    item.selection = dropFrenchTracks()
+    return item
+  }
+
+  /**
+   Filling a disk otherwise reaches the user as `ffmpeg exited with code N`, so
+   a projection the volume plainly can't hold settles the item up front with an
+   error that says what happened.
+   */
+  @Test
+  func runFailsUpFrontWhenTheOutputVolumeHasNoRoom() async throws {
+    let source = try makeTemporaryMovieFile()
+    defer { try? FileManager.default.removeItem(at: source) }
+    let coordinator = makeCoordinator(
+      StubEngine(container: try bitRatedContainer()),
+      availableCapacity: { _ in 1_000_000 }
+    )
+    let item = try await makeSlimmableItem(coordinator, source: source)
+
+    coordinator.startAll()
+    await waitUntil { coordinator.items.first?.status.needsAttention == true }
+
+    #expect(
+      item.status
+        == .failed(
+          VideoProcessingError.insufficientSpace(required: 61_185_000, available: 1_000_000)
+            .userMessage
+        )
+    )
+    #expect(item.progress == 0)
+  }
+
+  /**
+   `volumeAvailableCapacityForImportantUsage` is unavailable on SMB and NFS,
+   which is an ordinary destination for this app. An unanswerable volume has to
+   let the run through — refusing work that would have succeeded is worse than
+   the error message the check exists to improve.
+   */
+  @Test
+  func runProceedsWhenTheVolumeWontReportItsFreeSpace() async throws {
+    let source = try makeTemporaryMovieFile()
+    defer { try? FileManager.default.removeItem(at: source) }
+    let coordinator = makeCoordinator(
+      StubEngine(container: try bitRatedContainer()),
+      availableCapacity: { _ in nil }
+    )
+    let item = try await makeSlimmableItem(coordinator, source: source)
+
+    coordinator.startAll()
+    await waitUntil { coordinator.items.first?.status == .done }
+
+    #expect(item.status == .done)
+  }
+
+  /**
+   The other half of failing open: a plan whose output size can't be projected
+   — a transcode, or dropped tracks that declare no bit rate — runs even on a
+   volume reporting nothing free.
+   */
+  @Test
+  func runProceedsWhenTheOutputSizeCannotBeProjected() async throws {
+    let source = try makeTemporaryMovieFile()
+    defer { try? FileManager.default.removeItem(at: source) }
+    let coordinator = makeCoordinator(
+      StubEngine(container: try fiveStreamContainer()),
+      availableCapacity: { _ in 0 }
+    )
+    let item = try await makeSlimmableItem(coordinator, source: source)
+    #expect(coordinator.outputSize(for: item) == nil)
+
+    coordinator.startAll()
+    await waitUntil { coordinator.items.first?.status == .done }
+
+    #expect(item.status == .done)
   }
 
   @Test

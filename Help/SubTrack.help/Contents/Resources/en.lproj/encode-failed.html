@@ -4,7 +4,7 @@
   <title>If a run starts and then fails</title>
   <meta name="AppleTitle" content="If a run starts and then fails">
   <meta name="description" content="FFmpeg launched, worked for a while, and stopped. The usual causes are a full disk, a destination that went away, or damage in the source.">
-  <meta name="keywords" content="ffmpeg, exit code, failed, disk full, unmounted, network share, damaged, verify, output missing streams, retry">
+  <meta name="keywords" content="ffmpeg, exit code, failed, disk full, not enough room, free space, unmounted, network share, damaged, verify, output missing streams, retry">
   <meta name="robots" content="index, anchor">
   <link rel="stylesheet" href="subtrack-help.css">
 </head>
@@ -32,6 +32,19 @@ log — read it before you guess.</p>
 <p>SubTrack also checks the file it just wrote, so a run can fail at the very end: an output missing
 tracks it should have, or a track with no data in it, is reported as a failure rather than as done.
 That’s a deliberate refusal to hand you a file that’s quietly wrong.</p>
+
+<h2>If it never started</h2>
+
+<p>Some failures report no exit code at all, because SubTrack refused the run before launching
+FFmpeg: it weighs the file the run would write against the room the destination volume has, and
+stops when the file plainly won’t fit. The row names both figures, and the activity log has
+nothing to add — nothing ran. Free up space on that volume, or
+<a href="destinations.html">save the queue’s output somewhere else</a>, then start the row
+again.</p>
+
+<p>That check is a courtesy rather than a guarantee. A transcode’s output size can’t be
+projected, and some volumes don’t report their free space, so a disk can still fill up partway
+through and fail the way the rest of this page describes.</p>
 
 <h2>Try again</h2>
 
