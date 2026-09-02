@@ -120,7 +120,7 @@
      which the appearance can be pinned ahead of anything being drawn.
      */
     public static func makeEnvironment(featureFlags: FeatureFlags) -> AppEnvironment {
-      clearPersistedWindowGeometry()
+      clearPersistedWindowLayout()
       ScreenshotStaging.install()
       generateFixtures()
       installFilePanels()
@@ -144,23 +144,26 @@
     }
 
     /**
-     Drops the window geometry AppKit autosaves: the windows' frames and the
-     split view's divider positions.
+     Drops the window layout a previous launch left in defaults: the frames and
+     split-view divider positions AppKit autosaves, and the queue table's column
+     customization.
 
      AppKit brings a window back at whatever size it was last left at, so
      without this a test inherits the window the test before it left behind —
      and the screenshot suite leaves a 1280-point-wide one, which is enough to
-     keep the sidebar expanded for a test that never asked for it. Clearing on
-     the way *in* rather than pinning on the way out is what keeps a launch from
-     affecting any launch after it.
+     keep the sidebar expanded for a test that never asked for it. Hidden
+     columns would carry over the same way. Clearing on the way *in* rather than
+     pinning on the way out is what keeps a launch from affecting any launch
+     after it.
      */
-    private static func clearPersistedWindowGeometry() {
+    private static func clearPersistedWindowLayout() {
       let autosavedPrefixes = ["NSWindow Frame ", "NSSplitView Subview Frames "]
       let defaults = UserDefaults.standard
       for key in defaults.dictionaryRepresentation().keys
       where autosavedPrefixes.contains(where: key.hasPrefix) {
         defaults.removeObject(forKey: key)
       }
+      defaults.removeObject(forKey: QueueTableDefaults.columnCustomizationKey)
     }
 
     // MARK: - Fixtures
