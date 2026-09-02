@@ -835,7 +835,7 @@ extension QueueCoordinator {
    transient grant that produced it is gone.
    */
   private func refreshOutputNames() {
-    for (index, item) in items.enumerated() where !item.status.holdsWrittenOutput {
+    for (index, item) in items.enumerated() where !item.status.keepsOutputPath {
       let output = outputURL(for: item, position: index + 1)
       let previousFolder = item.outputURL.deletingLastPathComponent()
       item.outputURL = output

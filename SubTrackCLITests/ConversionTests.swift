@@ -11,13 +11,17 @@ import Testing
  */
 struct ConversionTests {
 
-  /// One real run into a fresh directory, reporting both what it printed and where it wrote.
+  /**
+   One real run, reporting both what it printed and where it wrote. The output
+   lands in a fresh directory unless the caller names one, which is how a
+   second run is aimed at what a first one already produced.
+   */
   private func convert(
     _ arguments: [String],
-    of movie: URL = MovieFixture.standard
+    of movie: URL = MovieFixture.standard,
+    to destination: URL? = nil
   ) throws -> (result: CLI.Result, output: URL) {
-    let output = try MovieFixture.makeWorkingDirectory()
-      .appending(path: "slimmed.mkv", directoryHint: .notDirectory)
+    let output = try destination ?? freshOutputURL()
     let result = try CLI.run(
       arguments + [
         movie.path(percentEncoded: false),
@@ -25,6 +29,12 @@ struct ConversionTests {
       ]
     )
     return (result, output)
+  }
+
+  /// A `slimmed.mkv` in a directory of its own, so one run can't disturb another.
+  private func freshOutputURL() throws -> URL {
+    try MovieFixture.makeWorkingDirectory()
+      .appending(path: "slimmed.mkv", directoryHint: .notDirectory)
   }
 
   @Test
@@ -82,6 +92,10 @@ struct ConversionTests {
    conversion rather than being handed over as a file that looks fine. The
    fixture's subtitle cue falls outside the video, so the track it writes holds
    no packets.
+
+   Verification is a gate rather than a postmortem: the rejected output is
+   staged elsewhere and never moved to the destination, so a failed run leaves
+   nothing behind for the user to mistake for a result.
    */
   @Test
   func anEmptyOutputStreamFailsTheRun() throws {
@@ -91,6 +105,35 @@ struct ConversionTests {
     #expect(
       attempt.result.standardError.contains("no packets"),
       "The failure should name what was wrong with the output: \(attempt.result.standardError)"
+    )
+    #expect(
+      !FileManager.default.fileExists(atPath: attempt.output.path(percentEncoded: false)),
+      "A rejected output should not be left at the destination."
+    )
+  }
+
+  /**
+   A run that fails leaves whatever was already at the destination alone.
+
+   Re-running a file is an ordinary flow — a cancelled or failed item can just
+   be started again — so writing straight to the destination would truncate a
+   good earlier result before `ffmpeg` had produced anything to replace it
+   with, and a run that then failed would have destroyed it for nothing.
+   */
+  @Test
+  func aFailedRunLeavesAnEarlierOutputIntact() throws {
+    let first = try convert([])
+    #expect(first.result.succeeded, "The first conversion failed: \(first.result.standardError)")
+    // Compared byte for byte: the losing run writes the same three streams, so
+    // a stream listing alone can't tell a survivor from its replacement.
+    let original = try Data(contentsOf: first.output)
+
+    let second = try convert([], of: MovieFixture.withEmptySubtitleTrack, to: first.output)
+
+    #expect(second.result.exitCode == 1)
+    #expect(
+      try Data(contentsOf: first.output) == original,
+      "The earlier output should survive a re-run that fails."
     )
   }
 

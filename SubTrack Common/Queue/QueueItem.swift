@@ -68,10 +68,18 @@ extension QueueItemState {
   public var isRescannable: Bool { !isActive }
 
   /**
-   Whether the item's output path names a file a run has written or is
-   writing, which a change to the queue's name format must leave alone.
+   Whether the item's output path names a file on disk. A run stages its
+   output elsewhere and moves it into place only once it has verified, so a
+   running item has nothing at that path yet.
    */
-  public var holdsWrittenOutput: Bool { self == .done || self == .running }
+  public var holdsWrittenOutput: Bool { self == .done }
+
+  /**
+   Whether a change to the queue's name format must leave the item's output
+   path alone: a finished run's file is on disk under that name, and a running
+   one is already committed to writing it there.
+   */
+  public var keepsOutputPath: Bool { self == .done || self == .running }
 }
 
 /**
