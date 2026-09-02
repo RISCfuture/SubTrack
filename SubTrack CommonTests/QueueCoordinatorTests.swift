@@ -416,19 +416,21 @@ struct QueueCoordinatorTests {
     await waitUntil { coordinator.items.first(where: { $0.id == ids[0] })?.status == .done }
 
     // A finished item is ignored, leaving the order untouched.
-    coordinator.moveItems([ids[0]], before: ids[2])
+    coordinator.moveItems([ids[0]], to: 2)
     #expect(coordinator.items.map(\.id) == ids)
 
-    // Dropping onto a moving item is a no-op.
-    coordinator.moveItems([ids[2]], before: ids[2])
+    // Dropping a row either side of where it already sits is a no-op.
+    coordinator.moveItems([ids[2]], to: 2)
+    #expect(coordinator.items.map(\.id) == ids)
+    coordinator.moveItems([ids[2]], to: 3)
     #expect(coordinator.items.map(\.id) == ids)
 
-    // Neither drop left anything to take back — a reorder that didn't happen
-    // must not consume the user's ⌘Z.
+    // None of those drops left anything to take back — a reorder that didn't
+    // happen must not consume the user's ⌘Z.
     #expect(!undoManager.canUndo)
 
     // Ready items reorder, and the finished item keeps its slot.
-    undoably(undoManager) { coordinator.moveItems([ids[2]], before: ids[1]) }
+    undoably(undoManager) { coordinator.moveItems([ids[2]], to: 1) }
     #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1]])
     #expect(undoManager.undoActionName == "Reorder Queue")
 

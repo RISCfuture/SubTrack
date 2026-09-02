@@ -359,22 +359,34 @@ public final class QueueCoordinator: Identifiable {
   }
 
   /**
-   Reorders the given items to sit immediately before `targetID`, so the
-   queue order (and thus the run order used by ``startAll()``) matches the
-   table. Only reorderable items move; a drop onto a moving item, an unknown
-   target, or a set with nothing reorderable is ignored. Undoable.
+   Reorders the given items to sit at `destination`, so the queue order (and
+   thus the run order used by ``startAll()``) matches the table. Only
+   reorderable items move; a set with nothing reorderable, and any drop that
+   would leave the order as it is, are ignored. Undoable.
+
+   - Parameter ids: The items to move. Ones that can't be reordered are left
+     where they are.
+   - Parameter destination: The row to insert before, counted in the order the
+     table is showing now — the same coordinate space `ForEach` reorders in,
+     and what the table's drop destination hands over. `items.count` appends.
    */
-  public func moveItems(_ ids: Set<UUID>, before targetID: UUID) {
+  public func moveItems(_ ids: Set<UUID>, to destination: Int) {
     let movingIDs = Set(items.filter { ids.contains($0.id) && $0.status.isReorderable }.map(\.id))
-    guard !movingIDs.isEmpty, !movingIDs.contains(targetID) else { return }
+    guard !movingIDs.isEmpty else { return }
 
     let moving = items.filter { movingIDs.contains($0.id) }
     var remaining = items.filter { !movingIDs.contains($0.id) }
-    guard let insertionIndex = remaining.firstIndex(where: { $0.id == targetID }) else { return }
-    // Sited past every guard above, so a drop the queue ignores registers
-    // nothing and Undo never offers back an edit that didn't happen.
-    registerOrderRestore()
+    // The drop index counts rows the table is showing, so it shifts up by every
+    // moving row above it once those are lifted out.
+    let above = items.prefix(min(destination, items.count))
+    let liftedAbove = above.count { movingIDs.contains($0.id) }
+    let insertionIndex = min(max(destination - liftedAbove, 0), remaining.count)
     remaining.insert(contentsOf: moving, at: insertionIndex)
+    // Sited past every guard above, and past the no-op check, so a drop that
+    // changes nothing registers nothing and Undo never offers back an edit that
+    // didn't happen.
+    guard remaining.map(\.id) != items.map(\.id) else { return }
+    registerOrderRestore()
     items = remaining
     refreshOutputNames()
     onPersistableChange()
