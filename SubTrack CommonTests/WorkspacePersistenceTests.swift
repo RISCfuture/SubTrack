@@ -5,7 +5,7 @@ import Testing
 import SubTrack_Common
 
 @MainActor
-@Suite(.serialized)
+@Suite(.serialized, .sourceFixtures)
 struct WorkspacePersistenceTests {
 
   private static let container = ModelContainer.inMemory(
@@ -128,8 +128,8 @@ struct WorkspacePersistenceTests {
     )
     let movies = workspace.selectedCoordinator
     let shows = workspace.newQueue(name: "Shows")
-    await movies.add((1...3).map { URL(filePath: "/tmp/dock-movies-\($0).mkv") })
-    await shows.add([URL(filePath: "/tmp/dock-shows-1.mkv")])
+    await movies.add(try SourceFixtures.make((1...3).map { "dock-movies-\($0).mkv" }))
+    await shows.add([try SourceFixtures.make("dock-shows-1.mkv")])
     // Probing counts as work in flight, so settle every item before asserting idle.
     await waitUntil {
       movies.items.count == 3 && shows.items.count == 1
@@ -169,7 +169,7 @@ struct WorkspacePersistenceTests {
     let coordinator = workspace.selectedCoordinator
     workspace.renameQueue(coordinator.id, to: "Movies")
 
-    let urls = ["A", "B", "C", "D"].map { URL(filePath: "/tmp/rt-\($0).mkv") }
+    let urls = try SourceFixtures.make(["A", "B", "C", "D"].map { "rt-\($0).mkv" })
     await coordinator.add(urls)
     await waitUntil {
       coordinator.items.count == 4 && coordinator.items.allSatisfy { $0.status == .ready }
@@ -228,8 +228,12 @@ struct WorkspacePersistenceTests {
     // folder its output lands in. Neither can be re-minted once the transient
     // grant is gone, and losing the folder one leaves a restored item able to
     // read its input but not create the output beside it.
-    #expect(items[1].sourceBookmark == Data("/tmp/rt-A.mkv".utf8))
-    #expect(items[1].outputFolderBookmark == Data("/tmp/".utf8))
+    let sourceA = urls[0]
+    #expect(items[1].sourceBookmark == Data(sourceA.path(percentEncoded: false).utf8))
+    #expect(
+      items[1].outputFolderBookmark
+        == Data(sourceA.deletingLastPathComponent().path(percentEncoded: false).utf8)
+    )
     #expect(items[2].status == .done)  // B
     #expect(items[2].sourceByteCount == 1_200_000_000)  // slimming numbers survive
     #expect(items[2].outputByteCount == 780_000_000)
@@ -350,8 +354,8 @@ struct WorkspacePersistenceTests {
     // Two queues, each with one startable item, sharing the one governor.
     let first = workspace.selectedCoordinator
     let second = workspace.newQueue(name: "Second")
-    await first.add([URL(filePath: "/tmp/gov-1.mkv")])
-    await second.add([URL(filePath: "/tmp/gov-2.mkv")])
+    await first.add([try SourceFixtures.make("gov-1.mkv")])
+    await second.add([try SourceFixtures.make("gov-2.mkv")])
     await waitUntil { first.items.first?.status == .ready && second.items.first?.status == .ready }
 
     first.startAll()
@@ -381,7 +385,7 @@ struct WorkspacePersistenceTests {
       governor: governor
     )
     let coordinator = workspace.selectedCoordinator
-    await coordinator.add([URL(filePath: "/tmp/sleep-1.mkv")])
+    await coordinator.add([try SourceFixtures.make("sleep-1.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     // An idle queue holds nothing; a slot in flight holds the activity…
@@ -405,7 +409,7 @@ struct WorkspacePersistenceTests {
       engine: StubEngine(container: try sampleContainer()),
       onPersistableChange: { counter.bump() }
     )
-    await coordinator.add([URL(filePath: "/tmp/wt.mkv")])
+    await coordinator.add([try SourceFixtures.make("wt.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
 
     // A full run streams `.running` then `progress` events before finishing;
@@ -429,7 +433,7 @@ struct WorkspacePersistenceTests {
     // Adding a folder settles one item at a time, and those writes are collected
     // rather than performed one per settling — but every one of them still has to
     // land, with nothing but the passage of time to make it happen.
-    await coordinator.add((1...12).map { URL(filePath: "/tmp/coalesced-\($0).mkv") })
+    await coordinator.add(try SourceFixtures.make((1...12).map { "coalesced-\($0).mkv" }))
     await waitUntil { coordinator.items.allSatisfy { $0.status == .ready } }
     await waitUntil {
       ((try? context.fetch(FetchDescriptor<StoredQueue>()))?.first?.items?.count ?? 0) == 12

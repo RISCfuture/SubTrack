@@ -9,7 +9,7 @@ import SubTrack_Common
  that a run the user broke off says nothing at all.
  */
 @MainActor
-@Suite
+@Suite(.sourceFixtures)
 struct QueueCompletionReportingTests {
 
   private func sampleContainer() throws -> Container {
@@ -63,31 +63,6 @@ struct QueueCompletionReportingTests {
     }
   }
 
-  /**
-   A directory of the caller's own, so one test's sources can't collide with
-   another's and cleanup is a single removal.
-   */
-  private func makeDirectory() throws -> URL {
-    let directory = URL(fileURLWithPath: NSTemporaryDirectory())
-      .appending(path: "subtrack-run-\(UUID().uuidString)", directoryHint: .isDirectory)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    return directory
-  }
-
-  /**
-   Real source files, because ``QueueCoordinator/add(_:)`` monitors each source
-   and settles a path that isn't there to `.missing`, which never runs.
-   */
-  private func makeMovieFiles(_ count: Int, in directory: URL) throws -> [URL] {
-    try (0..<count).map { _ in
-      let file =
-        directory
-        .appending(path: "subtrack-\(UUID().uuidString).mkv", directoryHint: .notDirectory)
-      try Data("x".utf8).write(to: file)
-      return file
-    }
-  }
-
   private func waitUntil(
     _ timeout: Duration = .seconds(3),
     _ condition: @MainActor () -> Bool
@@ -105,7 +80,7 @@ struct QueueCompletionReportingTests {
     in directory: URL
   ) async throws {
     let existing = coordinator.items.count
-    await coordinator.add(try makeMovieFiles(count, in: directory))
+    await coordinator.add(try SourceFixtures.make(count, in: directory))
     await waitUntil {
       coordinator.items.count == existing + count
         && coordinator.items.allSatisfy { $0.status != .waiting && $0.status != .probing }
@@ -127,8 +102,7 @@ struct QueueCompletionReportingTests {
       governor: EncodeGovernor(limit: 1),
       reporter: reporter
     )
-    let directory = try makeDirectory()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try SourceFixtures.makeDirectory()
     let first = workspace.newQueue(name: "First")
     let second = workspace.newQueue(name: "Second")
     try await addItems(3, to: first, in: directory)
@@ -159,8 +133,7 @@ struct QueueCompletionReportingTests {
       governor: EncodeGovernor(limit: 1),
       reporter: reporter
     )
-    let directory = try makeDirectory()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try SourceFixtures.makeDirectory()
     let queue = workspace.newQueue(name: "Queue")
     try await addItems(2, to: queue, in: directory)
 
@@ -184,8 +157,7 @@ struct QueueCompletionReportingTests {
       governor: EncodeGovernor(limit: 2),
       reporter: reporter
     )
-    let directory = try makeDirectory()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try SourceFixtures.makeDirectory()
     let queue = workspace.newQueue(name: "Queue")
     try await addItems(2, to: queue, in: directory)
 
@@ -211,8 +183,7 @@ struct QueueCompletionReportingTests {
     let workspace = makeWorkspace(governor: EncodeGovernor(limit: 2), reporter: reporter) { name in
       name == "Holding" ? holding : finishingEngine
     }
-    let directory = try makeDirectory()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try SourceFixtures.makeDirectory()
     let held = workspace.newQueue(name: "Holding")
     let finishing = workspace.newQueue(name: "Finishing")
     try await addItems(1, to: held, in: directory)
@@ -248,8 +219,7 @@ struct QueueCompletionReportingTests {
       governor: EncodeGovernor(limit: 2),
       reporter: reporter
     )
-    let directory = try makeDirectory()
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = try SourceFixtures.makeDirectory()
     let queue = workspace.newQueue(name: "Queue")
     try await addItems(2, to: queue, in: directory)
 
