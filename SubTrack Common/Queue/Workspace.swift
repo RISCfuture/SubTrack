@@ -50,6 +50,15 @@ public final class Workspace {
 
   private let coordinatorFactory: @MainActor (UUID, String, Int) -> QueueCoordinator
 
+  /// Told when the app starts and stops encoding, or `nil` when nothing is listening.
+  private let reporter: (any QueueCompletionReporting)?
+
+  /// Whether any queue was encoding the last time the workspace looked.
+  @ObservationIgnored private var runIsInFlight = false
+
+  /// What the run in progress has come to so far.
+  @ObservationIgnored private var tally = RunTally()
+
   /**
    The selected queue's coordinator, falling back to the first when the
    selection is stale. The workspace always holds at least one queue after
@@ -82,8 +91,18 @@ public final class Workspace {
    Creates a workspace whose queues are built by `makeCoordinator`, which
    wires each new coordinator to the shared engine, governor, and access
    closures.
+
+   - Parameter reporter: Told when the app's encoding starts and stops. Leaving
+     it `nil` — every preview, UI test, and unit test — runs the queues with
+     nothing listening.
+   - Parameter makeCoordinator: Builds a queue's coordinator from its identity,
+     name, and sidebar position.
    */
-  public init(makeCoordinator: @escaping @MainActor (UUID, String, Int) -> QueueCoordinator) {
+  public init(
+    reporting reporter: (any QueueCompletionReporting)? = nil,
+    makeCoordinator: @escaping @MainActor (UUID, String, Int) -> QueueCoordinator
+  ) {
+    self.reporter = reporter
     self.coordinatorFactory = makeCoordinator
   }
 
@@ -105,6 +124,14 @@ public final class Workspace {
   @discardableResult
   public func makeCoordinator(id: UUID = UUID(), name: String, sortIndex: Int) -> QueueCoordinator {
     let coordinator = coordinatorFactory(id, name, sortIndex)
+    // The one place every coordinator is created, so the run hooks are wired
+    // here rather than through `onCoordinatorCreated`, which the persistence
+    // layer already owns. Left unwired when nothing is listening, so a workspace
+    // with no reporter never accumulates a tally it will never read.
+    if reporter != nil {
+      coordinator.onEncodeActivityChanged = { [weak self] in self?.updateRunActivity() }
+      coordinator.onRunSettled = { [weak self] in self?.tally.record($0) }
+    }
     coordinators.append(coordinator)
     onCoordinatorCreated(coordinator)
     return coordinator
@@ -141,6 +168,11 @@ public final class Workspace {
    */
   public func deleteQueue(_ id: UUID) {
     guard let index = coordinators.firstIndex(where: { $0.id == id }) else { return }
+    // Unwired before teardown, because the runs `teardown` cancels go on firing
+    // their hooks as they unwind: a queue the workspace can no longer see must
+    // neither report into the run nor claim to have ended it.
+    coordinators[index].onEncodeActivityChanged = {}
+    coordinators[index].onRunSettled = { _ in }
     coordinators[index].teardown()
     coordinators.remove(at: index)
     reindex()
@@ -151,6 +183,7 @@ public final class Workspace {
       selectedQueueID = coordinators.first?.id
     }
     onWorkspaceChange()
+    abandonRunIfEnded()
   }
 
   /// Selects a queue (runtime-only; not persisted).
@@ -167,5 +200,75 @@ public final class Workspace {
   /// Renumbers `sortIndex` to match sidebar order after a structural change.
   private func reindex() {
     for (offset, coordinator) in coordinators.enumerated() { coordinator.sortIndex = offset }
+  }
+
+  /**
+   Reports the edges of a run: the moment the app starts encoding, and the
+   moment the last queue stops.
+
+   Every queue's activity hook lands here, so a run spanning several queues
+   announces itself once rather than once per queue. A run that finished
+   nothing and failed nothing — everything cancelled, or the items removed
+   mid-run — passes without a word.
+   */
+  private func updateRunActivity() {
+    guard let reporter else { return }
+    let isInFlight = coordinators.contains(where: \.hasEncodeWorkInFlight)
+    guard isInFlight != runIsInFlight else { return }
+    runIsInFlight = isInFlight
+
+    if isInFlight {
+      tally = RunTally()
+      reporter.queueWorkDidBegin()
+    } else if tally.isWorthReporting {
+      reporter.queueWorkDidFinish(tally.summary)
+    }
+  }
+
+  /**
+   Forgets a run that a deleted queue has just ended, so tearing down the only
+   working queue never reports a completion the user didn't wait for. A run
+   still alive in a surviving queue is left to finish and report normally.
+   */
+  private func abandonRunIfEnded() {
+    guard !coordinators.contains(where: \.hasEncodeWorkInFlight) else { return }
+    runIsInFlight = false
+    tally = RunTally()
+  }
+
+  /// Accumulates what a run comes to, one settled item at a time.
+  private struct RunTally {
+    private(set) var finishedCount = 0
+    private(set) var failedCount = 0
+    private(set) var bytesSaved: Int?
+    private(set) var outputURLs: [URL] = []
+
+    /// What to report, once the run has ended.
+    var summary: QueueRunSummary {
+      .init(
+        finishedCount: finishedCount,
+        failedCount: failedCount,
+        bytesSaved: bytesSaved,
+        outputURLs: outputURLs
+      )
+    }
+
+    /// Whether the run came to anything worth telling the user about.
+    var isWorthReporting: Bool { finishedCount + failedCount > 0 }
+
+    /**
+     Folds one settled run in. Savings are summed signed, so a track that had
+     to be transcoded larger tells against the total honestly instead of being
+     rounded away item by item.
+     */
+    mutating func record(_ outcome: QueueRunOutcome) {
+      switch outcome.result {
+        case .finished: finishedCount += 1
+        case .failed: failedCount += 1
+        case .cancelled: break
+      }
+      if let saved = outcome.bytesSaved { bytesSaved = (bytesSaved ?? 0) + saved }
+      if let outputURL = outcome.outputURL { outputURLs.append(outputURL) }
+    }
   }
 }
