@@ -28,6 +28,8 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   before there is anything to replace it with.
 - Running out of room on the output volume is reported as such, before `ffmpeg`
   starts, instead of arriving as `ffmpeg exited with code 1`.
+- Dragging a queue row shows an insertion line rather than highlighting the row
+  under the cursor, and a row can be dropped at the end of the queue.
 
 ## 1.0
 

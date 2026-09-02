@@ -177,7 +177,7 @@ struct WorkspacePersistenceTests {
 
     // A non-default run order, applied while every item is still reorderable.
     let ids = coordinator.items.map(\.id)
-    coordinator.moveItems([ids[3]], before: ids[0])  // → D, A, B, C
+    coordinator.moveItems([ids[3]], to: 0)  // → D, A, B, C
     #expect(coordinator.items.map(\.id) == [ids[3], ids[0], ids[1], ids[2]])
 
     // Settle a spread of states: a selection, a done, a failed(reason), and an

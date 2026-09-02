@@ -66,16 +66,15 @@ struct QueueTableView: View {
       .customizationID("destination")
     } rows: {
       ForEach(env.queue.items) { item in
-        let row =
-          TableRow(item)
-          .dropDestination(for: QueueItemDragPayload.self) { payloads in
-            env.queue.moveItems(Set(payloads.map(\.id)), before: item.id)
-          }
+        let row = TableRow(item)
         if item.status.isReorderable {
           row.draggable(QueueItemDragPayload(id: item.id))
         } else {
           row
         }
+      }
+      .dropDestination(for: QueueItemDragPayload.self) { index, payloads in
+        env.queue.moveItems(Set(payloads.map(\.id)), to: index)
       }
     }
     .contextMenu(forSelectionType: QueueItem.ID.self) { ids in

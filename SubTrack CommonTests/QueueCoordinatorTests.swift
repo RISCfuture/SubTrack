@@ -382,10 +382,10 @@ struct QueueCoordinatorTests {
     let (coordinator, undoManager) = makeUndoableCoordinator(
       StubEngine(container: try sampleContainer())
     )
-    let urls = try SourceFixtures.make((0..<3).map { "reorder-\($0).mkv" })
+    let urls = try SourceFixtures.make((0..<4).map { "reorder-\($0).mkv" })
     await coordinator.add(urls)
     await waitUntil {
-      coordinator.items.count == 3 && coordinator.items.allSatisfy { $0.status == .ready }
+      coordinator.items.count == 4 && coordinator.items.allSatisfy { $0.status == .ready }
     }
 
     let ids = coordinator.items.map(\.id)
@@ -395,25 +395,22 @@ struct QueueCoordinatorTests {
     await waitUntil { coordinator.items.first(where: { $0.id == ids[0] })?.status == .done }
 
     // A finished item is ignored, leaving the order untouched.
-    coordinator.moveItems([ids[0]], before: ids[2])
+    coordinator.moveItems([ids[0]], to: 2)
     #expect(coordinator.items.map(\.id) == ids)
 
-    // Dropping onto a moving item is a no-op.
-    coordinator.moveItems([ids[2]], before: ids[2])
+    // Dropping a row either side of where it already sits is a no-op.
+    coordinator.moveItems([ids[2]], to: 2)
+    #expect(coordinator.items.map(\.id) == ids)
+    coordinator.moveItems([ids[2]], to: 3)
     #expect(coordinator.items.map(\.id) == ids)
 
-    // So is a drop that rebuilds the order the queue already had — which is how
-    // an insert-before model reads a row dragged down by one.
-    coordinator.moveItems([ids[1]], before: ids[2])
-    #expect(coordinator.items.map(\.id) == ids)
-
-    // Neither drop left anything to take back — a reorder that didn't happen
-    // must not consume the user's ⌘Z.
+    // None of those drops left anything to take back — a reorder that didn't
+    // happen must not consume the user's ⌘Z.
     #expect(!undoManager.canUndo)
 
     // Ready items reorder, and the finished item keeps its slot.
-    undoably(undoManager) { coordinator.moveItems([ids[2]], before: ids[1]) }
-    #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1]])
+    undoably(undoManager) { coordinator.moveItems([ids[2]], to: 1) }
+    #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1], ids[3]])
     #expect(undoManager.undoActionName == "Reorder Queue")
 
     // Restored from a whole-order snapshot: `moveItems` is not its own inverse.
@@ -421,7 +418,13 @@ struct QueueCoordinatorTests {
     #expect(coordinator.items.map(\.id) == ids)
 
     undoManager.redo()
-    #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1]])
+    #expect(coordinator.items.map(\.id) == [ids[0], ids[2], ids[1], ids[3]])
+
+    // A row dragged downwards lands before the row it was dropped on: the drop
+    // index counts the dragged row itself, and lifting it out shifts the
+    // insertion point up by one.
+    undoably(undoManager) { coordinator.moveItems([ids[2]], to: 3) }
+    #expect(coordinator.items.map(\.id) == ids)
   }
 
   /**
