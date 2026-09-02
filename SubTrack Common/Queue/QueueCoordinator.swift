@@ -364,27 +364,34 @@ public final class QueueCoordinator: Identifiable {
   }
 
   /**
-   Reorders the given items to sit immediately before `targetID`, so the
-   queue order (and thus the run order used by ``startAll()``) matches the
-   table. Only reorderable items move; a drop onto a moving item, an unknown
-   target, a set with nothing reorderable, or a drop that lands every row back
-   where it already was is ignored. Undoable.
-   */
-  public func moveItems(_ ids: Set<UUID>, before targetID: UUID) {
-    let movingIDs = Set(items.filter { ids.contains($0.id) && $0.status.isReorderable }.map(\.id))
-    guard !movingIDs.isEmpty, !movingIDs.contains(targetID) else { return }
+   Reorders the given items to sit at `destination`, so the queue order (and
+   thus the run order used by ``startAll()``) matches the table. Only
+   reorderable items move; a set with nothing reorderable, and any drop that
+   would leave the order as it is, are ignored. Undoable.
 
+   - Parameter ids: The items to move. Ones that can't be reordered are left
+     where they are.
+   - Parameter destination: The row to insert before, counted in the order the
+     table is showing now — the same coordinate space `ForEach` reorders in,
+     and what the table's drop destination hands over. `items.count` appends,
+     and anything outside the queue clamps to one end or the other.
+   */
+  public func moveItems(_ ids: Set<UUID>, to destination: Int) {
+    let movingIDs = Set(items.filter { ids.contains($0.id) && $0.status.isReorderable }.map(\.id))
+    guard !movingIDs.isEmpty else { return }
+
+    let dropIndex = min(max(destination, 0), items.count)
     let moving = items.filter { movingIDs.contains($0.id) }
     var remaining = items.filter { !movingIDs.contains($0.id) }
-    guard let insertionIndex = remaining.firstIndex(where: { $0.id == targetID }) else { return }
-    remaining.insert(contentsOf: moving, at: insertionIndex)
-    // Sited past every guard above and past the rebuilt order itself, so a drop
-    // the queue ignores registers nothing and Undo never offers back an edit
-    // that didn't happen. The order has to be compared rather than reasoned
-    // about: dropping a row onto the one below it passes every guard and then
-    // rebuilds the order it started from, which is exactly how an
-    // insert-before model reads a row dragged down by one.
+    // The drop index counts rows the table is showing, so it shifts up by every
+    // moving row above it once those are lifted out. What's left counts the
+    // staying rows above the drop, which `remaining` is always long enough to
+    // take.
+    let liftedAbove = items.prefix(dropIndex).count { movingIDs.contains($0.id) }
+    remaining.insert(contentsOf: moving, at: dropIndex - liftedAbove)
     guard remaining.map(\.id) != items.map(\.id) else { return }
+    // Sited past the no-op check, so a drop that changes nothing registers
+    // nothing and Undo never offers back an edit that didn't happen.
     registerOrderRestore()
     items = remaining
     refreshOutputNames()
@@ -1245,7 +1252,7 @@ extension QueueCoordinator {
   /**
    Registers the undo that puts the queue back in the order it is in now.
 
-   ``moveItems(_:before:)`` is not its own inverse — one drop can gather rows
+   ``moveItems(_:to:)`` is not its own inverse — one drop can gather rows
    from three places and land them together, and no second drop separates them
    again — so undo restores the whole order rather than moving anything back.
    */
