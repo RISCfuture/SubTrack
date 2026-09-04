@@ -15,7 +15,7 @@ import XCUITestKit
  stylesheet adapts to both and a light-only image is the one element on a dark
  page that doesn't.
  */
-final class HelpScreenshotUITests: XCTestCase {
+nonisolated final class HelpScreenshotUITests: XCTestCase {
   /// The window the queue articles are shot in: wide enough for the sidebar, the table, and the inspector.
   private static let queueWindowSize = CGSize(width: 1280, height: 860)
 
@@ -25,14 +25,19 @@ final class HelpScreenshotUITests: XCTestCase {
   /// The window the troubleshooting article is shot in: six rows and their statuses.
   private static let problemsWindowSize = CGSize(width: 1180, height: 620)
 
-  override func setUpWithError() throws {
+  /// Main-actor isolated because the capture preconditions read `NSScreen` and `NSWorkspace`.
+  @MainActor
+  override func setUp() async throws {
     continueAfterFailure = false
     try XCTSkipUnless(
       ScreenshotPreconditions.machineCanCapture,
       "Help screenshots need a capture-ready Mac: \(ScreenshotPreconditions.unmetRequirement)."
     )
   }
+}
 
+@MainActor
+extension HelpScreenshotUITests {
   // MARK: - Queue and rules articles
 
   func testCapturesQueueArticlesInLightAppearance() { captureQueueArticles(in: .light) }

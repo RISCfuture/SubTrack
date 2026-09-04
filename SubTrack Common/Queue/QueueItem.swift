@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// The lifecycle state of a queued file.
 public enum QueueItemState: Sendable, Equatable {

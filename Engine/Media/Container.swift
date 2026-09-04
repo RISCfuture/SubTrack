@@ -340,7 +340,7 @@ public struct Container: Decodable, Sendable {
   public let tags: [String: String]
 
   /// The streams in the container.
-  public let streams: [Stream]
+  public let streams: [any Stream]
 
   /// The video streams.
   public var videoStreams: [VideoStream] { streams.compactMap { $0 as? VideoStream } }
@@ -363,7 +363,7 @@ public struct Container: Decodable, Sendable {
     let container = try decoder.container(keyedBy: CodingKeys.self)
 
     var codedStreams = try container.nestedUnkeyedContainer(forKey: .streams)
-    var decodedStreams = [Stream]()
+    var decodedStreams = [any Stream]()
     while !codedStreams.isAtEnd {
       if let stream = try Self.decodeStream(from: &codedStreams) { decodedStreams.append(stream) }
     }
@@ -383,9 +383,9 @@ public struct Container: Decodable, Sendable {
    right one. Returns `nil` for data streams, which a conversion never touches.
    */
   private static func decodeStream(
-    from codedStreams: inout UnkeyedDecodingContainer
+    from codedStreams: inout any UnkeyedDecodingContainer
   ) throws -> (any Stream)? {
-    let candidates: [(inout UnkeyedDecodingContainer) throws -> any Stream] = [
+    let candidates: [(inout any UnkeyedDecodingContainer) throws -> any Stream] = [
       { try $0.decode(VideoStream.self) },
       { try $0.decode(AudioStream.self) },
       { try $0.decode(SubtitleStream.self) },

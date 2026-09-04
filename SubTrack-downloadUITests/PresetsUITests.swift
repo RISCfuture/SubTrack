@@ -2,13 +2,16 @@ import XCTest
 import XCUITestKit
 
 /// The preset menu and the Settings tab that manages what it lists.
-final class PresetsUITests: XCTestCase {
+nonisolated final class PresetsUITests: XCTestCase {
 
   /// The starter preset whose rules differ from the default in a visible toggle.
   private let keepUntaggedPreset = "Blu-ray Rip — Keep Untagged Tracks"
 
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension PresetsUITests {
   func testSaveCurrentAsPresetListsIt() {
     let app = SubTrack.launch(state: .empty)
     MainWindowScreen(app: app).waitUntilLoaded()

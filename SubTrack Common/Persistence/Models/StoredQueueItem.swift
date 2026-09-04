@@ -1,5 +1,5 @@
-import Foundation
-import SwiftData
+public import Foundation
+public import SwiftData
 
 /**
  The SwiftData persistence record for one file in a ``StoredQueue``. Modeled

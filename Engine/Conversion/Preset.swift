@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A named bundle of keep-``SlimRules`` and the ``OutputNameFormat`` its output
