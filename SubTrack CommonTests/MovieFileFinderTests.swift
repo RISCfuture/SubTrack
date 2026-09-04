@@ -22,7 +22,7 @@ struct MovieFileFinderTests {
   }
 
   @Test
-  func ordersAFolderTheWayItsEpisodesAreNumbered() throws {
+  func `orders a folder the way its episodes are numbered`() throws {
     // `FileManager` enumerates in the file system's own order, so a season
     // folder arrives scrambled — and a plain string sort would still put
     // episode 10 ahead of episode 2.
@@ -38,7 +38,7 @@ struct MovieFileFinderTests {
   }
 
   @Test
-  func keepsFilesNamedIndividuallyInTheOrderTheyWereGiven() throws {
+  func `keeps files named individually in the order they were given`() throws {
     let folder = try makeFolder(containing: ["b.mkv", "a.mkv"])
     let (b, a) = (folder.appending(path: "b.mkv"), folder.appending(path: "a.mkv"))
 

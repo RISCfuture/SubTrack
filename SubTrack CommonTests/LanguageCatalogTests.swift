@@ -7,7 +7,7 @@ import Testing
 struct LanguageCatalogTests {
 
   @Test
-  func catalogIsNonEmptyDeduplicatedAndSorted() {
+  func `catalog is non-empty, deduplicated, and sorted`() {
     let all = LanguageCatalog.all
     #expect(!all.isEmpty)
 
@@ -21,7 +21,7 @@ struct LanguageCatalogTests {
   }
 
   @Test
-  func resolvesKnownCodesCaseInsensitivelyAndRejectsUnknown() {
+  func `resolves known codes case-insensitively and rejects unknown`() {
     #expect(LanguageCatalog.name(for: "eng") != nil)
     #expect(LanguageCatalog.name(for: "jpn") != nil)
     #expect(LanguageCatalog.name(for: "ENG") == LanguageCatalog.name(for: "eng"))
@@ -34,7 +34,7 @@ struct LanguageCatalogTests {
    be built from, so these resolve through the fallback or not at all.
    */
   @Test(arguments: [("fre", "fra"), ("ger", "deu"), ("dut", "nld"), ("chi", "zho")])
-  func namesBibliographicCodesLikeTheirTerminologicalTwin(
+  func `names bibliographic codes like their terminological twin`(
     bibliographic: String,
     terminological: String
   ) {

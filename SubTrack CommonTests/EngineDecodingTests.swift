@@ -38,7 +38,7 @@ private func decodeContainer(_ json: String) throws -> Container {
 struct ContainerDecodingTests {
 
   @Test
-  func decodesFormatMetadata() throws {
+  func `decodes format metadata`() throws {
     let container = try decodeContainer(sampleProbeJSON)
     #expect(container.filename == "/movies/Ep01.mkv")
     #expect(abs(container.durationSec - 1415.123) < 0.001)
@@ -47,7 +47,7 @@ struct ContainerDecodingTests {
   }
 
   @Test
-  func partitionsStreamsByTypeAndDropsData() throws {
+  func `partitions streams by type and drops data`() throws {
     let container = try decodeContainer(sampleProbeJSON)
     // The data stream is decoded but not retained.
     #expect(container.streams.count == 4)
@@ -57,7 +57,7 @@ struct ContainerDecodingTests {
   }
 
   @Test
-  func decodesStreamDetails() throws {
+  func `decodes stream details`() throws {
     let container = try decodeContainer(sampleProbeJSON)
 
     let video = try #require(container.videoStreams.first)
@@ -96,7 +96,7 @@ struct ConverterTests {
   }
 
   @Test
-  func copiesPreferredStreams() throws {
+  func `copies preferred streams`() throws {
     let container = try decodeContainer(sampleProbeJSON)
     let converter = Converter(container: container, languages: ["eng"])
     let operations = try converter.operations()
@@ -110,7 +110,7 @@ struct ConverterTests {
    preferred (decode-side) codec.
    */
   @Test
-  func transcodesToConfiguredConversionCodec() throws {
+  func `transcodes to configured conversion codec`() throws {
     let converter = Converter(container: try containerNeedingVideoTranscode(), languages: ["eng"])
     converter.videoConversionCodec = "hevc_videotoolbox"
     converter.videoConversionOptions = ["-q:v", "60"]
@@ -157,7 +157,7 @@ struct ConverterTests {
    languages not in the list are dropped.
    */
   @Test
-  func ordersTracksByLanguagePriority() throws {
+  func `orders tracks by language priority`() throws {
     let converter = Converter(container: try foreignFirstContainer(), languages: ["fra", "eng"])
     let operations = try converter.operations()
 
@@ -172,7 +172,7 @@ struct ConverterTests {
    kept tracks first in output order, dropped tracks after in file order.
    */
   @Test
-  func seededSelectionPreservesOutputOrder() throws {
+  func `seeded selection preserves output order`() throws {
     let container = try foreignFirstContainer()
     let operations = try Converter(container: container, languages: ["fra", "eng"]).operations()
     let selection = FileTrackSelection.seed(container: container, operations: operations)
@@ -195,7 +195,7 @@ struct CodecArgumentTests {
    apply only the last of them — to both tracks.
    */
   @Test
-  func numbersEachTrackWithinItsOwnType() {
+  func `numbers each track within its own type`() {
     let operations = [
       StreamOperation(streamIndex: 0, streamType: .video, kind: .copy),
       StreamOperation(streamIndex: 3, streamType: .audio, kind: .copy),
@@ -226,7 +226,7 @@ struct DispositionArgumentTests {
    subtitle operations contribute no disposition flags.
    */
   @Test
-  func flagsFirstAudioAsDefault() {
+  func `flags first audio as default`() {
     let operations = [
       StreamOperation(streamIndex: 0, streamType: .video, kind: .copy),
       StreamOperation(streamIndex: 3, streamType: .audio, kind: .copy),
@@ -240,7 +240,7 @@ struct DispositionArgumentTests {
   }
 
   @Test
-  func emitsNothingWithoutAudio() {
+  func `emits nothing without audio`() {
     let operations = [StreamOperation(streamIndex: 0, streamType: .video, kind: .copy)]
     #expect(ProgressReportingProcessor.dispositionArguments(for: operations).isEmpty)
   }

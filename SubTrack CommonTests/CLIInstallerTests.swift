@@ -7,7 +7,7 @@ import Testing
 struct CLIInstallerTests {
 
   @Test
-  func quotesBundlePathWithSpaces() {
+  func `quotes bundle path with spaces`() {
     let source = URL(fileURLWithPath: "/Applications/My App.app/Contents/Resources/subtrack")
     let destination = URL(fileURLWithPath: "/opt/tools", isDirectory: true)
     let command = CLIInstaller.installCommand(source: source, destinationDirectory: destination)
@@ -18,7 +18,7 @@ struct CLIInstallerTests {
   }
 
   @Test
-  func defaultsDestinationToUsrLocalBin() {
+  func `defaults destination to /usr/local/bin`() {
     let source = URL(fileURLWithPath: "/Applications/SubTrack.app/Contents/Resources/subtrack")
     let command = CLIInstaller.installCommand(source: source)
     #expect(

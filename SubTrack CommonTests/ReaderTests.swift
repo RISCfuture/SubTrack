@@ -32,7 +32,7 @@ struct ReaderTests {
    fails, because the stuck read also strands the queue item in `.probing`.
    */
   @Test
-  func launchFailureThrowsRatherThanHanging() async throws {
+  func `launch failure throws rather than hanging`() async throws {
     let ffprobeURL = try makeUnlaunchableExecutable()
     defer { try? FileManager.default.removeItem(at: ffprobeURL) }
 
@@ -49,7 +49,7 @@ struct ReaderTests {
    naming it, rather than a raw POSIX launch failure.
    */
   @Test
-  func missingFFprobeReportsWhichExecutableIsMissing() async throws {
+  func `missing ffprobe reports which executable is missing`() async throws {
     let reader = Reader(suppressStderr: true)
     reader.ffprobeURL = URL(filePath: "/nonexistent/ffprobe", directoryHint: .notDirectory)
 

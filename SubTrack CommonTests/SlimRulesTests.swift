@@ -12,7 +12,7 @@ struct SlimRulesTests {
   }
 
   @Test
-  func repairsPresetPassedAsProfile() throws {
+  func `repairs preset passed as profile`() throws {
     let rules = try decode(
       """
       {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
@@ -26,7 +26,7 @@ struct SlimRulesTests {
   }
 
   @Test
-  func leavesRealProfileAlone() throws {
+  func `leaves real profile alone`() throws {
     let rules = try decode(
       """
       {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
@@ -40,7 +40,7 @@ struct SlimRulesTests {
   }
 
   @Test
-  func addsAV1ToTheUneditedDefaultCodecList() throws {
+  func `adds AV1 to the unedited default codec list`() throws {
     let rules = try decode(
       """
       {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
@@ -54,7 +54,7 @@ struct SlimRulesTests {
   }
 
   @Test
-  func leavesAnEditedCodecListAlone() throws {
+  func `leaves an edited codec list alone`() throws {
     let rules = try decode(
       """
       {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
@@ -72,7 +72,7 @@ struct SlimRulesTests {
    collapsing the whole record to `SlimRules.default`.
    */
   @Test
-  func aMissingKeyFallsBackWithoutDiscardingTheRest() throws {
+  func `a missing key falls back without discarding the rest`() throws {
     let rules = try decode(
       """
       {"languages":["jpn","eng"],"preserveNoLanguages":true,"includeOtherAudio":true,
@@ -90,7 +90,7 @@ struct SlimRulesTests {
 
   /// AV1 sources are copied rather than transcoded, so no AV1 decoder is needed.
   @Test
-  func av1VideoIsCopied() throws {
+  func `AV1 video is copied`() throws {
     let container = try JSONDecoder().decode(
       Container.self,
       from: Data(
@@ -113,7 +113,7 @@ struct SlimRulesTests {
   }
 
   @Test
-  func repairsAnExperimentalAudioTranscodeTarget() throws {
+  func `repairs an experimental audio transcode target`() throws {
     let rules = try decode(
       """
       {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,
@@ -127,7 +127,7 @@ struct SlimRulesTests {
   }
 
   @Test
-  func leavesAUsableAudioTranscodeTargetAlone() throws {
+  func `leaves a usable audio transcode target alone`() throws {
     let rules = try decode(
       """
       {"languages":["eng"],"preserveNoLanguages":false,"includeOtherAudio":false,

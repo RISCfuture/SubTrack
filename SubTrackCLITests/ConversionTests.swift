@@ -38,7 +38,7 @@ struct ConversionTests {
   }
 
   @Test
-  func slimsAFileDownToTheKeptTracks() throws {
+  func `slims a file down to the kept tracks`() throws {
     let (result, output) = try convert([])
 
     #expect(result.succeeded, "The conversion failed: \(result.standardError)")
@@ -64,7 +64,7 @@ struct ConversionTests {
    having failed for some other reason.
    */
   @Test
-  func aConversionThatWouldChangeNothingIsSkipped() throws {
+  func `a conversion that would change nothing is skipped`() throws {
     // Keeping both languages and the untagged track leaves all six streams
     // copied, which is the definition of a no-op.
     let keepEverything = ["-l", "eng", "-l", "fra", "-n"]
@@ -98,7 +98,7 @@ struct ConversionTests {
    nothing behind for the user to mistake for a result.
    */
   @Test
-  func anEmptyOutputStreamFailsTheRun() throws {
+  func `an empty output stream fails the run`() throws {
     let attempt = try convert([], of: MovieFixture.withEmptySubtitleTrack)
 
     #expect(attempt.result.exitCode == 1)
@@ -121,7 +121,7 @@ struct ConversionTests {
    with, and a run that then failed would have destroyed it for nothing.
    */
   @Test
-  func aFailedRunLeavesAnEarlierOutputIntact() throws {
+  func `a failed run leaves an earlier output intact`() throws {
     let first = try convert([])
     #expect(first.result.succeeded, "The first conversion failed: \(first.result.standardError)")
     // Compared byte for byte: the losing run writes the same three streams, so
@@ -139,7 +139,7 @@ struct ConversionTests {
 
   /// `--skip-verify` accepts that same output rather than failing on it.
   @Test
-  func skipVerifyAcceptsAnOutputThatVerificationWouldReject() throws {
+  func `skip-verify accepts an output that verification would reject`() throws {
     let attempt = try convert(["--skip-verify"], of: MovieFixture.withEmptySubtitleTrack)
 
     #expect(attempt.result.succeeded, "Skipping verification should let the run finish.")
@@ -151,7 +151,7 @@ struct ConversionTests {
 
   /// Progress is reported on stderr, leaving stdout free to be piped somewhere.
   @Test
-  func progressIsReportedOnStandardError() throws {
+  func `progress is reported on standard error`() throws {
     let (result, _) = try convert([])
 
     #expect(result.succeeded)
