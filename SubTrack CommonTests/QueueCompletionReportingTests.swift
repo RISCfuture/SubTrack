@@ -94,7 +94,7 @@ struct QueueCompletionReportingTests {
    tracked per queue rather than across the workspace.
    */
   @Test
-  func aRunSpanningTwoQueuesIsAnnouncedOnce() async throws {
+  func `a run spanning two queues is announced once`() async throws {
     let engine = StubEngine(container: try sampleContainer())
     let reporter = SpyReporter()
     let workspace = makeWorkspace(
@@ -125,7 +125,7 @@ struct QueueCompletionReportingTests {
    from the runs themselves would count them a second time.
    */
   @Test
-  func aSecondRunCountsOnlyItsOwnFiles() async throws {
+  func `a second run counts only its own files`() async throws {
     let engine = StubEngine(container: try sampleContainer())
     let reporter = SpyReporter()
     let workspace = makeWorkspace(
@@ -149,7 +149,7 @@ struct QueueCompletionReportingTests {
 
   /// A run the user broke off has nothing to congratulate them on.
   @Test
-  func aFullyCancelledRunIsNotAnnounced() async throws {
+  func `a fully cancelled run is not announced`() async throws {
     let engine = StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     let reporter = SpyReporter()
     let workspace = makeWorkspace(
@@ -211,7 +211,7 @@ struct QueueCompletionReportingTests {
    and lets a departed queue report into the workspace afterwards.
    */
   @Test
-  func deletingTheWorkingQueueIsNotAnnounced() async throws {
+  func `deleting the working queue is not announced`() async throws {
     let engine = StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     let reporter = SpyReporter()
     let workspace = makeWorkspace(

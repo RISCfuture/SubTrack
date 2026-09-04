@@ -10,7 +10,7 @@ struct EncoderCapabilitiesTests {
   }
 
   @Test
-  func flagsUnsupportedVideoTranscodeButNotCopy() {
+  func `flags unsupported video transcode but not copy`() {
     let operations = [
       StreamOperation(streamIndex: 0, streamType: .video, kind: .copy),
       convert("libx265", .video)
@@ -24,14 +24,14 @@ struct EncoderCapabilitiesTests {
   }
 
   @Test
-  func subtitleTranscodesAreAlwaysAllowed() {
+  func `subtitle transcodes are always allowed`() {
     #expect(
       EncoderCapabilities.videoToolboxOnly.firstUnsupported(in: [convert("srt", .subtitle)]) == nil
     )
   }
 
   @Test
-  func probedCapabilitiesTrackEncoderNamesAndCodecFamilies() {
+  func `probed capabilities track encoder names and codec families`() {
     let capabilities = FFmpegCapabilities(
       version: nil,
       containers: [],

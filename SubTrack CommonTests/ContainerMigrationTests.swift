@@ -7,7 +7,7 @@ import Testing
 struct ContainerMigrationTests {
 
   @Test
-  func copiesStoresWithoutFollowingSymlinksOrOverwriting() throws {
+  func `copies stores without following symlinks or overwriting`() throws {
     let fileManager = FileManager.default
     let root = URL.temporaryDirectory
       .appending(path: UUID().uuidString, directoryHint: .isDirectory)

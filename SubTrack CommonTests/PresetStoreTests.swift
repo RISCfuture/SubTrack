@@ -18,7 +18,7 @@ struct PresetStoreTests {
   }
 
   @Test
-  func seedsStartersIntoAnEmptyStore() throws {
+  func `seeds starters into an empty store`() throws {
     let store = try makeStore()
     let seeded: Set<UUID> = Set(store.presets.map(\.id))
     let starters: Set<UUID> = Set(Preset.starters.map(\.id))
@@ -26,7 +26,7 @@ struct PresetStoreTests {
   }
 
   @Test
-  func savesAndReloadsCustomPreset() throws {
+  func `saves and reloads custom preset`() throws {
     let store = try makeStore()
     let custom = Preset(
       id: UUID(),
@@ -47,7 +47,7 @@ struct PresetStoreTests {
    back as the name those presets already produced.
    */
   @Test
-  func readsAPresetWithNoStoredTemplateAsTheDefaultFormat() throws {
+  func `reads a preset with no stored template as the default format`() throws {
     let store = try makeStore()
     let context = Self.container.mainContext
     context.insert(StoredPreset(id: UUID(), name: "Legacy"))
@@ -59,7 +59,7 @@ struct PresetStoreTests {
   }
 
   @Test
-  func updatesExistingPresetInPlace() throws {
+  func `updates existing preset in place`() throws {
     let store = try makeStore()
     var custom = Preset(id: UUID(), name: "Draft", rules: .default)
     store.save(custom)
@@ -71,7 +71,7 @@ struct PresetStoreTests {
   }
 
   @Test
-  func deletesAnyPresetIncludingAStarter() throws {
+  func `deletes any preset including a starter`() throws {
     let store = try makeStore()
     let custom = Preset(id: UUID(), name: "Temp", rules: .default)
     store.save(custom)
@@ -93,7 +93,7 @@ struct PresetStoreTests {
    then name, then rules — a total order over synced content only.
    */
   @Test
-  func collapsesRecordsSharingAnID() throws {
+  func `collapses records sharing an ID`() throws {
     let store = try makeStore()
     let context = Self.container.mainContext
     let shared = UUID()
@@ -116,7 +116,7 @@ struct PresetStoreTests {
    or insertion order.
    */
   @Test
-  func picksTheSameSurvivorRegardlessOfInsertionOrder() throws {
+  func `picks the same survivor regardless of insertion order`() throws {
     let context = Self.container.mainContext
     let shared = UUID()
     let stamp = Date(timeIntervalSince1970: 3_000)
@@ -144,7 +144,7 @@ struct PresetStoreTests {
    the shared `id`.
    */
   @Test
-  func tiedDuplicatesSurviveWithoutDestructiveDeletion() throws {
+  func `tied duplicates survive without destructive deletion`() throws {
     let store = try makeStore()
     let context = Self.container.mainContext
     let shared = UUID()
@@ -169,7 +169,7 @@ struct PresetStoreTests {
    upload a second copy of every starter.
    */
   @Test
-  func waitsForTheFirstImportBeforeSeedingStarters() throws {
+  func `waits for the first import before seeding starters`() throws {
     let context = Self.container.mainContext
     try context.delete(model: StoredPreset.self)
     try context.save()
@@ -189,7 +189,7 @@ struct PresetStoreTests {
    sync the starters back to their other Macs.
    */
   @Test
-  func doesNotSeedStartersIntoAStoreEmptiedDuringTheWait() throws {
+  func `does not seed starters into a store emptied during the wait`() throws {
     let context = Self.container.mainContext
     try context.delete(model: StoredPreset.self)
     context.insert(StoredPreset(id: UUID(), name: "Mine"))
@@ -206,7 +206,7 @@ struct PresetStoreTests {
 
   /// A preset written on another Mac reaches the UI without any view changing.
   @Test
-  func reloadsWhenAnotherDeviceWrites() throws {
+  func `reloads when another device writes`() throws {
     let context = Self.container.mainContext
     try context.delete(model: StoredPreset.self)
     try context.save()

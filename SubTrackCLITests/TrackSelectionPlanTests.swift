@@ -31,7 +31,7 @@ struct TrackSelectionPlanTests {
   }
 
   @Test
-  func defaultRulesKeepEnglishAndDropEverythingElse() throws {
+  func `default rules keep English and drop everything else`() throws {
     #expect(
       try plan([]) == [
         "0:0 (video): copy",
@@ -47,7 +47,7 @@ struct TrackSelectionPlanTests {
    French *instead of* English rather than in addition to it.
    */
   @Test
-  func languageFlagReplacesTheDefaultRatherThanAddingToIt() throws {
+  func `language flag replaces the default rather than adding to it`() throws {
     #expect(
       try plan(["-l", "fra"]) == [
         "0:0 (video): copy",
@@ -59,7 +59,7 @@ struct TrackSelectionPlanTests {
 
   /// Repeats accumulate, and their order is the priority order.
   @Test
-  func repeatedLanguageFlagsAccumulate() throws {
+  func `repeated language flags accumulate`() throws {
     #expect(
       try plan(["-l", "eng", "-l", "fra"]) == [
         "0:0 (video): copy",
@@ -72,8 +72,8 @@ struct TrackSelectionPlanTests {
   }
 
   /// Both spellings of a flag drive the same rule.
-  @Test("Untagged tracks are kept on request", arguments: ["-n", "--no-language"])
-  func noLanguageFlagKeepsTheUntaggedTrack(_ flag: String) throws {
+  @Test(arguments: ["-n", "--no-language"])
+  func `untagged tracks are kept on request`(_ flag: String) throws {
     #expect(
       try plan([flag]) == [
         "0:0 (video): copy",
@@ -90,11 +90,8 @@ struct TrackSelectionPlanTests {
    commentary nowhere at all — the way a disc remux usually ships — so neither
    language nor disposition is what decides.
    */
-  @Test(
-    "Extra audio is excluded unless asked for",
-    arguments: [MovieFixture.withCommentary, MovieFixture.withUnflaggedCommentary]
-  )
-  func extraAudioIsExcludedUnlessAskedFor(_ movie: URL) throws {
+  @Test(arguments: [MovieFixture.withCommentary, MovieFixture.withUnflaggedCommentary])
+  func `extra audio is excluded unless asked for`(_ movie: URL) throws {
     #expect(
       try plan([], of: movie) == [
         "0:0 (video): copy",
@@ -117,7 +114,7 @@ struct TrackSelectionPlanTests {
    counterpart does, rather than riding along on language alone.
    */
   @Test
-  func commentarySubtitlesFollowTheExtraTrackSetting() throws {
+  func `commentary subtitles follow the extra-track setting`() throws {
     #expect(
       try plan([], of: MovieFixture.withCommentarySubtitle) == [
         "0:0 (video): copy",
@@ -140,7 +137,7 @@ struct TrackSelectionPlanTests {
    fixture's H.264 video stops being acceptable once AV1 is the only preference.
    */
   @Test
-  func nonPreferredVideoIsTranscodedToTheTarget() throws {
+  func `non-preferred video is transcoded to the target`() throws {
     #expect(try plan(["--video-codec", "av1"]).first == "0:0 (video): transcode to hevc")
     #expect(
       try plan(["--video-codec", "av1", "--video-transcode", "av1"]).first

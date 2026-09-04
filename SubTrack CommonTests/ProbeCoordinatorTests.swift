@@ -84,7 +84,7 @@ struct ProbeCoordinatorTests {
   // MARK: - Sharing one read
 
   @Test
-  func readsAFileOnceHoweverManyCallersAskAtOnce() async throws {
+  func `reads a file once however many callers ask at once`() async throws {
     let url = try makeSourceFiles()[0]
     let recorder = ReadRecorder()
     let coordinator = try makeCoordinator(recorder: recorder)
@@ -101,7 +101,7 @@ struct ProbeCoordinatorTests {
   }
 
   @Test
-  func answersALaterCallerFromTheFirstRead() async throws {
+  func `answers a later caller from the first read`() async throws {
     let url = try makeSourceFiles()[0]
     let recorder = ReadRecorder()
     let coordinator = try makeCoordinator(recorder: recorder)
@@ -117,7 +117,7 @@ struct ProbeCoordinatorTests {
   // MARK: - Staying current
 
   @Test
-  func readsAgainOnceTheFileItselfChanges() async throws {
+  func `reads again once the file itself changes`() async throws {
     let url = try makeSourceFiles()[0]
     let recorder = ReadRecorder()
     let coordinator = try makeCoordinator(recorder: recorder)
@@ -131,7 +131,7 @@ struct ProbeCoordinatorTests {
   }
 
   @Test
-  func invalidateForcesAFreshReadOfAnUnchangedFile() async throws {
+  func `invalidate forces a fresh read of an unchanged file`() async throws {
     let url = try makeSourceFiles()[0]
     let recorder = ReadRecorder()
     let coordinator = try makeCoordinator(recorder: recorder)
@@ -148,7 +148,7 @@ struct ProbeCoordinatorTests {
   // MARK: - Staying bounded
 
   @Test
-  func neverReadsMoreFilesAtOnceThanTheLimitAllows() async throws {
+  func `never reads more files at once than the limit allows`() async throws {
     let urls = try makeSourceFiles(count: 24)
     let recorder = ReadRecorder()
     let coordinator = try makeCoordinator(limit: 3, recorder: recorder)

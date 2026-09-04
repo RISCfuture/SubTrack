@@ -90,7 +90,7 @@ struct WorkspacePersistenceTests {
   // MARK: - Seed
 
   @Test
-  func emptyStoreSeedsExactlyOneQueue() throws {
+  func `empty store seeds exactly one queue`() throws {
     let context = try makeContext()
     let (workspace, _) = launch(
       context,
@@ -107,7 +107,7 @@ struct WorkspacePersistenceTests {
   // MARK: - Default naming
 
   @Test
-  func defaultQueueNameFillsTheFirstGap() {
+  func `default queue name fills the first gap`() {
     #expect(Workspace.defaultQueueName(existingNames: []) == "Queue 1")
     #expect(Workspace.defaultQueueName(existingNames: ["Queue 1", "Queue 2"]) == "Queue 3")
     // Skips the used numbers and reuses the lowest free one, so a deletion frees it.
@@ -119,7 +119,7 @@ struct WorkspacePersistenceTests {
   // MARK: - Dock progress
 
   @Test
-  func dockProgressSpansEveryQueueWeightedPerItem() async throws {
+  func `Dock progress spans every queue, weighted per item`() async throws {
     let context = try makeContext()
     let (workspace, _) = launch(
       context,
@@ -157,7 +157,7 @@ struct WorkspacePersistenceTests {
   // MARK: - Round-trip across relaunch
 
   @Test
-  func queuesAndItemsRestoreAcrossRelaunch() async throws {
+  func `queues and items restore across relaunch`() async throws {
     let context = try makeContext()
 
     // First launch: rename the seeded queue and populate it.
@@ -244,7 +244,7 @@ struct WorkspacePersistenceTests {
   // MARK: - Per-queue settings
 
   @Test
-  func perQueueRulesAndDestinationsRestoreDistinctly() throws {
+  func `per-queue rules and destinations restore distinctly`() throws {
     let context = try makeContext()
     let (workspace, controller) = launch(
       context,
@@ -285,7 +285,7 @@ struct WorkspacePersistenceTests {
   }
 
   @Test
-  func applyingPresetToOneQueueLeavesAnotherUnchanged() throws {
+  func `applying preset to one queue leaves another unchanged`() throws {
     let context = try makeContext()
     let (workspace, _) = launch(
       context,
@@ -313,7 +313,7 @@ struct WorkspacePersistenceTests {
   }
 
   @Test
-  func newQueueSeedsDefaultPresetAndDestination() throws {
+  func `new queue seeds default preset and destination`() throws {
     let context = try makeContext()
     let presetID = UUID()
     let defaultRules = SlimRules(languages: ["eng", "fra"])
@@ -343,7 +343,7 @@ struct WorkspacePersistenceTests {
   // MARK: - Governor
 
   @Test
-  func governorCapsConcurrencyAcrossQueues() async throws {
+  func `governor caps concurrency across queues`() async throws {
     let context = try makeContext()
     let governor = EncodeGovernor(limit: 1)
     let (workspace, _) = launch(
@@ -376,7 +376,7 @@ struct WorkspacePersistenceTests {
   }
 
   @Test
-  func governorHoldsOffIdleSleepWhileEncoding() async throws {
+  func `governor holds off idle sleep while encoding`() async throws {
     let context = try makeContext()
     let governor = EncodeGovernor()
     let (workspace, _) = launch(
@@ -403,7 +403,7 @@ struct WorkspacePersistenceTests {
   // MARK: - Write-through discipline
 
   @Test
-  func progressDoesNotPersistButSettledStatusDoes() async throws {
+  func `progress does not persist but settled status does`() async throws {
     let counter = ChangeCounter()
     let coordinator = QueueCoordinator(
       engine: StubEngine(container: try sampleContainer()),
@@ -421,7 +421,7 @@ struct WorkspacePersistenceTests {
   }
 
   @Test
-  func settledChangesReachTheStoreWithoutAnExplicitSave() async throws {
+  func `settled changes reach the store without an explicit save`() async throws {
     let context = try makeContext()
     let (workspace, controller) = launch(
       context,

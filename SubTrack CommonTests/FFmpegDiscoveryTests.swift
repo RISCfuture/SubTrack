@@ -39,7 +39,7 @@ struct FFmpegDiscoveryTests {
   }
 
   @Test
-  func versionsOrderAcrossHomebrewMacPortsAndSnapshotSpellings() {
+  func `versions order across Homebrew, MacPorts, and snapshot spellings`() {
     let found = [
       installation("/usr/bin", version: "6.1.1-tessus"),
       installation("/opt/local/bin", version: "N-113579-g4a134eb14f"),
@@ -56,7 +56,7 @@ struct FFmpegDiscoveryTests {
   }
 
   @Test
-  func richerCodecSetBreaksAVersionTie() {
+  func `richer codec set breaks a version tie`() {
     let lean = installation("/usr/bin", version: "8.1.2", encoders: ["h264_videotoolbox"]),
       full = installation(
         "/opt/homebrew/bin",

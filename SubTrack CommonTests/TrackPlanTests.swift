@@ -71,7 +71,7 @@ struct OutputTrackTests {
    numbering closes up over it rather than leaving a gap the output won't have.
    */
   @Test
-  func numbersOnlyTheTracksTheRunWrites() {
+  func `numbers only the tracks the run writes`() {
     let tracks = rulesPlan.outputTracks
 
     #expect(tracks.count == container.managedStreams.count)
@@ -85,7 +85,7 @@ struct OutputTrackTests {
    it is has to still say what it is.
    */
   @Test
-  func marksTheFirstAudioDefaultAndDemotesTheRestIntact() throws {
+  func `marks the first audio default and demotes the rest intact`() throws {
     let tracks = overridePlan.outputTracks
     let english = try #require(tracks.first { $0.track.id == 2 })
     let japanese = try #require(tracks.first { $0.track.id == 1 })
@@ -100,7 +100,7 @@ struct OutputTrackTests {
    source has it.
    */
   @Test
-  func leavesEveryOtherTrackAsTheSourceHasIt() throws {
+  func `leaves every other track as the source has it`() throws {
     let tracks = rulesPlan.outputTracks
     let subtitle = try #require(tracks.first { $0.track.type == .subtitle })
     let dropped = try #require(tracks.first { $0.track.id == 1 })
@@ -115,7 +115,7 @@ struct OutputTrackTests {
    no list of named rows can predict.
    */
   @Test
-  func listsEveryTagTheProbeRead() throws {
+  func `lists every tag the probe read`() throws {
     let commentary = try #require(rulesPlan.outputTracks.first { $0.track.id == 3 })
     let facts = commentary.detailSections.flatMap(\.facts)
 
@@ -132,7 +132,7 @@ struct OutputTrackTests {
    part of the plan that is neither the codec nor visible anywhere else.
    */
   @Test
-  func namesTheArgumentsATranscodeRunsUnder() throws {
+  func `names the arguments a transcode runs under`() throws {
     let selection = FileTrackSelection(choices: [
       TrackChoice(
         streamIndex: 0,

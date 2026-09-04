@@ -62,7 +62,7 @@ struct StoredQueueTests {
   }
 
   @Test
-  func queueRoundTripsThroughStore() throws {
+  func `queue round-trips through store`() throws {
     let context = try makeContext()
     let original = sampleSnapshot()
 
@@ -76,7 +76,7 @@ struct StoredQueueTests {
   }
 
   @Test
-  func itemsProjectInSortIndexOrder() throws {
+  func `items project in sort-index order`() throws {
     let context = try makeContext()
     let queue = StoredQueue(name: "Q", rules: .default)
     // Insert items with sortIndex out of relationship order.
@@ -93,7 +93,7 @@ struct StoredQueueTests {
   }
 
   @Test
-  func transientStatesCollapseToReady() {
+  func `transient states collapse to ready`() {
     #expect(PersistedItemStatus(.waiting) == .ready)
     #expect(PersistedItemStatus(.probing) == .ready)
     #expect(PersistedItemStatus(.running) == .ready)
@@ -101,7 +101,7 @@ struct StoredQueueTests {
   }
 
   @Test
-  func failedAndIncompatibleReasonsRoundTrip() {
+  func `failed and incompatible reasons round-trip`() {
     let failed = QueueItemState.failed("disk full")
     let stored = StoredQueueItem(
       persistedStatusRaw: PersistedItemStatus(failed).rawValue,

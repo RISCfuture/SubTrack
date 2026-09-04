@@ -7,14 +7,14 @@ import Testing
 struct ProgressParserTests {
 
   @Test
-  func emitsNothingUntilBlockCompletes() {
+  func `emits nothing until block completes`() {
     var parser = ProgressParser(totalDuration: .seconds(100))
     #expect(parser.consume(line: "frame=10") == nil)
     #expect(parser.consume(line: "out_time_us=5000000") == nil)
   }
 
   @Test
-  func computesFractionFromMicroseconds() throws {
+  func `computes fraction from microseconds`() throws {
     var parser = ProgressParser(totalDuration: .seconds(100))
     _ = parser.consume(line: "out_time_us=25000000")
     let block = parser.consume(line: "progress=continue")
@@ -24,7 +24,7 @@ struct ProgressParserTests {
   }
 
   @Test
-  func parsesSpeedAndTotalSize() throws {
+  func `parses speed and total size`() throws {
     var parser = ProgressParser(totalDuration: .seconds(100))
     _ = parser.consume(line: "total_size=1048576")
     _ = parser.consume(line: "speed=2.5x")
@@ -36,7 +36,7 @@ struct ProgressParserTests {
   }
 
   @Test
-  func endBlockReportsComplete() throws {
+  func `end block reports complete`() throws {
     var parser = ProgressParser(totalDuration: .seconds(100))
     _ = parser.consume(line: "out_time_us=99000000")
     let block = parser.consume(line: "progress=end")
@@ -45,7 +45,7 @@ struct ProgressParserTests {
   }
 
   @Test
-  func unknownDurationYieldsIndeterminateFraction() throws {
+  func `unknown duration yields indeterminate fraction`() throws {
     var parser = ProgressParser(totalDuration: .zero)
     _ = parser.consume(line: "out_time_us=5000000")
     let block = parser.consume(line: "progress=continue")
@@ -54,7 +54,7 @@ struct ProgressParserTests {
   }
 
   @Test
-  func fallsBackToFormattedTimestamp() throws {
+  func `falls back to formatted timestamp`() throws {
     var parser = ProgressParser(totalDuration: .seconds(3600))
     _ = parser.consume(line: "out_time=00:30:00.000000")
     let block = parser.consume(line: "progress=continue")
@@ -63,7 +63,7 @@ struct ProgressParserTests {
   }
 
   @Test
-  func clampsOvershootToOne() throws {
+  func `clamps overshoot to one`() throws {
     var parser = ProgressParser(totalDuration: .seconds(10))
     _ = parser.consume(line: "out_time_us=15000000")
     let block = parser.consume(line: "progress=continue")
@@ -101,7 +101,7 @@ struct TrackSelectionTests {
   }
 
   @Test
-  func seedsAllTracksWithRuleOutcomes() throws {
+  func `seeds all tracks with rule outcomes`() throws {
     let container = try engAndFraAudioContainer()
     let operations = try SlimRules(languages: ["eng"]).makeConverter(container: container)
       .operations()
@@ -116,7 +116,7 @@ struct TrackSelectionTests {
   }
 
   @Test
-  func videoToolboxOnlyBuildsOmitSoftwareEncoders() {
+  func `VideoToolbox-only builds omit software encoders`() {
     let full = FileTrackSelection.availableTargets(for: .video, capabilities: .full).map(\.codec)
     #expect(full.contains("libx265"))
     #expect(full.contains("libx264"))
@@ -138,7 +138,7 @@ struct TrackSelectionTests {
   }
 
   @Test
-  func probedTargetsAreEveryEncoderTheBuildReports() {
+  func `probed targets are every encoder the build reports`() {
     let capabilities = FFmpegCapabilities(
       version: nil,
       containers: [],
