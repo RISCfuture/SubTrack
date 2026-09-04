@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// What one item's run came to, reported the moment that run settles.
 public struct QueueRunOutcome: Sendable {

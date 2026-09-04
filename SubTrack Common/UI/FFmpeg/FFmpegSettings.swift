@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 import os
 
 /// Where the app finds `ffmpeg`/`ffprobe`.

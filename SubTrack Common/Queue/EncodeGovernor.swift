@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A shared, app-wide gate on how many encodes may run at once across every

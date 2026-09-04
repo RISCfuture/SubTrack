@@ -5,7 +5,7 @@ protocol StreamComparator: SortComparator where Compared: CodedStream {
 }
 
 extension StreamComparator {
-  func compareCodecs(_ lhs: CodedStream, _ rhs: CodedStream) -> ComparisonResult? {
+  func compareCodecs(_ lhs: any CodedStream, _ rhs: any CodedStream) -> ComparisonResult? {
     let lhsCodecPriority = preferredCodecs.firstIndex(of: lhs.codecName) ?? Int.max
     let rhsCodecPriority = preferredCodecs.firstIndex(of: rhs.codecName) ?? Int.max
     if lhsCodecPriority != rhsCodecPriority {
@@ -14,11 +14,11 @@ extension StreamComparator {
     return nil
   }
 
-  func compareIndexes(_ lhs: CodedStream, _ rhs: CodedStream) -> ComparisonResult {
+  func compareIndexes(_ lhs: any CodedStream, _ rhs: any CodedStream) -> ComparisonResult {
     return lhs.index < rhs.index ? .orderedAscending : .orderedDescending
   }
 
-  func compareBPS(_ lhs: CodedStream, _ rhs: CodedStream) -> ComparisonResult? {
+  func compareBPS(_ lhs: any CodedStream, _ rhs: any CodedStream) -> ComparisonResult? {
     if let lhsBPS = lhs.bitsPerSecond, let rhsBPS = rhs.bitsPerSecond, lhsBPS != rhsBPS {
       return lhsBPS > rhsBPS ? .orderedAscending : .orderedDescending
     }

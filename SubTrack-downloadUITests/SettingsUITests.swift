@@ -2,9 +2,12 @@ import XCTest
 import XCUITestKit
 
 /// The Settings window's tabs, driving the controls rather than just finding them.
-final class SettingsUITests: XCTestCase {
+nonisolated final class SettingsUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension SettingsUITests {
   func testChangeSimultaneousEncodes() {
     let app = SubTrack.launch(state: .empty)
     MainWindowScreen(app: app).waitUntilLoaded()

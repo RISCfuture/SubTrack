@@ -6,9 +6,12 @@ import XCTest
  the downloadable build. The full flow behaviour is covered by the download
  suite; this asserts only the differences.
  */
-final class MASGatingUITests: XCTestCase {
+nonisolated final class MASGatingUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension MASGatingUITests {
   func testFFmpegLocationIsLocked() {
     let app = MASApp.launch()
     let settings = MASSettingsScreen(app: app).open()

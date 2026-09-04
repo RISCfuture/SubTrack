@@ -1,5 +1,5 @@
-import Foundation
-import SwiftData
+public import Foundation
+public import SwiftData
 
 /**
  Build-specific capabilities. The only thing that differs between the App

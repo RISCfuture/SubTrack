@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  How often the app looks for a new release on its own.

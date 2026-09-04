@@ -9,7 +9,7 @@ import Foundation
  invalidated by a delete, so no manual re-arming is needed.
  */
 final class SourceFileMonitor {
-  private var sources: [DispatchSourceFileSystemObject] = []
+  private var sources: [any DispatchSourceFileSystemObject] = []
 
   /**
    Starts watching `url` and its folder, calling `onChange` on the main actor
@@ -39,7 +39,7 @@ final class SourceFileMonitor {
     path: String,
     mask: DispatchSource.FileSystemEvent,
     onEvent: @escaping @Sendable () -> Void
-  ) -> DispatchSourceFileSystemObject? {
+  ) -> (any DispatchSourceFileSystemObject)? {
     let descriptor = open(path, O_EVTONLY)
     guard descriptor >= 0 else { return nil }
     let source = DispatchSource.makeFileSystemObjectSource(

@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  Main-actor state holder that probes the currently-resolved `ffmpeg` build

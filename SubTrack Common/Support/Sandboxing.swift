@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 import Security
 
 extension ProcessInfo {

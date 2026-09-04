@@ -1,4 +1,4 @@
-import CloudKit
+public import CloudKit
 import CoreData
 import Foundation
 import SwiftData

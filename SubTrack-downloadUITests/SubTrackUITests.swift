@@ -5,11 +5,14 @@ import XCUITestKit
  Smoke test proving the UI-test harness pipeline: the app launches in stubbed
  UI-test mode and lands on the empty-queue state.
  */
-final class SubTrackSmokeUITests: XCTestCase {
+nonisolated final class SubTrackSmokeUITests: XCTestCase {
   override func setUp() {
     continueAfterFailure = false
   }
+}
 
+@MainActor
+extension SubTrackSmokeUITests {
   func testLaunchShowsEmptyState() {
     let app = SubTrack.launch()
     app.descendant(id: "queue.emptyState")

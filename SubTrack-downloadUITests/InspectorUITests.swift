@@ -2,9 +2,12 @@ import XCTest
 import XCUITestKit
 
 /// The inspector's Rules and Override tabs.
-final class InspectorUITests: XCTestCase {
+nonisolated final class InspectorUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension InspectorUITests {
   func testRulesToggleEdits() {
     let app = SubTrack.launch(state: .oneReadyItem)
     let window = MainWindowScreen(app: app).waitUntilLoaded()

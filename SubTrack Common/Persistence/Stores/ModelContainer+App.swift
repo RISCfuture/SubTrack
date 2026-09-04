@@ -1,5 +1,5 @@
 import Foundation
-import SwiftData
+public import SwiftData
 
 extension ModelContainer {
   /**
@@ -71,7 +71,7 @@ extension ModelContainer {
     )
     // Creating the container intermittently fails in the Xcode preview JIT host;
     // a retry clears it. (Outside previews this succeeds on the first attempt.)
-    var lastError: Error?
+    var lastError: (any Error)?
     for _ in 0..<containerCreationAttempts {
       do {
         return try ModelContainer(

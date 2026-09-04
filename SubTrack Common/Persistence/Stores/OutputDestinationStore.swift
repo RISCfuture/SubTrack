@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  Persists the user's chosen output folder as a bookmark.

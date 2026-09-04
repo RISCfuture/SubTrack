@@ -1,9 +1,12 @@
 import XCTest
 
 /// Adding sources to the queue and running them through the stubbed engine.
-final class AddAndRunUITests: XCTestCase {
+nonisolated final class AddAndRunUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension AddAndRunUITests {
   func testAddFilesFromToolbar() {
     let app = SubTrack.launch(state: .empty)
     let window = MainWindowScreen(app: app).waitUntilLoaded()

@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A failure while transcoding a media file with `ffmpeg` and verifying its

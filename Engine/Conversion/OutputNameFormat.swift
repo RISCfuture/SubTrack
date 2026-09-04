@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// A placeholder an ``OutputNameFormat`` substitutes when it names a slimmed file.
 public enum OutputNameToken: String, Codable, CaseIterable, Sendable {

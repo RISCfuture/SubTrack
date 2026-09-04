@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  The shared owner of `ffprobe` inspection: it bounds how many probes run at once,

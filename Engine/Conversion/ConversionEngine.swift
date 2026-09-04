@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  The engine surface the queue depends on, so it can be driven by a stub in
