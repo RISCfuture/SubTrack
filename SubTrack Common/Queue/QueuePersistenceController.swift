@@ -1,6 +1,6 @@
 import AppKit
 import Foundation
-import SwiftData
+public import SwiftData
 import os
 
 /**

@@ -1,5 +1,5 @@
-import Foundation
-import SwiftData
+public import Foundation
+public import SwiftData
 
 /**
  Owns preset persistence: stocks a fresh install with the starter presets and

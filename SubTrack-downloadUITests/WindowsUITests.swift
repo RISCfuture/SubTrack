@@ -2,9 +2,12 @@ import XCTest
 import XCUITestKit
 
 /// Settings, the Activity Log and About windows, and menu/keyboard-driven commands.
-final class WindowsUITests: XCTestCase {
+nonisolated final class WindowsUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension WindowsUITests {
   func testSettingsTabNavigation() {
     let app = SubTrack.launch(state: .empty)
     MainWindowScreen(app: app).waitUntilLoaded()

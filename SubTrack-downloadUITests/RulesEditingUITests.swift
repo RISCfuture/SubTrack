@@ -6,9 +6,12 @@ import XCUITestKit
  preferred-codec rows are the same ``StringListEditor`` over a different list,
  so they are covered by these rather than repeated three more times.
  */
-final class RulesEditingUITests: XCTestCase {
+nonisolated final class RulesEditingUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension RulesEditingUITests {
   func testAddingAndRemovingALanguage() {
     let app = SubTrack.launch(state: .empty)
     let window = MainWindowScreen(app: app).waitUntilLoaded()

@@ -6,9 +6,12 @@ import XCUITestKit
  away, a plan the resolved build can't encode, a plan that would leave the
  output silent, and two files that would be written to one path.
  */
-final class WarningStatesUITests: XCTestCase {
+nonisolated final class WarningStatesUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension WarningStatesUITests {
   /**
    A deleted source is flagged on its row without the user doing anything — the
    file monitor notices it going away.

@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// A queue's rolled-up state, surfaced as the sidebar's per-queue icon.
 public enum QueueAggregateStatus: Sendable, Equatable {

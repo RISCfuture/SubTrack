@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  The live state of an in-flight ingest, driving the progress sheet.

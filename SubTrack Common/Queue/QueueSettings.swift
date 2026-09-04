@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  One queue's own editable settings: its keep-rules (and the preset they came

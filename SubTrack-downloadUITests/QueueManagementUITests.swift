@@ -2,9 +2,12 @@ import XCTest
 import XCUITestKit
 
 /// Destination, multi-queue workspace, and removing items.
-final class QueueManagementUITests: XCTestCase {
+nonisolated final class QueueManagementUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
+}
 
+@MainActor
+extension QueueManagementUITests {
   func testChangeDestination() {
     let app = SubTrack.launch(state: .oneReadyItem)
     MainWindowScreen(app: app).waitUntilLoaded()

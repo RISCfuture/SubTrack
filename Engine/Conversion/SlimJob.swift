@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A single unit of work for the `ConversionEngine`: slim `input` into

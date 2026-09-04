@@ -1,5 +1,5 @@
 import DockProgress
-import SwiftUI
+public import SwiftUI
 
 /**
  The reusable scene tree both app shells instantiate. The shells differ only

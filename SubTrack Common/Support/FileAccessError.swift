@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A failure reaching a user-selected file or folder, typically because a
