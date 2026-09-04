@@ -58,7 +58,7 @@ struct FFmpegCapabilitiesParserTests {
     """
 
   @Test
-  func parsesVersionAndConfiguration() throws {
+  func `parses version and configuration`() throws {
     let info = try #require(FFmpegOutputParser.parseVersion(Self.versionOutput))
     #expect(info.version == "6.1.1")
     let configuration = try #require(info.configuration)
@@ -67,7 +67,7 @@ struct FFmpegCapabilitiesParserTests {
   }
 
   @Test
-  func parsesContainerDirections() throws {
+  func `parses container directions`() throws {
     let containers = FFmpegOutputParser.parseFormats(Self.formatsOutput)
     let mov = try #require(containers.first { $0.name == "mov,mp4,m4a,3gp,3g2,mj2" })
     #expect(mov.canDemux && mov.canMux)
@@ -77,7 +77,7 @@ struct FFmpegCapabilitiesParserTests {
   }
 
   @Test
-  func mergesEncodeAndDecodeCapabilities() throws {
+  func `merges encode and decode capabilities`() throws {
     let codecs = FFmpegOutputParser.parseCodecs(
       encoders: Self.fullEncodersOutput,
       decoders: Self.decodersOutput
@@ -95,7 +95,7 @@ struct FFmpegCapabilitiesParserTests {
   }
 
   @Test
-  func lgplBuildHonestlyOmitsX264() {
+  func `LGPL build honestly omits x264`() {
     let codecs = FFmpegOutputParser.parseCodecs(
       encoders: Self.lgplEncodersOutput,
       decoders: Self.decodersOutput

@@ -8,8 +8,8 @@ import Testing
  */
 struct CommandLineUsageTests {
 
-  @Test("Help is printed and succeeds", arguments: ["-h", "--help"])
-  func helpFlagPrintsUsage(_ flag: String) throws {
+  @Test(arguments: ["-h", "--help"])
+  func `help is printed and succeeds`(_ flag: String) throws {
     let result = try CLI.run([flag])
 
     #expect(result.succeeded)
@@ -23,18 +23,15 @@ struct CommandLineUsageTests {
    command line it was asked from.
    */
   @Test
-  func helpIsAnsweredBeforeOtherArgumentsAreChecked() throws {
+  func `help is answered before other arguments are checked`() throws {
     let result = try CLI.run(["--dry-run", "-h", "only-one-positional"])
 
     #expect(result.succeeded)
     #expect(result.standardOutput.contains("USAGE: subtrack"))
   }
 
-  @Test(
-    "An input and an output are both required",
-    arguments: [[], ["input.mkv"], ["input.mkv", "output.mkv", "extra.mkv"]]
-  )
-  func wrongNumberOfPathsFails(_ paths: [String]) throws {
+  @Test(arguments: [[], ["input.mkv"], ["input.mkv", "output.mkv", "extra.mkv"]])
+  func `an input and an output are both required`(_ paths: [String]) throws {
     let result = try CLI.run(paths)
 
     #expect(result.exitCode == 1)
@@ -42,7 +39,7 @@ struct CommandLineUsageTests {
   }
 
   @Test
-  func unknownOptionFailsAndNamesIt() throws {
+  func `unknown option fails and names it`() throws {
     let result = try CLI.run(["--nonsense", "input.mkv", "output.mkv"])
 
     #expect(result.exitCode == 1)
@@ -51,7 +48,7 @@ struct CommandLineUsageTests {
 
   /// A flag whose value is missing must be reported as such, not silently ignored.
   @Test
-  func flagWithoutItsValueFailsAndNamesIt() throws {
+  func `flag without its value fails and names it`() throws {
     let result = try CLI.run(["input.mkv", "output.mkv", "--language"])
 
     #expect(result.exitCode == 1)

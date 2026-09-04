@@ -206,7 +206,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func ingestAddsEachSourceOnce() async throws {
+  func `ingest adds each source once`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     let url = try SourceFixtures.make("ingest-once.mkv")
     await coordinator.ingestAsync([url, url])
@@ -224,7 +224,7 @@ struct QueueCoordinatorTests {
    sheet is by definition still up.
    */
   @Test
-  func ingestClearsItsProgressWhenDone() async throws {
+  func `ingest clears its progress when done`() async throws {
     let url = try SourceFixtures.make("ingest-progress.mkv")
 
     let observer = IngestProgressObserver()
@@ -249,7 +249,7 @@ struct QueueCoordinatorTests {
    the probe coordinator will run reads for.
    */
   @Test
-  func ingestBoundsConcurrentProbes() async throws {
+  func `ingest bounds concurrent probes`() async throws {
     let engine = StubEngine(container: try sampleContainer())
     engine.probeDelay = .milliseconds(50)
     let coordinator = makeCoordinator(engine)
@@ -264,7 +264,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func addProbesFileToReady() async throws {
+  func `add probes a file to ready`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     await coordinator.add([try SourceFixtures.make("a.mkv")])
 
@@ -276,7 +276,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func runsItemToCompletion() async throws {
+  func `runs item to completion`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     await coordinator.add([try SourceFixtures.make("b.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
@@ -295,7 +295,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func changingTheNameFormatRenamesOnlyPendingItems() async throws {
+  func `changing the name format renames only pending items`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     await coordinator.add(try SourceFixtures.make(["format-a.mkv", "format-b.mkv"]))
     await waitUntil { coordinator.items.allSatisfy { $0.status == .ready } }
@@ -311,7 +311,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func namingOneFileLeavesTheOthersNumberingAlone() async throws {
+  func `naming one file leaves the others numbering alone`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     coordinator.settings.editNaming(OutputNameFormat(template: "{name} [{n}]"))
     await coordinator.add(try SourceFixtures.make(["named-a.mkv", "named-b.mkv", "named-c.mkv"]))
@@ -325,7 +325,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func twoFilesGivenTheSameNameConflict() async throws {
+  func `two files given the same name conflict`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     coordinator.settings.destination.setDestination(URL(filePath: "/tmp/nonexistent-out"))
     await coordinator.add(try SourceFixtures.make(["clash-a.mkv", "clash-b.mkv"]))
@@ -344,7 +344,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func aNameConflictKeepsTheQueueFromStarting() async throws {
+  func `a name conflict keeps the queue from starting`() async throws {
     let source = try SourceFixtures.make("clash.mkv")
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     await coordinator.add([source])
@@ -359,7 +359,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func cancelStopsRunningItem() async throws {
+  func `cancel stops running item`() async throws {
     let coordinator = makeCoordinator(
       StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     )
@@ -378,7 +378,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func reorderMovesStartableItemsButNotFinished() async throws {
+  func `reorder moves startable items but not finished`() async throws {
     let (coordinator, undoManager) = makeUndoableCoordinator(
       StubEngine(container: try sampleContainer())
     )
@@ -434,7 +434,7 @@ struct QueueCoordinatorTests {
    selection they were part of and the numbering their absence had shifted.
    */
   @Test
-  func undoPutsRemovedItemsBackWhereTheyWere() async throws {
+  func `undo puts removed items back where they were`() async throws {
     let (coordinator, undoManager) = makeUndoableCoordinator(
       StubEngine(container: try sampleContainer())
     )
@@ -479,7 +479,7 @@ struct QueueCoordinatorTests {
    unwinding and a second one would land on top of it.
    */
   @Test
-  func undoBringsBackARemovedRunningItemSettled() async throws {
+  func `undo brings back a removed running item as settled`() async throws {
     let (coordinator, undoManager) = makeUndoableCoordinator(
       StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     )
@@ -513,7 +513,7 @@ struct QueueCoordinatorTests {
    user's ⌘Z, nor rename the edit sitting under it.
    */
   @Test
-  func clearCompletedIsOneNamedUndoAndNothingWhenEmpty() async throws {
+  func `clear completed is one named undo, and nothing when empty`() async throws {
     let (coordinator, undoManager) = makeUndoableCoordinator(
       StubEngine(container: try sampleContainer())
     )
@@ -547,7 +547,7 @@ struct QueueCoordinatorTests {
    fails to re-arm it are invisible until a file vanishes unnoticed.
    */
   @Test
-  func aRestoredItemIsWatchedAgain() async throws {
+  func `a restored item is watched again`() async throws {
     let (coordinator, undoManager) = makeUndoableCoordinator(
       StubEngine(container: try sampleContainer())
     )
@@ -596,7 +596,7 @@ struct QueueCoordinatorTests {
    and fails on every re-scan after relaunch.
    */
   @Test
-  func probeAndRunReadSourceFromResolvedBookmark() async throws {
+  func `probe and run read source from resolved bookmark`() async throws {
     let recorder = JobInputRecorder()
     let resolved = URL(filePath: "/tmp/subtrack-resolved-source.mkv")
     let coordinator = QueueCoordinator(
@@ -631,7 +631,7 @@ struct QueueCoordinatorTests {
    nothing.
    */
   @Test
-  func addBookmarksTheFolderOutputLandsInBesideTheSource() async throws {
+  func `add bookmarks the folder output lands in beside the source`() async throws {
     let coordinator = QueueCoordinator(
       engine: StubEngine(container: try sampleContainer()),
       makeBookmark: { Data($0.path(percentEncoded: false).utf8) }
@@ -651,7 +651,7 @@ struct QueueCoordinatorTests {
    own bookmark, so the item doesn't carry a second one for it.
    */
   @Test
-  func addSkipsTheFolderBookmarkWhenTheDestinationCoversOutput() async throws {
+  func `add skips the folder bookmark when the destination covers output`() async throws {
     let coordinator = QueueCoordinator(
       engine: StubEngine(container: try sampleContainer()),
       makeBookmark: { Data($0.path(percentEncoded: false).utf8) }
@@ -672,7 +672,7 @@ struct QueueCoordinatorTests {
    with an actionable error instead of being handed to the engine.
    */
   @Test
-  func runFailsUpFrontWhenTheOutputFolderIsNotWritable() async throws {
+  func `run fails up front when the output folder is not writable`() async throws {
     let folder = URL(
       filePath: "/tmp/subtrack-absent-\(UUID().uuidString)",
       directoryHint: .isDirectory
@@ -715,7 +715,7 @@ struct QueueCoordinatorTests {
    error that says what happened.
    */
   @Test
-  func runFailsUpFrontWhenTheOutputVolumeHasNoRoom() async throws {
+  func `run fails up front when the output volume has no room`() async throws {
     let source = try SourceFixtures.make("no-room.mkv")
     let coordinator = makeCoordinator(
       StubEngine(container: try bitRatedContainer()),
@@ -743,7 +743,7 @@ struct QueueCoordinatorTests {
    the error message the check exists to improve.
    */
   @Test
-  func runProceedsWhenTheVolumeWontReportItsFreeSpace() async throws {
+  func `run proceeds when the volume won't report its free space`() async throws {
     let source = try SourceFixtures.make("unreported-capacity.mkv")
     let coordinator = makeCoordinator(
       StubEngine(container: try bitRatedContainer()),
@@ -763,7 +763,7 @@ struct QueueCoordinatorTests {
    volume reporting nothing free.
    */
   @Test
-  func runProceedsWhenTheOutputSizeCannotBeProjected() async throws {
+  func `run proceeds when the output size cannot be projected`() async throws {
     let source = try SourceFixtures.make("unprojectable-size.mkv")
     let coordinator = makeCoordinator(
       StubEngine(container: try fiveStreamContainer()),
@@ -779,7 +779,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func revalidateMarksMissingThenRecovers() async throws {
+  func `revalidate marks missing then recovers`() async throws {
     let file = try SourceFixtures.make("clip.mkv")
 
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
@@ -802,7 +802,7 @@ struct QueueCoordinatorTests {
    slimmed-count and saved-bytes rollups, which both filter on `.done`.
    */
   @Test
-  func rescanRefreshesContainerAndKeepsFinishedItemsDone() async throws {
+  func `rescan refreshes container and keeps finished items done`() async throws {
     let engine = StubEngine(container: try sampleContainer())
     let coordinator = makeCoordinator(engine)
     await coordinator.add([try SourceFixtures.make("rescan.mkv")])
@@ -827,7 +827,7 @@ struct QueueCoordinatorTests {
    would replace the container its operations were derived from.
    */
   @Test
-  func rescanSkipsRunningItems() async throws {
+  func `rescan skips running items`() async throws {
     let coordinator = makeCoordinator(
       StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     )
@@ -852,7 +852,7 @@ struct QueueCoordinatorTests {
    and stays succeeded.
    */
   @Test
-  func cancelDuringRescanPreservesFinishedItem() async throws {
+  func `cancel during rescan preserves finished item`() async throws {
     let engine = StubEngine(container: try sampleContainer())
     let coordinator = makeCoordinator(engine)
     await coordinator.add([try SourceFixtures.make("rescan-cancel.mkv")])
@@ -880,7 +880,7 @@ struct QueueCoordinatorTests {
    able to pick it back up once the user asks.
    */
   @Test
-  func startRecoversRescannedPendingItemAfterFailure() async throws {
+  func `start recovers rescanned pending item after failure`() async throws {
     let sources = try SourceFixtures.make(["a.mkv", "b.mkv"])
     let (fileA, fileB) = (sources[0], sources[1])
 
@@ -934,7 +934,7 @@ struct QueueCoordinatorTests {
    announce another run for the rest of the session.
    */
   @Test
-  func aPrunedPendingItemLeavesNoEncodeWorkInFlight() async throws {
+  func `a pruned pending item leaves no encode work in flight`() async throws {
     let sources = try SourceFixtures.make(["a.mkv", "b.mkv"])
     let (fileA, fileB) = (sources[0], sources[1])
 
@@ -964,7 +964,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func incompatibleWhenBuildLacksEncoderThenRecovers() async throws {
+  func `incompatible when build lacks encoder then recovers`() async throws {
     let capabilities = CapabilityProvider(.videoToolboxOnly)
     let coordinator = makeCoordinator(
       StubEngine(container: try sampleContainer()),
@@ -995,7 +995,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func overallProgressSpansTheWholeQueueNotJustStartedItems() async throws {
+  func `overall progress spans the whole queue not just started items`() async throws {
     let coordinator = makeCoordinator(
       StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
     )
@@ -1020,7 +1020,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func trackCountsFollowThePlanUntilTheRunReportsItsOwn() async throws {
+  func `track counts follow the plan until the run reports its own`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try fiveStreamContainer()))
     await coordinator.add([try SourceFixtures.make("tracks.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
@@ -1043,7 +1043,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func warnsWhenEveryAudioTrackWouldBeDropped() async throws {
+  func `warns when every audio track would be dropped`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try chineseAudioContainer()))
     let file = try SourceFixtures.make("audio-dropped.mkv")
     await coordinator.ingestAsync([file])
@@ -1055,7 +1055,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func doesNotWarnWhenAudioSurvives() async throws {
+  func `does not warn when audio survives`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
     let file = try SourceFixtures.make("audio-kept.mkv")
     await coordinator.ingestAsync([file])
@@ -1066,7 +1066,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func doesNotWarnWhenTheSourceHasNoAudio() async throws {
+  func `does not warn when the source has no audio`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try silentContainer()))
     let file = try SourceFixtures.make("silent.mkv")
     await coordinator.ingestAsync([file])
@@ -1077,7 +1077,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func outputSizeMovesFromPlanToProjectionToMeasurement() async throws {
+  func `output size moves from plan to projection to measurement`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try bitRatedContainer()))
     await coordinator.add([try SourceFixtures.make("output-size.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
@@ -1101,7 +1101,7 @@ struct QueueCoordinatorTests {
   }
 
   @Test
-  func outputSizeIsUnknownWhenADroppedTrackHasNoBitRate() async throws {
+  func `output size is unknown when a dropped track has no bit rate`() async throws {
     let coordinator = makeCoordinator(StubEngine(container: try fiveStreamContainer()))
     await coordinator.add([try SourceFixtures.make("no-bit-rates.mkv")])
     await waitUntil { coordinator.items.first?.status == .ready }
