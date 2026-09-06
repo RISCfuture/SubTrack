@@ -64,7 +64,7 @@ HELP_IMAGES_PATH = File.join(HELP_BOOK_PATH, "images")
 # adapt — more conspicuously wrong than a page that does not adapt at all. Doubling the set costs
 # nothing once the captures are automated, which is most of the argument for this lane existing.
 HELP_SCREENSHOTS = %w[
-  main-window queue-running add-videos rules-languages rules-codecs track-override
+  main-window queue-running add-videos rules-languages rules-codecs track-override track-preview
   output-name preset-menu settings-presets settings-ffmpeg settings-cli problem-queue
 ].freeze
 
