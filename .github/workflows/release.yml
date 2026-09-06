@@ -92,8 +92,13 @@ jobs:
           fi
           sources=$(find artifacts -name 'ffmpeg-sources-*.tar.xz' -print -quit)
 
+          # From CHANGELOG.md, not --generate-notes: most work here lands as direct commits rather
+          # than pull requests, so generated notes would describe a fraction of the release. The
+          # same text is what App Store Connect carries as "What's New".
+          Scripts/release-notes.sh "$VERSION" > release-notes.md
+
           gh release create "$VERSION" \
             --repo "$GITHUB_REPOSITORY" \
             --title "SubTrack $VERSION" \
-            --generate-notes \
+            --notes-file release-notes.md \
             "$dmg" "$sources"
