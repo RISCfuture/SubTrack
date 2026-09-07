@@ -937,6 +937,19 @@ extension QueueCoordinator {
       }
     )
   }
+
+  /**
+   Whether removing `ids` would stop work that is already under way, rather
+   than only dropping items that are sitting still.
+
+   Removal cancels whatever it finds running, which is the one part of the
+   edit that undo cannot give back: restoring the item restores the item, not
+   the minutes of encoding that were thrown away with it. The menu names the
+   consequence on that basis, so it has to be answered per selection.
+   */
+  public func removalCancelsActiveWork(_ ids: Set<UUID>) -> Bool {
+    items.contains { ids.contains($0.id) && $0.status.isActive }
+  }
 }
 
 // MARK: - Output names

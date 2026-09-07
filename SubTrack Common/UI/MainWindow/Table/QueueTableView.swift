@@ -121,10 +121,19 @@ private struct QueueRowMenu: View {
         reveal(selectedItems.map(\.sourceURL))
       }
       Divider()
-      Button(LocalizedStringResource("Remove", bundle: #bundle), role: .destructive) {
-        env.queue.remove(ids)
-      }
+      Button(removeTitle, role: .destructive) { env.queue.remove(ids) }
     }
+  }
+
+  /**
+   What the removal is called. Removing an encoding item cancels it, and the
+   plain name reads as though it only drops rows — so the destructive half is
+   named whenever the selection actually contains work in flight.
+   */
+  private var removeTitle: LocalizedStringResource {
+    env.queue.removalCancelsActiveWork(ids)
+      ? LocalizedStringResource("Cancel and Remove", bundle: #bundle)
+      : LocalizedStringResource("Remove", bundle: #bundle)
   }
 
   /// The selected items, in queue order.

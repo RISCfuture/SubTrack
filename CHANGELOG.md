@@ -30,6 +30,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   starts, instead of arriving as `ffmpeg exited with code 1`.
 - Dragging a queue row shows an insertion line rather than highlighting the row
   under the cursor, and a row can be dropped at the end of the queue.
+- Removing an item that is encoding is called "Cancel and Remove", because that
+  is what it does. The plain name said only that rows would go away, and the
+  encode it killed is the one part undo cannot give back.
 
 ## 1.0
 

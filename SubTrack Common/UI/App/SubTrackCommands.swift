@@ -103,13 +103,22 @@ private struct QueueRunCommands: Commands {
       Button(LocalizedStringResource("Cancel All", bundle: #bundle)) { queue.cancelAll() }
         .keyboardShortcut(".", modifiers: .command)
         .disabled(!queue.isRunning)
-      Button(LocalizedStringResource("Remove Selected", bundle: #bundle)) {
-        queue.remove(queue.selection)
-      }
-      .keyboardShortcut(.delete, modifiers: [])
-      .disabled(queue.selection.isEmpty)
+      Button(removeSelectedTitle) { queue.remove(queue.selection) }
+        .keyboardShortcut(.delete, modifiers: [])
+        .disabled(queue.selection.isEmpty)
       Button(LocalizedStringResource("Clear Completed", bundle: #bundle)) { queue.clearCompleted() }
     }
+  }
+
+  /**
+   What the removal is called, matching the row menu: removing an encoding
+   item cancels it, so the name says so whenever the selection holds work in
+   flight.
+   */
+  private var removeSelectedTitle: LocalizedStringResource {
+    queue.removalCancelsActiveWork(queue.selection)
+      ? LocalizedStringResource("Cancel and Remove Selected", bundle: #bundle)
+      : LocalizedStringResource("Remove Selected", bundle: #bundle)
   }
 
   private var queue: QueueCoordinator { environment.queue }
