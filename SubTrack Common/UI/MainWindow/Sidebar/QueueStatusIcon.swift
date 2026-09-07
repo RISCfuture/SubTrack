@@ -3,9 +3,9 @@ import SwiftUI
 /**
  The aggregate status glyph: a determinate progress ring while encoding, a
  warning triangle for attention, a check for a finished queue, nothing when
- idle. Mirrors the per-item treatment in the queue table: the ring and check
- read monochrome in `.secondary` like ``StatusCell``, and the attention
- triangle carries the same orange the table's name column uses.
+ idle. The ring and check read monochrome in `.secondary` like ``StatusCell``;
+ the attention triangle is the one coloured glyph, matching the orange the name
+ column tints an incompatible row rather than the status column's own grey.
  */
 struct QueueStatusIcon: View {
   let status: QueueAggregateStatus

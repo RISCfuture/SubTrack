@@ -72,12 +72,18 @@ struct NameCell: View {
   }
 
   /**
-   The color for the name and subtitle in the two exceptional states, or
-   `nil` for the default primary/secondary shades.
+   The colour for the name and subtitle. Red is an item that cannot produce a
+   file as it stands — its source is gone, or its run failed; orange is a plan
+   at fault, which editing the rules would fix. Everything else takes the
+   default primary/secondary shades.
+
+   A failed run reads red rather than untinted so it is not the one error
+   state drawn as though nothing were wrong, which is how it looked beside a
+   missing source.
    */
   private var warningTint: Color? {
     switch item.status {
-      case .missing: .red
+      case .missing, .failed: .red
       case .incompatible: .orange
       default: nil
     }

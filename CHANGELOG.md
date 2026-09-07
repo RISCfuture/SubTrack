@@ -36,6 +36,10 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - An item whose rules keep none of the source's audio is marked with an info
   button after its name, explained in a tooltip, rather than a caution triangle
   before it.
+- Every error state is tinted, and tinted alike in the queue and the Activity
+  Log. A failed run previously carried no colour at all in the queue, and an
+  encode the build cannot perform changed severity depending on which window
+  you looked at.
 
 ## 1.0
 

@@ -53,9 +53,15 @@ struct ActivityLogView: View {
     }
   }
 
+  /**
+   The same tiers the queue table uses, so one item does not change severity
+   between the two windows: red where it cannot produce a file, orange where
+   the plan is at fault, the default shade for everything merely in progress.
+   */
   private func color(_ item: QueueItem) -> Color {
     switch item.status {
       case .failed, .missing: .red
+      case .incompatible: .orange
       default: .secondary
     }
   }
