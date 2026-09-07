@@ -24,9 +24,6 @@ public enum FileAccessError: Error, Sendable {
    the sandbox grant covers the source file but not the folder holding it.
    */
   case outputFolderNotWritable(url: URL)
-
-  /// The chosen output folder isn't available.
-  case destinationUnavailable
 }
 
 extension FileAccessError: LocalizedError {
@@ -53,8 +50,6 @@ extension FileAccessError: LocalizedError {
           localized: "SubTrack doesn’t have permission to save into “\(url.lastPathComponent)”.",
           bundle: #bundle
         )
-      case .destinationUnavailable:
-        String(localized: "The output folder isn’t available.", bundle: #bundle)
     }
   }
 
@@ -72,8 +67,6 @@ extension FileAccessError: LocalizedError {
           localized: "Choose an output folder, or add the enclosing folder to the queue.",
           bundle: #bundle
         )
-      case .destinationUnavailable:
-        String(localized: "Choose the output folder again.", bundle: #bundle)
     }
   }
 
@@ -85,7 +78,7 @@ extension FileAccessError: LocalizedError {
     switch self {
       case .sourceMissing, .bookmarkFailed, .accessDenied:
         HelpAnchor.missingSource.rawValue
-      case .outputFolderNotWritable, .destinationUnavailable:
+      case .outputFolderNotWritable:
         HelpAnchor.settingsGeneral.rawValue
     }
   }
