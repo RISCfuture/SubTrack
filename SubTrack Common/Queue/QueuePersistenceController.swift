@@ -45,6 +45,7 @@ public final class QueuePersistenceController {
 
   private let modelContext: ModelContext
   private let workspace: Workspace
+  private let health: PersistenceHealth
 
   /// Queues changed since the last write, and the task that will write them.
   private var dirtyQueueIDs: Set<UUID> = []
@@ -60,10 +61,22 @@ public final class QueuePersistenceController {
   /**
    Creates a controller that reads and writes `workspace`'s queues through
    `modelContext`. Nothing is loaded until ``load()`` runs.
+
+   - Parameter modelContext: The context holding the queue records.
+   - Parameter workspace: The live queues this controller hydrates and writes
+     back.
+   - Parameter health: Where this controller reports whether the store is
+     readable and writable. Defaults to a record of its own, which is what a
+     test that isn't asking the question wants.
    */
-  public init(modelContext: ModelContext, workspace: Workspace) {
+  public init(
+    modelContext: ModelContext,
+    workspace: Workspace,
+    health: PersistenceHealth = PersistenceHealth()
+  ) {
     self.modelContext = modelContext
     self.workspace = workspace
+    self.health = health
   }
 
   // MARK: - Launch hydration
@@ -81,8 +94,9 @@ public final class QueuePersistenceController {
       // A transient fetch failure is not an empty store: seeding and writing
       // through here would overwrite the user's real queues. Present an
       // in-memory queue for this session without wiring write-through, leaving
-      // the on-disk data intact for a later, healthy launch.
-      report(.fetchFailed(detail: String(describing: error)))
+      // the on-disk data intact for a later, healthy launch. Nothing clears the
+      // condition ``fetchAll()`` just recorded, because with write-through
+      // unwired there is no later write to succeed — which is the truth of it.
       workspace.makeCoordinator(name: Workspace.seedQueueName, sortIndex: 0)
       workspace.selectFirstIfNeeded()
       return
@@ -118,10 +132,7 @@ public final class QueuePersistenceController {
    queues and then write duplicates of them back.
    */
   public func persistAll() {
-    guard let records = try? fetchAll() else {
-      reportUnreadableStore()
-      return
-    }
+    guard let records = try? fetchAll() else { return }
     dirtyQueueIDs.removeAll()
     let liveIDs = Set(workspace.coordinators.map(\.id))
     for record in records where !liveIDs.contains(record.id) {
@@ -143,10 +154,7 @@ public final class QueuePersistenceController {
     scheduledWrite?.cancel()
     scheduledWrite = nil
     guard !dirtyQueueIDs.isEmpty else { return }
-    guard let records = try? fetchAll() else {
-      reportUnreadableStore()
-      return
-    }
+    guard let records = try? fetchAll() else { return }
     let ids = dirtyQueueIDs
     dirtyQueueIDs.removeAll()
     for coordinator in workspace.coordinators where ids.contains(coordinator.id) {
@@ -265,31 +273,36 @@ public final class QueuePersistenceController {
    none of them is "there are no queues".
    */
   private func fetchAll() throws -> [StoredQueue] {
-    #if DEBUG
-      if failsFetchesForTesting { throw PersistenceError.fetchFailed(detail: "seeded by a test") }
-    #endif
-    // Small set; filtering in memory avoids a SwiftData `#Predicate` over UUID.
-    return try modelContext.fetch(FetchDescriptor<StoredQueue>())
-  }
-
-  private func reportUnreadableStore() {
-    report(.fetchFailed(detail: "The stored queues couldn’t be read."))
+    do {
+      #if DEBUG
+        // A Cocoa error, not a `PersistenceError`: this stands in for what the
+        // store itself would throw, and the catch below is what turns it into
+        // one. Throwing the wrapper here would have it wrapped a second time.
+        if failsFetchesForTesting { throw CocoaError(.fileReadUnknown) }
+      #endif
+      // Small set; filtering in memory avoids a SwiftData `#Predicate` over UUID.
+      return try modelContext.fetch(FetchDescriptor<StoredQueue>())
+    } catch {
+      report(.fetchFailed(detail: String(describing: error)))
+      throw error
+    }
   }
 
   private func save() {
     do {
       #if DEBUG
-        if failsWritesForTesting {
-          throw PersistenceError.saveFailed(detail: "seeded by a test")
-        }
+        if failsWritesForTesting { throw CocoaError(.fileWriteUnknown) }
       #endif
       try modelContext.save()
+      health.recordSuccess(from: .queues)
     } catch {
       report(.saveFailed(detail: String(describing: error)))
     }
   }
 
+  /// Logs a failure and raises it as the condition the status bar reports.
   private func report(_ failure: PersistenceError) {
     Self.logger.error("\(failure.userMessage, privacy: .public)")
+    health.record(failure, from: .queues)
   }
 }

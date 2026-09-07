@@ -18,6 +18,10 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - Undo takes back the destructive queue edits. Remove Selected, Clear Completed,
   and drag-reordering are all undoable, and an item comes back with the track
   overrides you set by hand rather than needing a re-probe.
+- SubTrack says so when it cannot record your work. A queue whose changes fail
+  to save now raises a "Not saving" indicator in the status bar for as long as
+  it stays true, and clicking it opens the Activity Log, which explains what
+  went wrong in full.
 
 ### Fixed
 

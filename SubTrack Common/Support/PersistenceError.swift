@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A failure reading or writing SubTrack's stored data (SwiftData and the
@@ -6,10 +6,11 @@ import Foundation
 
  Both cases share the headline "Couldn't access your saved data."; the
  specific cause is carried by ``failureReason``. Neither is user-actionable,
- so neither carries a ``recoverySuggestion``: they are logged rather than
- shown, and nothing in the app presents them.
+ so neither carries a ``recoverySuggestion`` — but being unable to fix
+ something is not a reason not to be told about it, and ``PersistenceHealth``
+ holds whichever of these is currently true so the interface can say so.
  */
-enum PersistenceError: Error, Sendable {
+public enum PersistenceError: Error, Sendable, Equatable {
 
   /// Changes couldn't be saved.
   case saveFailed(detail: String)

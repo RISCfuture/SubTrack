@@ -21,6 +21,7 @@ struct MainWindowScreen {
   var emptyState: XCUIElement { app.descendant(id: "queue.emptyState") }
   var statusSummary: XCUIElement { app.descendant(id: "status.summary") }
   var overallProgress: XCUIElement { app.descendant(id: "status.overallProgress") }
+  var persistenceFailure: XCUIElement { app.descendant(id: "status.persistenceFailure") }
   var doneStatus: XCUIElement { app.descendant(id: "queue.status.done") }
   var failedStatus: XCUIElement { app.descendant(id: "queue.status.failed") }
   var missingStatus: XCUIElement { app.descendant(id: "queue.status.missing") }

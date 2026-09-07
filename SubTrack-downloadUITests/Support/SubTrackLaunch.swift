@@ -16,7 +16,8 @@ enum SubTrack {
     largeFolderSize: Int? = nil,
     appearance: Appearance? = nil,
     windowSize: CGSize? = nil,
-    ffmpegFolder: FFmpegFolder = .missing
+    ffmpegFolder: FFmpegFolder = .missing,
+    storage: Storage = .working
   ) -> XCUIApplication {
     let app = XCUIApplication()
     // Every switch carries a value, including the bare-looking `-uiTesting`. The
@@ -33,6 +34,7 @@ enum SubTrack {
     app.launchEnvironment["UITEST_STATE"] = state.rawValue
     app.launchEnvironment["UITEST_ENGINE"] = engine.rawValue
     app.launchEnvironment["UITEST_FFMPEG_FOLDER"] = ffmpegFolder.rawValue
+    app.launchEnvironment["UITEST_STORAGE"] = storage.rawValue
     if let stepDelayMilliseconds {
       app.launchEnvironment["UITEST_STEP_DELAY_MS"] = String(stepDelayMilliseconds)
     }
@@ -109,6 +111,15 @@ enum SubTrack {
   enum Appearance: String {
     case light
     case dark
+  }
+
+  /// Whether the app can record the user's work (mirrors `UITEST_STORAGE`).
+  enum Storage: String {
+    /// Writes succeed, as they do in every other test.
+    case working
+
+    /// Every write of the queue store fails, raising the "Not saving" condition.
+    case failing
   }
 
   /// What the harness's folder chooser hands back (mirrors `UITEST_FFMPEG_FOLDER`).

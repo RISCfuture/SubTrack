@@ -2,9 +2,10 @@ import XCTest
 import XCUITestKit
 
 /**
- The states that tell the user a run would go wrong: a source that has gone
+ The states that tell the user something would go wrong: a source that has gone
  away, a plan the resolved build can't encode, a plan that would leave the
- output silent, and two files that would be written to one path.
+ output silent, two files that would be written to one path — and the one that
+ is about no file at all, a store the app cannot write.
  */
 nonisolated final class WarningStatesUITests: XCTestCase {
   override func setUp() { continueAfterFailure = false }
@@ -53,6 +54,23 @@ extension WarningStatesUITests {
 
     window.notice
       .assertExists("Dropping every audio track should be noted on the row.")
+  }
+
+  /**
+   A store that cannot be written is the one failure that belongs to no queued
+   file, so it is reported in the only place that is about the app rather than
+   about an item — and the full text of it survives where every other failure's
+   does.
+   */
+  func testUnwritableStoreIsReported() {
+    let app = SubTrack.launch(state: .oneReadyItem, storage: .failing)
+    let window = MainWindowScreen(app: app).waitUntilLoaded()
+
+    window.persistenceFailure
+      .assertExists("A queue that is not being saved should say so in the status bar.")
+
+    window.persistenceFailure.click()
+    ActivityLogScreen(app: app).assertPersistenceFailureShown()
   }
 
   /**

@@ -266,6 +266,11 @@ struct ActivityLogScreen {
   func assertTableVisible() {
     app.descendant(id: "activity.table").assertExists("Activity Log table not shown.")
   }
+
+  func assertPersistenceFailureShown() {
+    app.descendant(id: "activity.persistenceFailure")
+      .assertExists("A store that cannot be written should be explained in the Activity Log.")
+  }
 }
 
 /// Opens and inspects the About window.

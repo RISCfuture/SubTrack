@@ -1,5 +1,6 @@
 public import Foundation
 public import SwiftData
+import os
 
 /**
  Owns preset persistence: stocks a fresh install with the starter presets and
@@ -8,6 +9,11 @@ public import SwiftData
 @MainActor
 @Observable
 public final class PresetStore {
+  private static let logger = Logger(
+    subsystem: Bundle.main.bundleIdentifier ?? "SubTrack",
+    category: "persistence"
+  )
+
   #if DEBUG
     /**
      Makes every read of the store fail, so a test can drive the paths that
@@ -22,6 +28,7 @@ public final class PresetStore {
 
   private let modelContext: ModelContext
   private let sync: (any PresetSyncCoordinating)?
+  private let health: PersistenceHealth
 
   /**
    Creates a store over `modelContext`.
@@ -30,10 +37,18 @@ public final class PresetStore {
    - Parameter sync: The coordinator reporting when CloudKit has caught up, or
      `nil` when the store is not CloudKit-backed — an in-memory preview, UI
      test, or unit test — in which case the starters are seeded at once.
+   - Parameter health: Where this store reports whether it is readable and
+     writable. Defaults to a record of its own, which is what a test that
+     isn't asking the question wants.
    */
-  public init(modelContext: ModelContext, sync: (any PresetSyncCoordinating)? = nil) {
+  public init(
+    modelContext: ModelContext,
+    sync: (any PresetSyncCoordinating)? = nil,
+    health: PersistenceHealth = PersistenceHealth()
+  ) {
     self.modelContext = modelContext
     self.sync = sync
+    self.health = health
     if let sync {
       seedStarters(whenImportSettlesOn: sync)
       sync.onRemoteChange { [weak self] in self?.reload() }
@@ -70,7 +85,7 @@ public final class PresetStore {
     // where blanking the list would tell them their presets are gone.
     guard let stored = try? fetchAll() else { return }
     let (survivors, deletedAny) = collapseDuplicates(stored)
-    if deletedAny { try? modelContext.save() }
+    if deletedAny { save() }
     presets = survivors.map(\.asPreset).sorted {
       $0.name.localizedStandardCompare($1.name) == .orderedAscending
     }
@@ -168,10 +183,17 @@ public final class PresetStore {
    them is "the user has no presets".
    */
   private func fetchAll() throws -> [StoredPreset] {
-    #if DEBUG
-      if failsFetchesForTesting { throw PersistenceError.fetchFailed(detail: "seeded by a test") }
-    #endif
-    return try modelContext.fetch(FetchDescriptor<StoredPreset>())
+    do {
+      #if DEBUG
+        // A Cocoa error rather than a `PersistenceError`, so the catch below
+        // wraps it exactly once, as it does a real failure from the store.
+        if failsFetchesForTesting { throw CocoaError(.fileReadUnknown) }
+      #endif
+      return try modelContext.fetch(FetchDescriptor<StoredPreset>())
+    } catch {
+      report(.fetchFailed(detail: String(describing: error)))
+      throw error
+    }
   }
 
   private func records(for id: UUID) throws -> [StoredPreset] {
@@ -203,7 +225,22 @@ public final class PresetStore {
   }
 
   private func persist() {
-    try? modelContext.save()
+    save()
     reload()
+  }
+
+  private func save() {
+    do {
+      try modelContext.save()
+      health.recordSuccess(from: .presets)
+    } catch {
+      report(.saveFailed(detail: String(describing: error)))
+    }
+  }
+
+  /// Logs a failure and raises it as the condition the status bar reports.
+  private func report(_ failure: PersistenceError) {
+    Self.logger.error("\(failure.userMessage, privacy: .public)")
+    health.record(failure, from: .presets)
   }
 }

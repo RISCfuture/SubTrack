@@ -15,6 +15,9 @@ struct QueueStatusBar: View {
         .foregroundStyle(.secondary)
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityIdentifier("status.summary")
+      if let failure = env.storage.failure {
+        PersistenceFailureIndicator(failure: failure)
+      }
       if env.queue.isRunning {
         OverallProgressBar(fraction: env.queue.overallProgress)
       }
@@ -38,6 +41,52 @@ struct QueueStatusBar: View {
       groups.append(String(localized: "slimmed \(queue.slimmedCount) file", bundle: #bundle))
     }
     return groups.joined(separator: " · ")
+  }
+}
+
+/**
+ Shown only while the app is failing to record the user's work, and hidden
+ entirely the moment a write succeeds — success needs no chrome, and this is
+ the normal case by an overwhelming margin.
+
+ It sits before the progress bar rather than at the very edge so that the bar,
+ which the user watches, does not shift sideways the moment something goes
+ wrong somewhere else.
+ */
+private struct PersistenceFailureIndicator: View {
+  @Environment(\.openWindow)
+  private var openWindow
+
+  let failure: PersistenceError
+
+  var body: some View {
+    Button {
+      openWindow(id: SubTrackWindowID.activity)
+    } label: {
+      Label {
+        Text("Not saving", bundle: #bundle)
+      } icon: {
+        Image(systemName: "exclamationmark.triangle.fill")
+      }
+      .font(.callout)
+      .foregroundStyle(Severity.problem.tint)
+    }
+    .buttonStyle(.plain)
+    .help(summary)
+    .accessibilityLabel(summary)
+    .accessibilityIdentifier("status.persistenceFailure")
+  }
+
+  /**
+   The headline and where to read the rest, but not the rest itself.
+   ``PersistenceError/failureReason`` carries SwiftData's own account of the
+   fault, which for a save conflict runs to kilobytes of object dump — right
+   for the log and for the Activity Log, which wraps it and lets it be copied,
+   and quite wrong for a tooltip.
+   */
+  private var summary: String {
+    let detail = String(localized: "Open the Activity Log to read why.", bundle: #bundle)
+    return [failure.errorDescription, detail].compactMap(\.self).joined(separator: " ")
   }
 }
 
@@ -76,5 +125,18 @@ private struct OverallProgressBar: View {
         )
     }
     .frame(width: 640)
+  }
+
+  #Preview("Status bar — not saving") {
+    let environment = PreviewSupport.environment(items: [
+      PreviewSupport.ItemSpec(name: "A.mkv", status: .ready)
+    ])
+    environment.storage.record(
+      .saveFailed(detail: "The file “Queues” couldn’t be opened."),
+      from: .queues
+    )
+    return QueueStatusBar()
+      .environment(environment)
+      .frame(width: 640)
   }
 #endif

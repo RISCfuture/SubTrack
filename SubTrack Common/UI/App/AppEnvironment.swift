@@ -130,6 +130,13 @@ public final class AppEnvironment {
   /// Hydrates the workspace's queues on launch and writes their changes back.
   public let persistence: QueuePersistenceController
 
+  /**
+   Whether the app is managing to record the user's work. Shared by the queue
+   and preset stores, and read by the queue window's status bar, which shows
+   nothing at all while both are healthy.
+   */
+  public let storage: PersistenceHealth
+
   /// The app-wide gate on how many encodes run at once across every queue.
   public let governor: EncodeGovernor
 
@@ -213,7 +220,8 @@ public final class AppEnvironment {
     self.updates = updates
     let modelContext = modelContainer.mainContext
     let syncMonitor = Self.makeSyncMonitor(for: modelContainer)
-    let presets = PresetStore(modelContext: modelContext, sync: syncMonitor)
+    let storage = PersistenceHealth()
+    let presets = PresetStore(modelContext: modelContext, sync: syncMonitor, health: storage)
     let defaultDestination = OutputDestinationStore()
     let itemBookmarks = ItemBookmarkStore()
     let governor = EncodeGovernor()
@@ -255,13 +263,18 @@ public final class AppEnvironment {
     }
 
     self.presets = presets
+    self.storage = storage
     self.syncMonitor = syncMonitor
     self.defaultDestination = defaultDestination
     self.itemBookmarks = itemBookmarks
     self.governor = governor
     self.featureFlags = featureFlags
     self.workspace = workspace
-    self.persistence = QueuePersistenceController(modelContext: modelContext, workspace: workspace)
+    self.persistence = QueuePersistenceController(
+      modelContext: modelContext,
+      workspace: workspace,
+      health: storage
+    )
 
     // Hydrate queues (seeding one when the store is empty) before any view
     // reads `queue`. `load()` runs each queue's post-launch reconciliation,

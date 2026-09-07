@@ -36,10 +36,10 @@ public struct SubTrackScenes: Scene {
       if let environment {
         ActivityLogView()
           .environment(environment)
-          .frame(minWidth: 480, minHeight: 280)
+          .frame(minWidth: 560, minHeight: 280)
       }
     }
-    .defaultSize(width: 720, height: 420)
+    .defaultSize(width: 860, height: 420)
     .keyboardShortcut("l", modifiers: [.command, .shift])
 
     Settings {

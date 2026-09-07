@@ -25,6 +25,8 @@
    - `UITEST_FFMPEG_FOLDER` — `valid` makes the folder chooser return a folder
      that really holds `ffmpeg` and `ffprobe`; otherwise it returns one that
      holds neither.
+   - `UITEST_STORAGE` — `failing` makes every write of the queue store fail, so
+     a test can see what the app says when it cannot record the user's work.
 
    `ScreenshotStaging` reads `UITEST_SCREENSHOTS`, `UITEST_APPEARANCE`, and
    `UITEST_WINDOW_SIZE` for the AppKit staging the Help book's screenshots need.
@@ -33,6 +35,11 @@
   public enum UITestHarness {
 
     // MARK: - Launch configuration
+
+    /// Whether a test asked for a store that cannot be written.
+    private static var storageFails: Bool {
+      ProcessInfo.processInfo.environment["UITEST_STORAGE"] == "failing"
+    }
 
     /**
      The state a test asked to be seeded. An unrecognized value is a mistake in
@@ -140,7 +147,20 @@
       // what they offer is fixed rather than whatever build the machine resolves.
       environment.capabilities.setForPreview(.loaded(.previewSample))
       seedLaunchState(into: environment)
+      failStorageIfAsked(in: environment)
       return environment
+    }
+
+    /**
+     Breaks the queue store's writes, after the requested state has been seeded
+     through them, and writes once so the condition is raised before the window
+     appears. Every later write fails too, so the condition holds for the run
+     rather than being cleared by the next autosave.
+     */
+    private static func failStorageIfAsked(in environment: AppEnvironment) {
+      guard storageFails else { return }
+      environment.persistence.failsWritesForTesting = true
+      environment.persistence.persistAll()
     }
 
     /**
