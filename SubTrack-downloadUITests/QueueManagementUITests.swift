@@ -141,6 +141,28 @@ extension QueueManagementUITests {
   }
 
   /**
+   Removing an encoding item cancels it, so the row menu says so — where the
+   test above, whose item is merely ready, gets the plain name. The encode is
+   stalled long enough for the menu to be read while it is still in flight.
+   */
+  func testRowMenuNamesTheCancellationForARunningItem() {
+    let app = SubTrack.launch(state: .oneReadyItem, stepDelayMilliseconds: 1500)
+    let window = MainWindowScreen(app: app).waitUntilLoaded()
+    window.startAll()
+
+    window.rowNamed("Interstellar.mkv")
+      .assertExists("The queue should hold the seeded item.")
+      .rightClick()
+
+    app.menuItems["Cancel and Remove"]
+      .assertExists("An encoding item's removal should name the cancellation.")
+    XCTAssertFalse(
+      app.menuItems["Remove"].exists,
+      "The plain name must not be offered while the item is encoding."
+    )
+  }
+
+  /**
    A re-scan reads the file's tracks again, so the item passes back through
    being inspected. The probe is stalled far longer than the test needs so the
    transient state can't be raced.
