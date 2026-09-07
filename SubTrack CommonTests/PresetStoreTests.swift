@@ -204,6 +204,33 @@ struct PresetStoreTests {
     #expect(store.presets.isEmpty)
   }
 
+  /**
+   A store that can't be read is not an empty one. Seeding there writes the
+   starters on top of presets the user still has, which is what a first import
+   landing just as the store stops reading used to produce: the fetch failed,
+   the store read as empty, and a fresh install was assumed over real data.
+   */
+  @Test
+  func `does not seed starters when the store cannot be read`() throws {
+    let context = Self.container.mainContext
+    try context.delete(model: StoredPreset.self)
+    try context.save()
+    let sync = FakePresetSync()
+    let store = PresetStore(modelContext: context, sync: sync)
+
+    // The user's presets arrive from another Mac, and the store then stops
+    // reading before the import settles.
+    context.insert(StoredPreset(id: UUID(), name: "Mine"))
+    try context.save()
+    store.failsFetchesForTesting = true
+
+    sync.settle()
+
+    store.failsFetchesForTesting = false
+    store.reload()
+    #expect(store.presets.map(\.name) == ["Mine"])
+  }
+
   /// A preset written on another Mac reaches the UI without any view changing.
   @Test
   func `reloads when another device writes`() throws {

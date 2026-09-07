@@ -448,6 +448,32 @@ struct WorkspacePersistenceTests {
     withExtendedLifetime(controller) {}
   }
 
+  /**
+   A write cycle that can't read the store leaves it alone. Records that never
+   arrived read both as "every stored queue has been deleted" and as "this
+   queue has no record yet", so reconciling against them deleted the user's
+   queues and wrote duplicates of them back — two sidebar rows for one queue
+   on the next launch.
+   */
+  @Test
+  func `an unreadable store neither deletes nor duplicates queues`() throws {
+    let context = try makeContext()
+    let (workspace, controller) = launch(
+      context,
+      engine: StubEngine(container: try sampleContainer()),
+      governor: EncodeGovernor()
+    )
+    workspace.renameQueue(workspace.selectedCoordinator.id, to: "Mine")
+
+    controller.failsFetchesForTesting = true
+    workspace.newQueue(name: "Second")
+    controller.failsFetchesForTesting = false
+
+    let stored = try context.fetch(FetchDescriptor<StoredQueue>())
+    #expect(stored.map(\.name) == ["Mine"])
+    withExtendedLifetime(controller) {}
+  }
+
   // MARK: - Helpers
 
   private func isFailed(_ status: QueueItemState, reason: String) -> Bool {

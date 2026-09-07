@@ -19,6 +19,14 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   and drag-reordering are all undoable, and an item comes back with the track
   overrides you set by hand rather than needing a re-probe.
 
+### Fixed
+
+- A store that briefly could not be read is no longer mistaken for an empty
+  one. It could cause the starter presets to be written on top of presets you
+  already had, an edited preset to be saved as a second copy of itself, your
+  preset list to blank out, and a queue to be stored twice over and come back
+  as two identical rows in the sidebar.
+
 ### Changed
 
 - Output is staged and moved into place only once a run has exited cleanly and

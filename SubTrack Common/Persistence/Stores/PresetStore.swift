@@ -8,11 +8,20 @@ public import SwiftData
 @MainActor
 @Observable
 public final class PresetStore {
-  private let modelContext: ModelContext
-  private let sync: (any PresetSyncCoordinating)?
+  #if DEBUG
+    /**
+     Makes every read of the store fail, so a test can drive the paths that
+     refuse to treat an unreadable store as an empty one. Compiled out of
+     release builds; see ``UITestHarness``.
+     */
+    public var failsFetchesForTesting = false
+  #endif
 
   /// Every preset, by name.
   public private(set) var presets: [Preset] = []
+
+  private let modelContext: ModelContext
+  private let sync: (any PresetSyncCoordinating)?
 
   /**
    Creates a store over `modelContext`.
@@ -56,16 +65,27 @@ public final class PresetStore {
    have to go before anything reads them as two presets.
    */
   public func reload() {
-    let (survivors, deletedAny) = collapseDuplicates(fetchAll())
+    // A store that can't be read is not a store with no presets in it. Keeping
+    // the presets already in hand shows the user what they had a moment ago,
+    // where blanking the list would tell them their presets are gone.
+    guard let stored = try? fetchAll() else { return }
+    let (survivors, deletedAny) = collapseDuplicates(stored)
     if deletedAny { try? modelContext.save() }
     presets = survivors.map(\.asPreset).sorted {
       $0.name.localizedStandardCompare($1.name) == .orderedAscending
     }
   }
 
-  /// Inserts a new preset or updates an existing one with the same `id`.
+  /**
+   Inserts a new preset or updates an existing one with the same `id`.
+
+   Does nothing when the store can't be read: without knowing whether this
+   preset is already stored, inserting would write a second record for a
+   preset the user is editing, not saving the edit they asked for.
+   */
   public func save(_ preset: Preset) {
-    if let existing = record(for: preset.id) {
+    guard let matches = try? records(for: preset.id) else { return }
+    if let existing = matches.first {
       existing.name = preset.name
       existing.rules = preset.rules
       existing.naming = preset.naming
@@ -90,8 +110,7 @@ public final class PresetStore {
    copy and a surviving duplicate would reappear as the preset.
    */
   public func delete(_ preset: Preset) {
-    let matches = records(for: preset.id)
-    guard !matches.isEmpty else { return }
+    guard let matches = try? records(for: preset.id), !matches.isEmpty else { return }
     for record in matches { modelContext.delete(record) }
     persist()
   }
@@ -105,9 +124,14 @@ public final class PresetStore {
    at settle time alone would also cover a store the user emptied while the
    import was in flight, and the starters would reappear over their deletions
    and sync on to their other Macs.
+
+   A store that couldn't be read counts as not empty. The answer is decided
+   here and carried into the closure rather than asked again when the import
+   settles, which can be ten seconds later: by then the store may read
+   perfectly well and look empty for a reason this launch already disproved.
    */
   private func seedStarters(whenImportSettlesOn sync: any PresetSyncCoordinating) {
-    let wasEmptyBeforeTheWait = fetchAll().isEmpty
+    let wasEmptyBeforeTheWait = (try? fetchAll())?.isEmpty ?? false
     sync.whenInitialImportSettles { [weak self] in
       guard wasEmptyBeforeTheWait else { return }
       self?.seedStartersIfEmpty()
@@ -118,9 +142,13 @@ public final class PresetStore {
    Stocks an empty store with the starter presets — a fresh install. They are
    ordinary presets once written, so nothing re-seeds them while any preset
    remains: editing or deleting one sticks.
+
+   A store that can't be read is not an empty one, and seeding it would write
+   the starters on top of presets the user still has — the same mistake as
+   mistaking a failed fetch for a fresh install, made against their own data.
    */
   private func seedStartersIfEmpty() {
-    guard fetchAll().isEmpty else { return }
+    guard let stored = try? fetchAll(), stored.isEmpty else { return }
     for starter in Preset.starters {
       modelContext.insert(
         StoredPreset(
@@ -134,18 +162,22 @@ public final class PresetStore {
     persist()
   }
 
-  private func fetchAll() -> [StoredPreset] {
-    (try? modelContext.fetch(FetchDescriptor<StoredPreset>())) ?? []
+  /**
+   Every stored preset. Throwing rather than falling back to an empty array:
+   each caller has its own right answer to an unreadable store, and none of
+   them is "the user has no presets".
+   */
+  private func fetchAll() throws -> [StoredPreset] {
+    #if DEBUG
+      if failsFetchesForTesting { throw PersistenceError.fetchFailed(detail: "seeded by a test") }
+    #endif
+    return try modelContext.fetch(FetchDescriptor<StoredPreset>())
   }
 
-  private func records(for id: UUID) -> [StoredPreset] {
+  private func records(for id: UUID) throws -> [StoredPreset] {
     // The preset set is small; filtering in memory avoids a SwiftData
     // `#Predicate` over UUID, which is unstable across store back ends.
-    fetchAll().filter { $0.id == id }
-  }
-
-  private func record(for id: UUID) -> StoredPreset? {
-    records(for: id).first
+    try fetchAll().filter { $0.id == id }
   }
 
   /**

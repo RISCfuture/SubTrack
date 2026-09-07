@@ -31,6 +31,18 @@ public final class QueuePersistenceController {
     category: "persistence"
   )
 
+  #if DEBUG
+    /**
+     Makes every read of the store fail, so a test can drive the paths that
+     refuse to treat an unreadable store as an empty one. Compiled out of
+     release builds; see ``UITestHarness``.
+     */
+    public var failsFetchesForTesting = false
+
+    /// Makes every write fail, the read-side counterpart of ``failsFetchesForTesting``.
+    public var failsWritesForTesting = false
+  #endif
+
   private let modelContext: ModelContext
   private let workspace: Workspace
 
@@ -64,15 +76,13 @@ public final class QueuePersistenceController {
   public func load() {
     let stored: [StoredQueue]
     do {
-      stored = try modelContext.fetch(FetchDescriptor<StoredQueue>())
+      stored = try fetchAll()
     } catch {
       // A transient fetch failure is not an empty store: seeding and writing
       // through here would overwrite the user's real queues. Present an
       // in-memory queue for this session without wiring write-through, leaving
       // the on-disk data intact for a later, healthy launch.
-      Self.logger.error(
-        "\(PersistenceError.fetchFailed(detail: String(describing: error)).userMessage, privacy: .public)"
-      )
+      report(.fetchFailed(detail: String(describing: error)))
       workspace.makeCoordinator(name: Workspace.seedQueueName, sortIndex: 0)
       workspace.selectFirstIfNeeded()
       return
@@ -101,14 +111,23 @@ public final class QueuePersistenceController {
   /**
    Reconciles the whole workspace: deletes queues no longer present, upserts
    the rest (reindexing `sortIndex`), and saves.
+
+   A store that cannot be read is left entirely alone. Reconciling against
+   records that failed to arrive would read as "every stored queue has been
+   deleted" and as "no queue has a record yet", so it would delete the user's
+   queues and then write duplicates of them back.
    */
   public func persistAll() {
+    guard let records = try? fetchAll() else {
+      reportUnreadableStore()
+      return
+    }
     dirtyQueueIDs.removeAll()
     let liveIDs = Set(workspace.coordinators.map(\.id))
-    for record in fetchAll() where !liveIDs.contains(record.id) {
+    for record in records where !liveIDs.contains(record.id) {
       modelContext.delete(record)
     }
-    for coordinator in workspace.coordinators { upsert(coordinator.snapshot) }
+    for coordinator in workspace.coordinators { upsert(coordinator.snapshot, into: records) }
     save()
   }
 
@@ -116,15 +135,22 @@ public final class QueuePersistenceController {
    Writes every queue left dirty by a change still inside its write window.
    Called on the timer, and directly at termination so a change made in the
    last moments of a session isn't lost with the process.
+
+   Queues stay dirty when the store can't be read, so the next write window
+   tries them again rather than dropping the changes on the floor.
    */
   public func flushPendingWrites() {
     scheduledWrite?.cancel()
     scheduledWrite = nil
     guard !dirtyQueueIDs.isEmpty else { return }
+    guard let records = try? fetchAll() else {
+      reportUnreadableStore()
+      return
+    }
     let ids = dirtyQueueIDs
     dirtyQueueIDs.removeAll()
     for coordinator in workspace.coordinators where ids.contains(coordinator.id) {
-      upsert(coordinator.snapshot)
+      upsert(coordinator.snapshot, into: records)
     }
     save()
   }
@@ -180,9 +206,19 @@ public final class QueuePersistenceController {
 
   // MARK: - Mapping
 
-  private func upsert(_ snapshot: QueueSnapshot) {
+  /**
+   Writes one queue into `records`' matching row, inserting one when the queue
+   has never been stored.
+
+   The rows are handed in rather than fetched per queue: one read for a whole
+   reconciliation instead of one per queue, and — more to the point — a read
+   that has already been checked, so a failure can never be mistaken here for
+   "this queue has no record yet" and answered with a duplicate row.
+   */
+  private func upsert(_ snapshot: QueueSnapshot, into records: [StoredQueue]) {
     let record =
-      record(for: snapshot.id) ?? insertQueue(id: snapshot.id, createdAt: snapshot.createdAt)
+      records.first { $0.id == snapshot.id }
+      ?? insertQueue(id: snapshot.id, createdAt: snapshot.createdAt)
     record.name = snapshot.name
     record.sortIndex = snapshot.sortIndex
     record.rules = snapshot.rules
@@ -223,22 +259,37 @@ public final class QueuePersistenceController {
     return record
   }
 
-  private func record(for id: UUID) -> StoredQueue? {
+  /**
+   Every stored queue. Throwing rather than falling back to an empty array:
+   the callers each have a different right answer to an unreadable store, and
+   none of them is "there are no queues".
+   */
+  private func fetchAll() throws -> [StoredQueue] {
+    #if DEBUG
+      if failsFetchesForTesting { throw PersistenceError.fetchFailed(detail: "seeded by a test") }
+    #endif
     // Small set; filtering in memory avoids a SwiftData `#Predicate` over UUID.
-    fetchAll().first { $0.id == id }
+    return try modelContext.fetch(FetchDescriptor<StoredQueue>())
   }
 
-  private func fetchAll() -> [StoredQueue] {
-    (try? modelContext.fetch(FetchDescriptor<StoredQueue>())) ?? []
+  private func reportUnreadableStore() {
+    report(.fetchFailed(detail: "The stored queues couldn’t be read."))
   }
 
   private func save() {
     do {
+      #if DEBUG
+        if failsWritesForTesting {
+          throw PersistenceError.saveFailed(detail: "seeded by a test")
+        }
+      #endif
       try modelContext.save()
     } catch {
-      Self.logger.error(
-        "\(PersistenceError.saveFailed(detail: String(describing: error)).userMessage, privacy: .public)"
-      )
+      report(.saveFailed(detail: String(describing: error)))
     }
+  }
+
+  private func report(_ failure: PersistenceError) {
+    Self.logger.error("\(failure.userMessage, privacy: .public)")
   }
 }
