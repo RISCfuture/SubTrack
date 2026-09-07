@@ -137,6 +137,13 @@ public final class AppEnvironment {
    */
   public let storage: PersistenceHealth
 
+  /**
+   What went wrong during this session's runs, for the Activity Log window.
+   Emptied by quitting, which is the point: it answers for the session that did
+   the encoding.
+   */
+  public let activity: ActivityLog
+
   /// The app-wide gate on how many encodes run at once across every queue.
   public let governor: EncodeGovernor
 
@@ -221,6 +228,14 @@ public final class AppEnvironment {
     let modelContext = modelContainer.mainContext
     let syncMonitor = Self.makeSyncMonitor(for: modelContainer)
     let storage = PersistenceHealth()
+    let activity = ActivityLog()
+    // A store that stops accepting writes is worth a line for the moment it
+    // started and the moment it stopped, and `PersistenceHealth` reports only
+    // those edges — so a store failing on every write for a minute is two lines
+    // rather than four hundred.
+    storage.onConditionChanged = { [weak activity] failure in
+      activity?.recordCondition(failure)
+    }
     let presets = PresetStore(modelContext: modelContext, sync: syncMonitor, health: storage)
     let defaultDestination = OutputDestinationStore()
     let itemBookmarks = ItemBookmarkStore()
@@ -245,7 +260,7 @@ public final class AppEnvironment {
     let notifier =
       Self.isRunningInXcodePreview || Self.isRunningUITests ? nil : CompletionNotifier()
 
-    let workspace = Workspace(reporting: notifier) { id, name, sortIndex in
+    let workspace = Workspace(reporting: notifier, logging: activity) { id, name, sortIndex in
       let settings = QueueSettings(destinationBookmark: defaultDestination.bookmarkData)
       if let preset = presets.presets.first { settings.rules.apply(preset) }
       return QueueCoordinator(
@@ -264,6 +279,7 @@ public final class AppEnvironment {
 
     self.presets = presets
     self.storage = storage
+    self.activity = activity
     self.syncMonitor = syncMonitor
     self.defaultDestination = defaultDestination
     self.itemBookmarks = itemBookmarks

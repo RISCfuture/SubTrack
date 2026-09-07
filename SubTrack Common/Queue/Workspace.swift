@@ -72,6 +72,9 @@ public final class Workspace {
   /// Told when the app starts and stops encoding, or `nil` when nothing is listening.
   private let reporter: (any QueueCompletionReporting)?
 
+  /// Where the run's edges and its files' troubles are written down, if anywhere.
+  private let log: ActivityLog?
+
   /// Whether any queue was encoding the last time the workspace looked.
   @ObservationIgnored private var runIsInFlight = false
 
@@ -114,14 +117,18 @@ public final class Workspace {
    - Parameter reporter: Told when the app's encoding starts and stops. Leaving
      it `nil` — every preview, UI test, and unit test — runs the queues with
      nothing listening.
+   - Parameter log: Keeps the account of what a run came to and what went wrong
+     in it. `nil` runs the queues without one.
    - Parameter makeCoordinator: Builds a queue's coordinator from its identity,
      name, and sidebar position.
    */
   public init(
     reporting reporter: (any QueueCompletionReporting)? = nil,
+    logging log: ActivityLog? = nil,
     makeCoordinator: @escaping @MainActor (UUID, String, Int) -> QueueCoordinator
   ) {
     self.reporter = reporter
+    self.log = log
     self.coordinatorFactory = makeCoordinator
   }
 
@@ -145,11 +152,20 @@ public final class Workspace {
     let coordinator = coordinatorFactory(id, name, sortIndex)
     // The one place every coordinator is created, so the run hooks are wired
     // here rather than through `onCoordinatorCreated`, which the persistence
-    // layer already owns. Left unwired when nothing is listening, so a workspace
-    // with no reporter never accumulates a tally it will never read.
-    if reporter != nil {
-      coordinator.onEncodeActivityChanged = { [weak self] in self?.updateRunActivity() }
-      coordinator.onRunSettled = { [weak self] in self?.tally.record($0) }
+    // layer already owns. Wired for every queue rather than only when a notifier
+    // is listening: the run's edges are what the log is built on, and gating
+    // them on the notifier left the whole path dead in every preview, UI test
+    // and unit test — which is why nothing about it could be tested.
+    coordinator.onEncodeActivityChanged = { [weak self] in self?.updateRunActivity() }
+    coordinator.onRunSettled = { [weak self] in self?.tally.record($0) }
+    coordinator.onItemSettled = { [weak self, weak coordinator] item, state in
+      guard let self, let coordinator else { return }
+      self.log?.recordSettled(
+        state,
+        itemID: item.id,
+        fileName: item.displayName,
+        queueName: coordinator.name
+      )
     }
     // Unconditional, unlike the run hooks above: an undo is a UI event, not
     // something a run reports, and a workspace with no reporter still has a
@@ -238,17 +254,31 @@ public final class Workspace {
    cancelled, or its items removed mid-run — passes without a word.
    */
   private func updateRunActivity() {
-    guard let reporter else { return }
     let isInFlight = coordinators.contains(where: \.hasEncodeWorkInFlight)
     guard isInFlight != runIsInFlight else { return }
     runIsInFlight = isInFlight
 
     if isInFlight {
       tally = RunTally()
-      reporter.queueWorkDidBegin()
-    } else if tally.isWorthReporting {
-      reporter.queueWorkDidFinish(tally.summary)
+      log?.recordRunStarted()
+      reporter?.queueWorkDidBegin()
+    } else {
+      recordRunFinished()
+      // The notification's rule, not the log's: a run the user broke off is one
+      // they were there for, and needs no announcement.
+      if tally.isWorthReporting { reporter?.queueWorkDidFinish(tally.summary) }
     }
+  }
+
+  /// Writes down what the run came to, however it ended.
+  private func recordRunFinished() {
+    let summary = tally.summary
+    log?.recordRunFinished(
+      encoded: summary.finishedCount,
+      failed: summary.failedCount,
+      cancelled: summary.cancelledCount,
+      bytesSaved: summary.bytesSaved
+    )
   }
 
   /**
@@ -258,6 +288,9 @@ public final class Workspace {
    */
   private func abandonRunIfEnded() {
     guard !coordinators.contains(where: \.hasEncodeWorkInFlight) else { return }
+    // The log still closes its line: the run did happen, and a reader looking
+    // for what became of it should not find a beginning with no end.
+    if runIsInFlight { recordRunFinished() }
     runIsInFlight = false
     tally = RunTally()
   }
@@ -275,6 +308,7 @@ public final class Workspace {
       .init(
         finishedCount: finishedCount,
         failedCount: failedCount,
+        cancelledCount: cancelledCount,
         bytesSaved: bytesSaved,
         outputURLs: outputURLs
       )

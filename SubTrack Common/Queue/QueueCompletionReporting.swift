@@ -49,6 +49,14 @@ public struct QueueRunSummary: Sendable {
   public let failedCount: Int
 
   /**
+   How many items the user stopped. The finished-run notification never sees a
+   run with any of these — a run you broke off is one you were there for — but
+   the Activity Log records it, because a run you cut short is exactly the one
+   you come back to read about.
+   */
+  public let cancelledCount: Int
+
+  /**
    The bytes the run saved in total, or `nil` when no finished item knew both
    its source and output sizes.
    */
@@ -57,9 +65,16 @@ public struct QueueRunSummary: Sendable {
   /// The files the run wrote, for an action that reveals them.
   public let outputURLs: [URL]
 
-  public init(finishedCount: Int, failedCount: Int, bytesSaved: Int?, outputURLs: [URL]) {
+  public init(
+    finishedCount: Int,
+    failedCount: Int,
+    cancelledCount: Int = 0,
+    bytesSaved: Int?,
+    outputURLs: [URL]
+  ) {
     self.finishedCount = finishedCount
     self.failedCount = failedCount
+    self.cancelledCount = cancelledCount
     self.bytesSaved = bytesSaved
     self.outputURLs = outputURLs
   }

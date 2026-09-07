@@ -38,9 +38,10 @@ struct QueueCompletionReportingTests {
   private func makeWorkspace(
     engine: any ConversionEngineProtocol,
     governor: EncodeGovernor,
-    reporter: SpyReporter
+    reporter: SpyReporter?,
+    log: ActivityLog? = nil
   ) -> Workspace {
-    makeWorkspace(governor: governor, reporter: reporter) { _ in engine }
+    makeWorkspace(governor: governor, reporter: reporter, log: log) { _ in engine }
   }
 
   /**
@@ -49,10 +50,11 @@ struct QueueCompletionReportingTests {
    */
   private func makeWorkspace(
     governor: EncodeGovernor,
-    reporter: SpyReporter,
+    reporter: SpyReporter?,
+    log: ActivityLog? = nil,
     engineForQueue: @escaping @MainActor (String) -> any ConversionEngineProtocol
   ) -> Workspace {
-    Workspace(reporting: reporter) { id, name, sortIndex in
+    Workspace(reporting: reporter, logging: log) { id, name, sortIndex in
       QueueCoordinator(
         id: id,
         name: name,
@@ -230,6 +232,76 @@ struct QueueCompletionReportingTests {
     // Long enough for the cancelled runs to unwind and fire their own hooks.
     await waitUntil(.milliseconds(400)) { !reporter.summaries.isEmpty }
     #expect(reporter.summaries.isEmpty)
+  }
+
+  /**
+   The notification says nothing about a run the user broke off, and the log
+   must not inherit that silence: a run you cut short is exactly the one you
+   come back to read about.
+   */
+  @Test
+  func `a run the user cancelled is still written down`() async throws {
+    let engine = StubEngine(container: try sampleContainer(), holdUntilCancelled: true)
+    let reporter = SpyReporter()
+    let log = ActivityLog()
+    let workspace = makeWorkspace(
+      engine: engine,
+      governor: EncodeGovernor(limit: 2),
+      reporter: reporter,
+      log: log
+    )
+    let directory = try SourceFixtures.makeDirectory()
+    let queue = workspace.newQueue(name: "Queue")
+    try await addItems(2, to: queue, in: directory)
+
+    queue.startAll()
+    await waitUntil { queue.items.allSatisfy { $0.status == .running } }
+    queue.cancelAll()
+    await waitUntil { queue.items.allSatisfy { $0.status == .cancelled } }
+    await waitUntil { log.events.contains(where: \.kind.isRunFinished) }
+
+    #expect(reporter.summaries.isEmpty)
+    #expect(log.events.first?.kind == .runStarted)
+    #expect(
+      log.events.last?.kind == .runFinished(encoded: 0, failed: 0, cancelled: 2, bytesSaved: nil)
+    )
+  }
+
+  /**
+   The run's edges used to be found only when a notifier was listening, which
+   left the whole path dead in every preview, UI test and unit test. The log
+   depends on them, so they are found regardless.
+   */
+  @Test
+  func `a run is written down with nothing listening for its notification`() async throws {
+    let engine = StubEngine(container: try sampleContainer())
+    let log = ActivityLog()
+    let workspace = makeWorkspace(
+      engine: engine,
+      governor: EncodeGovernor(limit: 2),
+      reporter: nil,
+      log: log
+    )
+    let directory = try SourceFixtures.makeDirectory()
+    let queue = workspace.newQueue(name: "Queue")
+    try await addItems(2, to: queue, in: directory)
+
+    queue.startAll()
+    await waitUntil { queue.items.allSatisfy { $0.status == .done } }
+    await waitUntil { log.events.contains(where: \.kind.isRunFinished) }
+
+    #expect(log.events.first?.kind == .runStarted)
+    #expect(
+      log.events.last?.kind == .runFinished(encoded: 2, failed: 0, cancelled: 0, bytesSaved: nil)
+    )
+  }
+}
+
+extension ActivityEvent.Kind {
+  /// Whether this is a run's closing line, whatever the run came to.
+  fileprivate var isRunFinished: Bool {
+    if case .runFinished = self { return true }
+    return false
   }
 }
 

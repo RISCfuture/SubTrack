@@ -76,6 +76,14 @@ public final class QueueCoordinator: Identifiable {
   public var onEncodeActivityChanged: @MainActor () -> Void = {}
 
   /**
+   Fired as an item settles into a state it was not already in, so a
+   ``Workspace`` can keep an account of what went wrong. Transient
+   `probing`/`running` states and live `progress` updates never reach here, and
+   neither does a settle that changed nothing.
+   */
+  public var onItemSettled: @MainActor (QueueItem, QueueItemState) -> Void = { _, _ in }
+
+  /**
    Fired as each run settles, with what that run came to. Only `runItem(_:)`
    reaches this, so a probe, a re-scan, or a revalidation settling an item never
    looks like a run — which is what makes a rolled-up summary count only the
@@ -492,6 +500,7 @@ public final class QueueCoordinator: Identifiable {
     item.status = state
     if state != .ready { pending.removeAll { $0 == item.id } }
     onPersistableChange()
+    onItemSettled(item, state)
     onEncodeActivityChanged()
   }
 

@@ -33,6 +33,15 @@ public final class PersistenceHealth {
    */
   public var failure: PersistenceError? { activeFailures.first }
 
+  /**
+   Fired when a store's failure state changes — raised or cleared — and never
+   on a repeat, so a store failing on every write announces itself once. A
+   closure rather than a reference, so this stays free of any knowledge of what
+   listens and a listener that also writes cannot form a cycle back into here.
+   */
+  @ObservationIgnored public var onConditionChanged: @MainActor (PersistenceError?) -> Void = { _ in
+  }
+
   /// Creates a health record with every store healthy.
   public init() {}
 
@@ -46,12 +55,14 @@ public final class PersistenceHealth {
   func record(_ failure: PersistenceError, from source: Source) {
     guard failures[source] != failure else { return }
     failures[source] = failure
+    onConditionChanged(failure)
   }
 
   /// Notes that `source` has written successfully, clearing any failure it held.
   func recordSuccess(from source: Source) {
     guard failures[source] != nil else { return }
     failures[source] = nil
+    onConditionChanged(nil)
   }
 
   /// Which of the app's stores a failure came from.
