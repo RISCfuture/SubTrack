@@ -463,7 +463,9 @@ platform :mac do
                 UI.important("No build number given, so #{name} will attach whichever build is " \
                              "newest. If a release is still uploading, that is the one before it.")
                 newest = newest_build(app: app, version: version, platform: platform)
-                UI.user_error!("App Store Connect has no #{name} build for #{version}.") if newest.nil?
+                if newest.nil?
+                  UI.user_error!("App Store Connect has no #{name} build for #{version}.")
+                end
                 await_processing(newest, name: name)
               end
 
