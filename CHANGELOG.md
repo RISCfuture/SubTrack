@@ -33,6 +33,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - Removing an item that is encoding is called "Cancel and Remove", because that
   is what it does. The plain name said only that rows would go away, and the
   encode it killed is the one part undo cannot give back.
+- An item whose rules keep none of the source's audio is marked with an info
+  button after its name, explained in a tooltip, rather than a caution triangle
+  before it.
 
 ## 1.0
 

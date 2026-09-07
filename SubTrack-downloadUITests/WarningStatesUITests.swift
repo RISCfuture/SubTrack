@@ -46,13 +46,13 @@ extension WarningStatesUITests {
     )
   }
 
-  /// A plan that keeps none of the source's audio warns on the row.
-  func testSilentOutputIsWarnedAbout() {
+  /// A plan that keeps none of the source's audio says so on the row.
+  func testSilentOutputIsNotedOnTheRow() {
     let app = SubTrack.launch(state: .audioLoss)
     let window = MainWindowScreen(app: app).waitUntilLoaded()
 
-    window.audioWarning
-      .assertExists("Dropping every audio track should warn on the row.")
+    window.notice
+      .assertExists("Dropping every audio track should be noted on the row.")
   }
 
   /**

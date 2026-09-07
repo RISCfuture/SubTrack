@@ -2,11 +2,12 @@ import SwiftUI
 
 /**
  The file's Finder icon, its name, and the source path or error beneath.
- Missing sources are red; incompatible items are orange. A plan that would
- leave the output silent adds a caution icon between the icon and the name.
+ Missing sources are red; incompatible items are orange. Anything worth saying
+ that falls short of those — a plan that would leave the output silent, say —
+ follows the name as an info button carrying its explanation in a tooltip.
  Both text lines truncate to fit the column, so each carries its own tooltip
  holding the full string.
- The warning is handed in rather than read from the environment: a table cell
+ The notice is handed in rather than read from the environment: a table cell
  is laid out again while its row is being removed, and reading a non-optional
  `@Environment` observable at that moment traps.
  */
@@ -23,29 +24,32 @@ struct NameCell: View {
   let item: QueueItem
 
   /**
-   Why this item's output would have no audio, or `nil` when it would.
-   ``QueueTableView`` supplies it, already withheld for items whose status
-   carries its own warning.
+   Something about this item the reader would want to know but which does not
+   make the item a problem — that the output would have no audio, say — or
+   `nil` when there is nothing to say. ``QueueTableView`` supplies it.
    */
-  var audioWarning: String?
+  var notice: String?
 
   var body: some View {
     VStack(alignment: .leading, spacing: Self.lineSpacing) {
       HStack(spacing: Self.glyphSpacing) {
         FileTypeIcon(url: item.sourceURL)
-        if let audioLossWarning {
-          Image(systemName: "exclamationmark.triangle.fill")
-            .foregroundStyle(.orange)
-            .help(audioLossWarning)
-            .accessibilityLabel(audioLossWarning)
-            .accessibilityIdentifier("queue.cell.audioWarning")
-        }
         Text(item.displayName)
           .foregroundStyle(warningTint ?? .primary)
           .lineLimit(1)
           .truncationMode(.middle)
           .help(item.displayName)
           .accessibilityIdentifier("queue.cell.name")
+        // After the name rather than before it, and in `.secondary` rather than
+        // a colour: this qualifies a row that is otherwise fine, and reading
+        // louder than the status column's own glyphs would invert the two.
+        if let visibleNotice {
+          Image(systemName: "info.circle")
+            .foregroundStyle(.secondary)
+            .help(visibleNotice)
+            .accessibilityLabel(visibleNotice)
+            .accessibilityIdentifier("queue.cell.notice")
+        }
       }
       if let subtitle {
         Text(subtitle)
@@ -59,11 +63,12 @@ struct NameCell: View {
   }
 
   /**
-   The audio-loss warning, withheld for an item already flagged by its status
-   so a row never carries two competing signals.
+   The notice, withheld for an item already flagged by its status: a row whose
+   subtitle is explaining why it failed has no room for a remark about how it
+   would otherwise have turned out.
    */
-  private var audioLossWarning: String? {
-    item.status.needsAttention ? nil : audioWarning
+  private var visibleNotice: String? {
+    item.status.needsAttention ? nil : notice
   }
 
   /**
@@ -103,7 +108,7 @@ struct NameCell: View {
     let environment = PreviewSupport.environment(items: items)
     return Table(of: QueueItem.self) {
       TableColumn(LocalizedStringResource("Name", bundle: #bundle)) {
-        NameCell(item: $0, audioWarning: environment.queue.audioLossWarning(for: $0))
+        NameCell(item: $0, notice: environment.queue.audioLossWarning(for: $0))
       }
     } rows: {
       ForEach(environment.queue.items) { TableRow($0) }

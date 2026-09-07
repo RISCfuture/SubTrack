@@ -25,7 +25,7 @@ struct MainWindowScreen {
   var failedStatus: XCUIElement { app.descendant(id: "queue.status.failed") }
   var missingStatus: XCUIElement { app.descendant(id: "queue.status.missing") }
   var incompatibleStatus: XCUIElement { app.descendant(id: "queue.status.incompatible") }
-  var audioWarning: XCUIElement { app.descendant(id: "queue.cell.audioWarning") }
+  var notice: XCUIElement { app.descendant(id: "queue.cell.notice") }
   var outputSize: XCUIElement { app.staticTexts["queue.cell.outputSize"] }
   var ingestSheet: XCUIElement { app.descendant(id: "ingest.sheet") }
   var inspectorModePicker: XCUIElement { app.descendant(id: "inspector.mode") }

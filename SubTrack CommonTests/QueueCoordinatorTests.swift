@@ -1050,8 +1050,7 @@ struct QueueCoordinatorTests {
     try await waitUntilSettled(coordinator)
     let item = try #require(coordinator.items.first)
 
-    let warning = try #require(coordinator.audioLossWarning(for: item))
-    #expect(warning.contains("Chinese"))
+    #expect(coordinator.audioLossWarning(for: item) != nil)
   }
 
   @Test

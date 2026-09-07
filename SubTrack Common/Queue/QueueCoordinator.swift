@@ -1112,45 +1112,27 @@ extension QueueCoordinator {
   }
 
   /**
-   A warning for an item whose plan would drop every audio track its source
-   has, naming the languages being lost; `nil` when audio survives, when the
-   source has none to begin with, or before the container is probed.
+   A note for an item whose plan would drop every audio track its source has;
+   `nil` when audio survives, when the source has none to begin with, or
+   before the container is probed.
 
    Derived from the plan rather than from a finished run, so it appears and
-   clears as the queue's rules are edited.
+   clears as the queue's rules are edited. It names no languages: the rules
+   that dropped them are on screen beside it, and listing them made a line
+   long enough to need wrapping for a point the reader has already got.
    */
   public func audioLossWarning(for item: QueueItem) -> String? {
     guard let container = item.container else { return nil }
-    let audioStreams = container.audioStreams
-    guard !audioStreams.isEmpty else { return nil }
+    guard !container.audioStreams.isEmpty else { return nil }
     guard !plannedOperations(for: item).contains(where: { $0.streamType == .audio }) else {
       return nil
     }
-    let languages = droppedAudioLanguages(audioStreams)
     return String(
       localized: """
-        Output would have no audio. The source’s audio (\(languages)) isn’t kept by the current \
-        rules.
+        Output would have no audio. No audio tracks are selected by the current rules.
         """,
       bundle: #bundle
     )
-  }
-
-  /**
-   The distinct languages of `streams`, in source order, as a localized list —
-   display names where the tag is recognized, the raw tag where it isn't, and
-   “untagged” for a track carrying no language at all.
-   */
-  private func droppedAudioLanguages(_ streams: [AudioStream]) -> String {
-    var seen = Set<String>()
-    let names = streams.compactMap { stream -> String? in
-      let name =
-        stream.language.flatMap(LanguageCatalog.name(for:))
-        ?? stream.language
-        ?? String(localized: "untagged", bundle: #bundle)
-      return seen.insert(name).inserted ? name : nil
-    }
-    return names.formatted(.list(type: .and))
   }
 
   /**

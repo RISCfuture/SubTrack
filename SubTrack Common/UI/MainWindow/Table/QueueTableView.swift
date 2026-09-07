@@ -30,7 +30,7 @@ struct QueueTableView: View {
       TableColumn("") { StatusCell(item: $0) }
         .width(28)
       TableColumn(LocalizedStringResource("Name", bundle: #bundle)) {
-        NameCell(item: $0, audioWarning: env.queue.audioLossWarning(for: $0))
+        NameCell(item: $0, notice: env.queue.audioLossWarning(for: $0))
       }
       .width(min: 180, ideal: 300)
       .customizationID("name")
