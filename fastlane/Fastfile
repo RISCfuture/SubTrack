@@ -328,8 +328,11 @@ platform :mac do
 
     # `notarize` staples the ticket onto the app once Apple accepts it, so the copy that goes into
     # the disk image validates offline.
+    #
+    # No bundle identifier is passed: `notarytool` reads it from the package, and the option the
+    # action once took for `altool` is gone — supplying it fails the lane outright rather than being
+    # ignored, which is what took down the download leg of both releases tagged so far.
     notarize(package:   app_path,
-             bundle_id: EDITIONS["download"][:app_identifier],
              api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
              print_log: true)
 
@@ -343,7 +346,6 @@ platform :mac do
     # still what lets it run once dragged out; these are two separate gates.
     sh("codesign", "--force", "--timestamp", "--sign", developer_id_identity, dmg)
     notarize(package:   dmg,
-             bundle_id: EDITIONS["download"][:app_identifier],
              api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
              print_log: true)
     UI.success("Packaged #{dmg}")
