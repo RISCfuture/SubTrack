@@ -476,8 +476,19 @@ public final class QueueCoordinator: Identifiable {
    leave a stale id parked in the run queue), and notifies the persistence
    hook. Transient states (`probing`/`running`) and `progress` updates bypass
    this so they're never written through.
+
+   Settling an item into the state it already holds is not a change, and says
+   so by doing nothing. Two paths lean on that: ``revalidateAllCompatibility()``
+   settles every item in the queue whenever the FFmpeg build changes — which
+   includes every launch, by way of ``postHydrationRefresh()`` — and a source's
+   monitor fires on any write to the folder holding it, so a sibling file
+   appearing wakes every item in that folder. Both used to write the whole
+   workspace back for nothing. The reason strings on `failed` and
+   `incompatible` are part of the comparison, so a changed message still
+   settles.
    */
   private func settle(_ item: QueueItem, _ state: QueueItemState) {
+    guard item.status != state else { return }
     item.status = state
     if state != .ready { pending.removeAll { $0 == item.id } }
     onPersistableChange()

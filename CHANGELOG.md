@@ -30,6 +30,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   already had, an edited preset to be saved as a second copy of itself, your
   preset list to blank out, and a queue to be stored twice over and come back
   as two identical rows in the sidebar.
+- Settling a file into the state it was already in no longer counts as a change.
+  A large queue is no longer rewritten to disk in full on every launch and every
+  write to a source's folder.
 
 ### Changed
 

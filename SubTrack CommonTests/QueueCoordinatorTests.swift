@@ -994,6 +994,26 @@ struct QueueCoordinatorTests {
     #expect(item.status == .ready)
   }
 
+  /**
+   Every launch revalidates compatibility for every item, and any write to the
+   folder holding a source wakes that source's monitor. Both settle items into
+   the state they already hold, which used to announce a change and write the
+   whole workspace back for nothing.
+   */
+  @Test
+  func `settling an item into the state it already holds announces nothing`() async throws {
+    let coordinator = makeCoordinator(StubEngine(container: try sampleContainer()))
+    await coordinator.add([try SourceFixtures.make("no-op-settle.mkv")])
+    await waitUntil { coordinator.items.first?.status == .ready }
+
+    var changes = 0
+    coordinator.onPersistableChange = { changes += 1 }
+    coordinator.revalidateAllCompatibility()
+
+    #expect(changes == 0)
+    #expect(coordinator.items.first?.status == .ready)
+  }
+
   @Test
   func `overall progress spans the whole queue not just started items`() async throws {
     let coordinator = makeCoordinator(
