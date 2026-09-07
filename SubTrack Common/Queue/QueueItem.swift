@@ -41,10 +41,21 @@ extension QueueItemState {
    Whether the item is in a state that warrants a sidebar warning: a missing
    source, a failed run, or an encode the selected build can't perform.
    */
-  public var needsAttention: Bool {
+  public var needsAttention: Bool { severity != nil }
+
+  /**
+   How loudly this state reads, or `nil` for a state that is nothing to report.
+
+   A missing source and a failed run are problems: neither can produce a file
+   as things stand. An encode the selected build can't perform is a warning —
+   the plan is at fault, and choosing a capable binary or another target fixes
+   it without re-running anything.
+   */
+  public var severity: Severity? {
     switch self {
-      case .missing, .failed, .incompatible: true
-      case .waiting, .probing, .ready, .running, .done, .cancelled: false
+      case .missing, .failed: .problem
+      case .incompatible: .warning
+      case .waiting, .probing, .ready, .running, .done, .cancelled: nil
     }
   }
 

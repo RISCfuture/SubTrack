@@ -6,8 +6,12 @@ public enum QueueAggregateStatus: Sendable, Equatable {
   case idle
   /// One or more items are probing or encoding; carries overall progress (`0...1`).
   case running(Double)
-  /// At least one item is missing, failed, or incompatible.
-  case attention
+  /**
+   At least one item is missing, failed, or incompatible; carries the loudest
+   tier among them, so a queue holding a failed run does not read as mildly as
+   one holding only a plan the build can't perform.
+   */
+  case attention(Severity)
   /// Every item finished successfully.
   case done
 }

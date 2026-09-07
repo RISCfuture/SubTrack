@@ -2,9 +2,11 @@ import SwiftUI
 
 /**
  The file's Finder icon, its name, and the source path or error beneath.
- Missing sources are red; incompatible items are orange. Anything worth saying
- that falls short of those — a plan that would leave the output silent, say —
- follows the name as an info button carrying its explanation in a tooltip.
+ The name and its subtitle carry the item's own severity, so a row reads the
+ same tier here as it does in the Activity Log. Anything worth saying that
+ falls short of a problem or a warning — a plan that would leave the output
+ silent, say — follows the name as an info button carrying its explanation in
+ a tooltip.
  Both text lines truncate to fit the column, so each carries its own tooltip
  holding the full string.
  The notice is handed in rather than read from the environment: a table cell
@@ -45,7 +47,7 @@ struct NameCell: View {
         // louder than the status column's own glyphs would invert the two.
         if let visibleNotice {
           Image(systemName: "info.circle")
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Severity.note.tint)
             .help(visibleNotice)
             .accessibilityLabel(visibleNotice)
             .accessibilityIdentifier("queue.cell.notice")
@@ -72,22 +74,10 @@ struct NameCell: View {
   }
 
   /**
-   The colour for the name and subtitle. Red is an item that cannot produce a
-   file as it stands — its source is gone, or its run failed; orange is a plan
-   at fault, which editing the rules would fix. Everything else takes the
-   default primary/secondary shades.
-
-   A failed run reads red rather than untinted so it is not the one error
-   state drawn as though nothing were wrong, which is how it looked beside a
-   missing source.
+   The colour for the name and subtitle, or `nil` for a state that is nothing
+   to report, which takes the default primary/secondary shades.
    */
-  private var warningTint: Color? {
-    switch item.status {
-      case .missing, .failed: .red
-      case .incompatible: .orange
-      default: nil
-    }
-  }
+  private var warningTint: Color? { item.status.severity?.tint }
 
   private var subtitle: String? {
     switch item.status {

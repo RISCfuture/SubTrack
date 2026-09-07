@@ -898,7 +898,7 @@ extension QueueCoordinator {
    */
   public var aggregateStatus: QueueAggregateStatus {
     if isRunning { return .running(overallProgress) }
-    if items.contains(where: \.status.needsAttention) { return .attention }
+    if let severity = items.compactMap(\.status.severity).max() { return .attention(severity) }
     if !items.isEmpty, items.allSatisfy({ $0.status == .done }) { return .done }
     return .idle
   }

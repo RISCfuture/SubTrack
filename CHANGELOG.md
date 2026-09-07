@@ -52,6 +52,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   failure carries its recovery suggestion at the end — including where a
   finished file was left when it could not be moved into place — which was
   exactly the part being cut off.
+- The sidebar's warning triangle is red for a queue holding a run that failed
+  or a source that has gone, and stays orange for one whose plan the current
+  FFmpeg cannot encode.
 
 ## 1.0
 
