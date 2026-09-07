@@ -40,6 +40,10 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   Log. A failed run previously carried no colour at all in the queue, and an
   encode the build cannot perform changed severity depending on which window
   you looked at.
+- The Activity Log shows a message in full, wrapping rather than truncating. A
+  failure carries its recovery suggestion at the end — including where a
+  finished file was left when it could not be moved into place — which was
+  exactly the part being cut off.
 
 ## 1.0
 
