@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on:
   push:
@@ -245,8 +245,10 @@ jobs:
             ${{ runner.temp }}/dd-ui-download/SourcePackages
           key: derived-ui-download-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
-      # XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI hardware doesn't
-      # trip element lookups that pass locally.
+      # TEST_RUNNER_XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI
+      # hardware doesn't trip element lookups that pass locally. The waits are read by the test
+      # code, which runs in the runner process rather than in xcodebuild's, and only the
+      # TEST_RUNNER_ prefix reaches it — xcodebuild forwards those with the prefix stripped.
       #
       # HelpScreenshotUITests captures the Help book's images and belongs to `fastlane
       # help_screenshots`, not to a test run: it launches the app six times and its output is only
@@ -255,7 +257,7 @@ jobs:
       # deleting this line costs CI time but never turns the suite red.
       - name: Run UI tests
         env:
-          XCUITEST_TIMEOUT_MULTIPLIER: "3"
+          TEST_RUNNER_XCUITEST_TIMEOUT_MULTIPLIER: "3"
         run: |
           set -o pipefail
           xcodebuild test \
@@ -320,7 +322,7 @@ jobs:
 
       - name: Run UI tests
         env:
-          XCUITEST_TIMEOUT_MULTIPLIER: "3"
+          TEST_RUNNER_XCUITEST_TIMEOUT_MULTIPLIER: "3"
         run: |
           set -o pipefail
           xcodebuild test \
