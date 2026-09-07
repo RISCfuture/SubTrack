@@ -1,9 +1,15 @@
 name: Release
 
-# Pushing a version tag archives both editions: the App Store build goes to App Store Connect, where
-# it waits to be attached to a version and submitted by hand, and the Developer-ID build is
-# notarized, packaged as a disk image, and published as a GitHub release. Nothing here re-runs the
-# tests: tag a commit CI has already passed.
+# Pushing a version tag archives both editions and finishes the release: the App Store build goes to
+# App Store Connect, where its notes are written and the build attached to the version, leaving only
+# the submission by hand; the Developer-ID build is notarized, packaged as a disk image, and
+# published as a GitHub release.
+#
+# Re-tagging a version is how its build is replaced. The tag push runs all of this again and the
+# version ends up pointing at the newer build; the older one stays on App Store Connect, since a
+# build can be expired but never deleted. A tag push is a deploy, not bookkeeping.
+#
+# Nothing here re-runs the tests: tag a commit CI has already passed.
 #
 # Tags carry no "v" prefix. The in-app update checker compares release tags against
 # CFBundleShortVersionString, so "1.2" is the tag for version 1.2.
@@ -30,6 +36,15 @@ jobs:
       platforms: '["mas","download"]'
       version: ${{ inputs.version || github.ref_name }}
       certificates-repo: RISCfuture/certificates
+      # Before the build number is even resolved, on a runner with no credentials: a release that
+      # cannot succeed then costs seconds instead of the whole archive matrix. By the time the
+      # archives have run a build has reached App Store Connect, and neither that upload nor the
+      # tag can be taken back.
+      verify-lane: ci_verify_release_notes
+      # After every edition has uploaded. Writes the version's notes and attaches the build once
+      # Apple has processed it — a version cannot hold a build that is still processing, which is
+      # why this cannot run when the upload does.
+      finish-lane: ci_finish_release
       # Each leg builds the bundled FFmpeg its edition needs — the LGPL build for the App Store, the
       # GPL one for the download — from source, since Vendor/ is not checked in. The `ci_release`
       # lane does this itself, so no post-checkout-run is needed, but it dominates the job: x264,
