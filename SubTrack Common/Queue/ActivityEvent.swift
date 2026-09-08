@@ -46,6 +46,28 @@ public struct ActivityEvent: Sendable, Identifiable, Equatable {
     self.fileName = fileName
   }
 
+  #if DEBUG
+    /**
+     Builds an event at a stated moment rather than at this one, so the Help
+     book's picture of the log is the same picture every time it is taken.
+     Compiled out of release builds; see ``UITestHarness``.
+
+     - Parameter kind: What happened.
+     - Parameter queueName: The queue it happened in, or empty for an event true
+       of every queue.
+     - Parameter fileName: The file it happened to, or empty for an event about
+       no single file.
+     - Parameter timestamp: When to say it happened.
+     */
+    public init(kind: Kind, queueName: String = "", fileName: String = "", at timestamp: Date) {
+      self.id = UUID()
+      self.timestamp = timestamp
+      self.kind = kind
+      self.queueName = queueName
+      self.fileName = fileName
+    }
+  #endif
+
   /// What an event is, and whatever detail it carries.
   public enum Kind: Sendable, Equatable {
 

@@ -39,6 +39,15 @@ public final class ActivityLog {
    */
   private var recordedProblems: [UUID: QueueItemState] = [:]
 
+  #if DEBUG
+    /**
+     Stops the log taking anything further, so a seeded account cannot be
+     disturbed by a probe or a revalidation settling behind the picture being
+     taken. Compiled out of release builds; see ``UITestHarness``.
+     */
+    private var isSealedForTesting = false
+  #endif
+
   /// Whether anything has been recorded, so the window can offer an empty state.
   public var isEmpty: Bool { events.isEmpty }
 
@@ -83,6 +92,14 @@ public final class ActivityLog {
     recordedProblems[itemID] = state
     append(.init(kind: kind, queueName: queueName, fileName: fileName))
   }
+
+  #if DEBUG
+    /// Replaces the log with a fixed account and seals it, for the Help book's picture.
+    public func sealWithEventsForTesting(_ events: [ActivityEvent]) {
+      self.events = events
+      isSealedForTesting = true
+    }
+  #endif
 
   /// Records encoding starting across the app.
   public func recordRunStarted() {
@@ -134,6 +151,9 @@ public final class ActivityLog {
   }
 
   private func append(_ event: ActivityEvent) {
+    #if DEBUG
+      if isSealedForTesting { return }
+    #endif
     events.append(event)
     if events.count > Self.capacity { events.removeFirst(events.count - Self.capacity) }
   }

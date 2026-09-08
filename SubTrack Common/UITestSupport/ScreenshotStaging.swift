@@ -22,6 +22,17 @@
     /// The main queue window's title, which is how it is told from the app's others.
     private static let mainWindowTitle = "SubTrack"
 
+    /// The Activity Log window's title, told apart the same way.
+    private static let activityLogTitle = "Activity Log"
+
+    /**
+     The Activity Log's content size for a capture. Its own default leaves the
+     lower half of the window in empty rows, which is honest of the app and
+     wasteful of a page — the seeded account this is taken of is six lines, and
+     this is what six lines need.
+     */
+    private static let activityLogSize = CGSize(width: 860, height: 250)
+
     /// Retained so the observers below outlive ``install()``.
     private static var observers: [any NSObjectProtocol] = []
 
@@ -30,6 +41,9 @@
 
     /// Whether the main window has already been sized, so it is pinned once.
     private static var hasSizedMainWindow = false
+
+    /// Whether the Activity Log has already been sized, so it too is pinned once.
+    private static var hasSizedActivityLog = false
 
     /// Whether the running launch is capturing Help-book screenshots.
     static var isEnabled: Bool {
@@ -78,7 +92,7 @@
     static func install() {
       guard isEnabled else { return }
       stageAsAppKitLaunches()
-      pinMainWindowSize()
+      pinWindowSizes()
     }
 
     /**
@@ -161,14 +175,33 @@
      ``UITestHarness`` clears the autosaved geometry at launch instead, which
      leaves nothing behind.
      */
-    private static func pinMainWindowSize() {
-      guard let size = windowSize else { return }
+    private static func pinWindowSizes() {
       observe(NSWindow.didBecomeKeyNotification) {
-        guard !hasSizedMainWindow, let window = mainWindow else { return }
-        hasSizedMainWindow = true
-        window.setContentSize(size)
-        window.center()
+        pinMainWindowSize()
+        pinActivityLogSize()
       }
+    }
+
+    private static func pinMainWindowSize() {
+      guard let size = windowSize, !hasSizedMainWindow, let window = mainWindow else { return }
+      hasSizedMainWindow = true
+      window.setContentSize(size)
+      window.center()
+    }
+
+    /**
+     Sizes the Activity Log the first time it is opened. Unlike the main window
+     this takes no size from the environment: every article that shows the log
+     shows the same seeded account, so there is one right size for it and no
+     test has a reason to ask for another.
+     */
+    private static func pinActivityLogSize() {
+      guard !hasSizedActivityLog,
+        let window = NSApplication.shared.windows.first(where: { $0.title == activityLogTitle })
+      else { return }
+      hasSizedActivityLog = true
+      window.setContentSize(activityLogSize)
+      window.center()
     }
 
     /**

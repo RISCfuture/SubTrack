@@ -247,6 +247,13 @@ extension HelpScreenshotUITests {
     window.toggleInspectorFromToolbar()
     parkPointer(in: app)
     capture(slug("problem-queue", in: appearance), of: app.windows["SubTrack"])
+
+    // The article's other half, and a different question: the queue says what is
+    // true now, the log says what happened. Its account is seeded and sealed by
+    // the harness, so this picture is the same one every time it is taken.
+    ActivityLogScreen(app: app).open()
+    parkPointer(in: app)
+    capture(slug("activity-log", in: appearance), of: app.windows["Activity Log"])
   }
 
   // MARK: - Naming

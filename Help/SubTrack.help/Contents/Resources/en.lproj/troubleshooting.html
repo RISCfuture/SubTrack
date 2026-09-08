@@ -4,7 +4,7 @@
   <title>If a file won’t slim</title>
   <meta name="AppleTitle" content="If a file won’t slim">
   <meta name="description" content="What each failure in the queue means — an unreadable source, a missing file, a run that failed partway — and where the full error text lives.">
-  <meta name="keywords" content="error, failed, ffprobe, ffmpeg, exit code, unreadable, corrupt, truncated, drm, encrypted, stale, permission, sandbox, bookmark, disk full, activity log, log, red, warning, triangle, bug, report, not saving, save, lost, data loss">
+  <meta name="keywords" content="error, failed, ffprobe, ffmpeg, exit code, unreadable, corrupt, truncated, drm, encrypted, stale, permission, sandbox, bookmark, disk full, activity log, log, red, warning, triangle, bug, report, not saving, save, lost, data loss, history, timestamp, unattended, overnight">
   <meta name="robots" content="index, anchor">
   <link rel="stylesheet" href="subtrack-help.css">
 </head>
@@ -52,13 +52,35 @@ chose as a transcode target. That one names the codec, and the fix is in
 
 <p>Choose <strong>Window</strong> &#9656; <strong>Activity Log</strong> (<kbd>⇧⌘L</kbd>).</p>
 
-<p>The log is one plain table covering <strong>every queue at once</strong>: which queue a file is
-in, the file, its status, and the full path of the file it writes. It exists mostly for one reason —
-<strong>this is where the complete, untruncated error text lives.</strong> A queue row has a single
-short line to spare; the log has the whole message.</p>
+<p>The log is the account of what happened, newest first, covering <strong>every queue at
+once</strong>: the time, the queue, the file, and what happened to it. It exists mostly for one
+reason — <strong>this is where the complete, untruncated error text lives.</strong> A queue row has
+a single short line to spare; the log has the whole message.</p>
 
-<p class="note">Nothing here is abbreviated. Each entry grows to fit whatever it has to say, and
-the text can be selected and copied.</p>
+<figure>
+  <picture>
+    <source srcset="images/activity-log-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/activity-log.webp" width="860" height="312" alt="The Activity Log after an overnight run: the run finishing with three files encoded and one failed, a trouble clearing, a failed run, a codec the build can’t encode, a missing source, and the run starting.">
+  </picture>
+  <figcaption>An overnight run, read the morning after. Six lines for three hundred files.</figcaption>
+</figure>
+
+<p>It is built to be read the morning after a run you left going. Each run writes a line when it
+starts and another when it stops saying what it came to, and between them sits everything that went
+wrong: a file that failed, a source that went away, a transcode this FFmpeg can’t perform, a trouble
+that later cleared.</p>
+
+<p class="note">A file that behaves is not in the log at all. Inspecting, encoding and finishing
+write nothing — the closing line carries the counts — so a clean run of three hundred files is two
+lines rather than six hundred, and anything you can see is something worth reading. A run that had
+no trouble says <strong>Nothing to report</strong>.</p>
+
+<p class="note">No message here is abbreviated. Each entry grows to fit whatever it has to say, and
+the text can be selected and copied. Only the times are shortened: today’s carry the time alone,
+and anything older carries its date as well.</p>
+
+<p>The log covers this run of SubTrack. Quitting empties it, because it is there to answer for the
+session that did the encoding.</p>
 
 <p>If the message doesn’t match anything on this page, that’s worth knowing about — copy it out of
 the log and <a href="https://github.com/RISCfuture/SubTrack/issues">report an issue on GitHub</a>.</p>
@@ -72,8 +94,10 @@ What you see on screen is right; what’s stored on disk has stopped keeping up 
 
 <p>It shows only while that’s true, and disappears the moment a save works again — so a drive that
 was briefly busy leaves nothing behind. Click it to open the Activity Log, where the whole reason
-is spelled out on a line of its own — the one marked <strong>All Queues</strong>, because unlike everything
-else there it isn’t about a single queue.</p>
+is spelled out on a line of its own — marked <strong>All Queues</strong>, because unlike most of what
+is there it isn’t about a single file. The log also keeps the time it started, and writes another
+line when saving recovers, so a fault that came and went while you were away leaves a record of both
+ends.</p>
 
 <p>There’s no button that fixes this, which is exactly why SubTrack tells you rather than waiting.
 While it’s showing, <strong>anything you add or change may not survive quitting</strong>. Check

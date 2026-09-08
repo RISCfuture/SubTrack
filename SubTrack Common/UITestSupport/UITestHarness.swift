@@ -386,6 +386,53 @@
       }
       queue.encoderCapabilitiesOverride = .videoToolboxOnly
       environment.workspace.selectQueue(queue.id)
+      sealHelpActivityLog(in: environment, queueName: queue.name)
+    }
+
+    /**
+     The account the Help book's picture of the Activity Log is taken of: a run
+     left going overnight, three files that gave trouble, one of them coming
+     right again, and the closing line.
+
+     Seeded rather than performed, for the same reason the queue itself is:
+     the states this describes cannot all be reached in one seeded launch, and a
+     picture of the log has to show what the article is about. The times are
+     offsets into today, so the column renders them as times rather than dates
+     and the picture is identical whenever it is taken. Sealing the log keeps a
+     probe or a revalidation settling behind the capture from adding a line.
+     */
+    private static func sealHelpActivityLog(in environment: AppEnvironment, queueName: String) {
+      let midnight = Calendar.current.startOfDay(for: .now)
+      func at(_ hours: Int, _ minutes: Int, _ seconds: Int) -> Date {
+        midnight.addingTimeInterval(TimeInterval(hours * 3_600 + minutes * 60 + seconds))
+      }
+      let vanishing = "Vanishing Point (1971).mkv"
+      environment.activity.sealWithEventsForTesting([
+        .init(kind: .runStarted, at: at(2, 3, 11)),
+        .init(
+          kind: .sourceMissing,
+          queueName: queueName,
+          fileName: vanishing,
+          at: at(2, 14, 52)
+        ),
+        .init(
+          kind: .incompatible("The “libx265” encoder isn’t available in the current FFmpeg"),
+          queueName: queueName,
+          fileName: "Solaris (1972).mkv",
+          at: at(3, 47, 8)
+        ),
+        .init(
+          kind: .fileFailed("ffmpeg exited with code 1"),
+          queueName: queueName,
+          fileName: "Rififi (1955).mkv",
+          at: at(4, 12, 33)
+        ),
+        .init(kind: .resolved, queueName: queueName, fileName: vanishing, at: at(5, 29, 40)),
+        .init(
+          kind: .runFinished(encoded: 3, failed: 1, cancelled: 0, bytesSaved: 4_402_341_478),
+          at: at(6, 41, 2)
+        )
+      ])
     }
 
     /**
