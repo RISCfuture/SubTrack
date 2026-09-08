@@ -295,6 +295,34 @@ struct QueueCompletionReportingTests {
       log.events.last?.kind == .runFinished(encoded: 2, failed: 0, cancelled: 0, bytesSaved: nil)
     )
   }
+
+  /**
+   A run is app-wide because the concurrency limit is, not because it concerns
+   every queue. A workspace holding three queues while one of them runs must not
+   read as though all three had been busy.
+   */
+  @Test
+  func `a run names the queue it was in, not every queue there is`() async throws {
+    let engine = StubEngine(container: try sampleContainer())
+    let log = ActivityLog()
+    let workspace = makeWorkspace(
+      engine: engine,
+      governor: EncodeGovernor(limit: 2),
+      reporter: nil,
+      log: log
+    )
+    let directory = try SourceFixtures.makeDirectory()
+    let working = workspace.newQueue(name: "Movies")
+    workspace.newQueue(name: "TV Shows")
+    workspace.newQueue(name: "Archive")
+    try await addItems(1, to: working, in: directory)
+
+    working.startAll()
+    await waitUntil { working.items.allSatisfy { $0.status == .done } }
+    await waitUntil { log.events.contains(where: \.kind.isRunFinished) }
+
+    #expect(log.events.allSatisfy { $0.queueName == "Movies" })
+  }
 }
 
 extension ActivityEvent.Kind {

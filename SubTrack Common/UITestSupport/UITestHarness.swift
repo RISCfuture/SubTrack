@@ -408,7 +408,7 @@
       }
       let vanishing = "Vanishing Point (1971).mkv"
       environment.activity.sealWithEventsForTesting([
-        .init(kind: .runStarted, at: at(2, 3, 11)),
+        .init(kind: .runStarted, queueName: queueName, at: at(2, 3, 11)),
         .init(
           kind: .sourceMissing,
           queueName: queueName,
@@ -430,6 +430,7 @@
         .init(kind: .resolved, queueName: queueName, fileName: vanishing, at: at(5, 29, 40)),
         .init(
           kind: .runFinished(encoded: 3, failed: 1, cancelled: 0, bytesSaved: 4_402_341_478),
+          queueName: queueName,
           at: at(6, 41, 2)
         )
       ])

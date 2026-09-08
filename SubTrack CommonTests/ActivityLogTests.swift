@@ -145,8 +145,8 @@ struct `Activity log` {
   func `a run is recorded whatever it came to`() throws {
     let log = ActivityLog()
 
-    log.recordRunStarted()
-    log.recordRunFinished(encoded: 4, failed: 1, cancelled: 3, bytesSaved: 1_024)
+    log.recordRunStarted(in: queue)
+    log.recordRunFinished(encoded: 4, failed: 1, cancelled: 3, bytesSaved: 1_024, in: queue)
 
     #expect(log.events.count == 2)
     #expect(try #require(log.events.first).kind == .runStarted)

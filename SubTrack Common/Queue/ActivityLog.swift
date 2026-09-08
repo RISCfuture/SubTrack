@@ -101,9 +101,16 @@ public final class ActivityLog {
     }
   #endif
 
-  /// Records encoding starting across the app.
-  public func recordRunStarted() {
-    append(.init(kind: .runStarted))
+  /**
+   Records encoding starting.
+
+   - Parameter queueName: The queue the run is in, or how many when it spans
+     several. A run is app-wide — the concurrency limit is — but it is not
+     therefore about every queue, and a line claiming queues that took no part
+     in it would be false.
+   */
+  public func recordRunStarted(in queueName: String) {
+    append(.init(kind: .runStarted, queueName: queueName))
   }
 
   /**
@@ -114,8 +121,16 @@ public final class ActivityLog {
    - Parameter cancelled: How many the user stopped.
    - Parameter bytesSaved: What the run saved in total, or `nil` when no
      finished file knew both its sizes.
+   - Parameter queueName: The queue the run was in, or how many when it spanned
+     several.
    */
-  public func recordRunFinished(encoded: Int, failed: Int, cancelled: Int, bytesSaved: Int?) {
+  public func recordRunFinished(
+    encoded: Int,
+    failed: Int,
+    cancelled: Int,
+    bytesSaved: Int?,
+    in queueName: String
+  ) {
     append(
       .init(
         kind: .runFinished(
@@ -123,7 +138,8 @@ public final class ActivityLog {
           failed: failed,
           cancelled: cancelled,
           bytesSaved: bytesSaved
-        )
+        ),
+        queueName: queueName
       )
     )
   }

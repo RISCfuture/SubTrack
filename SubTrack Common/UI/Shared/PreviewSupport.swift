@@ -60,7 +60,7 @@
     static func recordEventfulRun(into env: AppEnvironment) {
       let queue = "Movies"
       let recovered = UUID()
-      env.activity.recordRunStarted()
+      env.activity.recordRunStarted(in: queue)
       env.activity.recordSettled(
         .missing,
         itemID: recovered,
@@ -87,7 +87,13 @@
         queueName: queue
       )
       env.activity.recordCondition(nil)
-      env.activity.recordRunFinished(encoded: 5, failed: 1, cancelled: 0, bytesSaved: 4_294_967_296)
+      env.activity.recordRunFinished(
+        encoded: 5,
+        failed: 1,
+        cancelled: 0,
+        bytesSaved: 4_294_967_296,
+        in: queue
+      )
     }
 
     /**

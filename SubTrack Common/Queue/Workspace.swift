@@ -143,6 +143,18 @@ public final class Workspace {
   }
 
   /**
+   How a run's line names the queues it touched: the one, or how many when it
+   spanned several. Never "all of them" — a run is app-wide in the sense that
+   the concurrency limit is, not in the sense that it concerns every queue, and
+   a workspace holding three queues while one of them runs must not read as
+   though all three had been busy.
+   */
+  private static func scope(of queueNames: Set<String>) -> String {
+    guard queueNames.count != 1 else { return queueNames.first ?? "" }
+    return String(localized: "\(queueNames.count, format: .number) queues", bundle: #bundle)
+  }
+
+  /**
    Builds a coordinator for a queue and appends it in sidebar order, without
    persisting — the shared entry point for both launch hydration and
    ``newQueue(name:)``.
@@ -157,7 +169,10 @@ public final class Workspace {
     // them on the notifier left the whole path dead in every preview, UI test
     // and unit test — which is why nothing about it could be tested.
     coordinator.onEncodeActivityChanged = { [weak self] in self?.updateRunActivity() }
-    coordinator.onRunSettled = { [weak self] in self?.tally.record($0) }
+    coordinator.onRunSettled = { [weak self, weak coordinator] outcome in
+      guard let self, let coordinator else { return }
+      self.tally.record(outcome, from: coordinator.name)
+    }
     coordinator.onItemSettled = { [weak self, weak coordinator] item, state in
       guard let self, let coordinator else { return }
       self.log?.recordSettled(
@@ -260,7 +275,10 @@ public final class Workspace {
 
     if isInFlight {
       tally = RunTally()
-      log?.recordRunStarted()
+      for coordinator in coordinators where coordinator.hasEncodeWorkInFlight {
+        tally.noteParticipant(coordinator.name)
+      }
+      log?.recordRunStarted(in: Self.scope(of: tally.queueNames))
       reporter?.queueWorkDidBegin()
     } else {
       recordRunFinished()
@@ -277,7 +295,8 @@ public final class Workspace {
       encoded: summary.finishedCount,
       failed: summary.failedCount,
       cancelled: summary.cancelledCount,
-      bytesSaved: summary.bytesSaved
+      bytesSaved: summary.bytesSaved,
+      in: Self.scope(of: tally.queueNames)
     )
   }
 
@@ -302,6 +321,13 @@ public final class Workspace {
     private(set) var cancelledCount = 0
     private(set) var bytesSaved: Int?
     private(set) var outputURLs: [URL] = []
+
+    /**
+     The queues this run has touched. A run is app-wide because the concurrency
+     limit is, but it is not therefore about every queue — so its lines name the
+     ones that actually took part rather than claiming the lot.
+     */
+    private(set) var queueNames: Set<String> = []
 
     /// What to report, once the run has ended.
     var summary: QueueRunSummary {
@@ -328,7 +354,11 @@ public final class Workspace {
      to be transcoded larger tells against the total honestly instead of being
      rounded away item by item.
      */
-    mutating func record(_ outcome: QueueRunOutcome) {
+    /// Notes a queue as taking part before any of its files have settled.
+    mutating func noteParticipant(_ queueName: String) { queueNames.insert(queueName) }
+
+    mutating func record(_ outcome: QueueRunOutcome, from queueName: String) {
+      queueNames.insert(queueName)
       switch outcome.result {
         case .finished: finishedCount += 1
         case .failed: failedCount += 1
