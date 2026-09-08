@@ -53,6 +53,44 @@
     }
 
     /**
+     Writes a run's worth of trouble into `env`'s activity log: a run that
+     began, three files that went wrong in different ways, one of them coming
+     right again, a store that stopped saving, and the run's closing line.
+     */
+    static func recordEventfulRun(into env: AppEnvironment) {
+      let queue = "Movies"
+      let recovered = UUID()
+      env.activity.recordRunStarted()
+      env.activity.recordSettled(
+        .missing,
+        itemID: recovered,
+        fileName: "Vanishing Point (1971).mkv",
+        queueName: queue
+      )
+      env.activity.recordSettled(
+        .incompatible("The “libx265” encoder isn’t available in the current FFmpeg"),
+        itemID: UUID(),
+        fileName: "Solaris (1972).mkv",
+        queueName: queue
+      )
+      env.activity.recordSettled(
+        .failed("ffmpeg exited with code 1"),
+        itemID: UUID(),
+        fileName: "Rififi (1955).mkv",
+        queueName: queue
+      )
+      env.activity.recordCondition(.saveFailed(detail: "The file “Queues” couldn’t be opened."))
+      env.activity.recordSettled(
+        .ready,
+        itemID: recovered,
+        fileName: "Vanishing Point (1971).mkv",
+        queueName: queue
+      )
+      env.activity.recordCondition(nil)
+      env.activity.recordRunFinished(encoded: 5, failed: 1, cancelled: 0, bytesSaved: 4_294_967_296)
+    }
+
+    /**
      Seeds `env`'s selected queue with one live ``QueueItem`` per spec. Items are
      hydrated as settled placeholders (so the coordinator owns them) and then
      forced into each spec's exact state, letting a preview show `probing`,

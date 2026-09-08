@@ -22,6 +22,14 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   to save now raises a "Not saving" indicator in the status bar for as long as
   it stays true, and clicking it opens the Activity Log, which explains what
   went wrong in full.
+- The Activity Log is a real log. It records each run starting and what it came
+  to, and everything that went wrong in between — a file that failed, a source
+  that went away, a transcode the current FFmpeg can't perform, a store that
+  stopped saving — each with the time it happened, across every queue at once.
+- What it leaves out is the point of it: a file that inspects, encodes and
+  finishes writes no line, so a clean overnight run of three hundred files is
+  two lines rather than six hundred. A queue that has had no trouble says
+  "Nothing to report", and the log empties when you quit.
 
 ### Fixed
 

@@ -74,6 +74,31 @@ extension WarningStatesUITests {
   }
 
   /**
+   The Activity Log's whole design is what it declines to write down. A queue
+   whose files inspect cleanly has had no trouble, so the log says so rather
+   than listing a line per file — which is the state that would make the window
+   need a filter to be readable.
+   */
+  func testActivityLogSaysNothingAboutFilesThatBehave() {
+    let app = SubTrack.launch(state: .oneReadyItem)
+    MainWindowScreen(app: app).waitUntilLoaded()
+
+    ActivityLogScreen(app: app).open().assertNothingToReport()
+  }
+
+  /**
+   A source that goes away mid-session is exactly what an unattended run comes
+   back to, so it earns a line.
+   */
+  func testActivityLogRecordsASourceGoingAway() {
+    let app = SubTrack.launch(state: .missingSource)
+    let window = MainWindowScreen(app: app).waitUntilLoaded()
+    window.missingStatus.assertExists("The source should have gone away before the log is read.")
+
+    ActivityLogScreen(app: app).open().assertEventShown()
+  }
+
+  /**
    A collision is reported where it is caused: the Rules tab covers the format
    that caused it, and the Override tab reports it against each file caught up
    in it.

@@ -271,6 +271,17 @@ struct ActivityLogScreen {
     app.descendant(id: "activity.persistenceFailure")
       .assertExists("A store that cannot be written should be explained in the Activity Log.")
   }
+
+  /// Asserts the log is empty, which is what a run with no trouble in it looks like.
+  func assertNothingToReport() {
+    app.descendant(id: "activity.nothingToReport")
+      .assertExists("A queue that has had no trouble should have nothing to report.")
+  }
+
+  /// Asserts the log has written something down.
+  func assertEventShown() {
+    app.descendant(id: "activity.event").assertExists("The Activity Log recorded nothing.")
+  }
 }
 
 /// Opens and inspects the About window.

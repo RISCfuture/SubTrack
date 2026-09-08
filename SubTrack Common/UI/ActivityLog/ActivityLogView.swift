@@ -1,159 +1,144 @@
 import SwiftUI
 
 /**
- A table of everything the app has to say about the work in front of it: every
- queued file across every queue, and the conditions that belong to no file at
- all.
+ What happened during this run of the app: the frame of each encoding run and
+ everything that went wrong inside it, newest first.
 
- The columns wrap rather than truncate. A failure message carries its recovery
- suggestion at the end — the fix to try, or where a finished file was left —
- so the tail of the string is the half worth reading, and abbreviating a cell
- would take exactly that.
+ Newest first because the reason to open this window is that something has just
+ happened, so the answer belongs at the top. There is no filter and nothing is
+ dimmed: ``ActivityLog`` writes down only what is worth reading, so there is
+ nothing here to hide. A file that inspects, encodes and finishes never reaches
+ this table — the run's closing line carries the counts, and the queue window
+ shows what each file came to.
  */
 struct ActivityLogView: View {
-  /// Queue names are short; the room belongs to the message beside them.
+  /// A time reads in one line; the room belongs to the message beside it.
+  private static let timeColumnWidth: (min: CGFloat, ideal: CGFloat, max: CGFloat) = (86, 96, 132)
+
+  /// Queue names are short, and shorter than the messages they sit beside.
   private static let queueColumnWidth: (min: CGFloat, ideal: CGFloat, max: CGFloat) = (80, 120, 180)
 
   @Environment(AppEnvironment.self)
   private var env
 
-  /**
-   Whatever is worth saying, the app-wide conditions first — a store that
-   cannot be written is the reason a file's own line may be the last true
-   thing said about it — and then each queue's files in sidebar order.
-   */
-  private var entries: [ActivityLogEntry] {
-    let conditions = env.storage.activeFailures.enumerated().map {
-      ActivityLogEntry.everyQueue($0.element, rank: $0.offset)
-    }
-    let files = env.workspace.coordinators.flatMap { coordinator in
-      coordinator.items.map { ActivityLogEntry.queued($0, queueName: coordinator.name) }
-    }
-    return conditions + files
-  }
-
   var body: some View {
-    Table(entries) {
-      TableColumn(LocalizedStringResource("Queue", bundle: #bundle)) { entry in
-        WrappingCell(text: entry.queueName)
+    Table(env.activity.events.reversed()) {
+      TableColumn(LocalizedStringResource("Time", bundle: #bundle)) { event in
+        TimestampCell(timestamp: event.timestamp)
+      }
+      .width(
+        min: Self.timeColumnWidth.min,
+        ideal: Self.timeColumnWidth.ideal,
+        max: Self.timeColumnWidth.max
+      )
+      TableColumn(LocalizedStringResource("Queue", bundle: #bundle)) { event in
+        WrappingCell(text: ActivityLogText.queue(event))
       }
       .width(
         min: Self.queueColumnWidth.min,
         ideal: Self.queueColumnWidth.ideal,
         max: Self.queueColumnWidth.max
       )
-      TableColumn(LocalizedStringResource("File", bundle: #bundle)) { entry in
-        WrappingCell(text: entry.subject)
-          .accessibilityIdentifier(entry.accessibilityIdentifier)
+      TableColumn(LocalizedStringResource("File", bundle: #bundle)) { event in
+        WrappingCell(text: event.fileName)
       }
-      TableColumn(LocalizedStringResource("Status", bundle: #bundle)) { entry in
-        WrappingCell(text: entry.status)
-          .foregroundStyle(entry.tint)
-      }
-      TableColumn(LocalizedStringResource("Output", bundle: #bundle)) { entry in
-        WrappingCell(text: entry.output)
-          .foregroundStyle(.secondary)
+      TableColumn(LocalizedStringResource("Event", bundle: #bundle)) { event in
+        WrappingCell(text: ActivityLogText.event(event.kind))
+          .foregroundStyle(event.kind.severity?.tint ?? .primary)
+          .accessibilityIdentifier(ActivityLogText.identifier(event.kind))
       }
     }
     .accessibilityIdentifier("activity.table")
+    .overlay {
+      if env.activity.isEmpty { NothingHasHappenedYet() }
+    }
+  }
+}
+
+/// What each part of an event reads as, kept out of the view so it can be one thing.
+private enum ActivityLogText {
+
+  /// The queue an event is about, or that it is about all of them.
+  static func queue(_ event: ActivityEvent) -> String {
+    event.queueName.isEmpty ? String(localized: "All Queues", bundle: #bundle) : event.queueName
+  }
+
+  /// The sentence an event reads as.
+  static func event(_ kind: ActivityEvent.Kind) -> String {
+    switch kind {
+      case .runStarted: String(localized: "Run started", bundle: #bundle)
+      case let .runFinished(encoded, failed, cancelled, bytesSaved):
+        runFinished(encoded: encoded, failed: failed, cancelled: cancelled, bytesSaved: bytesSaved)
+      case .fileFailed(let message): String(localized: "Failed: \(message)", bundle: #bundle)
+      case .sourceMissing: String(localized: "Source is missing", bundle: #bundle)
+      case .incompatible(let reason): reason
+      case .resolved: String(localized: "Problem cleared", bundle: #bundle)
+      case .notSaving(let message): message
+      case .savingAgain: String(localized: "Saving again", bundle: #bundle)
+    }
+  }
+
+  /**
+   How the UI tests find a line. Only the store's own trouble is addressed by
+   name, because it is the only line a test asserts the presence of rather than
+   the content of.
+   */
+  static func identifier(_ kind: ActivityEvent.Kind) -> String {
+    if case .notSaving = kind { return "activity.persistenceFailure" }
+    return "activity.event"
+  }
+
+  /**
+   What a run came to, naming only the numbers that happened. A run with nothing
+   cancelled says nothing about cancelling, so the common line stays short
+   enough to take in at a glance.
+   */
+  private static func runFinished(
+    encoded: Int,
+    failed: Int,
+    cancelled: Int,
+    bytesSaved: Int?
+  ) -> String {
+    var parts = [String(localized: "\(encoded, format: .number) encoded", bundle: #bundle)]
+    if failed > 0 {
+      parts.append(String(localized: "\(failed, format: .number) failed", bundle: #bundle))
+    }
+    if cancelled > 0 {
+      parts.append(String(localized: "\(cancelled, format: .number) cancelled", bundle: #bundle))
+    }
+    if let bytesSaved, bytesSaved > 0 {
+      let saved = Int64(bytesSaved).formatted(.byteCount(style: .file))
+      parts.append(String(localized: "\(saved) saved", bundle: #bundle))
+    }
+    let outcome = parts.formatted(.list(type: .and))
+    return String(localized: "Run finished — \(outcome)", bundle: #bundle)
   }
 }
 
 /**
- One line of the table: a file in one of the queues, or a condition that is
- true of all of them at once.
+ When an event happened. A run left going overnight is read the morning after,
+ so a bare time would be ambiguous the moment the app has been open past
+ midnight — today's lines carry a time, and everything older carries its date
+ as well.
 
- Both kinds answer the same four questions, which is what lets them share the
- columns — a persistence failure is not about a file, but it is very much
- about a queue, and saying so is the whole point of putting it here.
+ Monospaced digits so the column doesn't shimmer as the times change beneath
+ it, and one line, because a time that wraps is a time that is too long.
  */
-@MainActor
-private enum ActivityLogEntry: Identifiable {
-  /// A file waiting in, running in, or finished in the named queue.
-  case queued(QueueItem, queueName: String)
+private struct TimestampCell: View {
+  let timestamp: Date
 
-  /**
-   A read or write of the app's own stored data that failed, so it is true of
-   every queue. `rank` distinguishes the two that can stand at once.
-   */
-  case everyQueue(PersistenceError, rank: Int)
-
-  var id: String {
-    switch self {
-      case .queued(let item, _): "file.\(item.id)"
-      case .everyQueue(_, let rank): "everyQueue.\(rank)"
-    }
+  var body: some View {
+    Text(timestamp, format: style)
+      .monospacedDigit()
+      .lineLimit(1)
+      .textSelection(.enabled)
+      .accessibilityLabel(Text(timestamp, format: .dateTime))
   }
 
-  /// Which queue this line is about, or that it is about all of them.
-  var queueName: String {
-    switch self {
-      case .queued(_, let queueName): queueName
-      case .everyQueue: String(localized: "All Queues", bundle: #bundle)
-    }
-  }
-
-  /// What the line is about: a file, or the condition standing in for one.
-  var subject: String {
-    switch self {
-      case .queued(let item, _): item.displayName
-      case .everyQueue: String(localized: "Not saving", bundle: #bundle)
-    }
-  }
-
-  /// How it went, at whatever length it takes to say so.
-  var status: String {
-    switch self {
-      case .queued(let item, _): Self.statusText(item)
-      case .everyQueue(let failure, _): failure.userMessage
-    }
-  }
-
-  /// Where the file goes. A failure to save produced no file, and says so by
-  /// leaving the column empty rather than filling it with a dash.
-  var output: String {
-    switch self {
-      case .queued(let item, _): item.outputURL.path(percentEncoded: false)
-      case .everyQueue: ""
-    }
-  }
-
-  /**
-   The one severity vocabulary the queue table also reads from, so an item
-   cannot change tier depending on which window it is shown in. A store that
-   will not accept the user's work is a problem by any reading.
-   */
-  var tint: Color {
-    switch self {
-      case .queued(let item, _): (item.status.severity ?? .note).tint
-      case .everyQueue: Severity.problem.tint
-    }
-  }
-
-  /// How the UI tests find this line.
-  var accessibilityIdentifier: String {
-    switch self {
-      case .queued(let item, _): "activity.file.\(item.id)"
-      case .everyQueue: "activity.persistenceFailure"
-    }
-  }
-
-  private static func statusText(_ item: QueueItem) -> String {
-    switch item.status {
-      case .waiting: String(localized: "Waiting", bundle: #bundle)
-      case .probing: String(localized: "Inspecting", bundle: #bundle)
-      case .ready: String(localized: "Ready", bundle: #bundle)
-      case .running:
-        String(
-          localized: "Encoding \(item.progress, format: .percent.precision(.fractionLength(0)))",
-          bundle: #bundle
-        )
-      case .done: String(localized: "Done", bundle: #bundle)
-      case .cancelled: String(localized: "Cancelled", bundle: #bundle)
-      case .missing: String(localized: "Source is missing", bundle: #bundle)
-      case .incompatible(let reason): reason
-      case .failed(let message): String(localized: "Failed: \(message)", bundle: #bundle)
-    }
+  private var style: Date.FormatStyle {
+    Calendar.current.isDateInToday(timestamp)
+      ? .dateTime.hour().minute().second()
+      : .dateTime.day().month(.abbreviated).hour().minute()
   }
 }
 
@@ -175,27 +160,39 @@ private struct WrappingCell: View {
   }
 }
 
-#if DEBUG
-  #Preview("All statuses") {
-    ActivityLogView()
-      .environment(PreviewSupport.environment(items: PreviewSupport.everyStatusItems()))
-      .frame(minWidth: 720, minHeight: 340)
+/**
+ An empty log is the good outcome, so it says so rather than looking broken. It
+ is also the common one: nothing here means no run has had any trouble.
+ */
+private struct NothingHasHappenedYet: View {
+  var body: some View {
+    ContentUnavailableView {
+      Label {
+        Text("Nothing to report", bundle: #bundle)
+      } icon: {
+        Image(systemName: "checkmark.circle")
+      }
+    } description: {
+      Text("Runs, and anything that goes wrong in them, will appear here.", bundle: #bundle)
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(.background)
+    .accessibilityIdentifier("activity.nothingToReport")
   }
+}
 
-  #Preview("Not saving") {
-    let environment = PreviewSupport.environment(items: PreviewSupport.everyStatusItems())
-    environment.storage.record(
-      .saveFailed(detail: "The file “Queues” couldn’t be opened."),
-      from: .queues
-    )
+#if DEBUG
+  #Preview("An eventful run") {
+    let environment = PreviewSupport.environment()
+    PreviewSupport.recordEventfulRun(into: environment)
     return ActivityLogView()
       .environment(environment)
-      .frame(minWidth: 720, minHeight: 340)
+      .frame(minWidth: 760, minHeight: 340)
   }
 
-  #Preview("Empty") {
+  #Preview("Nothing to report") {
     ActivityLogView()
       .environment(PreviewSupport.environment())
-      .frame(minWidth: 720, minHeight: 240)
+      .frame(minWidth: 760, minHeight: 240)
   }
 #endif
