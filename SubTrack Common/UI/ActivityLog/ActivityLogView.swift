@@ -4,20 +4,29 @@ import SwiftUI
  A simple activity view listing each item's status and any error, for
  troubleshooting.
 
- A `List` of stacked rows rather than a `Table` of columns, because the whole
- value of this window is the error text and a `Table` cannot show it. Its rows
- are a fixed height on macOS and clip whatever overflows — dropping
- `lineLimit` does not change that — so a failure whose message names the fix,
- or where a finished file was left, lost exactly the part worth reading. Rows
- here grow to their content and nothing is abbreviated.
+ A `Table`, so the three fields keep their headers and their resizable columns,
+ with every cell wrapping to as many lines as its text needs rather than
+ truncating. A failure message carries its recovery suggestion at the end — the
+ fix to try, or where a finished file was left — so the tail of the string is
+ the half worth reading, and abbreviating a cell would take exactly that.
  */
 struct ActivityLogView: View {
   @Environment(AppEnvironment.self)
   private var env
 
   var body: some View {
-    List(env.queue.items) { item in
-      ActivityLogRow(item: item, status: statusText(item), tint: color(item))
+    Table(env.queue.items) {
+      TableColumn(LocalizedStringResource("File", bundle: #bundle)) { item in
+        WrappingCell(text: item.displayName)
+      }
+      TableColumn(LocalizedStringResource("Status", bundle: #bundle)) { item in
+        WrappingCell(text: statusText(item))
+          .foregroundStyle(color(item))
+      }
+      TableColumn(LocalizedStringResource("Output", bundle: #bundle)) { item in
+        WrappingCell(text: item.outputURL.path(percentEncoded: false))
+          .foregroundStyle(.secondary)
+      }
     }
     .accessibilityIdentifier("activity.table")
   }
@@ -50,30 +59,20 @@ struct ActivityLogView: View {
 }
 
 /**
- One item's line in the log: what it is, how it went, and where its output
- belongs. Every field wraps, since a truncated error is the thing this window
- exists to avoid, and the text is selectable so a message can be pasted into a
- bug report rather than retyped.
+ One cell, wrapping to its content and selectable so a message can be pasted
+ into a bug report rather than retyped. Growing vertically is the whole reason
+ this window is worth opening, so the text is fixed against the vertical
+ squeeze a table row would otherwise apply to it.
  */
-private struct ActivityLogRow: View {
-  /// Keeps the three lines reading as one entry rather than three.
-  private static let lineSpacing: Double = 2
-
-  let item: QueueItem
-  let status: String
-  let tint: Color
+private struct WrappingCell: View {
+  let text: String
 
   var body: some View {
-    VStack(alignment: .leading, spacing: Self.lineSpacing) {
-      Text(item.displayName)
-      Text(status)
-        .foregroundStyle(tint)
-      Text(item.outputURL.path(percentEncoded: false))
-        .font(.caption)
-        .foregroundStyle(.secondary)
-    }
-    .textSelection(.enabled)
-    .frame(maxWidth: .infinity, alignment: .leading)
+    Text(text)
+      .lineLimit(nil)
+      .fixedSize(horizontal: false, vertical: true)
+      .textSelection(.enabled)
+      .frame(maxWidth: .infinity, alignment: .leading)
   }
 }
 
