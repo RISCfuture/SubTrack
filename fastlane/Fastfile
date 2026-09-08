@@ -163,8 +163,8 @@ BUILD_PROCESSING_TIMEOUT = 45 * 60
 BUILD_POLL_INTERVAL = 60
 
 # The version states in which attaching a build is still the developer's to do. Anything further
-# along — submitted, in review, accepted, awaiting release, or on sale — belongs to Apple or to the
-# store, and swapping the binary underneath it is not something a tag push should do unattended.
+# along — submitted, in review, accepted, awaiting release, or on sale — belongs to Apple or to
+# the store, and swapping the binary underneath it is not a thing a tag push should do unattended.
 #
 # An allowlist rather than a denylist, so a state Apple adds later is refused rather than assumed
 # safe. `get_edit_app_store_version` counts WAITING_FOR_REVIEW among its editable states, so without
@@ -218,7 +218,8 @@ def write_release_notes(store_version, version:, name:)
   written = store_version.get_app_store_version_localizations.filter_map do |localization|
     text = release_notes(version, locale: localization.locale)
     if text.empty?
-      UI.important("#{name} #{version} rendered no notes for #{localization.locale}; leaving them.")
+      UI.important("#{name} #{version} rendered no notes for #{localization.locale}; " \
+                   "leaving them alone.")
       next nil
     end
     localization.update(attributes: { whats_new: text })
