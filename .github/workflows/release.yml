@@ -97,8 +97,19 @@ jobs:
           # same text is what App Store Connect carries as "What's New".
           Scripts/release-notes.sh "$VERSION" > release-notes.md
 
-          gh release create "$VERSION" \
-            --repo "$GITHUB_REPOSITORY" \
-            --title "SubTrack $VERSION" \
-            --notes-file release-notes.md \
-            "$dmg" "$sources"
+          # A release for the tag can already exist — this job re-run after a later failure, or
+          # a release cut by hand. `gh release create` refuses a duplicate outright, which leaves
+          # a built and notarized set of artifacts with nowhere to go, so an existing release
+          # takes the assets instead of stopping the run.
+          if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$VERSION" \
+              --repo "$GITHUB_REPOSITORY" \
+              --clobber \
+              "$dmg" "$sources"
+          else
+            gh release create "$VERSION" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "SubTrack $VERSION" \
+              --notes-file release-notes.md \
+              "$dmg" "$sources"
+          fi
