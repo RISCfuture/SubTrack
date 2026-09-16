@@ -198,14 +198,14 @@
         <div class="cta-row">
           <a
             class="button button-primary"
-            href="https://apps.apple.com/us/app/subtrack-trim-video-files/id6794950780"
-            >Mac App Store</a
-          >
-          <a class="button" href="https://github.com/RISCfuture/SubTrack/releases/latest"
-            >Direct download</a
+            href="https://github.com/RISCfuture/SubTrack/releases/latest"
+            >Download for macOS</a
           >
         </div>
-        <p class="fine-print">Free, both ways · Requires macOS 26.4 or later</p>
+        <p class="fine-print">
+          Free · Requires macOS 26.4 or later ·
+          <a href="#get-it">Other ways to install</a>
+        </p>
       </section>
 
       <!-- ────────────────────────  App screenshot  ─────────────────────── -->
@@ -396,8 +396,8 @@
           <li>
             <h3>FFmpeg included</h3>
             <p>
-              A signed, self-contained FFmpeg ships inside the app. Nothing to install, nothing to
-              keep up to date, no Homebrew.
+              A signed, self-contained FFmpeg ships inside the app. No FFmpeg to install from
+              Homebrew, and none to keep up to date.
             </p>
           </li>
           <li>
@@ -449,110 +449,48 @@
       <!-- ───────────────────────────  Get it  ──────────────────────────── -->
       <section id="get-it">
         <p class="section-mark">Get it</p>
-        <h2>Two builds, one engine</h2>
+        <h2>Other ways to install</h2>
         <p class="section-lede">
-          Both are free, and they slim files identically — same rules, same presets, same queues.
-          Three capabilities Apple doesn't permit inside a sandboxed App Store app are the whole
-          difference.
+          Every route installs the same app and slims files identically — same rules, same presets,
+          same queues. What differs is only what Apple permits inside a sandboxed App Store build.
         </p>
 
-        <div class="editions">
-          <div class="edition">
-            <h3>Mac App Store</h3>
-            <p class="edition-note">Installs and updates through the App Store.</p>
-            <ul class="spec">
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Lossless stream-copy slimming</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Rules, presets, and multiple queues</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Preset sync over iCloud</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Hardware HEVC and H.264 encoding</span>
-              </li>
-              <li class="off">
-                <span class="sr-only">Not included:</span>
-                <span class="mark no" aria-hidden="true">—</span>
-                <span>Software x264 and x265 encoding</span>
-              </li>
-              <li class="off">
-                <span class="sr-only">Not included:</span>
-                <span class="mark no" aria-hidden="true">—</span>
-                <span>Your own FFmpeg build</span>
-              </li>
-              <li class="off">
-                <span class="sr-only">Not included:</span>
-                <span class="mark no" aria-hidden="true">—</span>
-                <span>The <code>subtrack</code> command-line tool</span>
-              </li>
-            </ul>
-            <p class="fine-print">Bundled LGPL FFmpeg.</p>
-            <a
-              class="button button-primary"
-              href="https://apps.apple.com/us/app/subtrack-trim-video-files/id6794950780"
-              >View on the App Store</a
-            >
-          </div>
-
-          <div class="edition">
-            <h3>Direct download</h3>
-            <p class="edition-note">Signed, notarized, and checks for its own updates.</p>
-            <ul class="spec">
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Lossless stream-copy slimming</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Rules, presets, and multiple queues</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Preset sync over iCloud</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Hardware HEVC and H.264 encoding</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Software x264 and x265 encoding</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>Your own FFmpeg build</span>
-              </li>
-              <li>
-                <span class="sr-only">Included:</span>
-                <span class="mark yes" aria-hidden="true">✓</span>
-                <span>The <code>subtrack</code> command-line tool</span>
-              </li>
-            </ul>
-            <p class="fine-print">Bundled GPL FFmpeg, with libx264 and libx265.</p>
-            <a
-              class="button button-primary"
-              href="https://github.com/RISCfuture/SubTrack/releases/latest"
+        <ul class="routes">
+          <li class="route">
+            <div class="route-text">
+              <h3>Direct download</h3>
+              <p>
+                Signed, notarized, self-updating, and bundling GPL FFmpeg. Adds the
+                <code>subtrack</code> tool, software x264 and x265 encoding, and your own FFmpeg
+                build.
+              </p>
+            </div>
+            <a class="button button-primary" href="https://github.com/RISCfuture/SubTrack/releases/latest"
               >Download the latest release</a
             >
-          </div>
-        </div>
+          </li>
+
+          <li class="route">
+            <div class="route-text">
+              <h3>Homebrew</h3>
+              <p>The same build, with <code>subtrack</code> linked onto your <code>PATH</code> for you.</p>
+            </div>
+            <p class="brew"><code>brew install --cask riscfuture/tap/subtrack</code></p>
+          </li>
+
+          <li class="route">
+            <div class="route-text">
+              <h3>Mac App Store</h3>
+              <p>
+                Updates through the App Store, with LGPL FFmpeg. A sandbox rules out the
+                <code>subtrack</code> tool, software x264 and x265, and your own FFmpeg build.
+              </p>
+            </div>
+            <a class="button" href="https://apps.apple.com/us/app/subtrack-trim-video-files/id6794950780"
+              >View on the App Store</a
+            >
+          </li>
+        </ul>
       </section>
 
       <!-- ─────────────────────────────  FAQ  ───────────────────────────── -->

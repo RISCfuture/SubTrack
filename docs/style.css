@@ -172,17 +172,6 @@ strong {
   font-weight: 700;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 .skip-link {
   position: absolute;
   left: 0.5rem;
@@ -657,83 +646,71 @@ main > section:not(.hero):not(.showcase):not(.doc) {
   color: var(--ink-soft);
 }
 
-/* ───────────────────────────  Editions  ───────────────────────────── */
-
-.editions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
-}
+/* ─────────────────────────  Install routes  ───────────────────────── */
 
 /*
- * Both cards run the same seven rows in the same order, so the difference
- * between the builds is legible without either being framed as the leftovers.
+ * One install route per row: its description on the left, the thing you act on
+ * to its right. The three differ by a sentence rather than by a table of
+ * capabilities, so a hairline between them reads lighter than three panels and
+ * keeps the section short.
  */
-.edition {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-panel);
-}
 
-.edition h3 {
-  font-stretch: 112%;
-  font-size: 1.375rem;
-  margin-bottom: 0.25rem;
-}
-
-.edition-note {
-  color: var(--ink-soft);
-  font-size: 0.9375rem;
-  margin-bottom: 1.5rem;
-}
-
-.edition .button {
-  margin-top: auto;
-  align-self: flex-start;
-}
-
-.edition .fine-print {
-  margin: 0 0 1.25rem;
-}
-
-.spec {
-  margin: 0 0 1.5rem;
+.routes {
+  margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.9375rem;
 }
 
-.spec li {
+.route {
   display: grid;
-  grid-template-columns: 1.6rem 1fr;
-  align-items: baseline;
-  padding-block: 0.4rem;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.25rem 0;
   border-top: 1px solid var(--rule);
 }
 
-.spec li:first-child {
-  border-top: 0;
+.route:last-child {
+  border-bottom: 1px solid var(--rule);
 }
 
-.spec .off {
-  color: var(--ink-soft);
+.route-text h3 {
+  font-stretch: 112%;
+  font-size: 1.25rem;
+  margin: 0 0 0.35rem;
 }
 
-.mark {
-  font-family: var(--font-mono);
+.route-text p {
+  max-width: var(--measure);
+  margin: 0;
+}
+
+.brew {
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.brew code {
+  padding: 0;
   font-size: 0.8125rem;
+  background: none;
+  white-space: nowrap;
 }
 
-.mark.yes {
-  color: var(--magenta);
-}
+@media (width <= 40rem) {
+  .route {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 
-.mark.no {
-  color: var(--ink-soft);
-  opacity: 0.6;
+  /* A grid item fills its track by default; the button should not go full-bleed. */
+  .route .button {
+    justify-self: start;
+  }
 }
 
 /* ─────────────────────────────  FAQ  ──────────────────────────────── */
