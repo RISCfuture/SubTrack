@@ -105,7 +105,8 @@ private struct CustomCodecPopover: View {
     VStack(alignment: .leading, spacing: 8) {
       Text("Custom codec", bundle: #bundle).font(.subheadline)
       TextField("codec", text: $draft)
-        .textFieldStyle(.roundedBorder)
+        .textFieldStyle(.bordered)
+        .textInputBorderShape(.roundedRectangle)
         .frame(width: Self.codecFieldWidth)
       HStack {
         Spacer()
