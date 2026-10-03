@@ -19,6 +19,7 @@ struct TranscodeTargetMenu: View {
     LabeledContent(title) {
       HStack(spacing: 6) {
         TranscodeTargetMenuContent(
+          title: title,
           targets: targets,
           codec: $codec,
           chooseOther: { showingCustom = true }
@@ -49,6 +50,8 @@ struct TranscodeTargetMenu: View {
  one, and the `Other…` item that asks for a raw codec name.
  */
 private struct TranscodeTargetMenuContent: View {
+  /// Names the catalog for VoiceOver; the menu's own label states the value.
+  let title: LocalizedStringKey
   let targets: [ConversionTarget]
   @Binding var codec: String
   /// Called by the `Other…` item to reveal the raw text field.
@@ -56,22 +59,19 @@ private struct TranscodeTargetMenuContent: View {
 
   var body: some View {
     Menu(menuLabel) {
-      ForEach(targets) { target in
-        Button {
-          codec = target.codec
-        } label: {
-          if target.codec == codec {
-            Label(target.menuTitle, systemImage: "checkmark")
-          } else {
-            Text(target.menuTitle)
-          }
+      Picker(title, selection: $codec) {
+        ForEach(targets) { target in
+          Text(target.menuTitle).tag(target.codec)
+        }
+        // A codec typed into `Other…` is an option like any other, so the system
+        // marks it as the selection rather than the row drawing its own checkmark.
+        if isCustomValue {
+          Divider()
+          Text(codec).tag(codec)
         }
       }
-      if isCustomValue {
-        Divider()
-        Label(codec, systemImage: "checkmark")
-      }
-      Divider()
+      .pickerStyle(.inline)
+      .labelsHidden()
       Button(LocalizedStringResource("Other…", bundle: #bundle), action: chooseOther)
     }
     .fixedSize()
