@@ -4,6 +4,18 @@ Release notes for SubTrack. The version headings are what
 `Scripts/release-notes.sh` reads, and what the Release workflow attaches to a
 GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
+## 1.2
+
+### Fixed
+
+- Updating no longer fails for anyone whose Applications folder sits behind a
+  path carrying an apostrophe or a quote. The download edition could ask for
+  permission, copy the new version, and then be unable to relaunch it.
+- SubTrack is an Apple-silicon app, and now says so. The Intel slice it shipped
+  could not run the bundled FFmpeg, which is built for Apple silicon only, so
+  on an Intel Mac SubTrack launched and then failed at the one thing it exists
+  to do.
+
 ## 1.1
 
 ### New
