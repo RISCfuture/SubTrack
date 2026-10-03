@@ -1569,8 +1569,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RISCfuture/XCUITestKit";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 		01387D07301842490033110E /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */ = {
@@ -1578,7 +1578,7 @@
 			repositoryURL = "https://github.com/RISCfuture/GitHubUpdateChecker";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.1.1;
 			};
 		};
 		01D6205330172CCE004758E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
