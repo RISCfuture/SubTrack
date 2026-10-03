@@ -29,6 +29,9 @@ struct CodeAction: Identifiable {
  warning with opacity.
  */
 struct StringListEditor: View {
+  /// Which rows a drag moves, and where to.
+  private typealias Reorder = ReorderDifference<Row.ID, ReorderableSingleCollectionIdentifier>
+
   private static let rowListHeight = 196.0
   private static let popoverWidth = 320.0
 
@@ -59,37 +62,37 @@ struct StringListEditor: View {
   @State private var rows: [Row]
   @FocusState private var focused: UUID?
 
-  // A `List` can't host an editable `TextField` in a reorderable row on macOS 26
-  // (its outline coordinator asserts), so the editor is a plain `ScrollView`
-  // stack.
+  // The rows are a plain `ScrollView` stack rather than a `List`:
+  // `reorderable()` needs no `List`, and a `List`'s reorder drag recognizer
+  // delays focus reaching an inline `TextField`. Each row and the divider
+  // below it form one view, so one reorderable item is one row.
   var body: some View {
     VStack(spacing: 0) {
       ScrollView {
         VStack(spacing: 0) {
           ForEach(rows) { row in
-            CodeRow(
-              text: binding(for: row.id),
-              focused: $focused,
-              id: row.id,
-              accessibilityIdentifier: accessibilityIdentifier,
-              reorderable: reorderable,
-              placeholder: placeholder,
-              resolvedLabel: resolvedLabel,
-              isKnown: isKnown,
-              warningHelp: warningHelp,
-              onRemove: { removeRow(row.id) },
-              onDrop: { source in
-                guard reorderable else { return false }
-                moveRow(source, before: row.id)
-                return true
-              }
-            )
-            if row.id != rows.last?.id { Divider() }
+            VStack(spacing: 0) {
+              CodeRow(
+                text: binding(for: row.id),
+                focused: $focused,
+                id: row.id,
+                accessibilityIdentifier: accessibilityIdentifier,
+                reorderable: reorderable,
+                placeholder: placeholder,
+                resolvedLabel: resolvedLabel,
+                isKnown: isKnown,
+                warningHelp: warningHelp,
+                onRemove: { removeRow(row.id) }
+              )
+              if row.id != rows.last?.id { Divider() }
+            }
           }
+          .reorderable()
         }
         .padding(.vertical, 4)
       }
       .frame(height: Self.rowListHeight)
+      .reorderContainer(for: Row.self, isEnabled: reorderable, move: move)
       Divider()
       AddCodeBar(
         accessibilityIdentifier: "\(accessibilityIdentifier).add",
@@ -194,21 +197,20 @@ struct StringListEditor: View {
     writeBack()
   }
 
-  /**
-   Moves the dragged row to sit immediately before `targetID` (or drops it at
-   the end when the target can't be found).
-   */
-  private func moveRow(_ sourceID: UUID, before targetID: UUID) {
-    guard sourceID != targetID, let source = rows.firstIndex(where: { $0.id == sourceID }) else {
-      return
-    }
-    let row = rows.remove(at: source)
-    if let destination = rows.firstIndex(where: { $0.id == targetID }) {
-      rows.insert(row, at: destination)
-    } else {
-      rows.append(row)
-    }
+  /// Applies a drag-reorder of the row stack.
+  private func move(_ reorder: Reorder) {
+    let dragged = Set(reorder.sources)
+    let sources = IndexSet(rows.indices.filter { dragged.contains(rows[$0].id) })
+    rows.move(fromOffsets: sources, toOffset: offset(of: reorder.destination.position))
     writeBack()
+  }
+
+  /// Where in `rows` the dragged rows land.
+  private func offset(of position: Reorder.Destination.Position) -> Int {
+    switch position {
+      case .before(let targetID): rows.firstIndex { $0.id == targetID } ?? rows.endIndex
+      case .end: rows.endIndex
+    }
   }
 
   private struct Row: Identifiable, Equatable {
@@ -222,15 +224,15 @@ struct StringListEditor: View {
  resolved label, a warning triangle for unrecognized codes, and a remove
  button.
 
- Reordering drags from the grip handle (so it doesn't fight the text field)
- and drops onto any row, handing the dragged row's identifier to `onDrop`.
+ A reorderable row shows a grip handle marking it as draggable; the drag itself
+ is driven by ``StringListEditor``'s reorder container.
  */
 private struct CodeRow: View {
   private static let codeFieldWidth = 54.0
 
   @Binding var text: String
   @FocusState.Binding var focused: UUID?
-  /// The row's identity, used for focus and as the drag payload.
+  /// The row's identity, used for focus.
   let id: UUID
 
   /// The owning editor's identifier; this row's controls hang off the code it holds.
@@ -241,11 +243,6 @@ private struct CodeRow: View {
   let isKnown: (String) -> Bool
   let warningHelp: LocalizedStringKey
   let onRemove: () -> Void
-  /**
-   Handles a row dropped onto this one, returning whether the drop was
-   accepted.
-   */
-  let onDrop: (UUID) -> Bool
 
   private var code: String { text.trimmingCharacters(in: .whitespaces) }
   private var showsWarning: Bool { !code.isEmpty && !isKnown(code) }
@@ -255,7 +252,6 @@ private struct CodeRow: View {
       if reorderable {
         Image(systemName: "line.3.horizontal")
           .foregroundStyle(.secondary)
-          .draggable(id.uuidString)
           .help("Drag to reorder")
           .accessibilityLabel(Text("Reorder", bundle: #bundle))
       }
@@ -289,10 +285,6 @@ private struct CodeRow: View {
     .padding(.horizontal, 14)
     .padding(.vertical, 6)
     .contentShape(.rect)
-    .dropDestination(for: String.self) { items, _ in
-      guard let source = items.first.flatMap({ UUID(uuidString: $0) }) else { return false }
-      return onDrop(source)
-    }
   }
 }
 
