@@ -15,7 +15,8 @@ struct QueueSidebarRow: View {
     HStack {
       if isRenaming {
         TextField("Queue name", text: $draftName)
-          .textFieldStyle(.roundedBorder)
+          .textFieldStyle(.bordered)
+          .textInputBorderShape(.roundedRectangle)
           .focused($fieldFocused)
           .onSubmit(commit)
           .onExitCommand(perform: cancel)

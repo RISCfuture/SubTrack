@@ -13,7 +13,8 @@ struct LanguageBrowser: View {
   var body: some View {
     VStack(spacing: 0) {
       TextField("Search languages", text: $query)
-        .textFieldStyle(.roundedBorder)
+        .textFieldStyle(.bordered)
+        .textInputBorderShape(.roundedRectangle)
         .padding(8)
         .accessibilityIdentifier("language.search")
       List(matches) { language in
