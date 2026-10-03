@@ -40,7 +40,7 @@ final class SourceFileMonitor {
     mask: DispatchSource.FileSystemEvent,
     onEvent: @escaping @Sendable () -> Void
   ) -> (any DispatchSourceFileSystemObject)? {
-    let descriptor = open(path, O_EVTONLY)
+    let descriptor = unsafe open(path, O_EVTONLY)
     guard descriptor >= 0 else { return nil }
     let source = DispatchSource.makeFileSystemObjectSource(
       fileDescriptor: descriptor,

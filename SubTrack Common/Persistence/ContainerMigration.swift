@@ -100,7 +100,7 @@ public enum ContainerMigration {
       directoryHint: .notDirectory
     )
     guard let data = try? Data(contentsOf: plist),
-      let stored = try? PropertyListSerialization.propertyList(from: data, format: nil)
+      let stored = try? unsafe PropertyListSerialization.propertyList(from: data, format: nil)
         as? [String: Any]
     else { return }
     for (key, value) in stored where defaults.object(forKey: key) == nil {
