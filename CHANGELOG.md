@@ -11,6 +11,11 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - SubTrack now requires macOS 27. A Mac on macOS 26 cannot run this version;
   1.2.1 is the last release it can.
 
+### Changed
+
+- Cancelling a run always stops it, even when an encode has stalled. A run no
+  longer stays stuck on "Cancelling".
+
 ## 1.2.1
 
 ### Fixed
