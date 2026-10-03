@@ -29,7 +29,8 @@ struct OutputNameOverrideEditor: View {
       // another line of caption.
       TextField("File name", text: customName, prompt: Text(defaultBaseName))
         .labelsHidden()
-        .textFieldStyle(.roundedBorder)
+        .textFieldStyle(.bordered)
+        .textInputBorderShape(.roundedRectangle)
         .controlSize(.regular)
         .disabled(item.customName == nil)
         .accessibilityIdentifier("override.customName")
