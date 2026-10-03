@@ -189,21 +189,12 @@ private struct UnsupportedCodecWarning: View {
       .frame(width: 300, height: 560)
   }
 
-  #Preview("Override — probing") {
+  #Preview(
+    "Override — not yet probed",
+    arguments: [QueueItemState.probing, .missing, .failed("ffprobe exited with code 1")]
+  ) { status in
     OverrideInspector()
-      .environment(uninspectedEnvironment(status: .probing))
-      .frame(width: 300, height: 560)
-  }
-
-  #Preview("Override — missing source") {
-    OverrideInspector()
-      .environment(uninspectedEnvironment(status: .missing))
-      .frame(width: 300, height: 560)
-  }
-
-  #Preview("Override — probe failed") {
-    OverrideInspector()
-      .environment(uninspectedEnvironment(status: .failed("ffprobe exited with code 1")))
+      .environment(uninspectedEnvironment(status: status))
       .frame(width: 300, height: 560)
   }
 
