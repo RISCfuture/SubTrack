@@ -46,7 +46,7 @@ X265_TAG="4.2"
 AOM_TAG="v3.14.1"
 CMAKE_VERSION="3.30.5"
 PKGCONF_VERSION="3.0.5"
-# arm64 on Apple Silicon. The app targets pin ARCHS to arm64 to match: a universal app
+# arm64 on Apple Silicon. The project pins ARCHS to arm64 to match: a universal app
 # bundling a single-slice helper would ship an Intel slice that cannot run ffmpeg at all.
 # Going universal means adding an x86_64 slice here and lipo'ing, then dropping that pin.
 ARCH="$(uname -m)"
