@@ -11,6 +11,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - Updating no longer fails for anyone whose Applications folder sits behind a
   path carrying an apostrophe or a quote. The download edition could ask for
   permission, copy the new version, and then be unable to relaunch it.
+- The inspector's menus mark the entry in force again. On macOS 27 the
+  checkmark beside the active preset and beside the chosen transcode target
+  went undrawn, so both menus opened looking as though nothing had been picked.
 - SubTrack is an Apple-silicon app, and now says so. The Intel slice it shipped
   could not run the bundled FFmpeg, which is built for Apple silicon only, so
   on an Intel Mac SubTrack launched and then failed at the one thing it exists

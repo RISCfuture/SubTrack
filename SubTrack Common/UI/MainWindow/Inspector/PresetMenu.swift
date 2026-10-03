@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 /**
@@ -117,6 +118,9 @@ private struct PresetMenuControl: View {
     } label: {
       Label(activeName, systemImage: "slider.horizontal.3")
     }
+    .onReceive(NotificationCenter.default.publisher(for: NSMenu.didBeginTrackingNotification)) {
+      drawPresetCheckmark(in: $0.object as? NSMenu)
+    }
   }
 
   /**
@@ -131,6 +135,19 @@ private struct PresetMenuControl: View {
 
   private var activeName: String {
     activePreset?.name ?? String(localized: "(New Preset)", bundle: #bundle)
+  }
+
+  /**
+   Asks AppKit to draw the checkmark beside the active preset. AppKit decides
+   for itself whether a menu item's image is drawn and hides it by default, so
+   the row standing for the queue's current rules has to say it wants its own.
+   */
+  private func drawPresetCheckmark(in menu: NSMenu?) {
+    guard #available(macOS 27, *), let menu else { return }
+    let names = Set(env.presets.presets.map(\.name))
+    for item in menu.items where item.image != nil && names.contains(item.title) {
+      item.preferredImageVisibility = .visible
+    }
   }
 }
 
