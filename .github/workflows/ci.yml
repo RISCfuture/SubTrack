@@ -28,12 +28,12 @@ jobs:
   # The only suite needing no FFmpeg: the scheme is host-less and builds just the test bundle.
   unit:
     name: Unit Tests
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 30
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: "27"
       - uses: actions/checkout@v6
 
       # SwiftData's @Model and Observation's @Observable macros can fail fingerprint validation on
@@ -63,7 +63,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-unit/Build
             ${{ runner.temp }}/dd-unit/SourcePackages
-          key: derived-unit-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-unit-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       - name: Run unit tests
         run: |
@@ -94,12 +94,12 @@ jobs:
   # are not this project's to fix; scoped to the first-party targets, they stay warnings.
   docs:
     name: Documentation
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 45
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: "27"
       - uses: actions/checkout@v6
       - uses: ./.github/actions/vendored-ffmpeg
 
@@ -128,7 +128,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-docs/Build
             ${{ runner.temp }}/dd-docs/SourcePackages
-          key: derived-docs-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-docs-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # One derived-data directory for all four schemes: both app editions and the CLI build on the
       # framework, so a shared one compiles it once. The archives are throwaway — nothing publishes
@@ -152,12 +152,12 @@ jobs:
   # their movie fixtures at run time rather than committing them.
   cli:
     name: CLI Tests
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: "27"
       - uses: actions/checkout@v6
       - uses: ./.github/actions/vendored-ffmpeg
 
@@ -186,7 +186,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-cli/Build
             ${{ runner.temp }}/dd-cli/SourcePackages
-          key: derived-cli-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-cli-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       - name: Run CLI tests
         run: |
@@ -209,12 +209,12 @@ jobs:
 
   ui-download:
     name: UI Tests (download)
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 90
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: "27"
       - uses: actions/checkout@v6
       - uses: ./.github/actions/vendored-ffmpeg
 
@@ -243,7 +243,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-ui-download/Build
             ${{ runner.temp }}/dd-ui-download/SourcePackages
-          key: derived-ui-download-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-ui-download-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # TEST_RUNNER_XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI
       # hardware doesn't trip element lookups that pass locally. The waits are read by the test
@@ -284,12 +284,12 @@ jobs:
     name: UI Tests (MAS)
     needs: ui-download
     if: ${{ !cancelled() }}
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: "27"
       - uses: actions/checkout@v6
       - uses: ./.github/actions/vendored-ffmpeg
 
@@ -318,7 +318,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-ui-mas/Build
             ${{ runner.temp }}/dd-ui-mas/SourcePackages
-          key: derived-ui-mas-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-ui-mas-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       - name: Run UI tests
         env:

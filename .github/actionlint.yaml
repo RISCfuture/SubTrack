@@ -1,0 +1,6 @@
+# xcode-27 is a GitHub-hosted preview image, so it is absent from the runner labels actionlint
+# ships with. This key is the only way to name a label actionlint does not know; despite its name,
+# its effect is simply to add the label to the known set.
+self-hosted-runner:
+  labels:
+    - xcode-27
