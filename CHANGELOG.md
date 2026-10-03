@@ -37,6 +37,15 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   on an Intel Mac SubTrack launched and then failed at the one thing it exists
   to do.
 
+### Changed
+
+- Cancelling a run asks FFmpeg to stop, gives it a few seconds to close the
+  file it has open, and kills it if it has not gone by then. A single request to
+  stop can be ignored by an encode that has wedged, which left the run showing
+  as cancelling with FFmpeg still working; the cancel now takes effect either
+  way, and the cancelled output is discarded only once nothing is still writing
+  into it.
+
 ## 1.1
 
 ### New
