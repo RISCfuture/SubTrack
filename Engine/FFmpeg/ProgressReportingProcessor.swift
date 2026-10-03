@@ -1,11 +1,26 @@
 import Foundation
+import Subprocess
+import System
 
 /**
  Processes a video file with `ffmpeg`, streaming progress updates parsed from
- `ffmpeg -progress pipe:1`. Supports cooperative cancellation (terminating the
- `ffmpeg` child) and the same post-run re-probe verification as the CLI.
+ `ffmpeg -progress pipe:1`. Supports cooperative cancellation — a cancelled
+ run shuts the `ffmpeg` child down and kills it if it won't go — and the same
+ post-run re-probe verification as the CLI.
  */
 final class ProgressReportingProcessor: Processor {
+
+  /**
+   How a cancelled run takes the `ffmpeg` child down: `SIGTERM` first, giving
+   the muxer a few seconds to finish the file it has open and let go of it, and
+   then the `SIGKILL` `Subprocess` appends to every teardown sequence, so an
+   encode that has stopped listening stops anyway.
+   */
+  private static let platformOptions: PlatformOptions = {
+    var options = PlatformOptions()
+    options.teardownSequence = [.gracefulShutDown(allowedDurationToNextStep: .seconds(5))]
+    return options
+  }()
 
   /// The URL path to the `ffmpeg` executable, which the caller resolves.
   var ffmpegURL = URL(filePath: "ffmpeg", directoryHint: .notDirectory)
@@ -88,48 +103,52 @@ final class ProgressReportingProcessor: Processor {
     outputURL: URL,
     onProgress: @escaping @Sendable (ConversionProgress) -> Void
   ) async throws {
+    if suppressStderr {
+      try await process(outputURL: outputURL, diagnostics: .discarded, onProgress: onProgress)
+    } else {
+      try await process(
+        outputURL: outputURL,
+        diagnostics: .currentStandardError,
+        onProgress: onProgress
+      )
+    }
+  }
+
+  /// Runs the conversion with `ffmpeg`'s own diagnostics sent to `diagnostics`.
+  private func process<Diagnostics: ErrorOutputProtocol>(
+    outputURL: URL,
+    diagnostics: Diagnostics,
+    onProgress: @escaping @Sendable (ConversionProgress) -> Void
+  ) async throws {
     let staged = StagedOutput(destination: outputURL)
     let writeURL = staged?.url ?? outputURL
 
-    let running = RunningProcess()
-    let process = running.process
-    let stdout = configure(process, writingTo: writeURL)
-
-    let duration = totalDuration
-    let readHandle = stdout.fileHandleForReading, writeHandle = stdout.fileHandleForWriting
-
     do {
-      try await withTaskCancellationHandler {
-        // Reads only local, Sendable-transferable values (never `self`), so the
-        // non-Sendable processor is not sent into the child task.
-        async let reading: Void = {
-          var parser = ProgressParser(totalDuration: duration)
-          for try await line in readHandle.bytes.lines {
+      let status: TerminationStatus
+      do {
+        status = try await Subprocess.run(
+          .path(FilePath(ffmpegURL.path(percentEncoded: false))),
+          arguments: Arguments(arguments(outputURL: writeURL)),
+          platformOptions: Self.platformOptions,
+          input: .none,
+          output: .sequence,
+          error: diagnostics
+        ) { execution in
+          var parser = ProgressParser(totalDuration: self.totalDuration)
+          for try await line in execution.standardOutput.strings() {
             if let progress = parser.consume(line: line) { onProgress(progress) }
           }
-        }()
-
-        do {
-          try await process.runUntilExit()
-        } catch {
-          // Nothing spawned, so close the write end here too — the reader above
-          // would otherwise wait forever for an EOF no child can deliver.
-          try? writeHandle.close()
-          if Task.isCancelled { throw VideoProcessingError.cancelled }
-          throw VideoProcessingError.launchFailed(detail: error.userMessage)
-        }
-        // Close the parent's copy of the write end so the reader sees EOF.
-        try? writeHandle.close()
-        try await reading
-
+        }.terminationStatus
+      } catch {
         if Task.isCancelled { throw VideoProcessingError.cancelled }
-        guard process.terminationStatus == 0 else {
-          throw VideoProcessingError.encodeFailed(exitCode: process.terminationStatus)
-        }
-        if verifyOutput { try await verify(outputURL: writeURL) }
-      } onCancel: {
-        running.terminate()
+        throw VideoProcessingError.launchFailed(detail: error.userMessage)
       }
+
+      if Task.isCancelled { throw VideoProcessingError.cancelled }
+      guard status.isSuccess else {
+        throw VideoProcessingError.encodeFailed(exitCode: status.code)
+      }
+      if verifyOutput { try await verify(outputURL: writeURL) }
     } catch {
       staged?.discard()
       throw error
@@ -147,20 +166,6 @@ final class ProgressReportingProcessor: Processor {
     return ["-y", "-i", inputURL.path(percentEncoded: false)] + convertArguments
       + Self.dispositionArguments(for: operations)
       + ["-progress", "pipe:1", "-nostats", outputURL.path(percentEncoded: false)]
-  }
-
-  /**
-   Points `process` at `ffmpeg` with this conversion's arguments and pipes,
-   returning the pipe carrying the `-progress` stream.
-   */
-  private func configure(_ process: Process, writingTo outputURL: URL) -> Pipe {
-    let stdout = Pipe()
-    process.executableURL = ffmpegURL
-    process.arguments = arguments(outputURL: outputURL)
-    process.standardOutput = stdout
-    process.standardInput = Pipe()
-    if suppressStderr { process.standardError = FileHandle.nullDevice }
-    return stdout
   }
 
   private func verify(outputURL: URL) async throws {
@@ -325,18 +330,5 @@ private struct StagedOutput {
    */
   func discard() {
     try? FileManager.default.removeItem(at: directory)
-  }
-}
-
-/**
- A minimal `Sendable` box around a `Process` so a task-cancellation handler
- can terminate the child `ffmpeg` from outside the running actor context.
- `Process.terminate()` is safe to call from another thread.
- */
-private final class RunningProcess: @unchecked Sendable {
-  let process = Process()
-
-  func terminate() {
-    if process.isRunning { process.terminate() }
   }
 }
