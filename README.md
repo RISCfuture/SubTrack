@@ -62,7 +62,7 @@ container, so presets sync between them.
 
 ## Requirements
 
-SubTrack is written in Swift 6 and requires macOS 26.4.
+SubTrack is written in Swift 6 and requires macOS 27.
 
 ## Development
 

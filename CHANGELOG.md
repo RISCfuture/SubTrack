@@ -6,6 +6,12 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
 ## 1.2
 
+### Requirements
+
+- SubTrack now requires macOS 27, and runs on Apple silicon only. A Mac on
+  macOS 26, or any Intel Mac, cannot run this version; 1.1 is the last release
+  it can.
+
 ### Fixed
 
 - Updating no longer fails for anyone whose Applications folder sits behind a
