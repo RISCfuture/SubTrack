@@ -36,7 +36,7 @@ public enum MovieFileFinder {
     let fileManager = FileManager.default
     for url in urls {
       var isDirectory: ObjCBool = false
-      let exists = fileManager.fileExists(
+      let exists = unsafe fileManager.fileExists(
         atPath: url.path(percentEncoded: false),
         isDirectory: &isDirectory
       )
