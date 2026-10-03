@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01A5B1023018AAAA0033110E /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = 01A5B1013018AAAA0033110E /* Subprocess */; };
+		01A5B1043018AAAA0033110E /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = 01A5B1033018AAAA0033110E /* Subprocess */; };
 		01387CFE3017ED1C0033110E /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01387CFD3017ED1C0033110E /* XCUITestKit */; };
 		01387D003017ED240033110E /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01387CFF3017ED240033110E /* XCUITestKit */; };
 		01387D09301842490033110E /* GitHubUpdateChecker in Frameworks */ = {isa = PBXBuildFile; productRef = 01387D08301842490033110E /* GitHubUpdateChecker */; };
@@ -239,6 +241,7 @@
 		01ECAEFC300C9E50003C1729 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				01A5B1043018AAAA0033110E /* Subprocess in Frameworks */,
 			);
 		};
 		01ECAF07300CA189003C1729 /* Frameworks */ = {
@@ -260,6 +263,7 @@
 				01ECAF5F300CA644003C1729 /* SwiftData.framework in Frameworks */,
 				01DC0A01300CA2B3003C1729 /* DockProgress in Frameworks */,
 				01D6205530172CCE004758E7 /* Sentry in Frameworks */,
+				01A5B1023018AAAA0033110E /* Subprocess in Frameworks */,
 			);
 		};
 		01ECAF3F300CA2B3003C1729 /* Frameworks */ = {
@@ -441,6 +445,9 @@
 				01ECAF60300CB0B1003C1729 /* Engine */,
 			);
 			name = subtrack;
+			packageProductDependencies = (
+				01A5B1033018AAAA0033110E /* Subprocess */,
+			);
 			productName = subtrck;
 			productReference = 01ECAEFF300C9E50003C1729 /* subtrack */;
 			productType = "com.apple.product-type.tool";
@@ -520,6 +527,7 @@
 			packageProductDependencies = (
 				01DC0A02300CA2B3003C1729 /* DockProgress */,
 				01D6205430172CCE004758E7 /* Sentry */,
+				01A5B1013018AAAA0033110E /* Subprocess */,
 			);
 			productName = "SubTrack Common";
 			productReference = 01ECAF38300CA2B3003C1729 /* SubTrack_Common.framework */;
@@ -598,6 +606,7 @@
 				01D6205330172CCE004758E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */,
 				01387D07301842490033110E /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */,
+				01A5B1003018AAAA0033110E /* XCRemoteSwiftPackageReference "swift-subprocess" */,
 			);
 			preferredProjectObjectVersion = 100;
 			productRefGroup = 01ECAED2300C9E09003C1729 /* Products */;
@@ -1557,6 +1566,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		01A5B1003018AAAA0033110E /* XCRemoteSwiftPackageReference "swift-subprocess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftlang/swift-subprocess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RISCfuture/XCUITestKit";
@@ -1594,6 +1611,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		01A5B1013018AAAA0033110E /* Subprocess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01A5B1003018AAAA0033110E /* XCRemoteSwiftPackageReference "swift-subprocess" */;
+			productName = Subprocess;
+		};
+		01A5B1033018AAAA0033110E /* Subprocess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01A5B1003018AAAA0033110E /* XCRemoteSwiftPackageReference "swift-subprocess" */;
+			productName = Subprocess;
+		};
 		01387CFD3017ED1C0033110E /* XCUITestKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */;

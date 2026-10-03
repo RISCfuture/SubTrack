@@ -51,5 +51,8 @@ also attached to each GitHub release of the download edition.
   [swift-cmark](https://github.com/swiftlang/swift-cmark), and
   [swift-log](https://github.com/apple/swift-log).
 - [sentry-cocoa](https://github.com/getsentry/sentry-cocoa) — MIT.
+- [swift-subprocess](https://github.com/swiftlang/swift-subprocess) — Apache 2.0. It
+  depends in turn on [swift-system](https://github.com/apple/swift-system), also Apache
+  2.0.
 - [XCUITestKit](https://github.com/RISCfuture/XCUITestKit) — MIT. Test-only; not shipped
   in either app.

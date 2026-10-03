@@ -132,11 +132,11 @@ struct SystemFFmpegLocator: FFmpegLocator {
   let ffprobeURL: URL
   let capabilities: EncoderCapabilities
 
-  init(capabilities: EncoderCapabilities = .full) throws {
-    guard let ffmpeg = try which("ffmpeg") else {
+  init(capabilities: EncoderCapabilities = .full) async throws {
+    guard let ffmpeg = await which("ffmpeg") else {
       throw FFmpegToolError.executableNotFound(name: "ffmpeg")
     }
-    guard let ffprobe = try which("ffprobe") else {
+    guard let ffprobe = await which("ffprobe") else {
       throw FFmpegToolError.executableNotFound(name: "ffprobe")
     }
     self.ffmpegURL = ffmpeg

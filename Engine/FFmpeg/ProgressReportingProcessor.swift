@@ -15,13 +15,14 @@ final class ProgressReportingProcessor: Processor {
    */
   private static let dolbyVisionArguments = ["-strict", "unofficial"]
 
-  /// The URL path to the `ffmpeg` executable.
-  var ffmpegURL =
-    (try? which("ffmpeg")) ?? URL(filePath: "ffmpeg", directoryHint: .notDirectory)
+  /// The URL path to the `ffmpeg` executable, which the caller resolves.
+  var ffmpegURL = URL(filePath: "ffmpeg", directoryHint: .notDirectory)
 
-  /// The URL path to the `ffprobe` executable (used for post-process verification).
-  var ffprobeURL =
-    (try? which("ffprobe")) ?? URL(filePath: "ffprobe", directoryHint: .notDirectory)
+  /**
+   The URL path to the `ffprobe` executable, which the caller resolves. Used
+   for post-process verification.
+   */
+  var ffprobeURL = URL(filePath: "ffprobe", directoryHint: .notDirectory)
 
   /// If `true`, `ffmpeg`'s `stderr` output is discarded.
   var suppressStderr = false

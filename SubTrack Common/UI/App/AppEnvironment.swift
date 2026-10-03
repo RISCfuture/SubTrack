@@ -245,7 +245,7 @@ public final class AppEnvironment {
     let engine =
       engine
       ?? ConversionEngine(
-        locatorProvider: { FFmpegProvisioning.makeLocator(fullCodecSet: fullCodecSet) }
+        locatorProvider: { await FFmpegProvisioning.makeLocator(fullCodecSet: fullCodecSet) }
       )
 
     // Every queue's coordinator shares the one engine, governor, and source
@@ -325,7 +325,7 @@ public final class AppEnvironment {
    caller keeps its last-known capabilities.
    */
   private static func probeEncoderCapabilities(fullCodecSet: Bool) async -> EncoderCapabilities? {
-    let ffmpegURL = FFmpegProvisioning.makeLocator(fullCodecSet: fullCodecSet).ffmpegURL
+    let ffmpegURL = await FFmpegProvisioning.makeLocator(fullCodecSet: fullCodecSet).ffmpegURL
     switch await FFmpegProbe(ffmpegURL: ffmpegURL).run() {
       case .success(let capabilities): return EncoderCapabilities(probed: capabilities)
       case .unavailable: return nil
