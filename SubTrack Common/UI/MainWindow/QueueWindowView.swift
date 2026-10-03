@@ -38,10 +38,8 @@ struct QueueWindowView: View {
     }
     .dropDestination(for: URL.self) { urls, _ in
       env.queue.ingest(urls)
-      return true
-    } isTargeted: {
-      dropTargeted = $0
     }
+    .onDropSessionUpdated { dropTargeted = $0.isOverDestination }
     .overlay {
       if dropTargeted { DropOverlay() }
     }
@@ -88,6 +86,16 @@ private struct QueueContentView: View {
 }
 
 /// A translucent overlay shown while a drag is over the window.
+private extension DropSession {
+  /// Whether the drag is over the destination, as opposed to having left it or finished.
+  var isOverDestination: Bool {
+    switch phase {
+      case .entering, .active: true
+      default: false
+    }
+  }
+}
+
 private struct DropOverlay: View {
   private static let cornerRadius: Double = 16
   private static let borderWidth: Double = 3
