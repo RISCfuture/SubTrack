@@ -9,8 +9,8 @@ func run(_ options: CommandOptions) async throws {
     throw CLIUsageError.wrongArgumentCount
   }
 
-  let ffmpegURL = try resolve(options.ffmpeg, orLocate: "ffmpeg")
-  let ffprobeURL = try resolve(options.ffprobe, orLocate: "ffprobe")
+  let ffmpegURL = try await resolve(options.ffmpeg, orLocate: "ffmpeg")
+  let ffprobeURL = try await resolve(options.ffprobe, orLocate: "ffprobe")
 
   let reader = Reader(suppressStderr: options.suppressStderr)
   reader.ffprobeURL = ffprobeURL
@@ -42,9 +42,11 @@ func run(_ options: CommandOptions) async throws {
 }
 
 /// Uses an explicit path if provided, otherwise locates the executable on `$PATH`.
-private func resolve(_ explicit: URL?, orLocate name: String) throws -> URL {
+private func resolve(_ explicit: URL?, orLocate name: String) async throws -> URL {
   if let explicit { return explicit }
-  guard let located = try which(name) else { throw FFmpegToolError.executableNotFound(name: name) }
+  guard let located = await which(name) else {
+    throw FFmpegToolError.executableNotFound(name: name)
+  }
   return located
 }
 

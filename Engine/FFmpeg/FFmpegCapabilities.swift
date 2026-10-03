@@ -1,4 +1,6 @@
 import Foundation
+import Subprocess
+import System
 
 /**
  The kind of stream a codec applies to, as reported by `ffmpeg -encoders`
@@ -327,6 +329,12 @@ enum FFmpegOutputParser {
  type is `Sendable` and safe to hand to a background task.
  */
 struct FFmpegProbe: Sendable {
+  /**
+   The most a capability listing may run to. `ffmpeg -decoders` is the longest
+   of the four at a few tens of kilobytes, so a megabyte is generous.
+   */
+  private static let outputLimit = 1 << 20
+
   /// The `ffmpeg` executable to probe.
   let ffmpegURL: URL
 
@@ -362,25 +370,27 @@ struct FFmpegProbe: Sendable {
   }
 
   private func capture(_ arguments: [String]) async throws -> String {
-    let process = Process()
-    process.executableURL = ffmpegURL
-    process.arguments = arguments
-    process.standardError = FileHandle.nullDevice
-    process.standardInput = Pipe()
+    // `.string` repairs invalid bytes rather than rejecting them, which is what
+    // this wants: ffmpeg's capability listings can carry a stray byte, and
+    // losing a whole listing is worse than a U+FFFD in it.
+    let result = try await Subprocess.run(
+      .path(FilePath(ffmpegURL.path(percentEncoded: false))),
+      arguments: Arguments(arguments),
+      output: .string(limit: Self.outputLimit)
+    )
 
-    let data = try await process.runCapturingStandardOutput()
-
-    guard process.terminationStatus == 0 else {
+    guard result.terminationStatus.isSuccess else {
+      let code =
+        switch result.terminationStatus {
+          case .exited(let code), .signaled(let code): code
+        }
       throw FFmpegToolError.probeUnavailable(
         detail: String(
-          localized: "ffmpeg exited with code \(process.terminationStatus, format: .number).",
+          localized: "ffmpeg exited with code \(code, format: .number).",
           bundle: #bundle
         )
       )
     }
-    // Decoded lossily on purpose: ffmpeg's capability listings can carry a
-    // stray byte, and losing the whole listing to a nil is worse than a U+FFFD.
-    // swiftlint:disable:next optional_data_string_conversion
-    return String(decoding: data, as: UTF8.self)
+    return result.standardOutput
   }
 }

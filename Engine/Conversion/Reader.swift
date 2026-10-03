@@ -7,9 +7,8 @@ class Reader {
 
   private let suppressStderr: Bool
 
-  /// The URL to the `ffprobe` executable.
-  var ffprobeURL =
-    (try? which("ffprobe")) ?? URL(filePath: "ffprobe", directoryHint: .notDirectory)
+  /// The URL to the `ffprobe` executable, which the caller resolves.
+  var ffprobeURL = URL(filePath: "ffprobe", directoryHint: .notDirectory)
 
   /**
    Creates a new instance.

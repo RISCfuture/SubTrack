@@ -19,29 +19,6 @@ extension Process {
 
 extension Process {
 
-  // Runs the process and returns everything it wrote to standard output.
-  // Reading runs alongside the process so a full pipe buffer can't stall the
-  // child. Assigns `standardOutput`, so callers must not set it themselves.
-  func runCapturingStandardOutput() async throws -> Data {
-    let pipe = Pipe()
-    standardOutput = pipe
-
-    async let output = pipe.fileHandleForReading.readAllData()
-    do {
-      try await runUntilExit()
-    } catch {
-      // Nothing spawned, so no child will ever close the write end. Closing
-      // this process's copy is what lets the concurrent read reach EOF —
-      // otherwise it waits forever and takes the whole call with it.
-      try? pipe.fileHandleForWriting.close()
-      throw error
-    }
-    return try await output
-  }
-}
-
-extension Process {
-
   // Runs the process and returns everything it wrote to standard output and
   // standard error. Both pipes are drained alongside the process so neither can
   // fill and stall the child. Assigns `standardOutput` and `standardError`, so
