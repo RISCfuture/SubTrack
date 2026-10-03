@@ -380,10 +380,7 @@ struct FFmpegProbe: Sendable {
     )
 
     guard result.terminationStatus.isSuccess else {
-      let code =
-        switch result.terminationStatus {
-          case .exited(let code), .signaled(let code): code
-        }
+      let code = result.terminationStatus.code
       throw FFmpegToolError.probeUnavailable(
         detail: String(
           localized: "ffmpeg exited with code \(code, format: .number).",
