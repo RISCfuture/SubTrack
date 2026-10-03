@@ -1,9 +1,18 @@
 import Foundation
+import Subprocess
+import System
 import os
 
 /// Reads media files using `ffprobe` and returns ``Container``s.
 class Reader {
   private static let logger = Logger(subsystem: "SubTrack", category: "ffprobe")
+
+  /**
+   The most `ffprobe` may write to either stream. Its JSON scales with the
+   number of streams rather than the length of the movie, and its diagnostics
+   are a banner and a few lines, so a megabyte is generous for both.
+   */
+  private static let outputLimit = 1 << 20
 
   private let suppressStderr: Bool
 
@@ -48,23 +57,24 @@ class Reader {
       throw FFmpegToolError.executableNotFound(name: "ffprobe")
     }
 
-    let process = Process()
-    process.executableURL = ffprobeURL
-    process.arguments = arguments
-    process.standardInput = Pipe()
-
     let path = file.path(percentEncoded: false), tool = ffprobeURL.path(percentEncoded: false)
     Self.logger.debug("Probing \(path, privacy: .public) with \(tool, privacy: .public)")
 
-    let (data, diagnosticsData) = try await process.runCapturingOutputAndError()
+    let result = try await Subprocess.run(
+      .path(FilePath(tool)),
+      arguments: Arguments(arguments),
+      output: .data(limit: Self.outputLimit),
+      error: .data(limit: Self.outputLimit)
+    )
+    let data = result.standardOutput, diagnosticsData = result.standardError
     // Decoded lossily on purpose: ffprobe's complaint is worth surfacing with a
     // U+FFFD in it, where the failable initializer would discard it entirely.
     // swiftlint:disable:next optional_data_string_conversion
     let diagnostics = String(decoding: diagnosticsData, as: UTF8.self)
     if !suppressStderr { FileHandle.standardError.write(diagnosticsData) }
 
-    let exitCode = process.terminationStatus
-    guard exitCode == 0 else {
+    guard result.terminationStatus.isSuccess else {
+      let exitCode = result.terminationStatus.code
       Self.logger.error(
         "ffprobe exited with code \(exitCode) for \(path, privacy: .public): \(diagnostics, privacy: .public)"
       )
