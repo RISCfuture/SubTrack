@@ -24,7 +24,7 @@ public final class FFmpegCapabilitiesStore {
    */
   public func load(fullCodecSet: Bool) async {
     state = .loading
-    let ffmpegURL = FFmpegProvisioning.makeLocator(fullCodecSet: fullCodecSet).ffmpegURL
+    let ffmpegURL = await FFmpegProvisioning.makeLocator(fullCodecSet: fullCodecSet).ffmpegURL
     let outcome = await FFmpegProbe(ffmpegURL: ffmpegURL).run()
     guard !Task.isCancelled else { return }
     switch outcome {

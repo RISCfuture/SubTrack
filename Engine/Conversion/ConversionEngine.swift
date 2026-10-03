@@ -38,7 +38,7 @@ actor ConversionEngine: ConversionEngineProtocol {
    to the user's FFmpeg-location setting takes effect immediately. `Sendable`,
    so it is safe to call without hopping onto the actor.
    */
-  nonisolated private let locatorProvider: @Sendable () -> any FFmpegLocator
+  nonisolated private let locatorProvider: @Sendable () async -> any FFmpegLocator
 
   /**
    Where every inspection this engine performs goes through, so a burst of
@@ -49,13 +49,13 @@ actor ConversionEngine: ConversionEngineProtocol {
   nonisolated private let probes: ProbeCoordinator
 
   /// The current locator.
-  nonisolated var locator: any FFmpegLocator { locatorProvider() }
+  nonisolated var locator: any FFmpegLocator { get async { await locatorProvider() } }
 
-  init(locatorProvider: @escaping @Sendable () -> any FFmpegLocator) {
+  init(locatorProvider: @escaping @Sendable () async -> any FFmpegLocator) {
     self.locatorProvider = locatorProvider
     self.probes = ProbeCoordinator { url in
       let reader = Reader(suppressStderr: true)
-      reader.ffprobeURL = locatorProvider().ffprobeURL
+      reader.ffprobeURL = await locatorProvider().ffprobeURL
       return try await reader.open(file: url)
     }
   }
@@ -82,7 +82,7 @@ actor ConversionEngine: ConversionEngineProtocol {
           continuation.yield(.probed(container))
 
           let operations = try self.operations(for: job, container: container)
-          try validate(operations: operations)
+          try await validate(operations: operations)
           continuation.yield(.operations(operations))
 
           try await makeProcessor(for: job, container: container, operations: operations)
@@ -122,8 +122,9 @@ actor ConversionEngine: ConversionEngineProtocol {
     for job: SlimJob,
     container: Container,
     operations: [StreamOperation]
-  ) -> ProgressReportingProcessor {
+  ) async -> ProgressReportingProcessor {
     let processor = ProgressReportingProcessor(inputURL: job.input, operations: operations)
+    let locator = await self.locator
     processor.ffmpegURL = locator.ffmpegURL
     processor.ffprobeURL = locator.ffprobeURL
     processor.verifyOutput = job.verify
@@ -144,8 +145,8 @@ actor ConversionEngine: ConversionEngineProtocol {
    Rejects any transcode whose encoder this build cannot provide, so the
    failure is actionable rather than an opaque `ffmpeg` exit.
    */
-  nonisolated func validate(operations: [StreamOperation]) throws {
-    if let (_, codec) = locator.capabilities.firstUnsupported(in: operations) {
+  nonisolated func validate(operations: [StreamOperation]) async throws {
+    if let (_, codec) = await locator.capabilities.firstUnsupported(in: operations) {
       throw FFmpegToolError.unsupportedEncoder(codec: codec)
     }
   }

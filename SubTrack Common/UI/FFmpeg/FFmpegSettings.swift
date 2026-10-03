@@ -44,7 +44,7 @@ enum FFmpegProvisioning {
   private static let log = Logger(subsystem: "SubTrack", category: "FFmpegProvisioning")
 
   /// The locator for the current settings.
-  static func makeLocator(fullCodecSet: Bool, defaults: UserDefaults = .standard)
+  static func makeLocator(fullCodecSet: Bool, defaults: UserDefaults = .standard) async
     -> any FFmpegLocator
   {
     let capabilities: EncoderCapabilities = fullCodecSet ? .full : .videoToolboxOnly
@@ -58,16 +58,16 @@ enum FFmpegProvisioning {
         capabilities: capabilities
       )
     }
-    return builtInLocator(capabilities: capabilities)
+    return await builtInLocator(capabilities: capabilities)
   }
 
   /// The bundled binary when present, otherwise the system `ffmpeg` (dev).
-  static func builtInLocator(capabilities: EncoderCapabilities) -> any FFmpegLocator {
+  static func builtInLocator(capabilities: EncoderCapabilities) async -> any FFmpegLocator {
     let bundled = BundledFFmpegLocator(capabilities: capabilities)
     if FileManager.default.isExecutableFile(atPath: bundled.ffmpegURL.path(percentEncoded: false)) {
       return bundled
     }
-    if let system = try? SystemFFmpegLocator(capabilities: capabilities) { return system }
+    if let system = try? await SystemFFmpegLocator(capabilities: capabilities) { return system }
     let reason = FFmpegToolError.executableNotFound(name: "ffmpeg").userMessage
     log.error(
       "No runnable ffmpeg found; using non-runnable bundled locator: \(reason, privacy: .public)"
