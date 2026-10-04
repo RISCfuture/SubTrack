@@ -402,6 +402,9 @@
     "Copy Install Command" : {
 
     },
+    "Copy the file somewhere else and add the copy. Reading one in place from another app’s container needs Full Disk Access, granted under Privacy & Security in System Settings." : {
+
+    },
     "Copyright © %@" : {
 
     },
@@ -1669,6 +1672,9 @@
       }
     },
     "ffprobe returned no data for “%@”." : {
+
+    },
+    "macOS wouldn’t let “%@” be read." : {
 
     },
     "name" : {
