@@ -4,13 +4,23 @@ Release notes for SubTrack. The version headings are what
 `Scripts/release-notes.sh` reads, and what the Release workflow attaches to a
 GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
-## 1.2
+## 2.0
 
 ### Requirements
 
-- SubTrack now requires macOS 27, and runs on Apple silicon only. A Mac on
-  macOS 26, or any Intel Mac, cannot run this version; 1.1 is the last release
-  it can.
+- SubTrack now requires macOS 27. A Mac on macOS 26 cannot run this version;
+  1.2 is the last release it can.
+
+### Changed
+
+- Cancelling a run asks FFmpeg to stop, gives it a few seconds to close the
+  file it has open, and kills it if it has not gone by then. A single request to
+  stop can be ignored by an encode that has wedged, which left the run showing
+  as cancelling with FFmpeg still working; the cancel now takes effect either
+  way, and the cancelled output is discarded only once nothing is still writing
+  into it.
+
+## 1.2
 
 ### Fixed
 
@@ -24,15 +34,6 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   could not run the bundled FFmpeg, which is built for Apple silicon only, so
   on an Intel Mac SubTrack launched and then failed at the one thing it exists
   to do.
-
-### Changed
-
-- Cancelling a run asks FFmpeg to stop, gives it a few seconds to close the
-  file it has open, and kills it if it has not gone by then. A single request to
-  stop can be ignored by an encode that has wedged, which left the run showing
-  as cancelling with FFmpeg still working; the cancel now takes effect either
-  way, and the cancelled output is discarded only once nothing is still writing
-  into it.
 
 ## 1.1
 
