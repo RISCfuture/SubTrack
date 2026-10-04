@@ -26,6 +26,17 @@ struct QueueWindowView: View {
       Divider()
       QueueStatusBar()
     }
+    // Dropping files is the queue's own gesture, so it covers the queue rather
+    // than the whole window: a drop destination enclosing the inspector also
+    // claims the reorder drops its editors raise, leaving a dragged row to
+    // slide back.
+    .dropDestination(for: URL.self) { urls, _ in
+      env.queue.ingest(urls)
+    }
+    .onDropSessionUpdated { dropTargeted = $0.isOverDestination }
+    .overlay {
+      if dropTargeted { DropOverlay() }
+    }
     .toolbar { QueueToolbar() }
     .inspector(isPresented: $ui.inspectorVisible) {
       InspectorView()
@@ -38,13 +49,6 @@ struct QueueWindowView: View {
         // `inspectorColumnWidth` reports a new minimum from inside the window's
         // constraint pass, and the re-entry raises an uncaught AppKit exception.
         .frame(minWidth: 320, idealWidth: 360)
-    }
-    .dropDestination(for: URL.self) { urls, _ in
-      env.queue.ingest(urls)
-    }
-    .onDropSessionUpdated { dropTargeted = $0.isOverDestination }
-    .overlay {
-      if dropTargeted { DropOverlay() }
     }
     .onOpenURL { env.queue.ingest([$0]) }
     .onChange(of: undoManager, initial: true) { _, undoManager in
