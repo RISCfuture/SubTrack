@@ -203,11 +203,14 @@ extension QueueManagementUITests {
    the ingest is still running when the sheet is looked for. Cancelling it
    stops the ingest rather than merely hiding the sheet.
 
-   The count is deliberately far past what the assertions need: at 1,200 files
-   the ingest finished between finding the sheet and clicking its button.
+   The count sits between two failures: the ingest has to outlast the three
+   seconds or so it takes to find the sheet and then its button — at 1,200
+   files it did not — and the click's wait for the app to go idle has to end
+   inside the thirty seconds a query allows. At 3,000 the ingest runs about six
+   seconds, which clears both on a runner several times slower than a Mac.
    */
   func testIngestSheetReportsAndCancelsAFolderAdd() {
-    let app = SubTrack.launch(state: .empty, largeFolderSize: 6000)
+    let app = SubTrack.launch(state: .empty, largeFolderSize: 3000)
     let window = MainWindowScreen(app: app).waitUntilLoaded()
 
     window.addFolder()
