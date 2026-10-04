@@ -28,7 +28,7 @@ struct FFmpegAcknowledgement: Sendable, Equatable {
 
         This software uses libraries from the FFmpeg project under the LGPLv2.1.
 
-        Copyright © 2000–2024 the FFmpeg developers.
+        Copyright © 2000–2026 the FFmpeg developers.
 
         The full text of the GNU LGPL v2.1 is available at \
         https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html. FFmpeg source and license \
@@ -57,7 +57,7 @@ struct FFmpegAcknowledgement: Sendable, Equatable {
 
         This software uses code of the FFmpeg project licensed under the GPLv2+.
 
-        FFmpeg — Copyright © 2000–2024 the FFmpeg developers.
+        FFmpeg — Copyright © 2000–2026 the FFmpeg developers.
         x264 — Copyright © 2003–2024 the x264 project.
         x265 — Copyright © 2013–2024 MulticoreWare, Inc.
 
