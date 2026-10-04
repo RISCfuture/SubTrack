@@ -1,4 +1,3 @@
-import AppKit
 import SwiftUI
 
 /**
@@ -102,24 +101,16 @@ private struct PresetMenuControl: View {
 
   var body: some View {
     Menu {
-      ForEach(env.presets.presets) { preset in
-        Button {
-          env.queue.settings.apply(preset)
-        } label: {
-          if preset == activePreset {
-            Label(preset.name, systemImage: "checkmark")
-          } else {
-            Text(preset.name)
-          }
+      Picker(LocalizedStringResource("Preset", bundle: #bundle), selection: activeID) {
+        ForEach(env.presets.presets) { preset in
+          Text(preset.name).tag(Optional(preset.id))
         }
       }
-      Divider()
+      .pickerStyle(.inline)
+      .labelsHidden()
       Button(LocalizedStringResource("Save Current as Preset…", bundle: #bundle)) { beginNaming() }
     } label: {
       Label(activeName, systemImage: "slider.horizontal.3")
-    }
-    .onReceive(NotificationCenter.default.publisher(for: NSMenu.didBeginTrackingNotification)) {
-      drawPresetCheckmark(in: $0.object as? NSMenu)
     }
   }
 
@@ -138,16 +129,18 @@ private struct PresetMenuControl: View {
   }
 
   /**
-   Asks AppKit to draw the checkmark beside the active preset. AppKit decides
-   for itself whether a menu item's image is drawn and hides it by default, so
-   the row standing for the queue's current rules has to say it wants its own.
+   The active preset as a selection the `Picker` can mark and write back to.
+   Settings that match no preset select nothing, which is the same state the
+   menu's own label reports as a new preset.
    */
-  private func drawPresetCheckmark(in menu: NSMenu?) {
-    guard #available(macOS 27, *), let menu else { return }
-    let names = Set(env.presets.presets.map(\.name))
-    for item in menu.items where item.image != nil && names.contains(item.title) {
-      item.preferredImageVisibility = .visible
-    }
+  private var activeID: Binding<Preset.ID?> {
+    Binding(
+      get: { activePreset?.id },
+      set: { selected in
+        guard let preset = env.presets.presets.first(where: { $0.id == selected }) else { return }
+        env.queue.settings.apply(preset)
+      }
+    )
   }
 }
 
