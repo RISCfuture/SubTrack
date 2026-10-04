@@ -15,6 +15,14 @@ enum MediaInspectionError: Error, Sendable {
   case probeFailed(exitCode: Int32, detail: String?)
 
   /**
+   The file is there, but the system won't hand it over. macOS refuses another
+   app's container without prompting, and a process with no bundle identifier
+   — which is what the `subtrack` tool is — cannot be granted access to one at
+   all.
+   */
+  case accessDenied(url: URL)
+
+  /**
    `ffprobe` produced no output for the file, which usually means it isn't a
    valid media container.
    */
@@ -56,6 +64,11 @@ extension MediaInspectionError: LocalizedError {
             bundle: #bundle
           )
         }
+      case .accessDenied(let url):
+        String(
+          localized: "macOS wouldn’t let “\(url.lastPathComponent)” be read.",
+          bundle: #bundle
+        )
       case .noData(let url):
         String(
           localized: "ffprobe returned no data for “\(url.lastPathComponent)”.",
@@ -77,6 +90,14 @@ extension MediaInspectionError: LocalizedError {
 
   public var recoverySuggestion: String? {
     switch self {
+      case .accessDenied:
+        String(
+          localized: """
+            Copy the file somewhere else and add the copy. Reading one in place from another app’s \
+            container needs Full Disk Access, granted under Privacy & Security in System Settings.
+            """,
+          bundle: #bundle
+        )
       case .noVideoStream:
         String(localized: "Choose a file that contains a video track.", bundle: #bundle)
       default:
@@ -85,8 +106,8 @@ extension MediaInspectionError: LocalizedError {
   }
 
   /**
-   Every way `ffprobe` can refuse a file reads the same to the person holding
-   it — the file won't open — so they all land on the one page about that.
+   Every way a file can fail to open reads the same to the person holding it,
+   so they all land on the one page about that.
    ``noVideoStream(filename:)`` is the exception: it names the problem and the fix in a
    sentence, and has nothing left to explain.
    */

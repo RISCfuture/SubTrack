@@ -39,6 +39,18 @@ class Reader {
   }
 
   /**
+   Whether the system is withholding `file`: it is there, but this process is
+   not allowed to read it. macOS refuses another app's container without
+   prompting, and a process with no bundle identifier — which is what the
+   `subtrack` tool is — cannot be granted access to one at all. A path that
+   isn't there at all is `ffprobe`'s to complain about.
+   */
+  private static func isWithheld(_ file: URL) -> Bool {
+    let manager = FileManager.default, path = file.path(percentEncoded: false)
+    return manager.fileExists(atPath: path) && !manager.isReadableFile(atPath: path)
+  }
+
+  /**
    Reads a media file and creates a Container.
 
    - Parameter file: The path to the container file.
@@ -56,6 +68,7 @@ class Reader {
     else {
       throw FFmpegToolError.executableNotFound(name: "ffprobe")
     }
+    guard !Self.isWithheld(file) else { throw MediaInspectionError.accessDenied(url: file) }
 
     let path = file.path(percentEncoded: false), tool = ffprobeURL.path(percentEncoded: false)
     Self.logger.debug("Probing \(path, privacy: .public) with \(tool, privacy: .public)")
