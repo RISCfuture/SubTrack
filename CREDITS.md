@@ -1,8 +1,9 @@
 # Credits
 
 SubTrack itself is licensed under the [GNU General Public License, version 2 or
-later](LICENSE). The components below carry their own terms. The same notices appear in
-the app's About window, which shows the set applying to the edition you're running.
+later](LICENSE). The components below carry their own terms. The FFmpeg notices also
+appear in the app's About window, which shows the set applying to the edition you're
+running; the Swift packages are listed only here.
 
 ## FFmpeg
 
