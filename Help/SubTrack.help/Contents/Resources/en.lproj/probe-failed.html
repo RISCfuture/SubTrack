@@ -3,8 +3,8 @@
   <meta charset="utf-8">
   <title>If SubTrack can’t read a file</title>
   <meta name="AppleTitle" content="If SubTrack can’t read a file">
-  <meta name="description" content="Why inspecting a file fails before any slimming starts — not really a video, truncated, an unsupported container, or encrypted — and what to do.">
-  <meta name="keywords" content="ffprobe, unreadable, corrupt, truncated, drm, encrypted, container, inspect, rescan, couldn’t read">
+  <meta name="description" content="Why inspecting a file fails before any slimming starts — not really a video, truncated, an unsupported container, encrypted, or withheld by macOS — and what to do.">
+  <meta name="keywords" content="ffprobe, unreadable, corrupt, truncated, drm, encrypted, container, inspect, rescan, couldn’t read, permission, denied, full disk access">
   <meta name="robots" content="index, anchor">
   <link rel="stylesheet" href="subtrack-help.css">
 </head>
@@ -15,8 +15,8 @@
 
 <p>This happens before any slimming starts. SubTrack inspects every file you add, and that has to
 succeed before there’s a track list to make decisions about. When it fails, the row says SubTrack
-couldn’t read the video file, and the detail beneath is whatever <code>ffprobe</code> said on its
-way out.</p>
+couldn’t read the video file, and the detail beneath says why — usually whatever
+<code>ffprobe</code> said on its way out.</p>
 
 <h2>What it usually is</h2>
 
@@ -29,12 +29,18 @@ way out.</p>
     they’ve been compiled to handle.</li>
   <li><strong>It’s encrypted.</strong> Purchased and rented video carries DRM, and nothing in
     SubTrack removes it.</li>
+  <li><strong>macOS is withholding it.</strong> A file inside another app’s container is refused
+    outright, with no prompt offering to allow it.</li>
 </ul>
 
 <h2>What to do</h2>
 
-<p>Try playing the file elsewhere first: if it won’t open in QuickTime Player either, the problem is
-the file. If it plays fine, open <strong>Settings</strong> &#9656; <strong>FFmpeg</strong> and click
+<p>If macOS is the one refusing it, copy the file somewhere of your own and add the copy. Reading
+one in place from inside another app’s container needs Full Disk Access, which is granted under
+<strong>Privacy &amp; Security</strong> in System Settings.</p>
+
+<p>Otherwise, try playing the file elsewhere first: if it won’t open in QuickTime Player either, the
+problem is the file. If it plays fine, open <strong>Settings</strong> &#9656; <strong>FFmpeg</strong> and click
 <strong>Supported Formats</strong> to confirm this build reads that container. Then select the row
 and choose <strong>Queue</strong> &#9656; <strong>Re-scan Selected</strong>.</p>
 

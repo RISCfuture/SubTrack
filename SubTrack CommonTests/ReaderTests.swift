@@ -58,4 +58,35 @@ struct ReaderTests {
     }
     #expect(error?.failureReason?.contains("ffprobe") == true)
   }
+
+  /**
+   A file the system withholds is reported as that, rather than as whatever
+   `ffprobe` made of being refused — it is never started, so an unlaunchable
+   one standing in for it is enough to show the refusal came first.
+   */
+  @Test
+  func `a withheld file is reported as refused`() async throws {
+    let movie = URL.temporaryDirectory.appending(
+      path: "withheld-\(UUID().uuidString).mkv",
+      directoryHint: .notDirectory
+    )
+    try Data("not readable".utf8).write(to: movie)
+    try FileManager.default.setAttributes(
+      [.posixPermissions: 0o000],
+      ofItemAtPath: movie.path(percentEncoded: false)
+    )
+    let ffprobeURL = try makeUnlaunchableExecutable()
+    defer {
+      try? FileManager.default.removeItem(at: movie)
+      try? FileManager.default.removeItem(at: ffprobeURL)
+    }
+
+    let reader = Reader(suppressStderr: true)
+    reader.ffprobeURL = ffprobeURL
+
+    let error = await #expect(throws: MediaInspectionError.self) {
+      try await reader.open(file: movie)
+    }
+    #expect(error?.failureReason == MediaInspectionError.accessDenied(url: movie).failureReason)
+  }
 }
