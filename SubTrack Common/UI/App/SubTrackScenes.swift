@@ -20,7 +20,11 @@ public struct SubTrackScenes: Scene {
         NavigationSplitView {
           QueueSidebarView()
             .environment(environment)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 220)
+            // The width is the content's own rather than the column's: on
+            // macOS 27 `navigationSplitViewColumnWidth` reports a new minimum
+            // from inside the window's constraint pass, and the re-entry runs
+            // the pass until AppKit gives up and raises.
+            .frame(minWidth: 180, idealWidth: 220)
         } detail: {
           QueueWindowView()
             .environment(environment)
