@@ -143,13 +143,25 @@ struct InspectorScreen {
    Takes the selected file's name over from the queue's format and types
    `name` into the field.
    */
+  /**
+   Clicks a radio button in a `radioGroup` `Picker`. Its accessibility element
+   spans the whole row — control and title — but only the control itself takes
+   the click, so clicking the element's centre lands on empty space beside the
+   title and selects nothing.
+   */
+  private func clickRadio(_ identifier: String, _ message: String) {
+    app.descendant(id: identifier)
+      .assertExists(message)
+      .coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5))
+      .withOffset(CGVector(dx: 8, dy: 0))
+      .click()
+  }
+
   @discardableResult
   func setCustomName(_ name: String) -> Self {
     // By identifier, not label: SwiftUI prefixes the Picker's own label onto each
     // option, so this radio button's label is "File name, Use custom name:".
-    app.descendant(id: "override.useCustomName")
-      .assertExists("The custom-name option isn’t offered.")
-      .click()
+    clickRadio("override.useCustomName", "The custom-name option isn’t offered.")
     let field = customNameField.assertExists("The custom-name field isn’t shown.")
     field.click()
     field.typeKey("a", modifierFlags: .command)
@@ -167,9 +179,7 @@ struct InspectorScreen {
   /// Hands the file's name back to the queue's format.
   @discardableResult
   func useDefaultName() -> Self {
-    app.descendant(id: "override.useDefaultName")
-      .assertExists("The default-name option isn’t offered.")
-      .click()
+    clickRadio("override.useDefaultName", "The default-name option isn’t offered.")
     return self
   }
 
