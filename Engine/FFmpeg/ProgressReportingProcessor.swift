@@ -7,6 +7,14 @@ import Foundation
  */
 final class ProgressReportingProcessor: Processor {
 
+  /**
+   Lets the MP4 muxer write a copied Dolby Vision track's configuration box,
+   which it otherwise drops, leaving only the HDR10 base layer recognizable.
+   Matroska carries it regardless. `unofficial` sits above `experimental`, so
+   experimental encoders stay locked out.
+   */
+  private static let dolbyVisionArguments = ["-strict", "unofficial"]
+
   /// The URL path to the `ffmpeg` executable.
   var ffmpegURL =
     (try? which("ffmpeg")) ?? URL(filePath: "ffmpeg", directoryHint: .notDirectory)
@@ -145,6 +153,7 @@ final class ProgressReportingProcessor: Processor {
       Self.codecArguments(for: operations) + operations.flatMap(\.mapArgument)
     return ["-y", "-i", inputURL.path(percentEncoded: false)] + convertArguments
       + Self.dispositionArguments(for: operations)
+      + Self.dolbyVisionArguments
       + ["-progress", "pipe:1", "-nostats", outputURL.path(percentEncoded: false)]
   }
 

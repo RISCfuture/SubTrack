@@ -12,6 +12,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   format MP4 cannot hold, so FFmpeg refused to write the file and the run failed
   with exit code 234. MP4 subtitles are now copied as they are, and converted
   only when the output is MKV.
+- A Dolby Vision MP4 keeps its Dolby Vision. The slimmed copy came out with only
+  the HDR10 picture underneath it, so it played as HDR10 on a Dolby Vision
+  display.
 
 ## 1.2
 
