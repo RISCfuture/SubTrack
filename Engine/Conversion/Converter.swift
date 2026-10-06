@@ -6,6 +6,8 @@ import Foundation
  */
 public class Converter {
 
+  private static let matroskaExtensions: Set = ["mkv", "mka", "mks", "mk3d"]
+
   /**
    Ordered list of preferred video codecs. Used when ordering and filtering
    video streams.
@@ -51,6 +53,13 @@ public class Converter {
   /// The container file to convert.
   public let container: Container
 
+  /**
+   The extension of the file the output is written to, which decides whether
+   ``subtitleIncompatibleCodecs`` need transcoding. Defaults to the source's own
+   extension, since slimming remuxes into the same container.
+   */
+  public var outputExtension: String
+
   /// The audio and subtitle languages to filter in.
   public let languages: [String]
 
@@ -66,6 +75,10 @@ public class Converter {
    as commentary, which subtitle that audio.
    */
   public var includeOtherAudio: Bool
+
+  private var isMatroskaOutput: Bool {
+    Self.matroskaExtensions.contains(outputExtension.lowercased())
+  }
 
   private var bestVideoStream: VideoStream? {
     let comparator = VideoComparator(preferredCodecs: videoPreferredCodecs)
@@ -105,6 +118,7 @@ public class Converter {
     includeOtherAudio: Bool = false
   ) {
     self.container = container
+    outputExtension = URL(filePath: container.filename).pathExtension
     self.languages = languages
     self.preserveNoLanguages = preserveNoLanguages
     self.includeOtherAudio = includeOtherAudio
@@ -219,7 +233,7 @@ public class Converter {
   }
 
   private func operation(forStream stream: SubtitleStream) -> StreamOperation {
-    if subtitleIncompatibleCodecs.contains(stream.codecName) {
+    if isMatroskaOutput && subtitleIncompatibleCodecs.contains(stream.codecName) {
       return .init(
         streamIndex: stream.index,
         streamType: .subtitle,

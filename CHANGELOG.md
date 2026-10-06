@@ -4,6 +4,15 @@ Release notes for SubTrack. The version headings are what
 `Scripts/release-notes.sh` reads, and what the Release workflow attaches to a
 GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
+## 1.2.1
+
+### Fixed
+
+- An MP4 whose subtitles are kept slims again. SubTrack converted them to a
+  format MP4 cannot hold, so FFmpeg refused to write the file and the run failed
+  with exit code 234. MP4 subtitles are now copied as they are, and converted
+  only when the output is MKV.
+
 ## 1.2
 
 ### Fixed

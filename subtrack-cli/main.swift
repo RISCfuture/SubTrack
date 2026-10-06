@@ -15,7 +15,9 @@ func run(_ options: CommandOptions) async throws {
   let reader = Reader(suppressStderr: options.suppressStderr)
   reader.ffprobeURL = ffprobeURL
   let container = try await reader.open(file: input)
-  let operations = try options.rules.makeConverter(container: container).operations()
+  let converter = options.rules.makeConverter(container: container)
+  converter.outputExtension = output.pathExtension
+  let operations = try converter.operations()
 
   if options.dryRun {
     try DryRunProcessor(inputURL: input, operations: operations).process(outputURL: output)

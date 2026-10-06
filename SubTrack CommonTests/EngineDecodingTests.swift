@@ -167,6 +167,43 @@ struct ConverterTests {
     #expect(subtitleIndexes == [6, 5])  // fra, then eng — Russian (4) dropped
   }
 
+  /// An MP4 source carrying its native `mov_text` subtitles.
+  private func movTextContainer() throws -> Container {
+    try decodeContainer(
+      """
+      {
+        "streams": [
+          {"index":0,"codec_name":"hevc","codec_type":"video","width":1920,"height":1080,
+           "disposition":{"default":1},"tags":{"language":"eng"}},
+          {"index":1,"codec_name":"mov_text","codec_type":"subtitle","disposition":{"default":1},
+           "tags":{"language":"eng"}}
+        ],
+        "format":{"filename":"/movies/film.mp4","duration":"60.0","size":"1000"}
+      }
+      """
+    )
+  }
+
+  /**
+   `mov_text` is MP4's own subtitle format, so it is copied into an MP4 output and
+   converted only for a Matroska one, which can't carry it.
+   */
+  @Test(arguments: [
+    (nil, StreamOperation.Kind.copy),
+    ("mp4", .copy),
+    ("mkv", .convert(codec: "srt", arguments: []))
+  ])
+  func `converts mov_text only for Matroska output`(
+    outputExtension: String?,
+    expected: StreamOperation.Kind
+  ) throws {
+    let converter = Converter(container: try movTextContainer(), languages: ["eng"])
+    if let outputExtension { converter.outputExtension = outputExtension }
+
+    let subtitle = try #require(try converter.operations().first { $0.streamType == .subtitle })
+    #expect(subtitle.kind == expected)
+  }
+
   /**
    Seeding a per-file selection preserves the operations' priority order:
    kept tracks first in output order, dropped tracks after in file order.
