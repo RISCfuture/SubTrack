@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C5979609279692189EF1EF4 /* CloudKitSchemaTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 2B77FDEEC0FDF6254D9B2928 /* CloudKitSchemaTesting */; };
 		01A5B1023018AAAA0033110E /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = 01A5B1013018AAAA0033110E /* Subprocess */; };
 		01A5B1043018AAAA0033110E /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = 01A5B1033018AAAA0033110E /* Subprocess */; };
 		01387CFE3017ED1C0033110E /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01387CFD3017ED1C0033110E /* XCUITestKit */; };
@@ -269,6 +270,7 @@
 		01ECAF3F300CA2B3003C1729 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				9C5979609279692189EF1EF4 /* CloudKitSchemaTesting in Frameworks */,
 				01ECAF43300CA2B3003C1729 /* SubTrack_Common.framework in Frameworks */,
 			);
 		};
@@ -550,6 +552,9 @@
 				01ECAF48300CA2B3003C1729 /* SubTrack CommonTests */,
 			);
 			name = SubTrackCommonTests;
+			packageProductDependencies = (
+				2B77FDEEC0FDF6254D9B2928 /* CloudKitSchemaTesting */,
+			);
 			productName = "SubTrack CommonTests";
 			productReference = 01ECAF42300CA2B3003C1729 /* SubTrackCommonTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1579,7 +1584,7 @@
 			repositoryURL = "https://github.com/RISCfuture/XCUITestKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.1.0;
 			};
 		};
 		01387D07301842490033110E /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */ = {
@@ -1611,6 +1616,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2B77FDEEC0FDF6254D9B2928 /* CloudKitSchemaTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */;
+			productName = CloudKitSchemaTesting;
+		};
 		01A5B1013018AAAA0033110E /* Subprocess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 01A5B1003018AAAA0033110E /* XCRemoteSwiftPackageReference "swift-subprocess" */;

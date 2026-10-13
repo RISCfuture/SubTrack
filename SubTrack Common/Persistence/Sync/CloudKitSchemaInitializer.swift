@@ -40,7 +40,7 @@
         description.shouldAddStoreAsynchronously = false
 
         guard
-          let model = NSManagedObjectModel.makeManagedObjectModel(for: [StoredPreset.self])
+          let model = NSManagedObjectModel.makeManagedObjectModel(for: ModelContainer.syncedModels)
         else {
           return print("CloudKit schema: couldn't build the managed object model.")
         }
