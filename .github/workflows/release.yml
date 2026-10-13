@@ -9,7 +9,10 @@ name: Release
 # version ends up pointing at the newer build; the older one stays on App Store Connect, since a
 # build can be expired but never deleted. A tag push is a deploy, not bookkeeping.
 #
-# Nothing here re-runs the tests: tag a commit CI has already passed.
+# Nothing here re-runs the test suites: tag a commit CI has already passed. The one test it does
+# run is CloudKitSchemaTests, strictly, after checking Production still matches
+# CloudKit/schema.ckdb: a model that schema doesn't cover would never sync from the build being
+# shipped. See CloudKit/README.md.
 #
 # Tags carry no "v" prefix. The in-app update checker compares release tags against
 # CFBundleShortVersionString, so "1.2" is the tag for version 1.2.
@@ -28,7 +31,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  cloudkit:
+    uses: RISCfuture/XCUITestKit/.github/workflows/cloudkit-schema.yml@1.1.0
+    with:
+      runner: xcode-27
+      team-id: 2NFSK2WB24
+      container-id: iCloud.codes.tim.SubTrack
+      certificates-repo: RISCfuture/certificates
+      # The host-less unit scheme, as in ci.yml: it needs no FFmpeg and no signing.
+      scheme: SubTrack Common Tests
+      destination: platform=macOS,arch=arm64
+      only-testing: SubTrackCommonTests/CloudKitSchemaTests
+      xcodebuild-args: CODE_SIGNING_ALLOWED=NO
+    secrets:
+      certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
+      match-password: ${{ secrets.MATCH_PASSWORD }}
+
   release:
+    needs: cloudkit
     uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.0.0
     with:
       runner: xcode-27

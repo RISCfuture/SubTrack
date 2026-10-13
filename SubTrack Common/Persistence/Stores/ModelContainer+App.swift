@@ -13,6 +13,9 @@ extension ModelContainer {
   /// The ubiquity container the presets store syncs through, as both entitlements declare it.
   static let cloudKitContainerIdentifier = "iCloud.codes.tim.SubTrack"
 
+  /// The models synced through `cloudKitContainerIdentifier`. Queues stay on this Mac.
+  public static let syncedModels: [any PersistentModel.Type] = [StoredPreset.self]
+
   /**
    The app's SwiftData container, holding the preset, queue, and queue-item
    models.
@@ -47,7 +50,7 @@ extension ModelContainer {
   private static func presetsConfiguration(inMemory: Bool) -> ModelConfiguration {
     ModelConfiguration(
       "presets",
-      schema: Schema([StoredPreset.self]),
+      schema: Schema(syncedModels),
       isStoredInMemoryOnly: inMemory,
       cloudKitDatabase: inMemory ? .none : .private(cloudKitContainerIdentifier)
     )
