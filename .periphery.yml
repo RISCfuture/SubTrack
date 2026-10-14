@@ -20,3 +20,4 @@ report_exclude:
   - "**/SubTrackCLITests/**"
   - "**/SubTrack-MASUITests/**"
   - "**/SubTrack-downloadUITests/**"
+  - "**/SubTrack UITestSupport/**"
