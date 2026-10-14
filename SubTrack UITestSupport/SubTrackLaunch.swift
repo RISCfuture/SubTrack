@@ -95,6 +95,9 @@ enum SubTrack {
 
     /// The Help book's troubleshooting queue: four distinct troubles at once.
     case helpProblems
+
+    /// The App Store screenshots' queue: invented remuxes part-way through a run.
+    case appStore
   }
 
   /// How stubbed runs resolve (mirrors `UITEST_ENGINE`).
