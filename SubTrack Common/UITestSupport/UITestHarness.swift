@@ -14,7 +14,8 @@
    A test configures the run through launch environment values, read here:
    - `UITEST_STATE` — the queue arrangement to seed (`empty`, `oneReadyItem`,
      `multiQueue`, `duplicateNames`, `missingSource`, `audioLoss`,
-     `incompatible`, `helpQueue`, `helpProblems`); defaults to `empty`.
+     `incompatible`, `helpQueue`, `helpProblems`, `appStore`); defaults to
+     `empty`.
    - `UITEST_ENGINE` — `fail` makes every stubbed run fail; otherwise runs
      succeed.
    - `UITEST_STEP_DELAY_MS` — how long each stubbed progress tick takes.
@@ -144,8 +145,11 @@
       )
       // The formats sheet and the codec pickers read the shared capability store,
       // which a real run fills by probing ffmpeg. A UI test seeds it instead, so
-      // what they offer is fixed rather than whatever build the machine resolves.
-      environment.capabilities.setForPreview(.loaded(.previewSample))
+      // what they offer is fixed rather than whatever build the machine resolves —
+      // the LGPL build for the App Store edition, as it bundles.
+      environment.capabilities.setForPreview(
+        .loaded(featureFlags.fullCodecSet ? .previewSample : .previewLGPLSample)
+      )
       seedLaunchState(into: environment)
       failStorageIfAsked(in: environment)
       return environment
@@ -330,7 +334,37 @@
           seedHelpQueue(into: environment)
         case .helpProblems:
           seedHelpProblems(into: environment)
+        case .appStore:
+          seedAppStoreQueue(into: environment)
       }
+    }
+
+    // MARK: - App Store fixtures
+
+    /**
+     The queue the App Store screenshots are taken of: a remux queue part-way
+     through a run, beside two other queues.
+
+     Seeded the way the Help book's queue is, and for the same reasons. The
+     titles are invented: a product page is marketing, and a real film's name
+     on one is a claim about that film.
+     */
+    private static func seedAppStoreQueue(into environment: AppEnvironment) {
+      let queue = PreviewSupport.populate(
+        environment,
+        with: AppStoreFixtures.queueItems,
+        queueName: "Movies"
+      )
+      environment.workspace.newQueue(name: "TV Shows")
+      environment.workspace.newQueue(name: "Backlog")
+      discardSeededQueue(from: environment.workspace)
+      queue.settings.editRules {
+        $0.languages = ["eng"]
+        $0.preserveNoLanguages = false
+        $0.includeOtherAudio = false
+      }
+      queue.settings.destination.setDestination(HelpFixtures.destination)
+      environment.workspace.selectQueue(queue.id)
     }
 
     // MARK: - Help-book fixtures
@@ -721,7 +755,7 @@
        finished rows carry the many-language audio and subtitle sets a disc
        actually ships rather than the four-stream default.
        */
-      private static func rippedContainer(
+      static func rippedContainer(
         named name: String,
         sizeBytes: Int,
         audioLanguages: [String],
@@ -740,7 +774,7 @@
       }
 
       /// A typical film's streams, named and sized after the row they belong to.
-      private static func container(named name: String, sizeBytes: Int) -> Container {
+      static func container(named name: String, sizeBytes: Int) -> Container {
         PreviewSupport.container(
           filename: "\(sourceFolder)/\(name)",
           sizeBytes: sizeBytes
@@ -757,6 +791,145 @@
           filename: "\(sourceFolder)/\(name)",
           sizeBytes: sizeBytes,
           video: [PreviewSupport.VideoTrack(codec: "av1", width: 1920, height: 1080)]
+        )
+      }
+    }
+
+    /**
+     The queue the App Store screenshots are taken of. Every title is invented,
+     and the files sit where the Help book's do, so nothing on the product page
+     names a real film or a real person's library.
+     */
+    @MainActor
+    private enum AppStoreFixtures {
+      private static let sourceFolder = HelpFixtures.sourceFolder
+
+      /// The file the inspector is opened on: the remux the marketing site walks through.
+      static let featuredName = "Nightjar (2019).mkv"
+
+      /**
+       Eight remuxes in queue order: two slimmed, one running, the rest ready or
+       waiting — among them the featured file, whose plan the inspector shows
+       before it runs. No row is `.probing`, for the reason
+       ``HelpFixtures/queueItems`` gives.
+       */
+      static var queueItems: [PreviewSupport.ItemSpec] {
+        [
+          PreviewSupport.ItemSpec(
+            name: "Saltmarsh (2018).mkv",
+            folder: sourceFolder,
+            status: .done,
+            sourceByteCount: 29_600_000_000,
+            outputByteCount: 21_100_000_000,
+            tracksRemoved: 10,
+            container: HelpFixtures.rippedContainer(
+              named: "Saltmarsh (2018).mkv",
+              sizeBytes: 29_600_000_000,
+              audioLanguages: ["eng", "fra", "deu", "spa", "ita"],
+              subtitleLanguages: ["eng", "fra", "deu", "spa", "ita", "nld", "swe"]
+            )
+          ),
+          PreviewSupport.ItemSpec(
+            name: "Orbit of Glass (2022).mkv",
+            folder: sourceFolder,
+            status: .done,
+            sourceByteCount: 19_800_000_000,
+            outputByteCount: 14_600_000_000,
+            tracksRemoved: 7,
+            container: HelpFixtures.rippedContainer(
+              named: "Orbit of Glass (2022).mkv",
+              sizeBytes: 19_800_000_000,
+              audioLanguages: ["eng", "fra", "deu", "spa"],
+              subtitleLanguages: ["eng", "fra", "deu", "spa", "jpn"]
+            )
+          ),
+          PreviewSupport.ItemSpec(
+            name: "Lanternfall (2021).mkv",
+            folder: sourceFolder,
+            status: .running,
+            progress: 0.42,
+            sourceByteCount: 38_200_000_000,
+            writtenByteCount: 15_900_000_000,
+            container: HelpFixtures.container(
+              named: "Lanternfall (2021).mkv",
+              sizeBytes: 38_200_000_000
+            )
+          ),
+          PreviewSupport.ItemSpec(
+            name: featuredName,
+            folder: sourceFolder,
+            status: .ready,
+            sourceByteCount: 8_420_000_000,
+            container: nightjarContainer
+          ),
+          PreviewSupport.ItemSpec(
+            name: "Paper Harbour (2017).mkv",
+            folder: sourceFolder,
+            status: .waiting,
+            sourceByteCount: 27_300_000_000
+          ),
+          readyItem(named: "Cobalt Summer (2016).mkv", sizeBytes: 33_900_000_000),
+          readyItem(named: "Meridian (2020).mkv", sizeBytes: 24_800_000_000),
+          PreviewSupport.ItemSpec(
+            name: "The Long Thaw (2023).mkv",
+            folder: sourceFolder,
+            status: .waiting,
+            sourceByteCount: 30_500_000_000
+          )
+        ]
+      }
+
+      /**
+       A twelve-stream UHD remux that English-only rules cut to four: the video,
+       the lossless English mix, and both English subtitles. The commentary and
+       the dubs go.
+       */
+      private static var nightjarContainer: Container {
+        PreviewSupport.container(
+          filename: "\(sourceFolder)/\(featuredName)",
+          sizeBytes: 8_420_000_000,
+          video: [PreviewSupport.VideoTrack(codec: "hevc", width: 3840, height: 2160)],
+          audio: [
+            PreviewSupport.AudioTrack(
+              codec: "truehd",
+              language: "eng",
+              channels: 8,
+              title: "Dolby TrueHD 7.1"
+            ),
+            PreviewSupport.AudioTrack(
+              codec: "ac3",
+              language: "eng",
+              channels: 2,
+              title: "Director’s Commentary",
+              roles: [.comment]
+            ),
+            PreviewSupport.AudioTrack(codec: "dts", language: "fra", channels: 6),
+            PreviewSupport.AudioTrack(codec: "dts", language: "deu", channels: 6),
+            PreviewSupport.AudioTrack(codec: "ac3", language: "spa", channels: 6),
+            PreviewSupport.AudioTrack(codec: "ac3", language: "ita", channels: 6)
+          ],
+          subtitles: [
+            PreviewSupport.SubtitleTrack(codec: "hdmv_pgs_subtitle", language: "eng"),
+            PreviewSupport.SubtitleTrack(
+              codec: "subrip",
+              language: "eng",
+              title: "English (SDH)",
+              roles: [.hearingImpaired]
+            ),
+            PreviewSupport.SubtitleTrack(codec: "hdmv_pgs_subtitle", language: "fra"),
+            PreviewSupport.SubtitleTrack(codec: "hdmv_pgs_subtitle", language: "deu"),
+            PreviewSupport.SubtitleTrack(codec: "hdmv_pgs_subtitle", language: "spa")
+          ]
+        )
+      }
+
+      private static func readyItem(named name: String, sizeBytes: Int) -> PreviewSupport.ItemSpec {
+        PreviewSupport.ItemSpec(
+          name: name,
+          folder: sourceFolder,
+          status: .ready,
+          sourceByteCount: sizeBytes,
+          container: HelpFixtures.container(named: name, sizeBytes: sizeBytes)
         )
       }
     }
@@ -782,6 +955,9 @@
 
       /// The Help book's troubleshooting queue: four distinct troubles at once.
       case helpProblems
+
+      /// The App Store screenshots' queue: invented remuxes part-way through a run.
+      case appStore
     }
   }
 #endif
