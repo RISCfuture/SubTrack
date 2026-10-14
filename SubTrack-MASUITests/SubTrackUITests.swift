@@ -13,7 +13,7 @@ nonisolated final class MASGatingUITests: XCTestCase {
 @MainActor
 extension MASGatingUITests {
   func testFFmpegLocationIsLocked() {
-    let app = MASApp.launch()
+    let app = SubTrack.launch()
     let settings = MASSettingsScreen(app: app).open()
     settings.showTab("FFmpeg")
 
@@ -24,7 +24,7 @@ extension MASGatingUITests {
   }
 
   func testCLIInstallIsUnavailable() {
-    let app = MASApp.launch()
+    let app = SubTrack.launch()
     let settings = MASSettingsScreen(app: app).open()
     settings.showTab("CLI")
 
@@ -33,7 +33,7 @@ extension MASGatingUITests {
   }
 
   func testCodecSetShowsFullVersionLink() {
-    let app = MASApp.launch()
+    let app = SubTrack.launch()
     let settings = MASSettingsScreen(app: app).open()
     settings.showTab("Encoding")
 
