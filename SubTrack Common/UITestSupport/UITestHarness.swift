@@ -22,7 +22,9 @@
    - `UITEST_PROBE_DELAY_MS` — how long a stubbed probe takes, for a test that
      needs to catch an item while it is still being inspected.
    - `UITEST_LARGE_FOLDER` — makes "Add Folder…" return a folder of this many
-     movies, so an ingest runs long enough for a test to see its progress sheet.
+     movies, so an ingest runs in chunks.
+   - `UITEST_INGEST_PAUSE_MS` — how long the launch queue's ingest sleeps
+     between chunks, for a test that needs to catch it in flight.
    - `UITEST_FFMPEG_FOLDER` — `valid` makes the folder chooser return a folder
      that really holds `ffmpeg` and `ffprobe`; otherwise it returns one that
      holds neither.
@@ -62,6 +64,16 @@
      */
     private static var largeFolderCount: Int? {
       ProcessInfo.processInfo.environment["UITEST_LARGE_FOLDER"].flatMap(Int.init)
+    }
+
+    /**
+     How long an ingest sleeps between chunks, or `nil` when no test asked —
+     in which case it runs flat out, as it does outside a test.
+     */
+    private static var ingestChunkPause: Duration? {
+      ProcessInfo.processInfo.environment["UITEST_INGEST_PAUSE_MS"]
+        .flatMap(Int.init)
+        .map(Duration.milliseconds)
     }
 
     // MARK: - Stub configuration
@@ -151,6 +163,7 @@
         .loaded(featureFlags.fullCodecSet ? .previewSample : .previewLGPLSample)
       )
       seedLaunchState(into: environment)
+      if let ingestChunkPause { environment.queue.ingestChunkPause = ingestChunkPause }
       failStorageIfAsked(in: environment)
       return environment
     }
@@ -233,11 +246,7 @@
       }
     }
 
-    /**
-     Fills the large folder with the number of movies a test asked for. Minting
-     each row's bookmarks is what makes the ingest slow enough to watch, so the
-     count is the test's dial on how long its progress sheet stays up.
-     */
+    /// Fills the large folder with the number of movies a test asked for.
     private static func generateLargeFolder() {
       guard let count = largeFolderCount else { return }
       try? FileManager.default.createDirectory(

@@ -58,6 +58,13 @@ public final class QueueCoordinator: Identifiable {
         revalidateAllCompatibility()
       }
     }
+
+    /**
+     How long an ingest sleeps between chunks instead of only yielding, so a UI
+     test can catch an ingest in flight while the main thread stays free to
+     answer it. Zero, the default, leaves the ingest running flat out.
+     */
+    public var ingestChunkPause: Duration = .zero
   #endif
 
   /**
@@ -272,13 +279,24 @@ public final class QueueCoordinator: Identifiable {
       startMonitoring(item)
       enqueueProbe(item)
       if (offset + 1).isMultiple(of: Self.ingestChunkSize) {
-        await Task.yield()
+        await pauseBetweenIngestChunks()
         // A second ingest can add rows while this one is suspended, so the set
         // of sources already queued is re-read before the next chunk trusts it.
         existing.formUnion(items.map(\.sourceURL))
       }
     }
     onPersistableChange()
+  }
+
+  /// Lets the run loop draw between chunks of an ingest.
+  private func pauseBetweenIngestChunks() async {
+    #if DEBUG
+      if ingestChunkPause > .zero {
+        try? await Task.sleep(for: ingestChunkPause)
+        return
+      }
+    #endif
+    await Task.yield()
   }
 
   /// Builds a queue item for `url`, capturing its bookmarks and size.

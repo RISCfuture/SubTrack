@@ -199,18 +199,17 @@ extension QueueManagementUITests {
   }
 
   /**
-   A folder large enough that minting each row's bookmarks takes real time, so
-   the ingest is still running when the sheet is looked for. Cancelling it
-   stops the ingest rather than merely hiding the sheet.
+   An ingest paced to sleep between chunks, so it is still running when the
+   sheet is looked for and the app stays idle enough to answer the queries
+   that find it. Cancelling it stops the ingest rather than merely hiding the
+   sheet.
 
-   The count sits between two failures: the ingest has to outlast the three
-   seconds or so it takes to find the sheet and then its button — at 1,200
-   files it did not — and the click's wait for the app to go idle has to end
-   inside the thirty seconds a query allows. At 3,000 the ingest runs about six
-   seconds, which clears both on a runner several times slower than a Mac.
+   Twenty chunks a second apart keep the ingest up for twenty seconds, far
+   longer than finding the sheet and its button takes on any runner, and
+   cancelling ends it within a second.
    */
   func testIngestSheetReportsAndCancelsAFolderAdd() {
-    let app = SubTrack.launch(state: .empty, largeFolderSize: 3000)
+    let app = SubTrack.launch(state: .empty, largeFolderSize: 400, ingestPauseMilliseconds: 1000)
     let window = MainWindowScreen(app: app).waitUntilLoaded()
 
     window.addFolder()

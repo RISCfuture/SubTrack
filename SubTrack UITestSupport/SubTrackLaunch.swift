@@ -14,6 +14,7 @@ enum SubTrack {
     stepDelayMilliseconds: Int? = nil,
     probeDelayMilliseconds: Int? = nil,
     largeFolderSize: Int? = nil,
+    ingestPauseMilliseconds: Int? = nil,
     appearance: Appearance? = nil,
     windowSize: CGSize? = nil,
     ffmpegFolder: FFmpegFolder = .missing,
@@ -43,6 +44,9 @@ enum SubTrack {
     }
     if let largeFolderSize {
       app.launchEnvironment["UITEST_LARGE_FOLDER"] = String(largeFolderSize)
+    }
+    if let ingestPauseMilliseconds {
+      app.launchEnvironment["UITEST_INGEST_PAUSE_MS"] = String(ingestPauseMilliseconds)
     }
     if let appearance { stageForScreenshots(app, in: appearance) }
     if let windowSize {
