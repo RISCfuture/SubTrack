@@ -52,5 +52,6 @@ jobs:
       - name: Run swift-format lint
         run: |
           find Engine "SubTrack Common" "SubTrack CommonTests" SubTrack-MAS SubTrack-download \
-            SubTrackCLITests SubTrack-MASUITests SubTrack-downloadUITests subtrack-cli \
+            SubTrackCLITests SubTrack-MASUITests SubTrack-downloadUITests "SubTrack UITestSupport" \
+            subtrack-cli \
             -name '*.swift' -exec swift format lint --strict {} +

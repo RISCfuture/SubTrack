@@ -219,6 +219,11 @@
 			path = Engine;
 			sourceTree = "<group>";
 		};
+		F6BCED59D553DFF04ADA9E6A /* SubTrack UITestSupport */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "SubTrack UITestSupport";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +292,7 @@
 				01ECAF00300C9E50003C1729 /* subtrack-cli */,
 				01ECAF0B300CA189003C1729 /* SubTrack-download */,
 				01ECAF23300CA18A003C1729 /* SubTrack-downloadUITests */,
+				F6BCED59D553DFF04ADA9E6A /* SubTrack UITestSupport */,
 				01ECAF60300CB0B1003C1729 /* Engine */,
 				01ECAF39300CA2B3003C1729 /* SubTrack Common */,
 				01ECAF48300CA2B3003C1729 /* SubTrack CommonTests */,
@@ -423,6 +429,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				01ECAEEB300C9E0A003C1729 /* SubTrack-MASUITests */,
+				F6BCED59D553DFF04ADA9E6A /* SubTrack UITestSupport */,
 			);
 			name = SubTrackMASUITests;
 			packageProductDependencies = (
@@ -501,6 +508,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				01ECAF23300CA18A003C1729 /* SubTrack-downloadUITests */,
+				F6BCED59D553DFF04ADA9E6A /* SubTrack UITestSupport */,
 			);
 			name = SubTrackDownloadUITests;
 			packageProductDependencies = (
