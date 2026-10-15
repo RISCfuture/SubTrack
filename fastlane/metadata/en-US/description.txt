@@ -1,0 +1,25 @@
+Drop the tracks you don't need. Keep every bit of the ones you do.
+
+SubTrack strips unwanted audio and subtitle tracks out of your video files by copying, not re-encoding — so a two-hour Blu-ray rip slims down in seconds, with no loss in quality.
+
+QUEUE, DECIDE, COPY
+• Drag in movies, or a whole folder — SubTrack finds every video inside it.
+• Rules pick the tracks: keep the languages you speak, keep or drop commentary, and decide what happens to tracks with no language tag. The first language you list becomes the default audio.
+• Everything you keep is stream-copied into a new file, bit for bit. Same container, same quality, a fraction of the size.
+
+SEE THE PLAN BEFORE IT RUNS
+The inspector lists every track in a file and exactly what SubTrack will do with it — keep, drop, or convert. Override any of it, per file, per track.
+
+BUILT FOR BATCHES
+• As many queues as you like, each with its own files, rules, preset, and output folder.
+• Starter presets for Blu-ray, streaming, and web rips. Save your own, and they sync to your other Macs through your iCloud account.
+• Output naming patterns, per-file and overall progress, progress in the Dock, a notification when a queue finishes, and an Activity Log when you want the details.
+• Encoding keeps your Mac awake, so an overnight batch runs to the end.
+
+TRANSCODING ONLY WHEN IT MUST
+Name the codecs you're happy to keep. If a track you're keeping isn't one of them, SubTrack converts just that track — to HEVC or H.264 on your Mac's hardware encoder, or to AAC, AC-3, E-AC-3, FLAC, ALAC, or Opus for audio — and tells you up front that it's going to.
+
+YOUR FILES STAY YOURS
+Your videos never leave your Mac. SubTrack ships with its own LGPL build of FFmpeg, built with networking disabled, so there's nothing extra to install. No accounts, no ads, no tracking.
+
+Requires macOS 27 on a Mac with Apple silicon.

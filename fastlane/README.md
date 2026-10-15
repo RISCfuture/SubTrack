@@ -47,6 +47,22 @@ Build, notarize, and package the downloadable edition as a disk image
 
 Regenerate the Help book's screenshots from the UI test harness
 
+### mac upload_metadata
+
+```sh
+[bundle exec] fastlane mac upload_metadata
+```
+
+Upload fastlane/metadata to the App Store edition's version open for editing
+
+### mac download_metadata
+
+```sh
+[bundle exec] fastlane mac download_metadata
+```
+
+Download the App Store edition's live listing into fastlane/metadata
+
 ### mac ci_next_build_number
 
 ```sh
