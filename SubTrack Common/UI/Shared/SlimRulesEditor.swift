@@ -22,6 +22,8 @@ struct SlimRulesEditor: View {
       ) {
         LanguagePickerButton(languages: $rules.languages)
       }
+      .accessibilityElement(children: .contain)
+      .accessibilityIdentifier("rules.languagesRow")
       CaptionedControl("Keep tracks that have no language metadata.") {
         Toggle(
           LocalizedStringResource("Keep untagged tracks", bundle: #bundle),

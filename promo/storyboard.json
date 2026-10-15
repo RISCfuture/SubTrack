@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/xcuipromokit/schema/storyboard.schema.json",
+  "screenshots": [
+    { "id": "plan", "still": "plan", "caption": "plan" },
+    { "id": "rules", "still": "rules", "caption": "rules" },
+    { "id": "override", "still": "override", "caption": "override" },
+    { "id": "queues", "still": "queues", "caption": "queues" }
+  ]
+}

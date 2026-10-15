@@ -11,6 +11,7 @@
 		01A5B1023018AAAA0033110E /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = 01A5B1013018AAAA0033110E /* Subprocess */; };
 		01A5B1043018AAAA0033110E /* Subprocess in Frameworks */ = {isa = PBXBuildFile; productRef = 01A5B1033018AAAA0033110E /* Subprocess */; };
 		01387CFE3017ED1C0033110E /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01387CFD3017ED1C0033110E /* XCUITestKit */; };
+		7D4B03FE0E7208372F8302F5 /* XCUIPromoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 60F8B4A5AC9B659E2010C7E7 /* XCUIPromoKit */; };
 		01387D003017ED240033110E /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01387CFF3017ED240033110E /* XCUITestKit */; };
 		01387D09301842490033110E /* GitHubUpdateChecker in Frameworks */ = {isa = PBXBuildFile; productRef = 01387D08301842490033110E /* GitHubUpdateChecker */; };
 		01D6205530172CCE004758E7 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 01D6205430172CCE004758E7 /* Sentry */; };
@@ -242,6 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				01387CFE3017ED1C0033110E /* XCUITestKit in Frameworks */,
+				7D4B03FE0E7208372F8302F5 /* XCUIPromoKit in Frameworks */,
 			);
 		};
 		01ECAEFC300C9E50003C1729 /* Frameworks */ = {
@@ -434,6 +436,7 @@
 			name = SubTrackMASUITests;
 			packageProductDependencies = (
 				01387CFD3017ED1C0033110E /* XCUITestKit */,
+				60F8B4A5AC9B659E2010C7E7 /* XCUIPromoKit */,
 			);
 			productName = SubTrackUITests;
 			productReference = 01ECAEE8300C9E0A003C1729 /* SubTrackMASUITests.xctest */;
@@ -615,6 +618,7 @@
 			mainGroup = 01ECAEC8300C9E09003C1729;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				74DEB396D9A09D7861AEF93F /* XCRemoteSwiftPackageReference "XCUIPromoKit" */,
 				01DC0A03300CA2B3003C1729 /* XCRemoteSwiftPackageReference "DockProgress" */,
 				01D6205330172CCE004758E7 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */,
@@ -1621,9 +1625,22 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		74DEB396D9A09D7861AEF93F /* XCRemoteSwiftPackageReference "XCUIPromoKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RISCfuture/XCUIPromoKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		60F8B4A5AC9B659E2010C7E7 /* XCUIPromoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74DEB396D9A09D7861AEF93F /* XCRemoteSwiftPackageReference "XCUIPromoKit" */;
+			productName = XCUIPromoKit;
+		};
 		2B77FDEEC0FDF6254D9B2928 /* CloudKitSchemaTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */;

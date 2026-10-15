@@ -69,6 +69,18 @@ HELP_SCREENSHOTS = %w[
   output-name preset-menu settings-presets settings-ffmpeg settings-cli problem-queue
 ].freeze
 
+# promokit's folder, and the configuration and storyboard it captures and renders from.
+PROMO_PATH = File.join(REPO_ROOT, "promo")
+PROMO_CONFIG = JSON.parse(File.read(File.join(PROMO_PATH, "promokit.json")))
+PROMO_STORYBOARD = JSON.parse(File.read(File.join(PROMO_PATH, "storyboard.json")))
+
+# Where promokit keeps the stills it captures, a folder per locale and device.
+PROMO_STILLS_PATH = File.join(REPO_ROOT, ".build", "promo", "stills")
+
+# The folder `promokit render` writes the Mac screenshots into and deliver uploads from, a folder per
+# locale.
+MAC_SCREENSHOTS_PATH = File.join(REPO_ROOT, "fastlane", "screenshots_mac")
+
 # The listing text deliver uploads and downloads, a folder per locale.
 METADATA_PATH = File.join(REPO_ROOT, "fastlane", "metadata")
 
@@ -154,6 +166,149 @@ def provisioning_authentication_args
   "-authenticationKeyPath #{path.shellescape} " \
     "-authenticationKeyID #{key[:key_id].shellescape} " \
     "-authenticationKeyIssuerID #{key[:issuer_id].shellescape}"
+end
+
+# Runs one screenshot suite into a fresh result bundle under build/ and returns the bundle's path.
+#
+# xcodebuild neither overwrites nor merges a result bundle: an existing one at this path, or even a
+# plain file there, is a hard failure raised before any testing happens.
+#
+# Its own derived data, nested a level below build/ for two separate reasons. Both app targets emit
+# SubTrack.app, so sharing DerivedData with the developer's Xcode session would replace whatever they
+# last built out from under them; and notarize_and_package globs OUTPUT_PATH/*.app without recursing,
+# so a build directly in build/ would leave a test build of the app exactly where the release lane
+# looks for the exported one.
+#
+# -resultBundlePath rather than fishing the bundle out of the derived data afterwards: the ones
+# xcodebuild leaves in Logs/Test/ are timestamped, accumulate, and give the export script no way to
+# tell this run's captures from last run's. -project, because `sh` runs from the fastlane directory
+# and xcodebuild looks for something to build in its own working directory.
+#
+# A skip is the failure mode this exists to catch, and it is the one xcodebuild reports as success.
+# Display scale, accent colour, and the accessibility settings no per-process override can reach are
+# asserted inside each suite as XCTSkipUnless, so a machine that cannot take a faithful capture
+# yields a green run with nothing attached to it — and the export scripts own their output
+# directories, so an empty bundle would empty them.
+def run_screenshot_suite(name:, scheme:, only_testing:)
+  refuse_ci
+
+  result_bundle = File.join(OUTPUT_PATH, "#{name}.xcresult")
+  FileUtils.rm_rf(result_bundle)
+  sh("xcodebuild", "test",
+     "-project", File.join(REPO_ROOT, XCODEPROJ),
+     "-scheme", scheme,
+     "-destination", "platform=macOS,arch=arm64",
+     "-derivedDataPath", File.join(OUTPUT_PATH, "derived-data", name),
+     "-resultBundlePath", result_bundle,
+     "-only-testing:#{only_testing}")
+
+  summary = JSON.parse(sh("xcrun", "xcresulttool", "get", "test-results", "summary",
+                          "--path", result_bundle, "--compact", log: false))
+  unless summary["result"] == "Passed" && summary["skippedTests"].to_i.zero?
+    UI.user_error!("The screenshot suite finished #{summary['result']} with " \
+                   "#{summary['skippedTests']} skipped. A skip names the capture precondition " \
+                   "this Mac fails; open #{result_bundle} to read it.")
+  end
+  result_bundle
+end
+
+# Runs XCUIPromoKit's `promokit` from promo/.
+def promokit(*)
+  sh("pnpm", "--dir", PROMO_PATH, "promokit", *)
+end
+
+# A hosted runner draws to a virtual display that is not 2x, so a capture there would be a half-size,
+# softly scaled set.
+def refuse_ci
+  UI.user_error!("Screenshots have to be captured on a developer's 2x display, not on CI.") if Helper.ci?
+end
+
+# The screenshots `promokit render` makes for one locale and device: each of the storyboard's
+# screenshots whose still the test captured there, in order. A test may leave a still out on a
+# device it doesn't suit.
+def expected_screenshots(locale, device)
+  stills = File.join(PROMO_STILLS_PATH, locale, device)
+  UI.user_error!("No #{device} stills for #{locale} in #{stills}; run the capture lane first.") unless Dir.exist?(stills)
+
+  PROMO_STORYBOARD.fetch("screenshots", []).each_with_index.filter_map do |screenshot, index|
+    next unless screenshot["file"] || File.exist?(File.join(stills, "#{screenshot["still"]}.png"))
+
+    "#{device}-#{index.to_s.rjust(2, "0")}-#{screenshot["id"]}.png"
+  end
+end
+
+# Refuses a rendered screenshot folder that is not exactly what the storyboard makes of the
+# captured stills. An upload syncs the remote sets to it, so a missing file would clear a slot on
+# the product page and a stray one would publish whatever it happens to be.
+def verify_screenshot_folder(directory, devices)
+  PROMO_CONFIG.fetch("locales", %w[en-US]).each do |locale|
+    folder = File.join(directory, locale)
+    expected = devices.flat_map { |device| expected_screenshots(locale, device) }.sort
+    found = Dir.exist?(folder) ? Dir.children(folder).grep(/\.png\z/).sort : []
+    next if found == expected
+
+    UI.user_error!("#{folder} holds #{found.join(", ").then { it.empty? ? "nothing" : it }}, " \
+                   "not #{expected.join(", ")}. Run the capture lane again.")
+  end
+end
+
+# `upload_to_app_store` syncs every slot it uploads into, so an empty directory would strip the
+# screenshots from the product page rather than leave the ones already there alone.
+def verify_screenshots_present(directory, lane:)
+  return if Dir.glob(File.join(directory, "*", "*.png")).any?
+
+  UI.user_error!("No screenshots under #{directory}; run the #{lane} lane first. Uploading an " \
+                 "empty set would clear the screenshots already on the App Store.")
+end
+
+# Every screenshot set on the App Store edition's version currently open for editing.
+def editable_screenshot_sets
+  identifier = EDITIONS["mas"][:app_identifier]
+  app = Spaceship::ConnectAPI::App.find(identifier)
+  version = app.get_edit_app_store_version(platform: EDITIONS["mas"][:connect])
+  UI.user_error!("No editable version of #{identifier} to hold screenshots.") if version.nil?
+
+  version.get_app_store_version_localizations.flat_map(&:get_app_screenshot_sets)
+end
+
+# Empties those sets before an upload refills them.
+#
+# A set holds at most ten images, and deliver's sync uploads before it deletes, so a set already at
+# that ceiling has no room to work in and the sync fails outright. The count is re-read from App
+# Store Connect rather than inferred from the deletions, so a deletion that silently did not happen
+# stops the upload instead of leaving the set a mix of old and new.
+def purge_remote_screenshots
+  editable_screenshot_sets.each { |set| set.app_screenshots.each(&:delete!) }
+
+  remaining = editable_screenshot_sets.sum { |set| set.app_screenshots.count }
+  return if remaining.zero?
+
+  UI.user_error!("#{remaining} screenshot(s) are still on App Store Connect after being deleted. " \
+                 "Uploading now would leave the set a mix of old and new.")
+end
+
+# Syncs the rendered screenshots to the version open for editing, after `verify` and a purge.
+def upload_rendered_screenshots(directory, lane:)
+  verify_screenshots_present(directory, lane: lane)
+  verify
+  ensure_api_key
+  purge_remote_screenshots
+  # deliver ships screenshot syncing as a beta and refuses `sync_screenshots` without this opt-in.
+  ENV["FASTLANE_ENABLE_BETA_DELIVER_SYNC_SCREENSHOTS"] = "true"
+  upload_to_app_store(
+    app_identifier:                       EDITIONS["mas"][:app_identifier],
+    platform:                             "osx",
+    screenshots_path:                     directory,
+    # `overwrite_screenshots` verifies its deletions against the objects it already held rather
+    # than App Store Connect; syncing reconciles against what is actually there.
+    sync_screenshots:                     true,
+    skip_binary_upload:                   true,
+    skip_metadata:                        true,
+    languages:                            PROMO_CONFIG.fetch("locales", %w[en-US]),
+    force:                                true,
+    run_precheck_before_submit:           false,
+    ignore_language_directory_validation: true
+  )
 end
 
 # Removes what deliver's metadata download writes but the repository doesn't keep: CHANGELOG.md is
@@ -345,57 +500,14 @@ platform :mac do
 
   desc "Regenerate the Help book's screenshots from the UI test harness"
   lane :help_screenshots do
-    # These images are a build product of the app, not artifacts someone captured once and then had
-    # to remember to recapture — but that only holds while the machine taking them is pinned. A
-    # hosted runner draws to a virtual display that is not 2x, so a CI regeneration would write a
-    # half-size, softly-scaled set over a good one, and nothing about the result would look wrong
-    # until it shipped inside both apps. The suite asserts the rest of the machine's capture
-    # conditions itself and skips when they fail; this is the one that has to be refused before a
-    # single app is launched.
-    UI.user_error!("Screenshots have to be captured on a developer's 2x display, not on CI.") if is_ci
-
     # Deliberately no ensure_ffmpeg, ensure_signing or ensure_api_key. The -uiTesting harness stubs
     # the conversion engine and seeds the encoder capabilities outright, so no real ffmpeg is ever
     # resolved; and a development identity — which any machine that can build this project already
     # holds — signs a test build perfectly well. Demanding MATCH_PASSWORD and a certificates checkout
     # is a lot of ceremony to impose on "regenerate the help pictures".
-    #
-    # xcodebuild neither overwrites nor merges a result bundle: an existing one at this path, or even
-    # a plain file there, is a hard failure raised before any testing happens.
-    result_bundle = File.join(OUTPUT_PATH, "help-screenshots.xcresult")
-    FileUtils.rm_rf(result_bundle)
-
-    # Its own derived data, nested a level below build/ for two separate reasons. Both app targets
-    # emit SubTrack.app, so sharing DerivedData with the developer's Xcode session would replace
-    # whatever they last built out from under them; and notarize_and_package globs OUTPUT_PATH/*.app
-    # without recursing, so a build directly in build/ would leave a test build of the app exactly
-    # where the release lane looks for the exported one.
-    #
-    # -resultBundlePath rather than fishing the bundle out of the derived data afterwards: the ones
-    # xcodebuild leaves in Logs/Test/ are timestamped, accumulate, and give the export script no way
-    # to tell this run's captures from last run's.
-    # -project, because `sh` runs from the fastlane directory and xcodebuild looks for something to
-    # build in its own working directory — it has no notion of the project root gym resolves against.
-    sh("xcodebuild", "test",
-       "-project", File.join(REPO_ROOT, XCODEPROJ),
-       "-scheme", "SubTrack (download) UITests",
-       "-destination", "platform=macOS,arch=arm64",
-       "-derivedDataPath", File.join(OUTPUT_PATH, "derived-data", "help-screenshots"),
-       "-resultBundlePath", result_bundle,
-       "-only-testing:SubTrackDownloadUITests/HelpScreenshotUITests")
-
-    # A skip is the failure mode this lane exists to catch, and it is the one xcodebuild reports as
-    # success. Display scale, accent colour, and the four accessibility settings that no per-process
-    # override can reach are asserted inside the suite as XCTSkipUnless, so a machine that cannot take
-    # a faithful capture yields a green run with nothing attached to it. Left unchecked the lane would
-    # sail past that and hand the export script an empty bundle, which owns the image directory.
-    summary = JSON.parse(sh("xcrun", "xcresulttool", "get", "test-results", "summary",
-                            "--path", result_bundle, "--compact", log: false))
-    unless summary["result"] == "Passed" && summary["skippedTests"].to_i.zero?
-      UI.user_error!("The screenshot suite finished #{summary['result']} with " \
-                     "#{summary['skippedTests']} skipped. A skip names the capture precondition " \
-                     "this Mac fails; open #{result_bundle} to read it.")
-    end
+    result_bundle = run_screenshot_suite(name:         "help-screenshots",
+                                         scheme:       "SubTrack (download) UITests",
+                                         only_testing: "SubTrackDownloadUITests/HelpScreenshotUITests")
 
     sh(File.join(REPO_ROOT, "Scripts", "export-help-screenshots.sh"), result_bundle,
        HELP_IMAGES_PATH)
@@ -410,6 +522,25 @@ platform :mac do
 
     UI.success("Wrote #{HELP_SCREENSHOTS.count * 2} screenshots to #{HELP_IMAGES_PATH} — commit " \
                "them with the article changes.")
+  end
+
+  desc "Capture the Mac windows and render the Mac App Store screenshots"
+  lane :mac_screenshots do
+    refuse_ci
+    promokit("mac-stills")
+    promokit("render", "--only", "screenshots")
+    verify
+  end
+
+  desc "Check the rendered media against Apple's rules and the screenshots against the storyboard"
+  lane :verify do
+    verify_screenshot_folder(MAC_SCREENSHOTS_PATH, %w[mac]) if Dir.exist?(MAC_SCREENSHOTS_PATH)
+    promokit("check")
+  end
+
+  desc "Upload the rendered Mac screenshots to App Store Connect"
+  lane :upload_mac_screenshots do
+    upload_rendered_screenshots(MAC_SCREENSHOTS_PATH, lane: "mac_screenshots")
   end
 
   desc "Upload fastlane/metadata to the App Store edition's version open for editing"
@@ -575,9 +706,8 @@ platform :mac do
     )
   end
 
-  # Uploads the archived App Store build. Metadata goes up through its own lane, screenshots are
-  # maintained by hand in App Store Connect, and the build waits there to be attached to a version
-  # and submitted.
+  # Uploads the archived App Store build. Metadata and screenshots go up through their own lanes, and
+  # the build waits there to be attached to a version and submitted.
   private_lane :upload_store_build do
     upload_to_app_store(
       app_identifier:             EDITIONS["mas"][:app_identifier],
