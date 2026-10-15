@@ -47,6 +47,30 @@ Build, notarize, and package the downloadable edition as a disk image
 
 Regenerate the Help book's screenshots from the UI test harness
 
+### mac mac_screenshots
+
+```sh
+[bundle exec] fastlane mac mac_screenshots
+```
+
+Capture the Mac windows and render the Mac App Store screenshots
+
+### mac verify
+
+```sh
+[bundle exec] fastlane mac verify
+```
+
+Check the rendered media against Apple's rules and the screenshots against the storyboard
+
+### mac upload_mac_screenshots
+
+```sh
+[bundle exec] fastlane mac upload_mac_screenshots
+```
+
+Upload the rendered Mac screenshots to App Store Connect
+
 ### mac upload_metadata
 
 ```sh

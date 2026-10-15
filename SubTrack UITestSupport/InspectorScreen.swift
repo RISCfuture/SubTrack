@@ -51,6 +51,9 @@ struct InspectorScreen {
 
   /// The languages-to-keep summary in the Rules tab.
   var languagesSummary: XCUIElement { app.descendant(id: "rules.languages") }
+
+  /// The whole Languages row: its label, summary, Edit button, and caption.
+  var languagesRow: XCUIElement { app.descendant(id: "rules.languagesRow") }
   var languagesSummaryValue: String { (languagesSummary.value as? String) ?? "" }
 
   /**

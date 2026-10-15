@@ -7,8 +7,8 @@ import XCUITestKit
 
  `xcodebuild` forwards no shell environment into the runner, so a test can't be
  told where to write: every capture goes into the result bundle as an
- attachment, and `Scripts/export-help-screenshots.sh` recovers it from there by
- name.
+ attachment, and `Scripts/extract-screenshot-attachments.sh` recovers it from
+ there by name.
  */
 extension XCTestCase {
   /// How long to leave between the two captures a stability check compares.

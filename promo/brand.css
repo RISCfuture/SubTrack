@@ -1,0 +1,72 @@
+/* SubTrack's look for promokit renders: the marketing site's chassis panel, its display face, and the
+   icon's magenta. */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("../docs/assets/fonts/archivo.woff2") format("woff2-variations");
+  font-weight: 400 800;
+  font-stretch: 62.5% 125%;
+}
+
+.promo-root {
+  --chassis-top: #271c49;
+  --chassis-bottom: #1a1230;
+  --chassis-end: #2a1540;
+  --chassis-ink: #ece8f4;
+  --magenta: #b23566;
+
+  background: var(--chassis-bottom);
+}
+
+/* The chassis panel's gradient, with the magenta glowing up from behind the window. */
+.promo-screenshot {
+  background:
+    radial-gradient(
+      circle 55vw at 50% 82%,
+      rgb(from var(--magenta) r g b / 55%),
+      rgb(from var(--magenta) r g b / 0%)
+    ),
+    linear-gradient(158deg, var(--chassis-top), var(--chassis-bottom) 62%, var(--chassis-end));
+}
+
+/* The site's h1 at its largest, at 2×, with the copy's own line breaks. */
+.promo-headline {
+  max-width: 83.3vw;
+  margin-top: 6.1vh;
+  font-family: "Archivo", sans-serif;
+  font-size: 3.75vw;
+  font-weight: 800;
+  font-stretch: 116%;
+  letter-spacing: -0.035em;
+  line-height: 1.03;
+  text-align: center;
+  white-space: pre-line;
+  color: var(--chassis-ink);
+}
+
+/* The window at its captured size, centred in the space under the headline. */
+.promo-window {
+  flex: 1;
+  align-items: center;
+  margin: 4.4vh 0 5.6vh;
+}
+
+.promo-screen {
+  max-width: none;
+}
+
+/* Where to look: the rest of the window sinks into the chassis, and each region is ringed in
+   magenta. */
+.promo-highlights {
+  --promo-highlight-pad: 14px;
+  --promo-highlight-radius: 18px;
+}
+
+.promo-dim {
+  fill: rgb(from var(--chassis-bottom) r g b / 62%);
+}
+
+.promo-highlight {
+  outline: 5px solid var(--magenta);
+  box-shadow: 0 0 40px 6px rgb(from var(--magenta) r g b / 55%);
+}

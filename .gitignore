@@ -4,7 +4,8 @@ DerivedData/
 *.xcuserstate
 xcuserdata/
 
-# FFmpeg build cache and vendored binaries (produced by Scripts/build-ffmpeg.sh)
+# FFmpeg build cache and vendored binaries (produced by Scripts/build-ffmpeg.sh), and promokit's
+# captures
 .build/
 Vendor/
 
