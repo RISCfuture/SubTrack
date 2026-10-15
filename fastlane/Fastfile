@@ -69,6 +69,9 @@ HELP_SCREENSHOTS = %w[
   output-name preset-menu settings-presets settings-ffmpeg settings-cli problem-queue
 ].freeze
 
+# The listing text deliver uploads and downloads, a folder per locale.
+METADATA_PATH = File.join(REPO_ROOT, "fastlane", "metadata")
+
 # The two editions this app ships. They are separate targets producing separate bundle identifiers
 # from one project, and they sign completely differently: the App Store build is signed for the store
 # and uploaded to App Store Connect, while the download build is signed with Developer ID, notarized,
@@ -151,6 +154,14 @@ def provisioning_authentication_args
   "-authenticationKeyPath #{path.shellescape} " \
     "-authenticationKeyID #{key[:key_id].shellescape} " \
     "-authenticationKeyIssuerID #{key[:issuer_id].shellescape}"
+end
+
+# Removes what deliver's metadata download writes but the repository doesn't keep: CHANGELOG.md is
+# the source of the release notes, the review contact holds personal details, and the app has no
+# Apple TV listing.
+def remove_unversioned_metadata
+  FileUtils.rm_f(Dir.glob(File.join(METADATA_PATH, "*", "{release_notes,apple_tv_privacy_policy}.txt")))
+  FileUtils.rm_rf(Dir.glob(File.join(METADATA_PATH, "{review_information,trade_representative_contact_information}")))
 end
 
 # App Store Connect's ceiling on a "What's New" entry.
@@ -401,6 +412,41 @@ platform :mac do
                "them with the article changes.")
   end
 
+  desc "Upload fastlane/metadata to the App Store edition's version open for editing"
+  lane :upload_metadata do
+    ensure_api_key
+    remove_unversioned_metadata
+    upload_to_app_store(
+      app_identifier:             EDITIONS["mas"][:app_identifier],
+      platform:                   "osx",
+      metadata_path:              METADATA_PATH,
+      skip_binary_upload:         true,
+      skip_screenshots:           true,
+      skip_app_version_update:    true,
+      force:                      true,
+      run_precheck_before_submit: false
+    )
+  end
+
+  desc "Download the App Store edition's live listing into fastlane/metadata"
+  lane :download_metadata do
+    ensure_api_key
+    require "deliver"
+    require "deliver/setup"
+
+    identifier = EDITIONS["mas"][:app_identifier]
+    app = Spaceship::ConnectAPI::App.find(identifier)
+    version = app.get_live_app_store_version(platform: EDITIONS["mas"][:connect])
+    UI.user_error!("#{identifier} has no live version to download.") unless version
+
+    deliver_options = FastlaneCore::Configuration.create(Deliver::Options.available_options,
+                                                         app_identifier:   identifier,
+                                                         platform:         "osx",
+                                                         use_live_version: true)
+    Deliver::Setup.new.generate_metadata_files(app, version, METADATA_PATH, deliver_options)
+    remove_unversioned_metadata
+  end
+
   desc "Resolve the next build number and write it where CI can read it"
   lane :ci_next_build_number do
     ensure_api_key
@@ -529,8 +575,9 @@ platform :mac do
     )
   end
 
-  # Uploads the archived App Store build. Metadata and screenshots are maintained by hand in App
-  # Store Connect, and the build waits there to be attached to a version and submitted.
+  # Uploads the archived App Store build. Metadata goes up through its own lane, screenshots are
+  # maintained by hand in App Store Connect, and the build waits there to be attached to a version
+  # and submitted.
   private_lane :upload_store_build do
     upload_to_app_store(
       app_identifier:             EDITIONS["mas"][:app_identifier],

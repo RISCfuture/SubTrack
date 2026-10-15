@@ -19,7 +19,6 @@ Help/**/*.cshelpindex
 
 # fastlane: local secrets and run output. Archives and disk images land in build/, ignored above.
 fastlane/.env
-fastlane/report.xml
 fastlane/Preview.html
 *.dmg
 
