@@ -9,6 +9,8 @@ import XCUITestKit
 struct SidebarScreen {
   let app: XCUIApplication
 
+  var queueList: XCUIElement { app.descendant(id: "sidebar.queueList") }
+
   var queueRowCount: Int {
     app.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "sidebar.queueRow.")
@@ -21,9 +23,9 @@ struct SidebarScreen {
    */
   @discardableResult
   func ensureVisible() -> Self {
-    if !app.descendant(id: "sidebar.queueList").wait(scaledSeconds: 2) {
+    if !queueList.wait(scaledSeconds: 2) {
       app.buttons["Show Sidebar"].click()
-      app.descendant(id: "sidebar.queueList").assertExists("The sidebar never appeared.")
+      queueList.assertExists("The sidebar never appeared.")
     }
     return self
   }

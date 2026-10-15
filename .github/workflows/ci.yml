@@ -320,6 +320,8 @@ jobs:
             ${{ runner.temp }}/dd-ui-mas/SourcePackages
           key: derived-ui-mas-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
+      # MacStoreScreenshots captures the product page's screenshots and belongs to `fastlane
+      # mac_screenshots`, for the same reasons the download job skips the Help captures.
       - name: Run UI tests
         env:
           TEST_RUNNER_XCUITEST_TIMEOUT_MULTIPLIER: "3"
@@ -330,6 +332,7 @@ jobs:
             -destination 'platform=macOS,arch=arm64' \
             -derivedDataPath "$RUNNER_TEMP/dd-ui-mas" \
             -resultBundlePath "TestResults-UI-MAS.xcresult" \
+            -skip-testing:SubTrackMASUITests/MacStoreScreenshots \
             ${{ env.SIGNING }} \
             | xcbeautify --renderer github-actions
 

@@ -1,0 +1,27 @@
+{
+  "configurations" : [
+    {
+      "id" : "D6BD0940-8AD3-4305-91AD-842A2F99D51D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "selectedTests" : [
+        "MacStoreScreenshots"
+      ],
+      "target" : {
+        "containerPath" : "container:SubTrack.xcodeproj",
+        "identifier" : "01ECAEE7300C9E0A003C1729",
+        "name" : "SubTrackMASUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
