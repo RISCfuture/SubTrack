@@ -52,7 +52,7 @@ jobs:
     uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.0.0
     with:
       runner: xcode-27
-      ruby-version: 4.0.7
+      ruby-version: 4.0.9
       # Not platforms in the Apple sense — both are macOS. The reusable workflow passes these
       # through to the release lane verbatim, and `ci_release` reads them as edition names.
       platforms: '["mas","download"]'
