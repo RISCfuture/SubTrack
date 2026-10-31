@@ -1010,7 +1010,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackCLITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -1025,7 +1025,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackCLITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -1208,7 +1208,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-MAS";
 				PRODUCT_MODULE_NAME = SubTrackMAS;
@@ -1254,7 +1254,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-MAS";
 				PRODUCT_MODULE_NAME = SubTrackMAS;
@@ -1272,7 +1272,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -1289,7 +1289,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.SubTrackUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -1347,7 +1347,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download";
 				PRODUCT_MODULE_NAME = SubTrackDownload;
@@ -1382,7 +1382,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download";
 				PRODUCT_MODULE_NAME = SubTrackDownload;
@@ -1400,7 +1400,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -1417,7 +1417,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-download-UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -1447,7 +1447,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -1483,7 +1483,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				OTHER_DOCC_FLAGS = "--warnings-as-errors";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -1506,7 +1506,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-CommonTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
@@ -1521,7 +1521,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2NFSK2WB24;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.SubTrack-CommonTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
