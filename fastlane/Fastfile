@@ -110,11 +110,63 @@ EDITIONS = {
                   match_type: "developer_id", additional_cert_types: [] }
 }.freeze
 
-# The Sentry project the release lanes upload dSYMs and sources to. `sentry-cli` reads
-# SENTRY_AUTH_TOKEN from the environment itself; `.sentryclirc` is committed and so holds only the
-# project's identity.
-SENTRY_ORG = "timcodes"
-SENTRY_PROJECT = "subtrack"
+# Which Sentry organization and project a release uploads its debug symbols to, read from the
+# committed .sentryclirc that the app targets' "Upload Debug Symbols to Sentry" build phase also
+# reads, so the two cannot drift. sentry-cli would read that file itself, but only from its working
+# directory, which for `sh` is not the repository root — so the values go on the command line.
+def sentry_defaults
+  File.read(File.join(REPO_ROOT, ".sentryclirc")).scan(/^\s*(org|project)\s*=\s*(\S+)\s*$/).to_h
+rescue Errno::ENOENT
+  {}
+end
+
+# The MARKETING_VERSION the app targets carry, which is the version a release ships: the release
+# lanes stamp only the build number. Both editions ship one version, so they must agree.
+def project_marketing_version
+  project = Xcodeproj::Project.open(File.join(REPO_ROOT, XCODEPROJ))
+  versions = EDITIONS.each_value.flat_map do |config|
+    target = project.targets.find { it.name == config.fetch(:scheme) }
+    UI.user_error!("#{XCODEPROJ} has no #{config.fetch(:scheme)} target.") if target.nil?
+
+    target.build_configurations.map { it.build_settings["MARKETING_VERSION"] }
+  end.uniq
+  return versions.first if versions.one?
+
+  UI.user_error!("The editions' build configurations disagree on MARKETING_VERSION: " \
+                 "#{versions.join(", ")}.")
+end
+
+# The CFBundleShortVersionString an exported app carries, which the disk image is named after.
+def exported_app_version(app)
+  plist = File.join(app, "Contents", "Info.plist")
+  version = `/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" #{plist.shellescape}`.strip
+  UI.user_error!("#{app} carries no CFBundleShortVersionString.") if version.empty?
+  version
+end
+
+# Runs git in the repository and returns its output, failing the lane with git's own message.
+def git(*args)
+  output, status = Open3.capture2e("git", "-C", REPO_ROOT, *args)
+  UI.user_error!("git #{args.join(" ")} failed: #{output.strip}") unless status.success?
+  output
+end
+
+# The branches a release is cut from: main, or release/X.Y for a hotfix.
+RELEASE_BRANCH_REFSPECS = %w[
+  +refs/heads/main:refs/remotes/origin/main
+  +refs/heads/release/*:refs/remotes/origin/release/*
+].freeze
+
+# The first of those branches that contains HEAD, the commit being released, or nil. They are
+# fetched first, because a CI checkout holds the tagged commit and nothing else.
+def release_branch_containing_head
+  git("fetch", "--quiet", "--no-tags", "origin", *RELEASE_BRANCH_REFSPECS)
+  branches = git("for-each-ref", "--format=%(refname:short)",
+                 "refs/remotes/origin/main", "refs/remotes/origin/release").lines.map(&:strip)
+  branches.find do |branch|
+    system("git", "-C", REPO_ROOT, "merge-base", "--is-ancestor", "HEAD", branch)
+  end
+end
 
 # Signing credentials live in a private repository, everything in it encrypted under one
 # MATCH_PASSWORD: the signing certificates (managed by _match_) and the App Store Connect API key
@@ -378,8 +430,8 @@ end
 # rather than from the changelog, so a mistyped heading cannot publish the app into a territory it
 # does not sell in — it simply goes unused.
 #
-# An empty rendering is never written. `ci_verify_release_notes` should have caught that before the
-# build, but replacing a release's notes with blankness is bad enough to be worth refusing twice.
+# An empty rendering is never written. `ci_verify_release` should have caught that before the build,
+# but replacing a release's notes with blankness is bad enough to be worth refusing twice.
 def write_release_notes(store_version, version:, name:)
   written = store_version.get_app_store_version_localizations.filter_map do |localization|
     text = release_notes(version, locale: localization.locale)
@@ -478,22 +530,23 @@ end
 
 platform :mac do
   desc "Build and upload the App Store edition to TestFlight"
-  lane :beta do
-    archive_edition(edition_name: "mas")
+  lane :beta do |options|
+    archive_edition(edition_name: "mas", build: options.fetch(:build) { resolve_next_build_number })
     upload_to_testflight(app_identifier: EDITIONS["mas"][:app_identifier])
     upload_debug_symbols
   end
 
   desc "Build and upload the App Store edition to App Store Connect"
-  lane :release do
-    archive_edition(edition_name: "mas")
+  lane :release do |options|
+    archive_edition(edition_name: "mas", build: options.fetch(:build) { resolve_next_build_number })
     upload_store_build
     upload_debug_symbols
   end
 
   desc "Build, notarize, and package the downloadable edition as a disk image"
   lane :download_release do |options|
-    archive_edition(edition_name: "download", version: options[:version], build: options[:build])
+    archive_edition(edition_name: "download",
+                    build:        options.fetch(:build) { resolve_next_build_number })
     notarize_and_package
     upload_debug_symbols
   end
@@ -580,16 +633,7 @@ platform :mac do
 
   desc "Resolve the next build number and write it where CI can read it"
   lane :ci_next_build_number do
-    ensure_api_key
-
-    # App Store Connect is the authority, not the project file: the checked-in build number drifts
-    # behind whatever was last uploaded. Both editions share one number, so a user comparing them
-    # sees the same build behind the same version.
-    latest = latest_testflight_build_number(app_identifier:       EDITIONS["mas"][:app_identifier],
-                                            platform:             "osx",
-                                            initial_build_number: 0)
-
-    next_build_number = latest + 1
+    next_build_number = resolve_next_build_number
     UI.success("Next build number: #{next_build_number}")
 
     # Only CI needs the value in a file to hand to the next job; a local run just wants to see it.
@@ -597,9 +641,25 @@ platform :mac do
     File.write(build_number_file, next_build_number) if build_number_file
   end
 
-  desc "Refuse to start a release whose notes are missing, empty, or too long (CI)"
-  lane :ci_verify_release_notes do |options|
+  desc "Refuse to start a release that names the wrong version, sits off main, or lacks notes (CI)"
+  lane :ci_verify_release do |options|
     version = options.fetch(:version)
+
+    # The project is the version source: a release builds the MARKETING_VERSION it carries, and the
+    # tag only has to agree with it.
+    marketing_version = project_marketing_version
+    unless marketing_version == version
+      UI.user_error!("The release is #{version}, but the editions' MARKETING_VERSION is " \
+                     "#{marketing_version}. Advance MARKETING_VERSION in a release commit and tag " \
+                     "that commit.")
+    end
+
+    branch = release_branch_containing_head
+    if branch.nil?
+      UI.user_error!("#{git("rev-parse", "--short", "HEAD").strip} is on neither main nor a " \
+                     "release/* branch, so #{version} would ship a commit no branch keeps.")
+    end
+    UI.success("#{version} matches MARKETING_VERSION and is on #{branch}.")
 
     # Only the default section is checked. Every locale falls back to it, so if it is present and
     # fits, no locale can be empty — which lets this run with no App Store Connect credentials, and
@@ -631,9 +691,9 @@ platform :mac do
       # rejects, and notes that landed are worth more than notes withheld because a binary went bad.
       write_release_notes(store_version, version: version, name: name)
 
-      # Before the wait, not after: there is no sense spending up to forty-five minutes waiting
-      # on a build that will be refused the moment it arrives. The check reads the version's
-      # state and needs no build object — only its message names one — so a number runs it early.
+      # Checked twice, and both are needed. Here, so that a version already submitted is refused
+      # now rather than after forty-five minutes of waiting on a build it will never accept. The
+      # check reads the version's state and needs no build object, so a number is enough.
       refuse_unsafe_attach(store_version, name: name, version: version,
                            build_number: number || "the newest")
 
@@ -652,7 +712,19 @@ platform :mac do
                 await_processing(newest, name: name)
               end
 
-      store_version.select_build(build_id: build.id)
+      # And again here, against a freshly read version, because the check above is by now as old as
+      # the wait. A version submitted for review while the build was indexing would otherwise have
+      # its binary swapped on the strength of a state that stopped being true half an hour ago —
+      # the exact hazard the allowlist exists to prevent, reached by waiting rather than by racing.
+      current = app.get_edit_app_store_version(platform: platform)
+      if current.nil?
+        UI.user_error!("#{name} #{version} stopped being editable while build #{build.version} " \
+                       "was processing, so it will not be attached. The build is uploaded and " \
+                       "will stay there.")
+      end
+      refuse_unsafe_attach(current, name: name, version: version, build_number: build.version)
+
+      current.select_build(build_id: build.id)
       UI.success("#{name} #{version} now ships build #{build.version}.")
     end
   end
@@ -660,9 +732,7 @@ platform :mac do
   desc "Archive one edition and ship it (CI)"
   lane :ci_release do |options|
     name = options.fetch(:platform)
-    archive_edition(edition_name: name,
-                    version:      options.fetch(:version),
-                    build:        options.fetch(:build))
+    archive_edition(edition_name: name, build: options.fetch(:build))
 
     case name
       when "mas" then upload_store_build
@@ -673,8 +743,7 @@ platform :mac do
     upload_debug_symbols
   end
 
-  # Archives one edition. `version` and `build` are optional: a local run without them keeps whatever
-  # the project already carries.
+  # Archives one edition under the given build number.
   private_lane :archive_edition do |options|
     config = edition(options.fetch(:edition_name))
 
@@ -684,25 +753,22 @@ platform :mac do
                    app_identifier:        config.fetch(:app_identifier),
                    additional_cert_types: config.fetch(:additional_cert_types))
 
-    # Passing the version on the command line rather than writing it into the project keeps a release
-    # from leaving a commit behind, and stamps every target in the archive alike.
+    # The marketing version is the project's own, which `ci_verify_release` has matched to the tag.
+    # The build number goes on the command line rather than into the project, so a release leaves no
+    # commit behind and every target in the archive carries the same number.
     #
     # The archive signs automatically, exactly as it does in Xcode: `-allowProvisioningUpdates` plus
     # the API key lets it resolve a profile, and the certificate comes from the certificates
     # repository. The export cannot do the same — cloud signing is refused for distribution — so it
     # consumes the stored match profiles instead, which build_app puts into its export options from
     # match's mapping. Hence automatic signing here and managed profiles there.
-    stamps = []
-    stamps << "MARKETING_VERSION=#{options[:version]}" if options[:version]
-    stamps << "CURRENT_PROJECT_VERSION=#{options[:build]}" if options[:build]
-
     build_app(
       scheme:           config.fetch(:scheme),
       destination:      "generic/platform=macOS",
       export_method:    config.fetch(:export_method),
       output_directory: OUTPUT_DIRECTORY,
-      xcargs:           "#{stamps.join(' ')} -allowProvisioningUpdates " \
-                        "#{provisioning_authentication_args}".strip
+      xcargs:           "CURRENT_PROJECT_VERSION=#{options.fetch(:build)} " \
+                        "-allowProvisioningUpdates #{provisioning_authentication_args}"
     )
   end
 
@@ -735,7 +801,7 @@ platform :mac do
              api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
              print_log: true)
 
-    version = get_version_number(xcodeproj: XCODEPROJ, target: "SubTrack (download)")
+    version = exported_app_version(app_path)
     dmg = sh(File.join(REPO_ROOT, "Scripts", "make-dmg.sh"), app_path, version, OUTPUT_PATH).strip
 
     # The disk image needs notarizing in its own right. It reaches users as a browser download, so
@@ -748,6 +814,20 @@ platform :mac do
              api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
              print_log: true)
     UI.success("Packaged #{dmg}")
+  end
+
+  # The build number to ship next, shared by the CI release and the local `beta`, `release` and
+  # `download_release` lanes.
+  #
+  # App Store Connect is the authority, not the project file: the checked-in build number drifts
+  # behind whatever was last uploaded. Both editions share one number, so a user comparing them sees
+  # the same build behind the same version.
+  private_lane :resolve_next_build_number do
+    ensure_api_key
+
+    latest_testflight_build_number(app_identifier:       EDITIONS["mas"][:app_identifier],
+                                   platform:             "osx",
+                                   initial_build_number: 0) + 1
   end
 
   # Builds the bundled ffmpeg if it is not already there. Both app targets copy it into the app at
@@ -844,10 +924,17 @@ platform :mac do
       next
     end
 
+    org, project = sentry_defaults.values_at("org", "project")
+    if org.nil? || project.nil?
+      UI.important("No .sentryclirc naming an organization and project; skipping the Sentry " \
+                   "upload of #{dsym_path}.")
+      next
+    end
+
     begin
       sh("sentry-cli", "debug-files", "upload",
-         "--org", SENTRY_ORG,
-         "--project", SENTRY_PROJECT,
+         "--org", org,
+         "--project", project,
          "--include-sources",
          dsym_path)
     rescue StandardError => error

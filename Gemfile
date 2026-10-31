@@ -2,7 +2,5 @@
 
 source "https://rubygems.org"
 
-gem "fastlane"
-
-# Read directly by the Fastfile, which patches Xcodeproj to parse Xcode 26's build-phase format.
-gem "xcodeproj", "~> 1.28"
+# Carries fastlane PRs #30442 and #30457 (creative asset uploads) until a fastlane release includes them.
+gem "fastlane", git: "https://github.com/RISCfuture/fastlane.git", branch: "creative-assets"

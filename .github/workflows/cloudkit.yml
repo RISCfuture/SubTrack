@@ -6,9 +6,9 @@ name: CloudKit
 # unit suite's CloudKitSchemaTests: a warning there, and a failure in the release workflow.
 on:
   push:
-    branches: [main]
+    branches: [main, "release/**"]
   pull_request:
-    branches: [main]
+    branches: [main, "release/**"]
   schedule:
     - cron: "17 9 * * 1"
   workflow_dispatch:

@@ -2,8 +2,12 @@ name: Release
 
 # Pushing a version tag archives both editions and finishes the release: the App Store build goes to
 # App Store Connect, where its notes are written and the build attached to the version, leaving only
-# the submission by hand; the Developer-ID build is notarized, packaged as a disk image, and
-# published as a GitHub release.
+# the submission by hand; the Developer-ID build is notarized, packaged as a disk image, published as
+# a GitHub release, and handed to the Homebrew tap.
+#
+# The project is the version source. A tag names the version it releases, and the run refuses it
+# unless both editions' MARKETING_VERSION matches and the commit is on main or a release/* branch;
+# the build number comes from App Store Connect.
 #
 # Re-tagging a version is how its build is replaced. The tag push runs all of this again and the
 # version ends up pointing at the newer build; the older one stays on App Store Connect, since a
@@ -22,7 +26,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Marketing version to build and release.
+        description: Version to release, which must match the project's MARKETING_VERSION.
         required: true
         type: string
 
@@ -47,29 +51,49 @@ jobs:
       certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
       match-password: ${{ secrets.MATCH_PASSWORD }}
 
-  release:
+  # The editions are released by two calls rather than one matrix, so the GitHub release waits on
+  # the disk image alone and not on App Store Connect processing the store build, which can take
+  # most of an hour and fail on its own account. Each call resolves the build number before either
+  # has uploaded anything, so both editions carry the same one.
+  #
+  # Each leg builds the bundled FFmpeg its edition needs — the LGPL build for the App Store, the GPL
+  # one for the download — from source, since Vendor/ is not checked in. The `ci_release` lane does
+  # this itself, so no post-checkout-run is needed, but it dominates the job: x264, x265, and libaom
+  # all compile from scratch with no cache to fall back on.
+  store:
     needs: cloudkit
     uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
     with:
       runner: xcode-27
-      # Not platforms in the Apple sense — both are macOS. The reusable workflow passes these
-      # through to the release lane verbatim, and `ci_release` reads them as edition names.
-      platforms: '["mas","download"]'
+      # Not a platform in the Apple sense — both editions are macOS. The reusable workflow passes it
+      # through to the release lane verbatim, and `ci_release` reads it as an edition name.
+      platforms: '["mas"]'
       version: ${{ inputs.version || github.ref_name }}
       certificates-repo: RISCfuture/certificates
       # Before the build number is even resolved, on a runner with no credentials: a release that
-      # cannot succeed then costs seconds instead of the whole archive matrix. By the time the
-      # archives have run a build has reached App Store Connect, and neither that upload nor the
-      # tag can be taken back.
-      verify-lane: ci_verify_release_notes
-      # After every edition has uploaded. Writes the version's notes and attaches the build once
-      # Apple has processed it — a version cannot hold a build that is still processing, which is
-      # why this cannot run when the upload does.
+      # cannot succeed then costs seconds instead of the whole archive. By the time the archive has
+      # run a build has reached App Store Connect, and neither that upload nor the tag can be taken
+      # back.
+      verify-lane: ci_verify_release
+      # After the upload. Writes the version's notes and attaches the build once Apple has
+      # processed it — a version cannot hold a build that is still processing, which is why this
+      # cannot run when the upload does.
       finish-lane: ci_finish_release
-      # Each leg builds the bundled FFmpeg its edition needs — the LGPL build for the App Store, the
-      # GPL one for the download — from source, since Vendor/ is not checked in. The `ci_release`
-      # lane does this itself, so no post-checkout-run is needed, but it dominates the job: x264,
-      # x265, and libaom all compile from scratch with no cache to fall back on.
+      timeout-minutes: 150
+    secrets:
+      certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
+      match-password: ${{ secrets.MATCH_PASSWORD }}
+      sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+  download:
+    needs: cloudkit
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
+    with:
+      runner: xcode-27
+      platforms: '["download"]'
+      version: ${{ inputs.version || github.ref_name }}
+      certificates-repo: RISCfuture/certificates
+      verify-lane: ci_verify_release
       timeout-minutes: 150
     secrets:
       certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
@@ -78,7 +102,7 @@ jobs:
 
   publish:
     name: Publish GitHub release
-    needs: release
+    needs: download
     # Nothing here is Apple-specific: the disk image arrives already built and notarized, and
     # collecting the FFmpeg source is curl, git, and tar.
     runs-on: ubuntu-latest
@@ -134,3 +158,16 @@ jobs:
               --notes-file release-notes.md \
               "$dmg" "$sources"
           fi
+
+      # Only once the release and its disk image are up: the tap's audit checks the cask's version
+      # against the latest GitHub release, and its URL against the asset. -f rather than -F, which
+      # would send the version as a number and turn 1.10 into 1.1.
+      - name: Bump the Homebrew cask
+        env:
+          GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          VERSION: ${{ inputs.version || github.ref_name }}
+        run: |
+          gh api repos/RISCfuture/homebrew-tap/dispatches \
+            -f event_type=cask-release \
+            -f 'client_payload[cask]=subtrack' \
+            -f "client_payload[version]=${VERSION}"

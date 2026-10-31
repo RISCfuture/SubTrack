@@ -130,14 +130,23 @@ discard their events before transmission.
 
 ### Releasing
 
-Pushing a version tag (`1.0`, `1.1.2` — no `v` prefix, because the update checker compares
-tags against `CFBundleShortVersionString`) archives both editions, uploads the App Store
-build to App Store Connect, and publishes a GitHub release with the notarized disk image.
+A release is a commit titled "Release X.Y" that advances `MARKETING_VERSION` on every
+target, beside a `## X.Y` section in `CHANGELOG.md`, tagged `X.Y` on `main` or on a
+`release/X.Y` branch for a hotfix. The tag carries no `v` prefix, because the update
+checker compares tags against `CFBundleShortVersionString`.
+
+Pushing the tag archives both editions, uploads the App Store build to App Store
+Connect, publishes a GitHub release with the notarized disk image, and asks
+[the Homebrew tap](https://github.com/RISCfuture/homebrew-tap) to bump its cask. The
+Release workflow refuses a tag the project's version doesn't match, and numbers the
+build one past App Store Connect's latest.
 
 Signing credentials come from the private `RISCfuture/certificates` repository via
 [fastlane match](https://docs.fastlane.tools/actions/match/). Locally, copy
 `fastlane/.env.example` to `fastlane/.env` and fill it in. On CI the same names arrive as
-repository secrets: `CERTIFICATES_TOKEN`, `MATCH_PASSWORD`, and `SENTRY_AUTH_TOKEN`.
+repository secrets: `CERTIFICATES_TOKEN`, `MATCH_PASSWORD`, and `SENTRY_AUTH_TOKEN`, with
+`HOMEBREW_TAP_TOKEN` for the cask bump: a fine-grained token limited to
+`RISCfuture/homebrew-tap` with Contents read and write.
 
 ## License
 
