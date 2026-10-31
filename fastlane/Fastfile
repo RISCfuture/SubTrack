@@ -802,7 +802,9 @@ platform :mac do
              print_log: true)
 
     version = exported_app_version(app_path)
-    dmg = sh(File.join(REPO_ROOT, "Scripts", "make-dmg.sh"), app_path, version, OUTPUT_PATH).strip
+    # make-dmg.sh prints the image's path last; `sh` folds hdiutil's stderr in ahead of it.
+    dmg = sh(File.join(REPO_ROOT, "Scripts", "make-dmg.sh"), app_path, version, OUTPUT_PATH)
+          .lines.last.strip
 
     # The disk image needs notarizing in its own right. It reaches users as a browser download, so
     # it arrives carrying a quarantine flag, and Gatekeeper judges the image at the moment it is
