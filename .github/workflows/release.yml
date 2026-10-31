@@ -32,7 +32,7 @@ concurrency:
 
 jobs:
   cloudkit:
-    uses: RISCfuture/XCUITestKit/.github/workflows/cloudkit-schema.yml@1.1.0
+    uses: RISCfuture/XCUITestKit/.github/workflows/cloudkit-schema.yml@1.2.0
     with:
       runner: xcode-27
       team-id: 2NFSK2WB24
@@ -49,10 +49,9 @@ jobs:
 
   release:
     needs: cloudkit
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.0.0
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
     with:
       runner: xcode-27
-      ruby-version: 4.0.9
       # Not platforms in the Apple sense — both are macOS. The reusable workflow passes these
       # through to the release lane verbatim, and `ci_release` reads them as edition names.
       platforms: '["mas","download"]'
