@@ -1612,7 +1612,7 @@
 			repositoryURL = "https://github.com/swiftlang/swift-subprocess";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.2;
 			};
 		};
 		01387CFC3017ED1C0033110E /* XCRemoteSwiftPackageReference "XCUITestKit" */ = {
@@ -1620,7 +1620,7 @@
 			repositoryURL = "https://github.com/RISCfuture/XCUITestKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
+				minimumVersion = 1.2.1;
 			};
 		};
 		01387D07301842490033110E /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */ = {
@@ -1636,7 +1636,7 @@
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.23.0;
+				minimumVersion = 9.32.0;
 			};
 			traits = (
 			);

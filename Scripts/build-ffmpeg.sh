@@ -40,12 +40,12 @@
 # (pinned) when needed, so neither need be installed.
 set -euo pipefail
 
-FFMPEG_VERSION="8.1.2"
+FFMPEG_VERSION="9.0.2"
 X264_COMMIT="b35605ace3ddf7c1a5d67a2eb553f034aef41d55" # videolan/x264 stable
 X265_TAG="4.2"
-AOM_TAG="v3.14.1"
-CMAKE_VERSION="3.30.5"
-PKGCONF_VERSION="3.0.5"
+AOM_TAG="v3.15.3"
+CMAKE_VERSION="4.4.5"
+PKGCONF_VERSION="3.0.10"
 # arm64 on Apple Silicon. The project pins ARCHS to arm64 to match: a universal app
 # bundling a single-slice helper would ship an Intel slice that cannot run ffmpeg at all.
 # Going universal means adding an x86_64 slice here and lipo'ing, then dropping that pin.
@@ -74,16 +74,13 @@ if [[ -x "${OUT_DIR}/ffmpeg" && -x "${OUT_DIR}/ffprobe" ]]; then
 fi
 mkdir -p "${CACHE_DIR}"
 
-# Downloads the pinned macOS CMake, cached under .build. Deliberately ignores any cmake already on
-# PATH: x265 still declares a pre-3.5 `cmake_minimum_required`, which CMake 4 refuses outright
-# ("Compatibility with CMake < 3.5 has been removed"), so a machine with a current Homebrew cmake
-# cannot configure it. Pinning here matches every other version in this script.
+# Downloads the pinned macOS CMake into .build so dependency builds use the same toolchain.
 fetch_cmake() {
   local dir="${CACHE_DIR}/cmake-${CMAKE_VERSION}-macos-universal"
   local bin="${dir}/CMake.app/Contents/bin/cmake"
   if [[ ! -x "${bin}" ]]; then
     echo "==> Fetching CMake ${CMAKE_VERSION}" >&2
-    curl -L -o "${CACHE_DIR}/cmake.tar.gz" \
+    curl -fL --retry 3 --retry-all-errors -o "${CACHE_DIR}/cmake.tar.gz" \
       "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-macos-universal.tar.gz"
     tar -xzf "${CACHE_DIR}/cmake.tar.gz" -C "${CACHE_DIR}"
   fi
@@ -101,12 +98,12 @@ fetch_cmake() {
 # PATH, for the reason fetch_cmake does.
 fetch_pkgconf() {
   local src="${CACHE_DIR}/pkgconf-${PKGCONF_VERSION}"
-  local prefix="${CACHE_DIR}/pkgconf-install"
+  local prefix="${CACHE_DIR}/pkgconf-${PKGCONF_VERSION}-install"
   local bin="${prefix}/bin/pkgconf"
   if [[ ! -x "${bin}" ]]; then
     echo "==> Building pkgconf ${PKGCONF_VERSION}" >&2
     if [[ ! -d "${src}" ]]; then
-      curl -L -o "${CACHE_DIR}/pkgconf.tar.xz" \
+      curl -fL --retry 3 --retry-all-errors -o "${CACHE_DIR}/pkgconf.tar.xz" \
         "https://distfiles.dereferenced.org/pkgconf/pkgconf-${PKGCONF_VERSION}.tar.xz"
       tar -xJf "${CACHE_DIR}/pkgconf.tar.xz" -C "${CACHE_DIR}"
     fi
@@ -139,7 +136,7 @@ build_x264() {
 
 build_x265() {
   echo "==> Building x265 ${X265_TAG}"
-  local src="${CACHE_DIR}/x265"
+  local src="${CACHE_DIR}/x265-${X265_TAG}"
   [[ -d "${src}/.git" ]] \
     || git clone --branch "${X265_TAG}" --depth 1 https://bitbucket.org/multicoreware/x265_git.git "${src}"
   local cmake_bin build="${src}/build-mac"
@@ -161,7 +158,7 @@ build_x265() {
 
 build_aom() {
   echo "==> Building libaom ${AOM_TAG}"
-  local src="${CACHE_DIR}/aom"
+  local src="${CACHE_DIR}/aom-${AOM_TAG}"
   [[ -d "${src}/.git" ]] \
     || git clone --branch "${AOM_TAG}" --depth 1 https://aomedia.googlesource.com/aom "${src}"
   local cmake_bin build="${CACHE_DIR}/aom-build"
@@ -219,7 +216,7 @@ extra_ldflags="${CFLAGS_COMMON} -L${DEPS}/lib"
 SRC_DIR="${CACHE_DIR}/ffmpeg-${FFMPEG_VERSION}"
 if [[ ! -d "${SRC_DIR}" ]]; then
   echo "==> Downloading FFmpeg ${FFMPEG_VERSION}"
-  curl -L -o "${CACHE_DIR}/ffmpeg.tar.xz" "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz"
+  curl -fL --retry 3 --retry-all-errors -o "${CACHE_DIR}/ffmpeg.tar.xz" "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz"
   tar -xJf "${CACHE_DIR}/ffmpeg.tar.xz" -C "${CACHE_DIR}"
 fi
 

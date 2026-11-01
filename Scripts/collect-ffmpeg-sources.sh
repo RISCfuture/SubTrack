@@ -52,7 +52,7 @@ ROOT="${STAGE}/ffmpeg-sources-${VERSION}"
 mkdir -p "${ROOT}"
 
 echo "==> FFmpeg ${FFMPEG_VERSION}" >&2
-curl -fsSL --retry 3 -o "${ROOT}/ffmpeg-${FFMPEG_VERSION}.tar.xz" \
+curl -fsSL --retry 3 --retry-all-errors -o "${ROOT}/ffmpeg-${FFMPEG_VERSION}.tar.xz" \
   "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.xz"
 
 # The GPL libraries are distributed as git repositories rather than release tarballs, so each is

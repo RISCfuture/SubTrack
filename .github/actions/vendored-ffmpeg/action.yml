@@ -15,7 +15,7 @@ runs:
     # otherwise.
     - name: Restore the FFmpeg build
       id: cache
-      uses: actions/cache@v6
+      uses: actions/cache@v6.1.0
       with:
         path: Vendor
         key: ffmpeg-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Scripts/build-ffmpeg.sh') }}
