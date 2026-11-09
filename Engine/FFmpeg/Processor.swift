@@ -16,7 +16,7 @@ extension Processor {
    Returns `true` if a container does not need any processing (all
    operations are ``StreamOperation/Kind-swift.enum/copy``).
    */
-  public func isNoop(container: Container) -> Bool {
+  func isNoop(container: Container) -> Bool {
     if operations.count != container.streams.count { return false }
     return operations.allSatisfy { $0.kind == .copy }
   }

@@ -45,11 +45,11 @@ enum MediaInspectionError: Error, Sendable {
 }
 
 extension MediaInspectionError: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     String(localized: "Couldn’t read the video file.", bundle: #bundle)
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     switch self {
       case let .probeFailed(exitCode, detail):
         if let detail {
@@ -88,7 +88,7 @@ extension MediaInspectionError: LocalizedError {
     }
   }
 
-  public var recoverySuggestion: String? {
+  var recoverySuggestion: String? {
     switch self {
       case .accessDenied:
         String(
@@ -111,7 +111,7 @@ extension MediaInspectionError: LocalizedError {
    ``noVideoStream(filename:)`` is the exception: it names the problem and the fix in a
    sentence, and has nothing left to explain.
    */
-  public var helpAnchor: String? {
+  var helpAnchor: String? {
     switch self {
       case .noVideoStream: nil
       default: HelpAnchor.probeFailed.rawValue

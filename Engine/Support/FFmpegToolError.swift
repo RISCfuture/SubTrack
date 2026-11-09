@@ -20,11 +20,11 @@ enum FFmpegToolError: Error, Sendable {
 }
 
 extension FFmpegToolError: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     String(localized: "There’s a problem with FFmpeg.", bundle: #bundle)
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     switch self {
       case .executableNotFound(let name):
         String(localized: "The “\(name)” executable couldn’t be found.", bundle: #bundle)
@@ -35,7 +35,7 @@ extension FFmpegToolError: LocalizedError {
     }
   }
 
-  public var recoverySuggestion: String? {
+  var recoverySuggestion: String? {
     switch self {
       case .executableNotFound, .probeUnavailable:
         String(
@@ -50,7 +50,7 @@ extension FFmpegToolError: LocalizedError {
     }
   }
 
-  public var helpAnchor: String? {
+  var helpAnchor: String? {
     switch self {
       case .executableNotFound, .probeUnavailable: HelpAnchor.customFFmpeg.rawValue
       case .unsupportedEncoder: HelpAnchor.unsupportedCodec.rawValue

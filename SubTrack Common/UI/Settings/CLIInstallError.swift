@@ -21,11 +21,11 @@ enum CLIInstallError: Error, Sendable {
 }
 
 extension CLIInstallError: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     String(localized: "Couldn’t install the command-line tool.", bundle: #bundle)
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     switch self {
       case .toolMissingFromBundle:
         String(localized: "This build doesn’t include the subtrack tool.", bundle: #bundle)
@@ -36,7 +36,7 @@ extension CLIInstallError: LocalizedError {
     }
   }
 
-  public var recoverySuggestion: String? {
+  var recoverySuggestion: String? {
     switch self {
       case .permissionDenied:
         String(
@@ -53,7 +53,7 @@ extension CLIInstallError: LocalizedError {
    no amount of documentation helps with; the other two are the ordinary
    install troubles the manual walks through.
    */
-  public var helpAnchor: String? {
+  var helpAnchor: String? {
     switch self {
       case .toolMissingFromBundle: nil
       case .copyFailed, .permissionDenied: HelpAnchor.cliInstall.rawValue
