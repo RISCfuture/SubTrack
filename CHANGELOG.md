@@ -4,6 +4,17 @@ Release notes for SubTrack. The version headings are what
 `Scripts/release-notes.sh` reads, and what the Release workflow attaches to a
 GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
+## 2.0.1
+
+### Fixed
+
+- On macOS 27.2 and later, the inspector no longer has a gray line running
+  down it, and a narrow window no longer cuts off the inspector's controls.
+
+### Changed
+
+- The bundled FFmpeg is now version 9.0.2.
+
 ## 2.0
 
 ### Requirements
