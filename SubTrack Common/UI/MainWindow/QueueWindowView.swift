@@ -45,10 +45,7 @@ struct QueueWindowView: View {
         // tracks is the widest thing the pane holds, and `Table` lays its
         // columns out at their ideal widths and lets the last one overhang
         // rather than compressing them — so the table's needs set the floor.
-        // The width is the content's own rather than the column's: on macOS 27
-        // `inspectorColumnWidth` reports a new minimum from inside the window's
-        // constraint pass, and the re-entry raises an uncaught AppKit exception.
-        .frame(minWidth: 320, idealWidth: 360)
+        .crashSafeInspectorColumnWidth(min: 320, ideal: 360)
     }
     .onOpenURL { env.queue.ingest([$0]) }
     .onChange(of: undoManager, initial: true) { _, undoManager in
@@ -123,6 +120,27 @@ private struct DropOverlay: View {
 
   private var outline: RoundedRectangle {
     RoundedRectangle(cornerRadius: Self.cornerRadius)
+  }
+}
+
+extension View {
+  /**
+   Sizes the inspector column, or on macOS releases where that crashes, sizes
+   the inspector's content to the same widths instead.
+
+   On macOS 27 releases before 27.2 (27.0.1 among them), `inspectorColumnWidth`
+   can report its minimum to the split view from inside the window's constraint
+   pass, and the re-entry raises an uncaught AppKit exception. The content-sized fallback doesn't crash, but the
+   split view keeps its own narrower minimum: a separator line shows inside the
+   inspector, and a narrow window clips the inspector's content.
+   */
+  @ViewBuilder
+  fileprivate func crashSafeInspectorColumnWidth(min: CGFloat, ideal: CGFloat) -> some View {
+    if #available(macOS 27.2, *) {
+      inspectorColumnWidth(min: min, ideal: ideal)
+    } else {
+      frame(minWidth: min, idealWidth: ideal)
+    }
   }
 }
 
