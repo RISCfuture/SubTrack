@@ -35,10 +35,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  route:
+    uses: RISCfuture/ci-workflows/.github/workflows/minerva-route.yml@1.1.0
+    permissions:
+      contents: read
+
   cloudkit:
-    uses: RISCfuture/XCUITestKit/.github/workflows/cloudkit-schema.yml@1.2.1
+    needs: route
+    uses: RISCfuture/XCUITestKit/.github/workflows/cloudkit-schema.yml@1.3.0
     with:
-      runner: xcode-27
+      runner: ${{ needs.route.outputs.macos-27 }}
       team-id: 2NFSK2WB24
       container-id: iCloud.codes.tim.SubTrack
       certificates-repo: RISCfuture/certificates
@@ -61,10 +67,10 @@ jobs:
   # this itself, so no post-checkout-run is needed, but it dominates the job: x264, x265, and libaom
   # all compile from scratch with no cache to fall back on.
   store:
-    needs: cloudkit
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.1
+    needs: [route, cloudkit]
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.3.0
     with:
-      runner: xcode-27
+      runner: ${{ needs.route.outputs.xcode-27 }}
       # Not a platform in the Apple sense — both editions are macOS. The reusable workflow passes it
       # through to the release lane verbatim, and `ci_release` reads it as an edition name.
       platforms: '["mas"]'
@@ -86,10 +92,10 @@ jobs:
       sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   download:
-    needs: cloudkit
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.1
+    needs: [route, cloudkit]
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.3.0
     with:
-      runner: xcode-27
+      runner: ${{ needs.route.outputs.xcode-27 }}
       platforms: '["download"]'
       version: ${{ inputs.version || github.ref_name }}
       certificates-repo: RISCfuture/certificates
