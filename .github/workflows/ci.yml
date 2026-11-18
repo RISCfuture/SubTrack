@@ -25,10 +25,16 @@ env:
     CODE_SIGN_ENTITLEMENTS=
 
 jobs:
+  route:
+    uses: RISCfuture/ci-workflows/.github/workflows/minerva-route.yml@1.1.0
+    permissions:
+      contents: read
+
   # The only suite needing no FFmpeg: the scheme is host-less and builds just the test bundle.
   unit:
     name: Unit Tests
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.macos-27) }}
     timeout-minutes: 30
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
@@ -94,7 +100,8 @@ jobs:
   # are not this project's to fix; scoped to the first-party targets, they stay warnings.
   docs:
     name: Documentation
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.xcode-27) }}
     timeout-minutes: 45
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
@@ -152,7 +159,8 @@ jobs:
   # their movie fixtures at run time rather than committing them.
   cli:
     name: CLI Tests
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.macos-27) }}
     timeout-minutes: 60
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
@@ -209,7 +217,8 @@ jobs:
 
   ui-download:
     name: UI Tests (download)
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.macos-27) }}
     timeout-minutes: 90
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
@@ -282,9 +291,9 @@ jobs:
   # every subsequent launch fails with "does not have a process ID".
   ui-mas:
     name: UI Tests (MAS)
-    needs: ui-download
+    needs: [route, ui-download]
     if: ${{ !cancelled() }}
-    runs-on: xcode-27
+    runs-on: ${{ fromJSON(needs.route.outputs.macos-27) }}
     timeout-minutes: 60
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
