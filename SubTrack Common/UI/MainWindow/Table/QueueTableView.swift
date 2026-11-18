@@ -41,7 +41,7 @@ struct QueueTableView: View {
       .width(min: 55, ideal: 70, max: 70)
       .customizationID("inputTracks")
       TableColumn(LocalizedStringResource("Output Tracks", bundle: #bundle)) {
-        OutputTracksCell(item: $0)
+        OutputTracksCell(item: $0, queue: env.queue)
       }
       .width(min: 55, ideal: 80, max: 80)
       .customizationID("outputTracks")
@@ -51,7 +51,7 @@ struct QueueTableView: View {
       .width(min: 65, ideal: 85, max: 85)
       .customizationID("inputSize")
       TableColumn(LocalizedStringResource("Output Size", bundle: #bundle)) {
-        OutputSizeCell(item: $0)
+        OutputSizeCell(item: $0, queue: env.queue)
       }
       .width(min: 65, ideal: 95, max: 95)
       .customizationID("outputSize")
