@@ -6,9 +6,8 @@ import SwiftUI
  never reads as a fact.
  */
 struct OutputSizeCell: View {
-  @Environment(AppEnvironment.self)
-  private var env
   let item: QueueItem
+  let queue: QueueCoordinator
 
   var body: some View {
     MetricCell(text: text)
@@ -16,7 +15,7 @@ struct OutputSizeCell: View {
   }
 
   private var text: String? {
-    guard let size = env.queue.outputSize(for: item) else { return nil }
+    guard let size = queue.outputSize(for: item) else { return nil }
     let byteCount = size.byteCount.formatted(.byteCount(style: .file))
     guard size.isEstimate else { return byteCount }
     return String(
@@ -37,13 +36,12 @@ struct OutputSizeCell: View {
       TableColumn(LocalizedStringResource("Name", bundle: #bundle)) { Text($0.displayName) }
         .width(min: 140)
       TableColumn(LocalizedStringResource("Output Size", bundle: #bundle)) {
-        OutputSizeCell(item: $0)
+        OutputSizeCell(item: $0, queue: environment.queue)
       }
       .width(min: 65, ideal: 95, max: 95)
     } rows: {
       ForEach(environment.queue.items) { TableRow($0) }
     }
-    .environment(environment)
     .frame(width: 340, height: 320)
   }
 #endif
