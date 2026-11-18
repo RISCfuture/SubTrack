@@ -23,7 +23,7 @@ struct SidebarScreen {
    */
   @discardableResult
   func ensureVisible() -> Self {
-    if !queueList.wait(scaledSeconds: 2) {
+    if !(queueList.exists || queueList.wait(scaledSeconds: 2)) {
       app.buttons["Show Sidebar"].click()
       queueList.assertExists("The sidebar never appeared.")
     }
