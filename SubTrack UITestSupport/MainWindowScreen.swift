@@ -44,6 +44,13 @@ struct MainWindowScreen {
   var outputTrackCountValue: String { (outputTrackCount.value as? String) ?? "" }
   var destination: XCUIElement { app.staticTexts["queue.cell.destination"] }
 
+  /// Whichever of the queue table or the empty state the window shows.
+  private var queueContent: XCUIElement {
+    app.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier IN %@", ["queue.table", "queue.emptyState"])
+    ).firstMatch
+  }
+
   func rowNamed(_ name: String) -> XCUIElement {
     app.staticTexts.matching(
       NSPredicate(format: "identifier == %@ AND value == %@", "queue.cell.name", name)
@@ -57,10 +64,7 @@ struct MainWindowScreen {
 
   @discardableResult
   func waitUntilLoaded() -> Self {
-    XCTAssertTrue(
-      app.descendant(id: "queue.table").wait() || app.descendant(id: "queue.emptyState").wait(),
-      "The main queue window never appeared."
-    )
+    XCTAssertTrue(queueContent.wait(), "The main queue window never appeared.")
     return self
   }
 
