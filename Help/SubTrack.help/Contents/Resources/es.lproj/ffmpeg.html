@@ -1,0 +1,60 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Usar otra versión de FFmpeg</title>
+  <meta name="AppleTitle" content="Usar otra versión de FFmpeg">
+  <meta name="description" content="Comprueba qué versión de FFmpeg usa SubTrack, indícale una propia y consulta todo lo que esa versión puede leer y escribir.">
+  <meta name="keywords" content="ffmpeg, ffprobe, binario, ruta, homebrew, versión estática, versión, incluida, personalizada, codificador, decodificador, multiplexor, demultiplexor, formatos, sandbox">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-ffmpeg" id="settings-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Usar otra versión de FFmpeg</h1>
+
+<p>SubTrack hace su trabajo con FFmpeg, y la app incluye una versión firmada y autónoma. No usa
+nada de lo que hayas instalado tú y no hay nada que configurar. La mayoría de las personas no
+llegan a abrir este panel.</p>
+
+<p>Hay dos motivos para venir aquí: ver qué versión estás usando o – en la versión descargable – usar una propia en su lugar.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-ffmpeg-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-ffmpeg.webp" width="620" height="548" alt="El panel FFmpeg de los ajustes de SubTrack, con la opción entre la versión incluida y una personalizada, y debajo la versión de FFmpeg en uso.">
+  </picture>
+  <figcaption>Ajustes &#9656; FFmpeg indica la versión en uso y lo que puede hacer.</figcaption>
+</figure>
+
+<h2>Ver qué versión de FFmpeg usas</h2>
+
+<ol>
+  <li>Elige <strong>SubTrack</strong> &#9656; <strong>Ajustes</strong> (<kbd>⌘,</kbd>) y haz clic
+    en <strong>FFmpeg</strong>.</li>
+  <li>Lee <strong>Versión</strong> en <strong>Información de FFmpeg</strong>.</li>
+</ol>
+
+<p>SubTrack obtiene ese número ejecutando la versión que ha elegido, así que refleja con exactitud
+lo que se está ejecutando. Si en lugar de una versión aparece un aviso, no se ha podido ejecutar
+la versión de FFmpeg y nada de la cola se codificará hasta que lo soluciones.</p>
+
+<h2>Ir más allá</h2>
+
+<ul>
+  <li><a href="custom-ffmpeg.html">Usar tu propia versión de FFmpeg</a> – cuando necesitas un codificador que la versión incluida no tiene.</li>
+  <li><a href="supported-formats.html">Ver qué admite una versión de FFmpeg</a> – todos los
+    contenedores y códecs que la versión en uso lee y escribe.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="preferred-codecs.html">Definir códecs preferidos y códecs de destino</a></li>
+    <li><a href="editions.html">Elegir entre las dos versiones de SubTrack</a></li>
+    <li><a href="credits.html">FFmpeg, licencias y créditos</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

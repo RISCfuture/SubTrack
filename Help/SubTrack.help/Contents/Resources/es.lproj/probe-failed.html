@@ -1,0 +1,59 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Si SubTrack no puede leer un archivo</title>
+  <meta name="AppleTitle" content="Si SubTrack no puede leer un archivo">
+  <meta name="description" content="Por qué falla el análisis de un archivo antes de empezar a aligerar – no es un vídeo, está incompleto, el contenedor no es compatible, está cifrado o macOS lo bloquea – y qué hacer.">
+  <meta name="keywords" content="ffprobe, ilegible, dañado, incompleto, drm, cifrado, contenedor, analizar, volver a analizar, no se pudo leer, permiso, denegado, acceso total al disco">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="probe-failed" id="probe-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si SubTrack no puede leer un archivo</h1>
+
+<p>Esto ocurre antes de empezar a aligerar. SubTrack analiza cada archivo que añades, y ese análisis
+debe completarse para que haya una lista de pistas sobre la que decidir. Cuando falla, la fila indica
+que SubTrack no ha podido leer el archivo de vídeo y el detalle de debajo explica el motivo – suele
+ser lo último que ha dicho <code>ffprobe</code> antes de terminar.</p>
+
+<h2>Causas habituales</h2>
+
+<ul>
+  <li><strong>No es realmente un vídeo.</strong> Una extensión puede decir cualquier cosa. Un archivo
+    sin pista de vídeo – un archivo de audio suelto o un archivo auxiliar – se rechaza de plano y
+    así lo indica.</li>
+  <li><strong>Está incompleto o aún se está recibiendo.</strong> Una descarga en curso o una copia
+    sin terminar se lee como un contenedor dañado hasta que llega el último byte.</li>
+  <li><strong>La versión de FFmpeg no lee ese contenedor.</strong> Las versiones de FFmpeg difieren
+    en los formatos para los que se compilaron.</li>
+  <li><strong>Está cifrado.</strong> El vídeo comprado o alquilado lleva DRM, y SubTrack no hace
+    nada para quitarlo.</li>
+  <li><strong>macOS lo bloquea.</strong> Un archivo que está dentro del contenedor de otra app se
+    rechaza sin más, sin ningún aviso que ofrezca permitirlo.</li>
+</ul>
+
+<h2>Qué hacer</h2>
+
+<p>Si es macOS quien lo rechaza, copia el archivo a un lugar tuyo y añade la copia. Para leer un
+archivo en su ubicación original, dentro del contenedor de otra app, hace falta el acceso total al
+disco, que se concede en <strong>Privacidad y seguridad</strong>, dentro de Ajustes del Sistema.</p>
+
+<p>Si no es el caso, prueba primero a reproducir el archivo con otra app: si tampoco se abre en
+QuickTime Player, el problema es el archivo. Si se reproduce bien, abre <strong>Ajustes</strong>
+&#9656; <strong>FFmpeg</strong> y haz clic en <strong>Formatos compatibles</strong> para comprobar
+que esa versión de FFmpeg lee el contenedor. Después, selecciona la fila y elige <strong>Cola</strong>
+&#9656; <strong>Volver a analizar la selección</strong>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Si un archivo no se aligera</a></li>
+    <li><a href="supported-formats.html">Ver qué admite una versión de FFmpeg</a></li>
+    <li><a href="troubleshooting.html#activity-log">Leer el error completo en el Registro de actividad</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

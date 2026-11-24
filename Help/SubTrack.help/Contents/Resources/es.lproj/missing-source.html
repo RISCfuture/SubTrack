@@ -1,0 +1,51 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Si falta el archivo de origen</title>
+  <meta name="AppleTitle" content="Si falta el archivo de origen">
+  <meta name="description" content="Una cola guarda una referencia a cada archivo, no una copia, así que un origen movido, renombrado o desmontado hace que su fila se ponga en rojo – igual que un acceso guardado que ha caducado.">
+  <meta name="keywords" content="falta el origen, movido, renombrado, eliminado, desmontado, disco, permiso, sandbox, acceso guardado, caducado, volver a analizar, volver a añadir">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="missing-source" id="missing-source"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si falta el archivo de origen</h1>
+
+<p>Una cola guarda una referencia a cada archivo, no una copia, y esa referencia se conserva al
+cerrar SubTrack. Por eso, una cola que dejes toda la noche puede encontrarse al día siguiente con un
+archivo que se ha movido, renombrado o eliminado, o que está en un disco que todavía nadie ha
+montado. La fila se pone en rojo y muestra <strong>Falta el origen</strong>.</p>
+
+<p>Hay otra variante menos evidente del mismo problema. Al añadir un archivo, SubTrack obtiene
+permiso para acceder a él y ese acceso se guarda para que siga funcionando después de reiniciar la
+app. Los accesos guardados pueden caducar: el archivo está exactamente donde lo dejaste, pero la fila
+indica que la referencia guardada ya no es válida o que SubTrack no tiene permiso para abrirlo.</p>
+
+<h2>Restaurar el archivo</h2>
+
+<ol>
+  <li>Devuelve el archivo a su sitio – monta el disco, deshaz el cambio de nombre o recupéralo de la
+    papelera.</li>
+  <li>Selecciona la fila y elige <strong>Cola</strong> &#9656; <strong>Volver a analizar la
+    selección</strong>.</li>
+  <li>Si sigue marcada, elige <strong>Cola</strong> &#9656; <strong>Quitar la selección</strong>
+    (<kbd>Borrar</kbd>) y vuelve a añadir el archivo.</li>
+</ol>
+
+<p>El tercer paso es el que elimina un acceso caducado y por eso es el consejo habitual: al añadir un
+archivo se concede acceso, así que volver a añadirlo lo concede de nuevo. Quitar una fila nunca
+elimina nada del disco.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Si un archivo no se aligera</a></li>
+    <li><a href="adding-files.html">Añadir vídeos a una cola</a></li>
+    <li><a href="destinations.html">Elegir dónde se guardan los archivos aligerados</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

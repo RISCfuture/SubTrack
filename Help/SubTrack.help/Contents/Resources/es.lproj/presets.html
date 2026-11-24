@@ -1,0 +1,115 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Guardar un conjunto de reglas como preajuste</title>
+  <meta name="AppleTitle" content="Guardar un conjunto de reglas como preajuste">
+  <meta name="description" content="Reutiliza un conjunto de reglas de conservación en varias colas y Mac guardándolo como preajuste, y entiende cuándo el menú de preajustes dice «Nuevo preajuste».">
+  <meta name="keywords" content="preajuste, guardar, reglas, reutilizar, predefinido, blu-ray, streaming, rip web, nuevo preajuste, eliminar">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="presets" id="presets"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Guardar un conjunto de reglas como preajuste</h1>
+
+<p>Un preajuste es un conjunto de reglas de conservación con nombre. Cuando ya has averiguado lo que
+necesita un determinado tipo de rip, guardarlo te evita tener que repetirlo.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-presets-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-presets.webp" width="620" height="548" alt="La pestaña Preajustes de los ajustes de SubTrack, con una lista de preajustes a la izquierda y las reglas del preajuste seleccionado a la derecha.">
+  </picture>
+  <figcaption>Ajustes &#9656; Preajustes enumera tus preajustes y edita las reglas del seleccionado.</figcaption>
+</figure>
+
+<a name="saving-presets" id="saving-presets"></a>
+<h2>Guardar las reglas que usas</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/preset-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/preset-menu.webp" width="1280" height="860" alt="El menú de preajustes abierto en la parte superior del inspector, con los preajustes guardados encima de la opción Guardar como preajuste.">
+  </picture>
+  <figcaption>Todos los preajustes guardados y la opción que añade a ellos las reglas que usas.</figcaption>
+</figure>
+
+<ol>
+  <li>Configura en el inspector las reglas que quieras.</li>
+  <li>Haz clic en el menú de preajustes, en la parte superior del inspector.</li>
+  <li>Elige <strong>Guardar como preajuste…</strong>, ponle un nombre y haz clic en
+    <strong>Guardar</strong>.</li>
+</ol>
+
+<p>Para aplicar uno, elígelo en el mismo menú. La cola adopta sus reglas de inmediato.</p>
+
+<h2>Por qué el menú a veces dice «(Nuevo preajuste)»</h2>
+
+<p>Es lo más importante que hay que entender de SubTrack, porque la primera vez parece un error.</p>
+
+<p>El menú de preajustes no muestra el último en el que <em>has hecho clic</em>, sino con qué preajuste
+<em>coinciden</em> las reglas actuales. Si aplicas «Rip de Blu-ray – Solo inglés» y luego añades un idioma,
+el menú deja de mostrar ese nombre – porque las reglas ya no son las de ese preajuste. En su lugar dice
+«(Nuevo preajuste)»: tienes un conjunto de reglas que no es ningún preajuste guardado.</p>
+
+<p>Si quitas ese idioma, el menú vuelve a mostrar «Rip de Blu-ray – Solo inglés» sin que tengas que aplicar
+nada de nuevo. No se ha perdido nada y el preajuste nunca se modificó – al aplicar un preajuste se copian
+sus reglas a la cola, pero la cola no queda vinculada a él.</p>
+
+<p>Así que «(Nuevo preajuste)» es una invitación, no una advertencia: guarda estas reglas si quieres
+conservarlas.</p>
+
+<a name="starter-presets" id="starter-presets"></a>
+<h2>Los preajustes que incluye SubTrack</h2>
+
+<p>SubTrack incluye cinco preajustes integrados, agrupados según el origen del archivo – que es lo que
+determina tanto qué pistas conviene conservar como qué códecs conviene copiar.</p>
+
+<ul>
+  <li><strong>Rip de Blu-ray – Solo inglés</strong> – audio y subtítulos en inglés, y nada más.</li>
+  <li><strong>Rip de Blu-ray – Inglés + comentarios</strong> – lo mismo, más el audio en inglés que no es
+    el predeterminado: comentarios, audio descriptivo y mezclas alternativas.</li>
+  <li><strong>Rip de Blu-ray – Conservar pistas sin idioma</strong> – lo mismo otra vez, y además conserva
+    las pistas sin etiqueta de idioma, para el rip de un disco que las etiquetó de forma
+    incoherente.</li>
+  <li><strong>Rip de web / YouTube – Solo inglés</strong> – conserva las pistas sin idioma y prefiere los
+    códecs que ya usa una descarga web, de modo que VP9, AV1 y Opus se copian en lugar de convertirse a
+    códecs de disco, lo que solo costaría tamaño y calidad.</li>
+  <li><strong>Rip de servicio de streaming – Solo inglés</strong> – conserva las pistas sin idioma, con la
+    lista de códecs de disco habitual.</li>
+</ul>
+
+<p>El ajuste que distingue a la mayoría es si se conservan las pistas sin idioma. Los discos de estudio
+etiquetan todo, así que los dos primeros las quitan por considerarlas sobrantes; los rips web y de
+streaming suelen traer una única pista de audio sin idioma que es toda la banda sonora, así que los demás
+la conservan. Para obtener más información, consulta
+<a href="slim-rules.html#rule-untagged">Elegir qué idiomas conservar</a>.</p>
+
+<p>Los preajustes integrados son preajustes normales desde el momento en que aparecen – SubTrack ni los
+protege ni los restaura. Edítalos como quieras o elimina los que no uses.</p>
+
+<h2>Editar, renombrar y eliminar</h2>
+
+<ol>
+  <li>Elige <strong>SubTrack</strong> &#9656; <strong>Ajustes</strong> (<kbd>⌘,</kbd>) y haz clic en
+    <strong>Preajustes</strong>.</li>
+  <li>Selecciona un preajuste. Su nombre, el nombre de salida y las reglas aparecen junto a la lista.</li>
+  <li>Para eliminarlo, haz clic en <strong>Eliminar preajuste</strong> y confirma.</li>
+</ol>
+
+<p class="note">Eliminar un preajuste no afecta a ninguna cola. Una cola que usaba esas reglas las conserva
+– tiene una copia, no una referencia – y lo único que cambia es que su menú de preajustes pasa a mostrar
+«(Nuevo preajuste)».</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="preset-sync.html">Sincronizar preajustes entre tus Mac</a></li>
+    <li><a href="slim-rules.html">Elegir qué idiomas conservar</a></li>
+    <li><a href="output-names.html">Dar nombre a los archivos que escribe SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

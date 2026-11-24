@@ -1,0 +1,102 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Elegir qué idiomas conservar</title>
+  <meta name="AppleTitle" content="Elegir qué idiomas conservar">
+  <meta name="description" content="Define los idiomas que conserva SubTrack, por orden de prioridad, y decide qué hacer con las pistas de comentarios y las pistas sin idioma.">
+  <meta name="keywords" content="idioma, reglas, conservar, quitar, prioridad, pista predeterminada, sin idioma, comentario, doblaje, subtítulos, audio, iso 639">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="slim-rules" id="slim-rules"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Elegir qué idiomas conservar</h1>
+
+<p>Las reglas de conservación son el núcleo de SubTrack. Se aplican a la vez a todos los archivos de la
+cola, así que describes una sola vez lo que quieres conservar en lugar de hacerlo archivo por
+archivo.</p>
+
+<p>Para acceder a ellas, muestra el inspector (<kbd>⌥⌘I</kbd>) y elige <strong>Reglas</strong>. Las
+mismas reglas aparecen al editar un preajuste en <strong>Ajustes</strong> &#9656;
+<strong>Preajustes</strong>.</p>
+
+<a name="rule-languages" id="rule-languages"></a>
+<h2>Definir los idiomas que se conservan</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/rules-languages-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/rules-languages.webp" width="346" height="247" alt="El editor de idiomas con inglés, francés y japonés en ese orden, cada uno con un tirador para arrastrar y un botón para quitarlo, encima de un menú Añadir.">
+  </picture>
+  <figcaption>La lista indica el orden de prioridad – arrastra los idiomas para reordenarla.</figcaption>
+</figure>
+
+<ol>
+  <li>En el inspector, haz clic en el control de idiomas de <strong>Selección de pistas</strong>.</li>
+  <li>Busca un idioma y selecciónalo para añadirlo a la lista.</li>
+  <li>Arrastra los elementos para ponerlos en el orden que prefieras.</li>
+</ol>
+
+<p>Se conservan las pistas de audio y de subtítulos en estos idiomas. Todo lo que esté en cualquier
+otro idioma se quita.</p>
+
+<p><strong>El orden importa, y tiene un efecto concreto.</strong> La lista es un orden de preferencia,
+y el primer idioma se convierte en la pista de audio <em>predeterminada</em> del archivo aligerado –
+la que suena cuando pulsas reproducir sin elegir nada. Si conservas inglés y japonés pero quieres que
+el audio en japonés sea el primero, pon el japonés en primer lugar.</p>
+
+<p class="note">Los idiomas se identifican por la etiqueta almacenada en el archivo, que usa códigos
+ISO 639-2 de tres letras. Si quien creó el archivo etiquetó mal una pista, se tratará según la
+etiqueta y no según lo que oyes.</p>
+
+<a name="rule-untagged" id="rule-untagged"></a>
+<h2>Decidir qué hacer con las pistas sin idioma</h2>
+
+<p><strong>Conservar pistas sin idioma</strong> se aplica a las pistas que no tienen ninguna etiqueta de
+idioma.</p>
+
+<p>De este único ajuste depende que algunos archivos queden perfectos o se queden sin sonido. Los
+discos de estudio etiquetan todas las pistas, así que en los rips de Blu-ray puedes dejarlo
+desactivado sin riesgo y quitar lo que sobra. Pero los rips de la web y del streaming suelen
+incluir una única pista de audio, bien codificada pero sin etiqueta – y si quitas las pistas sin
+idioma, ese archivo pierde todo el sonido.</p>
+
+<p>Si trabajas con rips de distintas procedencias, déjalo activado. Conservarás alguna pista que no
+necesitabas, pero la alternativa es una película muda.</p>
+
+<a name="rule-commentary" id="rule-commentary"></a>
+<h2>Decidir qué hacer con los comentarios y el audio adicional</h2>
+
+<p><strong>Incluir comentarios y audio adicional</strong> se aplica al audio no predeterminado de un
+idioma que conservas: comentarios del director, audiodescripción y mezclas alternativas.</p>
+
+<p>Si lo desactivas, conservas una pista de audio principal por cada idioma que hayas indicado. Si lo
+activas, conservas también las adicionales. Las pistas de comentarios suelen ocupar poco al lado de
+una mezcla principal sin pérdidas, así que rara vez suponen mucho tamaño – es cuestión de si las
+quieres o no.</p>
+
+<p>Las pistas de subtítulos que el disco marca como comentarios siguen el mismo ajuste, ya que
+subtitulan el audio de los comentarios y sirven de poco sin él. Una pista que no lleva esa marca – como
+ocurre en muchos rips – se considera un subtítulo normal y se conserva según su idioma, como los
+demás.</p>
+
+<h2>Comprobar el resultado antes de ejecutar</h2>
+
+<p>Las reglas describen una intención; el inspector muestra la consecuencia. Selecciona cualquier
+archivo y elige <strong>Previsualización</strong> en el inspector para ver el archivo completo de un
+vistazo – todas las pistas que conservan tus reglas, en el orden en que las incluirá el resultado, y
+todas las que quitan. Si una regla no hace lo que esperabas, ahí lo verás.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="overrides.html">Personalizar el plan de pistas de un archivo</a></li>
+    <li><a href="preview.html">Leer el plan completo de un archivo</a></li>
+    <li><a href="preferred-codecs.html">Definir códecs preferidos y códecs de destino</a></li>
+    <li><a href="presets.html">Guardar un conjunto de reglas como preajuste</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

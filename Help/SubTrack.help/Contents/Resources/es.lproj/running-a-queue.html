@@ -1,0 +1,100 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ejecutar una cola y seguir su progreso</title>
+  <meta name="AppleTitle" content="Ejecutar una cola y seguir su progreso">
+  <meta name="description" content="Inicia todos los archivos o solo los seleccionados, sigue el progreso en la ventana y en el Dock, y consulta cuánto ha ahorrado cada archivo terminado.">
+  <meta name="keywords" content="iniciar, ejecutar, cancelar, progreso, Dock, estado, ahorro, tamaño, lote, volver a analizar">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="running-a-queue" id="running-a-queue"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Ejecutar una cola y seguir su progreso</h1>
+
+<p>Cuando la cola muestra lo que conservará cada archivo, puedes ejecutarla entera o solo una parte.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/queue-running-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/queue-running.webp" width="1280" height="860" alt="Una cola a mitad de una ejecución: los archivos terminados tienen una marca de verificación, uno muestra un anillo de progreso y el resto espera su turno.">
+  </picture>
+  <figcaption>Cada fila muestra su propio estado y la barra inferior cuenta la cola en conjunto.</figcaption>
+</figure>
+
+<h2>Empezar a aligerar</h2>
+
+<ol>
+  <li>Para ejecutar todo, elige <strong>Cola</strong> &#9656; <strong>Iniciar todo</strong>
+    (<kbd>⌘R</kbd>).</li>
+  <li>Para ejecutar solo algunos archivos, selecciónalos y elige <strong>Cola</strong> &#9656;
+    <strong>Iniciar la selección</strong> (<kbd>⌘Return</kbd>).</li>
+  <li>Para detener la ejecución, elige <strong>Cola</strong> &#9656; <strong>Cancelar todo</strong>
+    (<kbd>⌘.</kbd>).</li>
+</ol>
+
+<p>Al cancelar, el trabajo en curso se detiene y se descarta el resultado parcial. Tus archivos de
+origen nunca se modifican – SubTrack solo escribe archivos nuevos.</p>
+
+<p class="note">Si <strong>Iniciar</strong> aparece atenuado, es porque dos archivos de la cola se
+escribirían en el mismo lugar o uno sobrescribiría su propio origen. SubTrack no empieza hasta que se
+resuelva, porque en ambos casos se destruiría un archivo. Para obtener más información, consulta
+<a href="name-conflicts.html">Resolver un conflicto de nombres</a>.</p>
+
+<a name="queue-progress" id="queue-progress"></a>
+<h2>Seguir el progreso</h2>
+
+<p>Cada fila en ejecución muestra su propio progreso, y la barra situada bajo la cola indica cuántos
+elementos hay, cuántos han terminado y cuántos se están codificando en ese momento. El icono del Dock
+también refleja el progreso total, así que puedes iniciar un lote y cambiar a otra app.</p>
+
+<p>Los archivos que solo se copian terminan casi al instante. Un archivo en el que hay que convertir
+una pista tarda lo que tarde esa conversión – por eso una cola puede parecer detenida en una fila
+mientras las demás avanzan rápidamente. Esa fila está trabajando.</p>
+
+<a name="queue-status" id="queue-status"></a>
+<h2>Leer los resultados</h2>
+
+<p>La cola muestra el número de pistas y el tamaño de cada archivo antes y después, para que veas lo
+que ha supuesto realmente una ejecución. El tamaño de salida solo es definitivo cuando el archivo
+termina; hasta entonces no hay nada en el disco que medir.</p>
+
+<p>Haz clic con el botón derecho en el encabezado de la cola para ocultar las columnas que no
+consultas y ceder su ancho a Nombre; vuelve a hacerlo para mostrarlas de nuevo. SubTrack recuerda tu
+elección. El símbolo de estado y Nombre siempre se mantienen.</p>
+
+<p>La columna de estado muestra un símbolo en cada fila. Coloca el puntero sobre uno para ver qué
+significa:</p>
+
+<ul>
+  <li>Un anillo giratorio – se está analizando o aligerando.</li>
+  <li>Una marca de verificación – terminado.</li>
+  <li>Un triángulo de advertencia – falta el archivo, la ejecución ha fallado o la versión de FFmpeg
+    actual no puede hacer lo que piden las reglas. Para obtener más información, consulta
+    <a href="troubleshooting.html#troubleshooting">Si un archivo no se aligera</a>.</li>
+</ul>
+
+<h2>Ordenar</h2>
+
+<ul>
+  <li><strong>Cola</strong> &#9656; <strong>Quitar completados</strong> quita las filas terminadas y
+    deja el resto.</li>
+  <li><strong>Cola</strong> &#9656; <strong>Quitar la selección</strong> (<kbd>Delete</kbd>) quita
+    archivos de la cola. No elimina nada del disco.</li>
+  <li><strong>Cola</strong> &#9656; <strong>Volver a analizar la selección</strong> lee de nuevo un
+    origen – útil si has sustituido el archivo o has cambiado la versión de FFmpeg que usa
+    SubTrack.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="encoding.html#settings-encoding">Definir cuántos archivos se codifican a la vez</a></li>
+    <li><a href="troubleshooting.html">Si un archivo no se aligera</a></li>
+    <li><a href="output-names.html">Dar nombre a los archivos que escribe SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

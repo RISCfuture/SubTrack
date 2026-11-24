@@ -1,0 +1,88 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Personalizar el plan de pistas de un archivo</title>
+  <meta name="AppleTitle" content="Personalizar el plan de pistas de un archivo">
+  <meta name="description" content="Consulta el plan de pistas de un solo archivo y cambia lo que ocurre con cada pista, sin afectar al resto de la cola.">
+  <meta name="keywords" content="personalizar, personalización, plan de pistas, por archivo, conservar, quitar, descartar, convertir, restablecer, inspector, excepción">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-overrides" id="track-overrides"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Personalizar el plan de pistas de un archivo</h1>
+
+<p>Las reglas de conservación se aplican a toda la cola. Cuando un archivo necesita un trato distinto –
+por ejemplo, porque tiene una pista mal etiquetada o porque es un documental cuyo comentario sí quieres – puedes
+cambiar solo ese archivo.</p>
+
+<a name="track-plan" id="track-plan"></a>
+<h2>Leer el plan</h2>
+
+<ol>
+  <li>Selecciona un archivo de la cola.</li>
+  <li>Muestra el inspector (<kbd>⌥⌘I</kbd>) y elige <strong>Personalización</strong>
+    (<kbd>⌥⌘2</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-override-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-override.webp" width="300" height="792" alt="La pestaña Personalización del inspector para un archivo: un selector de pistas encima del códec, el idioma, el título y los canales de la pista seleccionada, y los controles para incluirla o convertirla.">
+  </picture>
+  <figcaption>Todos los datos de la pista seleccionada y los dos controles que deciden qué ocurre con ella.</figcaption>
+</figure>
+
+<p>El menú de pistas muestra todas las del archivo. Las que aparecen atenuadas se quitan; el resto
+se conserva. Elige una pista para ver qué ocurrirá con ella y por qué.</p>
+
+<p>Para ver el archivo entero de una vez en lugar de pista a pista, consulta
+<a href="preview.html#track-preview">Leer el plan completo de un archivo</a>. Es la forma más rápida
+de comprobar que las reglas hacen lo que querías antes de aplicarlas a toda una cola.</p>
+
+<h2>Cambiar una pista</h2>
+
+<p>Elige una pista y, después, qué debe ocurrir con ella – conservarla, quitarla o convertirla a un
+códec concreto.</p>
+
+<p><strong>Antes de hacerlo, ten en cuenta una cosa.</strong> Al cambiar una sola pista, todo el
+archivo pasa a tener un plan propio. Las demás pistas quedan fijadas tal como las dejaban las reglas
+en ese momento, y, a partir de entonces, el archivo deja de seguir las reglas de la cola. Si cambias las reglas más tarde,
+este archivo no las seguirá.</p>
+
+<p>Normalmente es lo que quieres – has elegido ese archivo a propósito – pero significa que una
+personalización que hiciste hace tiempo y olvidaste ignorará sin avisar los cambios posteriores en
+las reglas.</p>
+
+<a name="override-reset" id="override-reset"></a>
+<h2>Volver a las reglas</h2>
+
+<p>Haz clic en <strong>Restablecer a las reglas</strong>. El archivo abandona su plan propio y vuelve
+a seguir las reglas de la cola, incluidos los cambios que hayas hecho desde que lo personalizaste. El botón solo
+aparece mientras un archivo tiene una personalización, así que también sirve para saber si la
+tiene.</p>
+
+<h2>Dar a un archivo otro nombre</h2>
+
+<p>En la misma pestaña puedes definir un nombre de salida solo para este archivo; ese nombre sustituye al
+formato del nombre de salida de la cola. Para obtener más información, consulta
+<a href="output-names.html#output-names">Dar nombre a los archivos que escribe SubTrack</a>.</p>
+
+<p class="note">Si vuelves a analizar un archivo (<strong>Cola</strong> &#9656; <strong>Volver a
+analizar la selección</strong>), sus pistas se leen de nuevo desde el disco. Una personalización que
+se refería a una pista que ya no existe no puede aplicarse, así que revisa el plan después de
+sustituir un archivo de origen.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="preview.html">Leer el plan completo de un archivo</a></li>
+    <li><a href="slim-rules.html">Elegir qué idiomas conservar</a></li>
+    <li><a href="preferred-codecs.html">Definir códecs preferidos y códecs de destino</a></li>
+    <li><a href="output-names.html">Dar nombre a los archivos que escribe SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

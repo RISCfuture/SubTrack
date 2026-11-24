@@ -1,0 +1,70 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Dar nombre a los archivos que escribe SubTrack</title>
+  <meta name="AppleTitle" content="Dar nombre a los archivos que escribe SubTrack">
+  <meta name="description" content="Compón los nombres de los archivos de salida con marcadores y resuelve los dos conflictos que impiden iniciar una cola.">
+  <meta name="keywords" content="nombre de salida, formato, marcador, renombrar, aligerado, conflicto, duplicado, sobrescribir, extensión">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="output-names" id="output-names"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Dar nombre a los archivos que escribe SubTrack</h1>
+
+<p>SubTrack nunca modifica un archivo de origen – escribe uno nuevo junto a él. El formato del nombre de salida
+decide cómo se llama ese archivo nuevo.</p>
+
+<p>Para cambiarlo, muestra el inspector (<kbd>⌥⌘I</kbd>), selecciona <strong>Reglas</strong> y edita
+<strong>Nombre de salida</strong>. Cada cola tiene el suyo.</p>
+
+<a name="name-tokens" id="name-tokens"></a>
+<h2>Componer un nombre con marcadores</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/output-name-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/output-name.webp" width="280" height="87" alt="El campo del nombre de salida con un marcador Nombre original seguido del texto «(aligerado)», con los marcadores disponibles debajo y una vista previa del nombre de archivo resultante.">
+  </picture>
+  <figcaption>La línea inferior muestra una vista previa del formato aplicado a un archivo real de la cola.</figcaption>
+</figure>
+
+<p>El formato es texto normal con marcadores que representan los datos de cada archivo:</p>
+
+<ul>
+  <li><code>{name}</code> – el nombre del archivo de origen, sin su extensión.</li>
+  <li><code>{n}</code> – la posición del archivo en la cola.</li>
+</ul>
+
+<p>Así, <code>{name} (slimmed)</code> convierte <code>The Third Man.mkv</code> en
+<code>The Third Man (slimmed).mkv</code>.</p>
+
+<p>La extensión nunca forma parte del formato. El resultado conserva el mismo contenedor que el origen,
+de modo que SubTrack añade la extensión por sí mismo; un formato que intentara cambiarla describiría
+algo que no puede hacer.</p>
+
+<h3>Escribir una llave literal</h3>
+
+<p>Duplica una llave para que se escriba tal cual: <code>{{name}}</code> produce el texto
+<code>{name}</code> en lugar del nombre del archivo. Un marcador desconocido, como <code>{title}</code>,
+se deja sin tocar y aparece tal cual en el nombre, de modo que un error de escritura da un nombre de
+archivo extraño, pero no se pierde nada.</p>
+
+<h2>Cuando dos nombres coinciden</h2>
+
+<p>SubTrack se niega a iniciar una cola cuyos nombres destruirían un archivo, y esto solo puede ocurrir
+de dos maneras – ambas fáciles de resolver. Para obtener más información, consulta
+<a href="name-conflicts.html">Resolver un conflicto de nombres</a>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="destinations.html">Elegir dónde se guardan los archivos aligerados</a></li>
+    <li><a href="overrides.html">Personalizar el plan de pistas de un archivo</a></li>
+    <li><a href="running-a-queue.html">Ejecutar una cola y seguir su progreso</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

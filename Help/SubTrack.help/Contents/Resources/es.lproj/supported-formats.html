@@ -1,0 +1,42 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ver qué admite una versión de FFmpeg</title>
+  <meta name="AppleTitle" content="Ver qué admite una versión de FFmpeg">
+  <meta name="description" content="La hoja Formatos compatibles enumera todos los contenedores y códecs que admite la versión en uso, y distingue la lectura de la escritura.">
+  <meta name="keywords" content="formatos compatibles, contenedores, códecs, decodificar, codificar, leer, escribir, filtro, muxer, demuxer, capacidades">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="supported-formats" id="supported-formats"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Ver qué admite una versión de FFmpeg</h1>
+
+<p>Haz clic en <strong>Formatos compatibles</strong> en <strong>Ajustes</strong> &#9656;
+<strong>FFmpeg</strong>. La hoja enumera los <strong>Contenedores</strong>, los <strong>Códecs de
+vídeo</strong>, los <strong>Códecs de audio</strong> y los <strong>Códecs de subtítulos</strong> de la
+versión que estás usando. Cada grupo se puede plegar y cada fila indica el identificador del formato y su
+nombre completo. Escribe en el campo <strong>Filtro</strong> para acotar todos los grupos a la vez.</p>
+
+<h2>Decodificar no es codificar</h2>
+
+<p>Cada fila lleva dos marcas con significados distintos. Los contenedores se marcan como <strong>Lectura /
+Escritura</strong> y los códecs como <strong>Decodificación / Codificación</strong> – y leer no es lo mismo
+que escribir. Una versión puede decodificar un códec a la perfección y no ser capaz de producir ni un solo
+fotograma con él. Es normal: prácticamente todas las versiones leen más de lo que escriben.</p>
+
+<p>Esa diferencia es justo lo que hay detrás de la advertencia de que la versión de FFmpeg actual no puede
+codificar un códec de destino que has elegido. Filtra por el códec, mira la segunda marca y lo verás.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Usar otra versión de FFmpeg</a></li>
+    <li><a href="unsupported-codec.html">Si un códec no se puede codificar</a></li>
+    <li><a href="preferred-codecs.html">Definir códecs preferidos y códecs de destino</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

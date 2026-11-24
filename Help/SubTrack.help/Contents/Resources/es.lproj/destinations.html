@@ -1,0 +1,69 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Elegir dónde se guardan los archivos aligerados</title>
+  <meta name="AppleTitle" content="Elegir dónde se guardan los archivos aligerados">
+  <meta name="description" content="Define la carpeta de salida de una cola o deja que SubTrack guarde cada archivo aligerado junto al archivo del que procede.">
+  <meta name="keywords" content="destino, carpeta de salida, guardar, ubicación, junto al origen, predeterminado, ajustes generales">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="destinations" id="destinations"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Elegir dónde se guardan los archivos aligerados</h1>
+
+<p>Cada cola escribe su resultado en algún sitio: una carpeta que eliges tú o la carpeta en la que ya
+está cada archivo de origen.</p>
+
+<h2>Definir el destino de una cola</h2>
+
+<ol>
+  <li>Selecciona la cola en la barra lateral.</li>
+  <li>Haz clic en <strong>Cambiar…</strong> en la barra situada encima de la cola.</li>
+  <li>Elige una carpeta y haz clic en <strong>Abrir</strong>.</li>
+</ol>
+
+<p>Todos los archivos de esa cola se escriben ahí, sea cual sea la carpeta de la que procedan. Es lo
+que te conviene cuando quieres reunir en un solo lugar los resultados de varios orígenes dispersos.</p>
+
+<h2>Guardar junto a cada origen</h2>
+
+<p>Una cola sin destino definido guarda cada archivo aligerado en la misma carpeta que el archivo del
+que procede. Así, los episodios de una temporada siguen repartidos en sus carpetas de temporada en
+lugar de acabar todos juntos en una sola.</p>
+
+<p>Es el comportamiento predeterminado, y por eso la barra de destino puede indicar <strong>Se guarda
+junto a cada origen</strong> en lugar del nombre de una carpeta.</p>
+
+<p class="note">Guardar junto al origen es la opción que más conflictos de nombres puede provocar,
+porque el resultado queda en la misma carpeta que el original. Si tu formato genera exactamente el
+nombre del origen, SubTrack se negará a empezar en lugar de sobrescribirlo. Para obtener más información,
+consulta <a href="name-conflicts.html">Resolver un conflicto de nombres</a>.</p>
+
+<h2>Definir el destino predeterminado de las colas nuevas</h2>
+
+<p>Cada cola nueva empieza con su propio destino, que se define una sola vez en Ajustes. Para obtener
+más información, consulta <a href="settings-general.html">Definir el destino predeterminado de las
+colas nuevas</a>. Cambiarlo no afecta a las colas que ya existen.</p>
+
+<h2>Si SubTrack no puede escribir en una carpeta</h2>
+
+<p>macOS da a SubTrack acceso a las carpetas que eliges, y ese acceso guardado se conserva entre
+sesiones. Si un destino deja de estar disponible – un disco externo que no está montado o una carpeta que se ha movido o eliminado – la ejecución se detiene en lugar de escribir en otro lugar
+inesperado.</p>
+
+<p>Si eliges la carpeta de nuevo, se restablece el acceso. Si el problema es un archivo de origen y no
+un destino, consulta <a href="missing-source.html">Si falta el archivo de origen</a>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="output-names.html">Dar nombre a los archivos que escribe SubTrack</a></li>
+    <li><a href="adding-files.html#queues">Añadir vídeos a una cola</a></li>
+    <li><a href="troubleshooting.html">Si un archivo no se aligera</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
