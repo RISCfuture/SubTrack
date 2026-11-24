@@ -55,6 +55,14 @@ string, the Help book and the App Store listing use it.
 | hearing impaired | subtitles or audio for deaf and hard-of-hearing viewers (SDH) | für Hörgeschädigte | pour sourds et malentendants | para personas sordas | per non udenti |
 | visually impaired | audio description | Audiodeskription | audiodescription | audiodescripción | audiodescrizione |
 | inspect, re-scan | read a file's tracks with `ffprobe` | analysieren, Analyse, erneut analysieren | analyser, analyse, réanalyser | analizar, análisis, volver a analizar | analizzare, analisi, rianalizzare |
+| transcode, transcode target | re-encode a track into another codec; the codec it becomes | umcodieren, Umcodierung, Zielcodec | transcoder, transcodage, codec cible | transcodificar, transcodificación, códec de destino | transcodificare, transcodifica, codec di destinazione |
+| encode, decode | FFmpeg's encode and decode capabilities; also the Encoding settings tab and queue status | codieren, decodieren, Codierung | encoder, décoder, encodage, décodage | codificar, decodificar, codificación, decodificación | codificare, decodificare, codifica, decodifica |
+| inspector | the right-hand pane with the Rules, Override and Preview tabs | Inspektor | inspecteur | inspector | Inspector |
+| run | one pass of a queue from Start until it finishes | Durchlauf | exécution | ejecución | esecuzione |
+| Activity Log | the window that lists runs and problems | Aktivitätsprotokoll | Journal d’activité | Registro de actividad | Registro attività |
+| token | a placeholder in the output-name format, such as `{name}`, that stands for each file's own details | Platzhalter | balise | marcador | segnaposto |
+| download version, App Store version | SubTrack's two editions: from the website (fuller FFmpeg) and from the Mac App Store | Download-Version, App-Store-Version | version téléchargeable, version App Store | versión descargable, versión de App Store | versione scaricabile, versione App Store |
+| home folder | the user's macOS home folder | Benutzerordner | dossier de départ | carpeta de inicio | cartella Inizio |
 
 Where a cell gives a verb and a noun, buttons and menu items take the verb and tabs,
 headers and labels the noun: the Override tab is Anpassung, personnalisation, personalización,
