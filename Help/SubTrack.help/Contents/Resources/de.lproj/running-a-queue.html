@@ -1,0 +1,101 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Eine Warteschlange ausführen und ihren Fortschritt verfolgen</title>
+  <meta name="AppleTitle" content="Eine Warteschlange ausführen und ihren Fortschritt verfolgen">
+  <meta name="description" content="Starte alle oder ausgewählte Dateien, verfolge den Fortschritt im Fenster und im Dock und lies ab, was jede fertige Datei eingespart hat.">
+  <meta name="keywords" content="starten, ausführen, abbrechen, Fortschritt, Dock, Status, Einsparung, Größe, Stapel, erneut analysieren">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="running-a-queue" id="running-a-queue"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Eine Warteschlange ausführen und ihren Fortschritt verfolgen</h1>
+
+<p>Sobald die Warteschlange zeigt, was jede Datei behält, kannst du sie ganz oder nur teilweise
+ausführen.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/queue-running-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/queue-running.webp" width="1280" height="860" alt="Eine Warteschlange mitten im Durchlauf: Fertige Dateien tragen ein Häkchen, eine zeigt einen Fortschrittsring, die übrigen warten, bis sie an der Reihe sind.">
+  </picture>
+  <figcaption>Jede Zeile zeigt ihren eigenen Status, und die Leiste darunter zählt die Warteschlange als Ganzes.</figcaption>
+</figure>
+
+<h2>Mit dem Verschlanken beginnen</h2>
+
+<ol>
+  <li>Um alles auszuführen, wähle <strong>Warteschlange</strong> &#9656; <strong>Alle starten</strong>
+    (<kbd>⌘R</kbd>).</li>
+  <li>Um nur einige Dateien auszuführen, wähle sie aus und wähle <strong>Warteschlange</strong> &#9656;
+    <strong>Auswahl starten</strong> (<kbd>⌘Return</kbd>).</li>
+  <li>Zum Anhalten wähle <strong>Warteschlange</strong> &#9656; <strong>Alle abbrechen</strong> (<kbd>⌘.</kbd>).</li>
+</ol>
+
+<p>Beim Abbrechen wird die laufende Arbeit angehalten und die unvollständige Ausgabe verworfen. Deine
+Quelldateien werden nie verändert – SubTrack schreibt immer nur neue.</p>
+
+<p class="note">Ist „Starten“ abgeblendet, würden zwei Dateien in der Warteschlange an dieselbe Stelle
+geschrieben oder eine würde ihre eigene Quelle überschreiben. SubTrack startet erst, wenn das behoben
+ist, denn beides würde eine Datei zerstören. Siehe <a href="name-conflicts.html">Einen Namenskonflikt beheben</a>.</p>
+
+<a name="queue-progress" id="queue-progress"></a>
+<h2>Den Fortschritt verfolgen</h2>
+
+<p>Jede laufende Zeile zeigt ihren eigenen Fortschritt, und die Leiste unter der Warteschlange zeigt,
+wie viele Objekte es gibt, wie viele fertig sind und wie viele gerade codiert werden. Auch das
+Dock-Symbol zeigt den Gesamtfortschritt, sodass du einen Stapel starten und zu etwas anderem wechseln
+kannst.</p>
+
+<p>Dateien, die nur kopiert werden, sind fast sofort fertig. Eine Datei, in der eine Spur umcodiert
+werden muss, braucht so lange wie dieses Umcodieren – deshalb kann eine Warteschlange bei einer
+einzelnen Zeile zu hängen scheinen, während die anderen vorbeiziehen. Diese Zeile leistet echte
+Arbeit.</p>
+
+<a name="queue-status" id="queue-status"></a>
+<h2>Die Ergebnisse lesen</h2>
+
+<p>Die Warteschlange listet für jede Datei Spuranzahl und Größe vor und nach dem Verschlanken auf, sodass
+du siehst, was ein Durchlauf tatsächlich gebracht hat. Die Größe der Ausgabe steht erst fest, wenn
+eine Datei fertig ist; vorher gibt es auf der Festplatte nichts zu messen.</p>
+
+<p>Klicke mit gedrückter Control-Taste oder mit der rechten Maustaste auf die Kopfzeile der
+Warteschlange, um Spalten auszublenden, die du nicht brauchst, und ihre Breite an „Name“
+zurückzugeben; wiederhole das, um sie wieder einzublenden. SubTrack merkt sich deine Auswahl. Die
+Statusspalte und „Name“ bleiben immer sichtbar.</p>
+
+<p>Die Statusspalte zeigt pro Zeile ein Symbol. Bewege den Zeiger darauf, um zu lesen, was es
+bedeutet:</p>
+
+<ul>
+  <li>Ein drehender Ring – wird analysiert oder verschlankt.</li>
+  <li>Ein Häkchen – fertig.</li>
+  <li>Ein Warndreieck – die Datei fehlt, der Durchlauf ist fehlgeschlagen, oder der aktuelle FFmpeg-Build
+    kann nicht, was die Regeln verlangen. Siehe <a href="troubleshooting.html#troubleshooting">Wenn sich eine Datei nicht verschlanken lässt</a>.</li>
+</ul>
+
+<h2>Aufräumen</h2>
+
+<ul>
+  <li><strong>Warteschlange</strong> &#9656; <strong>Abgeschlossene entfernen</strong> entfernt fertige
+    Zeilen und lässt den Rest stehen.</li>
+  <li><strong>Warteschlange</strong> &#9656; <strong>Auswahl entfernen</strong> (<kbd>⌫</kbd>)
+    nimmt Dateien aus der Warteschlange. Es wird nie etwas von der Festplatte gelöscht.</li>
+  <li><strong>Warteschlange</strong> &#9656; <strong>Auswahl erneut analysieren</strong> liest eine
+    Quelle noch einmal – nützlich, wenn du die Datei ersetzt oder den verwendeten FFmpeg-Build
+    gewechselt hast.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="encoding.html#settings-encoding">Festlegen, wie viele Dateien gleichzeitig codiert werden</a></li>
+    <li><a href="troubleshooting.html">Wenn sich eine Datei nicht verschlanken lässt</a></li>
+    <li><a href="output-names.html">Die von SubTrack geschriebenen Dateien benennen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

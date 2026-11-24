@@ -1,0 +1,25 @@
+Entferne die Spuren, die du nicht brauchst. Behalte jedes Bit der anderen.
+
+SubTrack entfernt unerwünschte Audio- und Untertitelspuren aus deinen Videodateien. Die Spuren werden kopiert statt neu codiert – ein zwei Stunden langer Blu-ray-Rip ist deshalb in Sekunden verschlankt, ohne Qualitätsverlust.
+
+EINREIHEN, FESTLEGEN, KOPIEREN
+• Ziehe Filme oder einen ganzen Ordner hinein – SubTrack findet jedes Video darin.
+• Regeln wählen die Spuren aus: Behalte die Sprachen, die du sprichst, behalte oder entferne Kommentare und lege fest, was mit Spuren ohne Sprachangabe geschieht. Die erste Sprache in deiner Liste wird zur Standardtonspur.
+• Alles, was du behältst, wird Bit für Bit in eine neue Datei kopiert. Gleicher Container, gleiche Qualität, nur ein Bruchteil der Größe.
+
+DEN PLAN SEHEN, BEVOR ES LOSGEHT
+Der Inspektor listet jede Spur einer Datei auf und zeigt genau, was SubTrack damit tut: behalten, entfernen oder konvertieren. Passe alles an – pro Datei und pro Spur.
+
+FÜR GANZE STAPEL GEMACHT
+• So viele Warteschlangen, wie du willst – jede mit eigenen Dateien, Regeln, Voreinstellung und Zielordner.
+• Voreinstellungen für Blu-ray, Streaming und Web-Rips sind schon dabei. Sichere deine eigenen; sie werden über deinen iCloud-Account mit deinen anderen Macs synchronisiert.
+• Namensmuster für die Ausgabe, Fortschritt pro Datei und insgesamt, Fortschritt im Dock, eine Mitteilung, wenn eine Warteschlange fertig ist, und ein Aktivitätsprotokoll für die Details.
+• Beim Codieren bleibt dein Mac wach, damit ein Stapel über Nacht bis zum Ende durchläuft.
+
+UMCODIEREN NUR, WENN ES SEIN MUSS
+Nenne die Codecs, die du behalten möchtest. Ist eine Spur, die du behältst, keiner davon, wandelt SubTrack nur diese Spur um – mit dem Hardware-Encoder deines Mac in HEVC oder H.264, bei Audio in AAC, AC-3, E-AC-3, FLAC, ALAC oder Opus – und sagt dir vorher Bescheid.
+
+DEINE DATEIEN BLEIBEN DEINE
+Deine Videos verlassen deinen Mac nie. SubTrack bringt einen eigenen LGPL-Build von FFmpeg mit, bei dem Netzwerkzugriff abgeschaltet ist; du musst also nichts zusätzlich installieren. Keine Accounts, keine Werbung, kein Tracking.
+
+Erfordert macOS 27 auf einem Mac mit Apple Silicon.

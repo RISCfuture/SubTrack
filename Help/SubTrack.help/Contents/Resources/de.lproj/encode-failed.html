@@ -1,0 +1,70 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Wenn ein Durchlauf startet und dann fehlschlägt</title>
+  <meta name="AppleTitle" content="Wenn ein Durchlauf startet und dann fehlschlägt">
+  <meta name="description" content="FFmpeg wurde gestartet, hat eine Weile gearbeitet und ist stehen geblieben. Meist liegt es an einem vollen Volume, einem Ziel, das verschwunden ist, oder einer Beschädigung in der Quelle.">
+  <meta name="keywords" content="ffmpeg, Exit-Code, fehlgeschlagen, Volume voll, Festplatte voll, nicht genug Platz, freier Speicherplatz, ausgeworfen, Netzwerkvolume, beschädigt, Prüfung, Ausgabe ohne Spuren, erneut versuchen">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="encode-failed" id="encode-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Wenn ein Durchlauf startet und dann fehlschlägt</h1>
+
+<p>Ein anderer Zeitpunkt und ein anderes Problem als bei einer Datei, die nie lesbar war: FFmpeg wurde
+gestartet, hat eine Weile gearbeitet und ist stehen geblieben. In der Zeile steht, dass SubTrack das
+Video nicht verarbeiten konnte, zusammen mit dem Code, mit dem FFmpeg beendet wurde – der allein
+sagt dir nichts. Die eigentliche Meldung steht im Aktivitätsprotokoll; lies sie, bevor du
+Vermutungen anstellst.</p>
+
+<h2>Was es meistens ist</h2>
+
+<ul>
+  <li><strong>Das Volume ist vollgelaufen.</strong> Beim Verschlanken wird eine ganz neue Datei
+    geschrieben; die Ausgabe braucht also neben dem Original Platz, bis der Durchlauf fertig
+    ist.</li>
+  <li><strong>Das Ziel ist mitten im Durchlauf verschwunden</strong> – ein externes Laufwerk wurde
+    ausgeworfen oder ein Netzwerkvolume getrennt.</li>
+  <li><strong>Eine Spur in der Quelle ist beschädigt.</strong> Ein Rip mit einer fehlerhaften Stelle kann
+    sich fehlerfrei analysieren lassen und trotzdem scheitern, sobald FFmpeg an die Beschädigung
+    gelangt.</li>
+</ul>
+
+<p>SubTrack prüft außerdem die Datei, die es gerade geschrieben hat; ein Durchlauf kann also ganz am
+Ende fehlschlagen: Eine Ausgabe, in der Spuren fehlen, die vorhanden sein sollten, oder eine Spur
+ohne Daten wird als Fehler gemeldet und nicht als erledigt. SubTrack liefert damit absichtlich
+keine Datei aus, die unbemerkt fehlerhaft ist.</p>
+
+<h2>Wenn er nie gestartet wurde</h2>
+
+<p>Manche Fehler nennen gar keinen Exit-Code, weil SubTrack den Durchlauf abgelehnt hat, bevor FFmpeg
+gestartet wurde: Es vergleicht die Datei, die der Durchlauf schreiben würde, mit dem freien Platz auf
+dem Zielvolume und hält an, wenn die Datei offensichtlich nicht passt. Die Zeile nennt beide Werte,
+und im Aktivitätsprotokoll steht dazu nichts – es lief nichts. Schaffe Platz auf diesem
+Volume oder
+<a href="destinations.html">sichere die Ausgabe der Warteschlange an einem anderen Ort</a> und starte
+die Zeile dann erneut.</p>
+
+<p>Diese Prüfung ist eine Hilfe, aber keine Garantie. Die Größe der Ausgabe eines Umcodierens
+lässt sich nicht vorhersagen, und manche Volumes melden ihren freien Platz nicht; ein Volume kann also
+mittendrin trotzdem volllaufen und so fehlschlagen, wie es der Rest dieser Seite beschreibt.</p>
+
+<h2>Erneut versuchen</h2>
+
+<p>Eine fehlgeschlagene Zeile lässt sich erneut starten. Behebe die Ursache und wähle dann
+<strong>Warteschlange</strong> &#9656; <strong>Auswahl starten</strong>
+(<kbd>⌘Return</kbd>).</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="troubleshooting.html#activity-log">Den vollständigen Fehler im Aktivitätsprotokoll lesen</a></li>
+    <li><a href="troubleshooting.html">Wenn sich eine Datei nicht verschlanken lässt</a></li>
+    <li><a href="destinations.html">Festlegen, wohin verschlankte Dateien gesichert werden</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

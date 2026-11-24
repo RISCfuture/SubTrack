@@ -1,0 +1,61 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Wenn SubTrack eine Datei nicht lesen kann</title>
+  <meta name="AppleTitle" content="Wenn SubTrack eine Datei nicht lesen kann">
+  <meta name="description" content="Warum die Analyse einer Datei scheitert, bevor das Verschlanken beginnt – kein echtes Video, abgeschnitten, nicht unterstützter Container, verschlüsselt oder von macOS zurückgehalten – und was du tun kannst.">
+  <meta name="keywords" content="ffprobe, nicht lesbar, beschädigt, abgeschnitten, DRM, verschlüsselt, Container, analysieren, erneut analysieren, kann nicht gelesen werden, Berechtigung, verweigert, Festplattenvollzugriff">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="probe-failed" id="probe-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Wenn SubTrack eine Datei nicht lesen kann</h1>
+
+<p>Das passiert, bevor das Verschlanken beginnt. SubTrack analysiert jede Datei, die du hinzufügst,
+und das muss gelingen, bevor es eine Spurliste gibt, über die entschieden werden kann. Scheitert es,
+steht in der Zeile, dass SubTrack die Videodatei nicht lesen konnte, und die Details darunter nennen
+den Grund – meist das, was <code>ffprobe</code> zuletzt gemeldet hat.</p>
+
+<h2>Woran es meist liegt</h2>
+
+<ul>
+  <li><strong>Es ist gar kein Video.</strong> Eine Dateiendung kann alles Mögliche behaupten. Eine
+    Datei ohne Videospur – etwa eine einzelne Audiodatei oder eine Begleitdatei – wird sofort
+    abgelehnt, und das wird auch angezeigt.</li>
+  <li><strong>Sie ist abgeschnitten oder noch nicht vollständig da.</strong> Ein laufender Download
+    oder eine Kopie, die noch nicht fertig ist, wirkt wie ein defekter Container, bis das letzte Byte
+    angekommen ist.</li>
+  <li><strong>Der Container wird von diesem Build nicht gelesen.</strong> FFmpeg-Builds unterscheiden
+    sich darin, welche Formate sie verarbeiten können.</li>
+  <li><strong>Sie ist verschlüsselt.</strong> Gekauftes und geliehenes Video trägt DRM, und SubTrack
+    entfernt es nicht.</li>
+  <li><strong>macOS hält sie zurück.</strong> Eine Datei im Container einer anderen App wird sofort
+    abgelehnt, ohne dass eine Rückfrage die Freigabe anbietet.</li>
+</ul>
+
+<h2>Was du tun kannst</h2>
+
+<p>Wenn macOS den Zugriff verweigert, kopiere die Datei an einen Ort, der dir gehört, und füge die
+Kopie hinzu. Eine Datei direkt im Container einer anderen App zu lesen, erfordert den
+Festplattenvollzugriff, den du in den Systemeinstellungen unter <strong>Datenschutz &amp; Sicherheit</strong>
+erteilst.</p>
+
+<p>Versuche andernfalls zuerst, die Datei anderswo abzuspielen: Lässt sie sich auch im QuickTime Player
+nicht öffnen, liegt das Problem an der Datei. Spielt sie dort einwandfrei, öffne
+<strong>Einstellungen</strong> &#9656; <strong>FFmpeg</strong> und klicke auf
+<strong>Unterstützte Formate</strong>, um zu prüfen, ob dieser Build den Container liest. Wähle dann die
+Zeile aus und wähle <strong>Warteschlange</strong> &#9656; <strong>Auswahl erneut analysieren</strong>.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Wenn sich eine Datei nicht verschlanken lässt</a></li>
+    <li><a href="supported-formats.html">Unterstützte Formate eines FFmpeg-Builds anzeigen</a></li>
+    <li><a href="troubleshooting.html#activity-log">Den vollständigen Fehler im Aktivitätsprotokoll lesen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

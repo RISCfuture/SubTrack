@@ -1,0 +1,50 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Einen Namenskonflikt beheben</title>
+  <meta name="AppleTitle" content="Einen Namenskonflikt beheben">
+  <meta name="description" content="SubTrack startet keine Warteschlange, deren Namen eine Datei zerstören würden. Das kann auf genau zwei Arten passieren, und beide lassen sich schnell beheben.">
+  <meta name="keywords" content="Konflikt, Kollision, doppelt, überschreiben, gleicher Name, Start abgeblendet, blockiert, Platzhalter, Nummer, Anpassung">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="name-conflicts" id="name-conflicts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Einen Namenskonflikt beheben</h1>
+
+<p>SubTrack startet keine Warteschlange, deren Namen eine Datei zerstören würden. Das kann auf genau
+zwei Arten passieren.</p>
+
+<h2>Zwei Dateien würden an dieselbe Stelle geschrieben</h2>
+
+<p>Das Format unterscheidet nicht zwischen zwei Quellen – meist, weil sie in verschiedenen Ordnern
+denselben Namen haben, etwa <code>Show.mkv</code> in einem Ordner „Staffel 1“ und einem Ordner
+„Staffel 2“. Die Datei, die zuletzt fertig würde, überschriebe die andere.</p>
+
+<p>Sorge dafür, dass das Format unterschiedliche Namen erzeugt. Am schnellsten geht das mit
+<code>{n}</code>; genauer geht es, wenn du einer Datei im Tab <strong>Anpassung</strong> einen
+eigenen Namen gibst. Oder du schickst die Warteschlangen in verschiedene Ordner.</p>
+
+<h2>Eine Datei würde ihre eigene Quelle überschreiben</h2>
+
+<p>Das Format erzeugt genau den Namen der Quelle, und der Ausgabeordner ist der Ordner, in dem die
+Quelle liegt – SubTrack würde also genau die Datei überschreiben, die es gerade liest.</p>
+
+<p>Behebe das, indem du dem Format etwas hinzufügst, etwa <code>{name} (slimmed)</code>, oder einen
+anderen Ausgabeordner wählst. Siehe <a href="destinations.html">Festlegen, wohin verschlankte Dateien gesichert werden</a>.</p>
+
+<p class="note">Die Warnung nennt die betroffenen Dateien, sodass du siehst, welche kollidiert sind,
+statt zu raten. Das Starten ist wieder möglich, sobald keine zwei Ausgaben mehr kollidieren.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="output-names.html">Die von SubTrack geschriebenen Dateien benennen</a></li>
+    <li><a href="destinations.html">Festlegen, wohin verschlankte Dateien gesichert werden</a></li>
+    <li><a href="overrides.html">Den Spurplan für eine Datei anpassen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

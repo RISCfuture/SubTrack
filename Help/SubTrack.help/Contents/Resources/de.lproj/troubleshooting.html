@@ -1,0 +1,118 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Wenn sich eine Datei nicht verschlanken lässt</title>
+  <meta name="AppleTitle" content="Wenn sich eine Datei nicht verschlanken lässt">
+  <meta name="description" content="Was jeder Fehler in der Warteschlange bedeutet – eine nicht lesbare Quelle, eine fehlende Datei, ein Durchlauf, der mittendrin fehlgeschlagen ist – und wo der vollständige Fehlertext steht.">
+  <meta name="keywords" content="Fehler, fehlgeschlagen, ffprobe, ffmpeg, Exit-Code, nicht lesbar, beschädigt, abgeschnitten, DRM, verschlüsselt, ungültig, Berechtigung, Sandbox, Lesezeichen, Festplatte voll, Aktivitätsprotokoll, Protokoll, rot, Warnung, Dreieck, Bug, melden, wird nicht gesichert, sichern, verloren, Datenverlust, Verlauf, Zeitstempel, unbeaufsichtigt, über Nacht">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="troubleshooting" id="troubleshooting"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Wenn sich eine Datei nicht verschlanken lässt</h1>
+
+<p>Bei den meisten Dateien läuft vom Hinzufügen bis zum Abschluss alles ohne dein Zutun. Wenn nicht, liegt es fast immer an einem von drei Gründen: Die Quelle konnte gar nicht gelesen werden, die
+Quelle liegt nicht mehr dort, wo sie war, oder ein Durchlauf hat begonnen und ist dann schiefgegangen.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/problem-queue-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/problem-queue.webp" width="1180" height="620" alt="Eine Warteschlange mit vier verschiedenen Problemen gleichzeitig: eine fehlende Quelle, ein Codec, den der Build nicht codieren kann, ein fehlgeschlagener Durchlauf und eine Datei, deren Ausgabe stumm wäre.">
+  </picture>
+  <figcaption>Jedes Problem wird unter der Datei angezeigt, zu der es gehört.</figcaption>
+</figure>
+
+<p>Jede Zeile, die Aufmerksamkeit braucht, zeigt in der Statusspalte ein Warndreieck. <strong>Zeige
+auf das Dreieck, um den Grund zu lesen.</strong> Die Zeile unter dem Dateinamen sagt dasselbe, wird
+aber auf die Breite der Spalte gekürzt, und eine FFmpeg-Meldung ist oft länger. Wenn sie
+abgeschnitten ist, zeige darauf oder öffne das Aktivitätsprotokoll.</p>
+
+<p class="note">Ein Dreieck kann auch bedeuten, dass der verwendete FFmpeg-Build keinen Encoder für
+einen Codec hat, den du als Zielcodec zum Umcodieren gewählt hast. In diesem Fall wird der Codec genannt,
+und die Lösung steht unter
+<a href="unsupported-codec.html">Wenn sich ein Codec nicht codieren lässt</a>.</p>
+
+<h2>Den zutreffenden Fall finden</h2>
+
+<ul>
+  <li><a href="probe-failed.html">Wenn SubTrack eine Datei nicht lesen kann</a> – das Verschlanken hat gar nicht erst begonnen, weil die Analyse der Quelle fehlgeschlagen ist.</li>
+  <li><a href="missing-source.html">Wenn die Quelldatei fehlt</a> – die Datei wurde verschoben, oder
+    die gespeicherte Berechtigung für den Zugriff darauf ist ungültig geworden.</li>
+  <li><a href="encode-failed.html">Wenn ein Durchlauf startet und dann fehlschlägt</a> – FFmpeg wurde
+    gestartet, hat eine Weile gearbeitet und ist dann abgebrochen.</li>
+  <li><a href="unsupported-codec.html">Wenn sich ein Codec nicht codieren lässt</a> – der verwendete
+    Build hat keinen Encoder für einen Zielcodec, den du gewählt hast.</li>
+</ul>
+
+<a name="activity-log" id="activity-log"></a>
+<h2>Die vollständige Fehlermeldung im Aktivitätsprotokoll lesen</h2>
+
+<p>Wähle <strong>Fenster</strong> &#9656; <strong>Aktivitätsprotokoll</strong> (<kbd>⇧⌘L</kbd>).</p>
+
+<p>Das Protokoll ist der Bericht darüber, was geschehen ist, mit den neuesten Einträgen zuerst, und es
+umfasst <strong>alle Warteschlangen auf einmal</strong>: die Uhrzeit, die Warteschlange, die Datei
+und was mit ihr passiert ist. Das Protokoll gibt es vor allem aus einem Grund – <strong>hier steht der
+vollständige, ungekürzte Fehlertext.</strong> In der Warteschlange ist pro Datei nur Platz für eine kurze Zeile; das Protokoll hat die ganze Meldung.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/activity-log-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/activity-log.webp" width="860" height="312" alt="Das Aktivitätsprotokoll nach einem nächtlichen Durchlauf in der Warteschlange „Troubleshooting“: der Durchlauf endet mit drei codierten und einer fehlgeschlagenen Datei, ein behobenes Problem, ein fehlgeschlagener Durchlauf, ein Codec, den der Build nicht codieren kann, eine fehlende Quelle und der Beginn des Durchlaufs.">
+  </picture>
+  <figcaption>Ein nächtlicher Durchlauf, am Morgen danach gelesen. Sechs Zeilen für dreihundert Dateien.</figcaption>
+</figure>
+
+<p>Es ist dafür gedacht, am Morgen nach einem Durchlauf gelesen zu werden, den du hast laufen lassen.
+Jeder Durchlauf schreibt eine Zeile, wenn er beginnt, und eine weitere, wenn er endet und
+zusammenfasst, was dabei herauskam; dazwischen steht alles, was schiefgegangen ist: eine Datei, die
+fehlgeschlagen ist, eine Quelle, die verschwunden ist, eine Umcodierung, die dieser FFmpeg-Build nicht ausführen kann, ein Problem, das sich später erledigt hat.</p>
+
+<p class="note">Eine Datei, bei der alles glatt läuft, steht gar nicht im Protokoll. Analysieren,
+Codieren und Abschließen schreiben nichts – die Schlusszeile enthält die Zahlen –, sodass ein
+fehlerfreier Durchlauf mit dreihundert Dateien zwei Zeilen statt sechshundert ergibt – und alles, was
+du dort siehst, lesenswert ist. Ein Durchlauf ohne Probleme zeigt <strong>Nichts zu
+melden</strong>.</p>
+
+<p class="note">Keine Meldung ist hier abgekürzt. Jeder Eintrag wächst so weit, wie er es braucht, und
+der Text lässt sich auswählen und kopieren. Nur die Zeitangaben sind verkürzt: Die von heute zeigen nur die Uhrzeit, ältere zusätzlich das Datum.</p>
+
+<p>Das Protokoll gilt für die aktuelle Sitzung von SubTrack. Beim Beenden wird es geleert, denn es soll über
+die Sitzung Auskunft geben, in der codiert wurde.</p>
+
+<p>Wenn die Meldung zu nichts auf dieser Seite passt, möchten wir davon erfahren – kopiere sie aus dem
+Protokoll und <a href="https://github.com/RISCfuture/SubTrack/issues">melde ein Problem auf GitHub</a>.</p>
+
+<a name="not-saving" id="not-saving"></a>
+<h2>Wenn SubTrack meldet, dass nicht gesichert wird</h2>
+
+<p>Alles andere auf dieser Seite betrifft jeweils eine Datei. Dies hier betrifft keine davon:
+<strong>„Wird nicht gesichert“ rechts in der Statusleiste bedeutet, dass SubTrack die Warteschlange
+selbst nicht sichern kann.</strong> Was du auf dem Bildschirm siehst, stimmt; was auf der
+Festplatte steht, hält nicht mehr Schritt.</p>
+
+<p>Der Hinweis erscheint nur, solange das der Fall ist, und verschwindet, sobald das Sichern wieder
+funktioniert – ein Laufwerk, das kurz beschäftigt war, hinterlässt also nichts. Klicke darauf, um das
+Aktivitätsprotokoll zu öffnen, wo der ganze Grund in einer eigenen Zeile steht – gekennzeichnet mit
+<strong>Alle Warteschlangen</strong>, weil er sich anders als das meiste dort nicht auf eine einzelne
+Datei bezieht. Das Protokoll hält auch fest, wann das Problem begonnen hat, und schreibt eine weitere Zeile,
+wenn das Sichern wieder klappt, sodass von einem Fehler, der in deiner Abwesenheit kam und ging, Beginn
+und Ende dokumentiert sind.</p>
+
+<p>Es gibt keine Taste, die das behebt, und genau deshalb sagt SubTrack es dir, statt zu warten.
+Solange der Hinweis zu sehen ist, <strong>geht alles, was du hinzufügst oder änderst, beim Beenden
+möglicherweise verloren</strong>. Prüfe, ob die Festplatte mit deinem Benutzerordner voll ist, und
+notiere dir alles, was du lieber nicht ein zweites Mal einrichten möchtest.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="running-a-queue.html#queue-status">Eine Warteschlange ausführen und ihren Fortschritt verfolgen</a></li>
+    <li><a href="adding-files.html">Videos zu einer Warteschlange hinzufügen</a></li>
+    <li><a href="supported-formats.html">Unterstützte Formate eines FFmpeg-Builds anzeigen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

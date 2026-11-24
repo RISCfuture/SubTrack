@@ -1,0 +1,75 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Einen eigenen FFmpeg-Build verwenden</title>
+  <meta name="AppleTitle" content="Einen eigenen FFmpeg-Build verwenden">
+  <meta name="description" content="Verweise SubTrack auf dein eigenes ffmpeg und ffprobe oder lass es eines suchen. Hier steht, was der Ordner enthalten muss und wie du die Änderung rückgängig machst, wenn das Umcodieren fehlschlägt.">
+  <meta name="keywords" content="eigener ffmpeg, ffprobe, Ordner, automatisch erkennen, homebrew, macports, statischer Build, Encoder, integriert, zurücksetzen, erneut analysieren, Sandbox, App Store">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="custom-ffmpeg" id="custom-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Einen eigenen FFmpeg-Build verwenden</h1>
+
+<p>Der Grund dafür ist ein ganz bestimmter: Du brauchst einen Encoder, den der mitgelieferte Build nicht hat.
+Andernfalls ist der mitgelieferte Build die bessere Wahl – SubTrack wird mit ihm getestet, und er wird
+mit der App ausgeliefert.</p>
+
+<h2>SubTrack auf einen Ordner ausrichten</h2>
+
+<ol>
+  <li>Wähle <strong>SubTrack</strong> &#9656; <strong>Einstellungen</strong> (<kbd>⌘,</kbd>) und klicke auf
+    <strong>FFmpeg</strong>.</li>
+  <li>Wähle unter <strong>FFmpeg-Speicherort</strong> die Option <strong>Eigene&nbsp;…</strong>.</li>
+  <li>Klicke auf <strong>Automatisch erkennen</strong>, damit SubTrack einen Build für dich sucht, oder auf
+    <strong>Auswählen&nbsp;…</strong>, um den Ordner mit den Programmen selbst zu wählen.</li>
+  <li>Prüfe unter <strong>FFmpeg-Informationen</strong>, ob die angezeigte Version der Build ist, den du
+    meintest. Eine orangefarbene Warnung darüber – <strong>Dieser Ordner muss ffmpeg und
+    ffprobe enthalten</strong> – bedeutet, dass SubTrack den Ordner nicht verwenden kann; steht dort nichts,
+    kann es das.</li>
+</ol>
+
+<p>Beide Programme sind erforderlich, und der übliche Fehler ist, auf einen Ordner zu zeigen, der nur eines
+davon enthält. SubTrack liest die Spuren einer Datei mit <code>ffprobe</code> und schreibt die verschlankte
+Datei mit <code>ffmpeg</code>, und die Warnung nennt das Programm, das fehlt.</p>
+
+<h2>SubTrack einen suchen lassen</h2>
+
+<p><strong>Automatisch erkennen</strong> sucht dort, wo ein Mac üblicherweise ein FFmpeg ablegt – Homebrew mit
+beiden Präfixen (<code>/opt/homebrew/bin</code> oder <code>/usr/local/bin</code>), MacPorts
+(<code>/opt/local/bin</code>) und <code>/usr/bin</code> –, führt jedes gefundene aus und wählt das
+neueste. Bei zwei Builds derselben Version nimmt es den mit mehr Encodern.</p>
+
+<p>Dabei wird nicht der <code>PATH</code> deiner Shell herangezogen: Eine aus dem Finder gestartete App erbt ihn
+nicht, das Ergebnis würde also für eine Umgebung gelten, die du nie siehst. Liegt dein Build woanders,
+verwende <strong>Auswählen&nbsp;…</strong>.</p>
+
+<h2>Wenn das Umcodieren danach fehlschlägt</h2>
+
+<p>Builds unterscheiden sich enorm darin, womit sie kompiliert wurden, und einer, dem ein Encoder fehlt, den
+der mitgelieferte Build <em>hat</em>, ist ein häufiger Grund dafür, dass eine Warteschlange, die gestern noch
+funktionierte, nicht mehr läuft. Setze den <strong>FFmpeg-Speicherort</strong> zurück auf
+<strong>Integriert</strong> – das macht es vollständig rückgängig.</p>
+
+<p>Wähle nach einem Wechsel des Builds deine Dateien aus und wähle <strong>Warteschlange</strong> &#9656;
+<strong>Auswahl erneut analysieren</strong>. Die Spurpläne auf dem Bildschirm wurden für den vorherigen
+Build berechnet, und die erneute Analyse berechnet sie für den neuen.</p>
+
+<p class="note">Die App-Store-Version zeigt hier statt der Auswahl einen festen Hinweis <strong>Integriert</strong>.
+Eine App in der Sandbox darf kein Programm ausführen, das du ihr übergibst, daher gehört dies zu den
+Dingen, die diese Version nicht kann. Weitere Informationen: <a href="editions.html#editions">Zwischen den beiden Versionen von
+SubTrack wählen</a>.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Einen anderen FFmpeg-Build verwenden</a></li>
+    <li><a href="supported-formats.html">Unterstützte Formate eines FFmpeg-Builds anzeigen</a></li>
+    <li><a href="unsupported-codec.html">Wenn sich ein Codec nicht codieren lässt</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

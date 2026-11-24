@@ -1,0 +1,62 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Einen anderen FFmpeg-Build verwenden</title>
+  <meta name="AppleTitle" content="Einen anderen FFmpeg-Build verwenden">
+  <meta name="description" content="Prüfe, welchen FFmpeg-Build SubTrack verwendet, richte SubTrack auf einen eigenen Build aus und sieh nach, was dieser Build lesen und schreiben kann.">
+  <meta name="keywords" content="ffmpeg, ffprobe, Programm, Pfad, homebrew, statischer Build, Version, integriert, eigener, Encoder, Decoder, Muxer, Demuxer, Formate, Sandbox">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-ffmpeg" id="settings-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Einen anderen FFmpeg-Build verwenden</h1>
+
+<p>SubTrack arbeitet, indem es FFmpeg ansteuert, und ein signierter, eigenständiger Build davon ist
+in der App enthalten. SubTrack verwendet nichts, was du selbst installiert hast, und du musst nichts
+einrichten. Die meisten Leute öffnen diesen Bereich nie.</p>
+
+<p>Du kommst aus einem von zwei Gründen hierher: um zu sehen, welchen Build du tatsächlich verwendest,
+oder – in der Download-Version – um stattdessen einen eigenen Build zu verwenden.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-ffmpeg-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-ffmpeg.webp" width="620" height="548" alt="Der Bereich „FFmpeg“ in den SubTrack-Einstellungen mit der Auswahl zwischen dem integrierten und einem eigenen Build und der Version des ermittelten Builds darunter.">
+  </picture>
+  <figcaption>Einstellungen &#9656; FFmpeg nennt den verwendeten Build und was er kann.</figcaption>
+</figure>
+
+<h2>Sehen, welchen Build du verwendest</h2>
+
+<ol>
+  <li>Wähle <strong>SubTrack</strong> &#9656; <strong>Einstellungen</strong> (<kbd>⌘,</kbd>) und
+    klicke auf <strong>FFmpeg</strong>.</li>
+  <li>Lies unter <strong>FFmpeg-Informationen</strong> die <strong>Version</strong> ab.</li>
+</ol>
+
+<p>SubTrack ermittelt die Version, indem es den gefundenen Build ausführt; sie sagt dir also, was
+tatsächlich läuft. Erscheint statt einer Version eine Warnung, ließ sich der Build gar nicht
+ausführen, und nichts in der Warteschlange wird codiert, bis das behoben ist.</p>
+
+<h2>Weiterführend</h2>
+
+<ul>
+  <li><a href="custom-ffmpeg.html">Einen eigenen FFmpeg-Build verwenden</a> – wenn du einen Encoder
+    brauchst, den der integrierte Build nicht hat.</li>
+  <li><a href="supported-formats.html">Unterstützte Formate eines FFmpeg-Builds anzeigen</a> – alle Container
+    und Codecs, die der laufende Build liest und schreibt.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="preferred-codecs.html">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a></li>
+    <li><a href="editions.html">Zwischen den beiden Versionen von SubTrack wählen</a></li>
+    <li><a href="credits.html">FFmpeg, Lizenzierung und Danksagungen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

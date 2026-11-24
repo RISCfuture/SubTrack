@@ -1,0 +1,86 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</title>
+  <meta name="AppleTitle" content="Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen">
+  <meta name="description" content="Lege fest, welche Codecs du unverändert behalten möchtest und in welchen Codec SubTrack alles andere umwandeln soll.">
+  <meta name="keywords" content="Codec, bevorzugt, umcodieren, umwandeln, Zielcodec, H.264, HEVC, AV1, E-AC-3, AAC, x265, Encoder, nicht unterstützt">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="preferred-codecs" id="preferred-codecs"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</h1>
+
+<p>Eine Spur zu behalten bedeutet normalerweise, sie genau so zu kopieren, wie sie ist. Manchmal
+behältst du aber eine Spur in einem Format, das du nicht verwenden kannst – etwa eine verlustfreie
+Audiomischung, die dein Player nicht decodiert. Diese beiden Einstellungen beschreiben genau diesen
+Fall und nur ihn.</p>
+
+<p>Es sind zwei verschiedene Listen mit zwei verschiedenen Aufgaben, und das solltest du dir klar
+machen, bevor du eine von beiden änderst.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/rules-codecs-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/rules-codecs.webp" width="300" height="792" alt="Der Inspektor „Regeln“ mit den bevorzugten Codecs, nach Medientyp aufgelistet, über den Zielcodecs zum Umcodieren, auf die sie zurückfallen.">
+  </picture>
+  <figcaption>Die bevorzugten Codecs stehen direkt über den Zielcodecs, auf die sie zurückfallen.</figcaption>
+</figure>
+
+<a name="transcode-targets" id="transcode-targets"></a>
+<h2>Wie die beiden Listen zusammenarbeiten</h2>
+
+<p><strong>Bevorzugte Codecs</strong> ist ein Filter für das, was bereits in der Datei steckt. Er
+sagt: <em>Wenn eine Spur, die ich behalte, in einem dieser Formate vorliegt, lass sie in
+Ruhe.</em></p>
+
+<p><strong>Zielcodecs zum Umcodieren</strong> ist der Ersatz. Er sagt: <em>Und wenn nicht, wandle sie
+in diesen um.</em></p>
+
+<p>Eine Spur wird also unverändert kopiert, wenn ihr Codec in der Liste der bevorzugten steht, und
+in den Zielcodec umgewandelt, wenn nicht. Eine Datei, deren Spuren alle bevorzugt sind, wird gar nicht
+umgewandelt – der Normalfall und der schnelle.</p>
+
+<p class="note">Mehr Codecs in die Liste der bevorzugten aufzunehmen bedeutet <em>weniger</em>
+Umwandeln, nicht mehr. Die Liste enthält das, was du so akzeptierst, wie es ist.</p>
+
+<h2>Einstellen</h2>
+
+<ol>
+  <li>Blende den Inspektor ein (<kbd>⌥⌘I</kbd>) und wähle <strong>Regeln</strong>.</li>
+  <li>Klicke unter <strong>Bevorzugte Codecs</strong> auf <strong>Video</strong>,
+    <strong>Audio</strong> oder <strong>Untertitel</strong> und bearbeite die Liste. Die
+    Reihenfolge ist die Rangfolge.</li>
+  <li>Wähle unter <strong>Zielcodecs zum Umcodieren</strong>, was aus Video und Audio werden soll,
+    wenn sie den Filter nicht bestehen.</li>
+</ol>
+
+<p>Für Untertitel gibt es eine Liste bevorzugter Codecs, aber keinen Zielcodec zum Umcodieren: Eine
+Untertitelspur wird entweder behalten oder weggelassen, nie umgewandelt.</p>
+
+<h2>Vor dem Start wissen, was passiert</h2>
+
+<p>Das Umwandeln ist der langsame Weg, und SubTrack sagt dir immer vorher Bescheid, statt dich damit
+zu überraschen. Wähle eine Datei und im Inspektor <strong>Anpassung</strong> – jede Spur,
+die umgewandelt wird, ist entsprechend gekennzeichnet und nennt den Zielcodec der Umwandlung.</p>
+
+<h2>Wenn sich ein Codec nicht codieren lässt</h2>
+
+<p>Das Umwandeln zu wählen ist eine Sache, den Encoder dafür zu haben eine andere. Wenn SubTrack
+warnt, dass der verwendete Build einen von dir gewählten Zielcodec nicht schreiben kann, erfährst du unter
+<a href="unsupported-codec.html">Wenn sich ein Codec nicht codieren lässt</a> mehr.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="supported-formats.html">Unterstützte Formate eines FFmpeg-Builds anzeigen</a></li>
+    <li><a href="overrides.html">Den Spurplan für eine Datei anpassen</a></li>
+    <li><a href="preview.html">Den gesamten Plan für eine Datei ansehen</a></li>
+    <li><a href="editions.html">Zwischen den beiden Versionen von SubTrack wählen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

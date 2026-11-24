@@ -1,0 +1,78 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Was SubTrack sendet und was nicht</title>
+  <meta name="AppleTitle" content="Was SubTrack sendet und was nicht">
+  <meta name="description" content="Deine Videodateien verlassen deinen Mac nie. SubTrack sendet nur Absturzberichte, synchronisiert Voreinstellungen über dein eigenes iCloud und prüft auf Updates; Letzteres kannst du abschalten.">
+  <meta name="keywords" content="Datenschutz, Daten, Telemetrie, Analyse, Diagnose, Sentry, Absturzbericht, CloudKit, iCloud, Tracking, offline, Upload, Widerspruch, DSGVO">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="privacy" id="privacy"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Was SubTrack sendet und was nicht</h1>
+
+<p>Fast nichts verlässt deinen Mac. Es gibt keine Accounts, keine Werbe-IDs und kein Tracking. Hier
+findest du die vollständige Liste dessen, was doch hinausgeht, und wohin es jeweils geht.</p>
+
+<h2>Deine Videodateien verlassen deinen Mac nie</h2>
+
+<p>Alles, was SubTrack mit einer Datei macht – ihre Spuren lesen, festlegen, was behalten wird, die
+verschlankte Kopie schreiben –, geschieht auf deinem eigenen Rechner. Das in SubTrack enthaltene
+FFmpeg ist ohne Netzwerkunterstützung kompiliert. Die App verzichtet also nicht nur freiwillig aufs
+Hochladen: Dieses FFmpeg enthält keinen Netzwerkcode und kann überhaupt keine Verbindung öffnen. Deine
+Dateien, ihre Namen und ihre Inhalte werden nirgendwohin gesendet.</p>
+
+<h2>Absturz- und Leistungsberichte gehen an Sentry</h2>
+
+<p>Wenn SubTrack abstürzt oder schlecht läuft, sendet es einen Bericht an Sentry, einen Dienst zur
+Fehlerüberwachung, damit der Fehler gefunden und behoben werden kann. Ein Bericht enthält
+Geräteinformationen, den Zustand der App zum Zeitpunkt des Problems und Leistungsprotokolle.</p>
+
+<p>Er ist nicht mit deiner Identität verknüpft. SubTrack weist Sentry an, weder deine IP-Adresse noch
+deinen Gerätenamen oder Ähnliches anzuhängen, und es gibt ohnehin keinen Account, dem ein Bericht
+zugeordnet werden könnte. Berichte von Debug-Builds und automatisierten Testläufen werden verworfen,
+bevor sie gesendet werden.</p>
+
+<h2>Voreinstellungen werden über dein eigenes iCloud synchronisiert, sonst nichts</h2>
+
+<p>Gesicherte Voreinstellungen werden über CloudKit zwischen deinen Macs synchronisiert, und zwar im
+privaten iCloud-Container deines Apple-Accounts. Dieser Container gehört dir: Der Entwickler kann ihn
+nicht lesen, und für das, was dort liegt, gilt die Datenschutzrichtlinie von Apple.</p>
+
+<p>Voreinstellungen sind das Einzige, was synchronisiert wird. Deine Warteschlangen, die Dateien darin und
+deine Ausgabeordner bleiben auf diesem Mac und gehen nirgendwohin.</p>
+
+<h2>Die Update-Prüfung ausschalten</h2>
+
+<p>Die Download-Version fragt in der öffentlichen Release-Liste von GitHub nach, ob
+es eine neuere gibt. Diese Anfrage verrät einem Server, was jede Webanfrage verrät – vor allem deine
+IP-Adresse – und sonst nichts über dich. So schaltest du sie aus:</p>
+
+<ol>
+  <li>Wähle <strong>SubTrack</strong> &#9656; <strong>Einstellungen</strong> (<kbd>⌘,</kbd>) und klicke
+    auf <strong>Updates</strong>.</li>
+  <li>Stelle <strong>Nach Updates suchen</strong> auf <strong>Nie</strong>.</li>
+</ol>
+
+<p class="note">Die App-Store-Version sendet diese Anfrage nie – der Store hält sie
+aktuell –, deshalb hat sie gar keine Einstellungen für <strong>Updates</strong>.</p>
+
+<h2>Das maßgebliche Dokument</h2>
+
+<p>Diese Seite ist eine Zusammenfassung für Menschen, die die App benutzen. Maßgeblich ist die
+<a href="https://riscfuture.github.io/SubTrack/privacy.html">Datenschutzrichtlinie von SubTrack</a>.
+Lies sie, wenn du den genauen Wortlaut brauchst.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="preset-sync.html">Voreinstellungen zwischen deinen Macs synchronisieren</a></li>
+    <li><a href="updates.html">Nach SubTrack-Updates suchen</a></li>
+    <li><a href="editions.html">Zwischen den beiden Versionen von SubTrack wählen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
