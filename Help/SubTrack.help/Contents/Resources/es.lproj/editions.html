@@ -1,0 +1,97 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Elegir entre las dos versiones de SubTrack</title>
+  <meta name="AppleTitle" content="Elegir entre las dos versiones de SubTrack">
+  <meta name="description" content="Las dos versiones de SubTrack aligeran los archivos exactamente igual; solo tres funciones y la búsqueda de actualizaciones distinguen la versión de App Store de la descargable.">
+  <meta name="keywords" content="edición, versión, app store, mas, descarga, descargable, sandbox, atenuado, desactivado, en gris, no disponible, x264, x265, libx264, libx265, videotoolbox, gpl, lgpl, licencia">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="editions" id="editions"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Elegir entre las dos versiones de SubTrack</h1>
+
+<p>SubTrack se ofrece en dos versiones: una en la Mac App Store y otra que se descarga de la web. Las
+dos aligeran los archivos de forma idéntica – las mismas reglas, los mismos preajustes, la misma copia
+de pistas y el mismo resultado, byte por byte. Para lo que hace la app, no hay ninguna diferencia
+entre ellas.</p>
+
+<p>Se distinguen en tres funciones, y las tres responden a las normas del App Store, no a una decisión
+de SubTrack. Si has llegado aquí al hacer clic en el botón «?» junto a un control atenuado, ese control
+es una de las tres.</p>
+
+<h2>Averiguar qué versión tienes</h2>
+
+<ol>
+  <li>Selecciona <strong>SubTrack</strong> &#9656; <strong>Ajustes</strong> (<kbd>⌘,</kbd>) y haz
+    clic en <strong>Codificación</strong>.</li>
+  <li>Consulta la línea <strong>Conjunto de códecs</strong>. <strong>Completo (todos los códecs)</strong>
+    es la versión descargable; <strong>App Store (VideoToolbox)</strong> es la versión de App
+    Store.</li>
+</ol>
+
+<p>La versión de App Store tampoco tiene la pestaña <strong>Actualizaciones</strong> en Ajustes, porque
+las actualizaciones las gestiona la tienda.</p>
+
+<a name="app-store-limits" id="app-store-limits"></a>
+<h2>Qué no puede hacer la versión de App Store</h2>
+
+<p><strong>Codificación de H.264 y H.265 por software.</strong> La versión de App Store incluye una
+versión de FFmpeg con licencia LGPL, sin libx264 ni libx265 – son GPL, y las condiciones de la tienda
+y la GPL son incompatibles. La codificación de vídeo la realiza VideoToolbox, el codificador por
+hardware de tu Mac, que admite H.264 y HEVC y es mucho más rápido que la codificación por software.
+Los codificadores por software logran más calidad con el mismo tamaño de archivo; los de hardware
+terminan antes. Lo verás en <strong>Ajustes</strong> &#9656; <strong>FFmpeg</strong> &#9656;
+<strong>Formatos compatibles</strong>, donde la lista de códecs incluye un enlace
+<strong>¿Faltan códecs?</strong>, y en el aviso que aparece si eliges un códec de destino que esta
+versión no puede codificar.</p>
+
+<p><strong>Usar tu propia versión de FFmpeg.</strong> En <strong>Ajustes</strong> &#9656;
+<strong>FFmpeg</strong>, la versión de App Store muestra <strong>Integrado</strong> y la línea «El uso
+de un ffmpeg personalizado está disponible en la versión descargable.». La versión descargable ofrece
+en su lugar la opción <strong>Integrado</strong> / <strong>Personalizado…</strong>, con un botón
+<strong>Detectar automáticamente</strong> que busca las versiones de FFmpeg ya instaladas en tu Mac. Una
+app en el sandbox no puede ejecutar un archivo ejecutable que le proporciones, y la versión de App
+Store está en el sandbox; la descargable no, y por eso puede hacerlo.</p>
+
+<p><strong>Instalar la herramienta de línea de comandos <code>subtrack</code>.</strong> En
+<strong>Ajustes</strong> &#9656; <strong>CLI</strong>, la versión de App Store indica «La instalación de
+la herramienta de línea de comandos está disponible en la versión descargable.», mientras que la
+descargable ofrece <strong>Instalar…</strong>. Copiar un binario en una carpeta de tu
+<code>PATH</code> queda fuera del sandbox.</p>
+
+<p>Además, la versión descargable busca en GitHub sus propias versiones nuevas y puede avisarte cuando
+hay una. La versión de App Store no lo necesita.</p>
+
+<p class="note">Ninguna de las dos versiones es la limitada. Aligerar – quitar pistas y copiar el resto – no se ve afectado por nada de esto, y la transcodificación funciona en ambas; lo que cambia es el
+codificador que hay detrás.</p>
+
+<h2>Obtener la otra versión</h2>
+
+<p>La versión descargable está notarizada por Apple y se instala desde una imagen de disco; la
+actualizas tú mismo cuando te avisa de que hay una versión nueva. La versión de App Store se instala y
+se actualiza como el resto de las apps de tu Mac.</p>
+
+<ul>
+  <li><a href="https://riscfuture.github.io/SubTrack/">El sitio web de SubTrack</a>, que enlaza con
+    las dos.</li>
+  <li><a href="https://github.com/RISCfuture/SubTrack/releases">Versiones de SubTrack en GitHub</a>,
+    para la versión descargable y sus notas.</li>
+</ul>
+
+<p>Puedes tener instaladas las dos. Comparten el mismo contenedor de iCloud, así que tus preajustes se
+sincronizan entre ellas igual que entre Mac.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="unsupported-codec.html">Si un códec no se puede codificar</a></li>
+    <li><a href="custom-ffmpeg.html">Usar tu propia versión de FFmpeg</a></li>
+    <li><a href="subtrack-cli.html">Instalar la herramienta de línea de comandos <code>subtrack</code></a></li>
+  </ul>
+</div>
+
+</body>
+</html>

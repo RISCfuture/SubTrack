@@ -1,0 +1,60 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Instalar la herramienta subtrack</title>
+  <meta name="AppleTitle" content="Instalar la herramienta subtrack">
+  <meta name="description" content="Coloca el ejecutable subtrack en tu PATH desde Ajustes ▸ CLI y qué hacer cuando la carpeta que has elegido requiere acceso de administrador.">
+  <meta name="keywords" content="instalar, cli, línea de comandos, terminal, usr local bin, path, sudo, administrador, contraseña, mostrar, no instalado, which subtrack">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="cli-install" id="cli-install"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Instalar la herramienta <code>subtrack</code></h1>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-cli-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-cli.webp" width="620" height="548" alt="El panel CLI de los ajustes de SubTrack, que ofrece instalar la herramienta subtrack e indica dónde se va a escribir.">
+  </picture>
+  <figcaption>Ajustes &#9656; CLI instala la herramienta e indica dónde ha quedado.</figcaption>
+</figure>
+
+<ol>
+  <li>Elige <strong>SubTrack</strong> &#9656; <strong>Ajustes</strong> (<kbd>⌘,</kbd>) y haz clic en
+    <strong>CLI</strong>.</li>
+  <li>Haz clic en <strong>Instalar…</strong>.</li>
+  <li>Elige una carpeta que ya esté en tu <code>PATH</code>. El panel se abre en
+    <code>/usr/local/bin</code>; una carpeta <code>bin</code> dentro de tu carpeta de inicio funciona igual
+    de bien y no requiere acceso de administrador.</li>
+</ol>
+
+<p>La fila <strong>Estado</strong> muestra entonces la ruta completa donde ha quedado la herramienta, con un
+botón <strong>Mostrar</strong> que la selecciona en el Finder.</p>
+
+<h2>Si la carpeta requiere acceso de administrador</h2>
+
+<p>Si no se puede escribir en la carpeta – algo habitual en <code>/usr/local/bin</code> – SubTrack no te
+pide la contraseña de administrador. No dispone de ninguna herramienta auxiliar con privilegios a la que
+entregársela, y no conviene acostumbrar a nadie a dar su contraseña a una app para copiar un archivo. El
+panel muestra <em>Esa carpeta requiere acceso de administrador – ejecuta esto en su lugar</em> y el comando
+<code>sudo cp</code> exacto con un botón <strong>Copiar</strong>. Pégalo en Terminal y autentícate allí,
+donde puedes ver qué estás autorizando. <strong>Copiar comando de instalación</strong> hace lo mismo sin
+abrir antes el panel y se dirige a <code>/usr/local/bin</code>.</p>
+
+<p class="note">Una instalación que haces tú mismo es una instalación real, pero SubTrack no la ha
+realizado y no tiene constancia de ella – <strong>Estado</strong> sigue mostrando <strong>No
+instalado</strong>. Para comprobarla, usa <code>which subtrack</code>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="subtrack-cli.html">Instalar la herramienta de línea de comandos subtrack</a></li>
+    <li><a href="subtrack-cli.html#cli-options">Ejecutarla</a></li>
+    <li><a href="editions.html">Elegir entre las dos versiones de SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

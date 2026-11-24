@@ -1,0 +1,117 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Leer el plan completo de un archivo</title>
+  <meta name="AppleTitle" content="Leer el plan completo de un archivo">
+  <meta name="description" content="Consulta todas las pistas que escribirá la ejecución de un archivo, en el orden en que las incluirá la salida, y cuáles se quitan.">
+  <meta name="keywords" content="previsualización, plan, salida, pistas, orden, función, predeterminado, comentario, forzado, quitadas, inspector">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-preview" id="track-preview"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Leer el plan completo de un archivo</h1>
+
+<p>Antes de aplicar tus reglas a toda una cola, conviene ver en qué se queda un archivo concreto. La
+pestaña <strong>Previsualización</strong> te lo muestra: todas las pistas que escribirá la ejecución,
+en el orden en que las incluirá la salida, y todas las que quita.</p>
+
+<ol>
+  <li>Selecciona un archivo de la cola.</li>
+  <li>Muestra el inspector (<kbd>⌥⌘I</kbd>) y elige <strong>Previsualización</strong> (<kbd>⌥⌘3</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-preview-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-preview.webp" width="300" height="792" alt="La pestaña Previsualización del inspector para un archivo: una tabla con las pistas de la salida numeradas por orden, con su idioma, códec y función, las pistas quitadas atenuadas entre ellas y, debajo, un panel de detalles con todo lo que se sabe de la pista seleccionada.">
+  </picture>
+  <figcaption>La salida, pista a pista, y todo lo que se sabe de la que seleccionas.</figcaption>
+</figure>
+
+<p>Las filas atenuadas y las que tienen un guion donde iría un número son las pistas que se quitan –
+aparecen para que veas lo que pierdes, no porque vayan a estar en el archivo.</p>
+
+<p>Aquí no se puede cambiar nada: es el resultado de tus reglas y de las personalizaciones que hayas
+definido. Para cambiarlo, consulta <a href="overrides.html#track-overrides">Personalizar el plan de pistas de un archivo</a>.</p>
+
+<a name="track-roles" id="track-roles"></a>
+<h2>Qué indican las columnas</h2>
+
+<p><strong>Pista</strong> es la posición de la pista en la salida, numerada desde uno, con un icono
+que indica de qué tipo es. Un guion significa que no está en la salida.</p>
+
+<p><strong>Códec</strong> es el formato en el que la salida contendrá la pista, junto con sus
+características – <code>ac3 5.1</code>, <code>h264 1080p</code>. Una flecha (<code>→ aac</code>)
+significa que la pista se convierte en lugar de copiarse.</p>
+
+<p><strong>Título</strong> es el nombre propio de la pista, cuando su autor le puso uno – «Comentarios
+del director», «English (SDH)», «Dolby TrueHD 7.1». Suele ser la forma más rápida de distinguir dos
+pistas del mismo idioma, y está vacío en las muchas pistas que no tienen nombre.</p>
+
+<p><strong>Función</strong> indica para qué sirve la pista, que suele ser lo que decide si la
+quieres:</p>
+
+<ul>
+  <li><strong>Predeterminado</strong> – la pista que un reproductor elige por sí solo.</li>
+  <li><strong>Forzado</strong> – subtítulos solo para los diálogos en otro idioma, no para toda la
+    película.</li>
+  <li><strong>Comentario</strong> – una pista con comentarios sobre la película.</li>
+  <li><strong>Para personas sordas</strong> – subtítulos que describen también los sonidos, además
+    del habla (a menudo llamados SDH).</li>
+  <li><strong>Audiodescripción</strong> y <strong>Descripciones</strong> – narración de lo que
+    ocurre en pantalla.</li>
+  <li><strong>Doblado</strong> y <strong>Original</strong> – si el audio está en el idioma en que se
+    rodó la película.</li>
+</ul>
+
+<p>Estos datos proceden de las etiquetas del archivo, así que una pista mal etiquetada muestra la
+etiqueta que tiene, no lo que es en realidad. Para ese caso existe precisamente la pestaña
+Personalización.</p>
+
+<p class="note"><strong>Predeterminado</strong> es la única función que asigna SubTrack en lugar de
+leerla. El orden de idiomas que has definido decide con qué pista de audio empieza el archivo
+aligerado, así que la primera pista de audio de la salida se marca como predeterminada y las demás
+no – digan lo que digan las etiquetas del origen. Las demás funciones se conservan tal cual.</p>
+
+<a name="track-detail" id="track-detail"></a>
+<h2>Seleccionar una pista para el resto</h2>
+
+<p>Las columnas muestran solo lo que distingue una pista de otra. Si seleccionas una fila, el panel
+de debajo muestra <em>todo</em> lo que se sabe de esa pista, en tres grupos:</p>
+
+<ul>
+  <li><strong>Salida</strong> – el códec en el que acaba la pista y los indicadores con los que
+    sale. La posición que ocupa y si se conserva ya figuran en las columnas de la lista, así que no
+    se repiten aquí.</li>
+  <li><strong>Pista</strong> – lo que el archivo dice que es: su índice de flujo, códec y perfil,
+    idioma, título, tamaño de fotograma o disposición de canales, frecuencia de muestreo,
+    profundidad de bits y tasa de bits.</li>
+  <li><strong>Metadatos</strong> – todas las etiquetas que leyó el análisis, tal cual y sin filtrar.
+    Aquí aparecen las notas propias de una edición, y conviene leerlas cuando una pista no se
+    comporta como cabría esperar por su idioma y códec.</li>
+</ul>
+
+<p>Arrastra el divisor para dar más espacio a la lista o al detalle, y selecciona cualquier valor
+para copiarlo.</p>
+
+<p class="note">Tanto la lista como el detalle se pueden desplazar. Un remux con una docena de
+pistas de subtítulos no cabe en un inspector estrecho, ni tampoco los metadatos que escriben algunos
+codificadores.</p>
+
+<p class="note">Si vuelves a analizar un archivo (<strong>Cola</strong> &#9656; <strong>Volver a
+analizar la selección</strong>), la pestaña lo indica mientras se leen de nuevo las pistas, y el plan
+que se ve en pantalla es el anterior hasta que termina.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="overrides.html">Personalizar el plan de pistas de un archivo</a></li>
+    <li><a href="slim-rules.html">Elegir qué idiomas conservar</a></li>
+    <li><a href="preferred-codecs.html">Definir códecs preferidos y códecs de destino</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

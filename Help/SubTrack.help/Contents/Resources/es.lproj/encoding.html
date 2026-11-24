@@ -1,0 +1,73 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Definir cuántos archivos se codifican a la vez</title>
+  <meta name="AppleTitle" content="Definir cuántos archivos se codifican a la vez">
+  <meta name="description" content="Elige cuántos archivos procesa SubTrack al mismo tiempo y consulta qué conjunto de códecs incluye tu versión.">
+  <meta name="keywords" content="simultáneas, simultáneo, a la vez, codificaciones, rendimiento, paralelo, conjunto de códecs, videotoolbox, velocidad">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-encoding" id="settings-encoding"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Definir cuántos archivos se codifican a la vez</h1>
+
+<p>Selecciona <strong>SubTrack</strong> &#9656; <strong>Ajustes</strong> (<kbd>⌘,</kbd>) y haz clic en
+<strong>Codificación</strong>.</p>
+
+<a name="simultaneous-encodes" id="simultaneous-encodes"></a>
+<h2>Codificaciones simultáneas</h2>
+
+<p>Este ajuste limita cuántos archivos procesa SubTrack al mismo tiempo. Las opciones van de una a
+ocho en lugar de ofrecer todos los números, porque lo que importa es elegir entre «de uno en uno»,
+«un par» o «aprovechar todo el equipo» – los valores intermedios no se comportan de forma lo bastante
+distinta como para que merezca la pena.</p>
+
+<p><strong>Al aligerar de forma habitual, este ajuste apenas influye.</strong> La copia de pistas
+depende de la velocidad de lectura y escritura del disco, no del procesador. Si ejecutas ocho copias a
+la vez, casi todas esperan el turno para usar el mismo disco, y el resultado puede ser más lento que
+con dos.</p>
+
+<p><strong>Influye cuando se convierten pistas.</strong> Convertir exige trabajo real del procesador,
+así que varias conversiones a la vez aprovechan de verdad más recursos del equipo. Si tus colas suelen incluir conversiones – porque tus orígenes usan códecs que no están en tu lista de preferidos – subir el
+límite terminará antes un lote.</p>
+
+<p>El inconveniente es la fluidez. Un límite alto durante las conversiones hará que el resto del Mac
+vaya lento. Si trabajas mientras se ejecuta un lote, mantén un límite bajo.</p>
+
+<p class="note">Bajar el límite no interrumpe lo que ya está en marcha. Los archivos en curso terminan
+y el nuevo límite se aplica a lo que empiece después.</p>
+
+<a name="codec-sets" id="codec-sets"></a>
+<h2>Conjunto de códecs</h2>
+
+<p>Indica qué versión de FFmpeg incluye tu copia de SubTrack. No es un ajuste – no hay nada que cambiar – sino que sirve para que sepas con qué cuentas.</p>
+
+<ul>
+  <li><strong>Completo (todos los códecs)</strong> – la versión descargable. Incluye los codificadores
+    de software de H.264 y H.265.</li>
+  <li><strong>App Store (VideoToolbox)</strong> – la versión de App Store. Codificación por hardware
+    con VideoToolbox, sin los codificadores de software, cuya licencia no permite distribuirlos en
+    App Store.</li>
+</ul>
+
+<p>Las dos aligeran los archivos exactamente igual. La diferencia solo aparece cuando hay que convertir
+una pista, y únicamente con determinados códecs de destino. Para obtener más información, consulta
+<a href="editions.html#editions">Elegir entre las dos versiones de SubTrack</a>.</p>
+
+<p>Para ver la lista completa de lo que puede leer y escribir la versión que usas, abre
+<strong>Ajustes</strong> &#9656; <strong>FFmpeg</strong> y haz clic en <strong>Formatos
+compatibles</strong>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Usar otra versión de FFmpeg</a></li>
+    <li><a href="editions.html">Elegir entre las dos versiones de SubTrack</a></li>
+    <li><a href="running-a-queue.html">Ejecutar una cola y seguir su progreso</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

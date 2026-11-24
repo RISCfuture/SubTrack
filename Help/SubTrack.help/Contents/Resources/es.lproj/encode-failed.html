@@ -1,0 +1,66 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Si una ejecución empieza y luego falla</title>
+  <meta name="AppleTitle" content="Si una ejecución empieza y luego falla">
+  <meta name="description" content="FFmpeg se ha iniciado, ha trabajado un rato y se ha detenido. Las causas habituales son un disco lleno, un destino que ha dejado de estar disponible o un daño en el origen.">
+  <meta name="keywords" content="ffmpeg, código de salida, error, disco lleno, falta espacio, espacio libre, desmontado, recurso de red, dañado, verificar, faltan pistas en la salida, reintentar">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="encode-failed" id="encode-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si una ejecución empieza y luego falla</h1>
+
+<p>Es un momento y un problema distintos de los de un archivo que nunca se pudo leer: FFmpeg se ha
+iniciado, ha trabajado un rato y se ha detenido. La fila indica que SubTrack no ha podido procesar el
+vídeo e informa del código con el que ha terminado FFmpeg, que por sí solo no te dice nada. El
+mensaje real está en el Registro de actividad – léelo antes de hacer suposiciones.</p>
+
+<h2>Causas habituales</h2>
+
+<ul>
+  <li><strong>El disco se ha llenado.</strong> Aligerar escribe un archivo completamente nuevo, así
+    que la salida necesita espacio junto al original hasta que termina la ejecución.</li>
+  <li><strong>El destino ha dejado de estar disponible durante la ejecución</strong> – por ejemplo,
+    porque se ha desmontado una unidad externa o se ha perdido la conexión con un recurso de red.</li>
+  <li><strong>Una pista del origen está dañada.</strong> Una copia con una zona defectuosa puede
+    analizarse sin problemas y aun así fallar cuando FFmpeg llega al daño.</li>
+</ul>
+
+<p>SubTrack también comprueba el archivo que acaba de escribir, de modo que una ejecución puede
+fallar justo al final: una salida a la que le faltan pistas que debería tener, o una pista sin datos,
+se notifica como un fallo y no como terminada. Así SubTrack se niega a entregarte un archivo que
+tiene errores sin que lo sepas.</p>
+
+<h2>Si no llegó a empezar</h2>
+
+<p>Algunos fallos no indican ningún código de salida, porque SubTrack ha rechazado la ejecución antes
+de iniciar FFmpeg: compara el tamaño del archivo que se escribiría con el espacio disponible en el
+volumen de destino y se detiene cuando es evidente que no cabrá. La fila indica ambas cifras y el
+Registro de actividad no añade nada – no se ha ejecutado nada. Libera espacio en ese volumen o
+<a href="destinations.html">guarda la salida de la cola en otro lugar</a> y vuelve a iniciar la
+fila.</p>
+
+<p>Esta comprobación es una ayuda, no una garantía. El tamaño de la salida de una transcodificación
+no se puede calcular de antemano y algunos volúmenes no informan de su espacio libre, por lo que un
+disco aún puede llenarse a mitad de la ejecución y fallar como se describe en el resto de esta
+página.</p>
+
+<h2>Volver a intentarlo</h2>
+
+<p>Una fila que ha fallado se puede iniciar de nuevo. Soluciona la causa y selecciona
+<strong>Cola</strong> &#9656; <strong>Iniciar la selección</strong> (<kbd>⌘Intro</kbd>).</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="troubleshooting.html#activity-log">Leer el error completo en el Registro de actividad</a></li>
+    <li><a href="troubleshooting.html">Si un archivo no se aligera</a></li>
+    <li><a href="destinations.html">Elegir dónde se guardan los archivos aligerados</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

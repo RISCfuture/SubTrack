@@ -1,0 +1,118 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Si un archivo no se aligera</title>
+  <meta name="AppleTitle" content="Si un archivo no se aligera">
+  <meta name="description" content="Qué significa cada fallo de la cola – un origen ilegible, un archivo que falta, una ejecución que ha fallado a medias – y dónde está el texto completo del error.">
+  <meta name="keywords" content="error, fallo, falló, ffprobe, ffmpeg, código de salida, ilegible, dañado, truncado, drm, cifrado, obsoleto, permiso, sandbox, acceso guardado, disco lleno, registro de actividad, registro, rojo, advertencia, triángulo, informar, no se puede guardar, guardar, pérdida, pérdida de datos, historial, hora, sin supervisión, de noche">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="troubleshooting" id="troubleshooting"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si un archivo no se aligera</h1>
+
+<p>La mayoría de los archivos pasan de añadidos a terminados sin que tengas que hacer nada. Cuando no es así, casi siempre es por una de estas tres razones: no se pudo leer el origen, el origen ya no
+está donde estaba o una ejecución empezó y luego falló.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/problem-queue-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/problem-queue.webp" width="1180" height="620" alt="Una cola con cuatro problemas distintos a la vez: un origen que falta, un códec que la versión no puede codificar, una ejecución fallida y un archivo cuya salida quedaría sin sonido.">
+  </picture>
+  <figcaption>Cada problema se indica bajo el archivo al que corresponde.</figcaption>
+</figure>
+
+<p>Cualquier fila que requiera atención muestra un triángulo de advertencia en la columna de estado.
+<strong>Coloca el puntero sobre el triángulo para ver el motivo.</strong> La línea que hay bajo el
+nombre del archivo dice lo mismo, pero se corta al ancho de la columna, y un mensaje de FFmpeg suele
+ser más largo. Si aparece cortado, coloca el puntero sobre él o abre el Registro de actividad.</p>
+
+<p class="note">Un triángulo también puede significar que la versión de FFmpeg que usas no tiene
+codificador para un códec de destino que has elegido. En ese caso se indica el códec, y la
+solución está en <a href="unsupported-codec.html">Si un códec no se puede codificar</a>.</p>
+
+<h2>Identificar el problema que te afecta</h2>
+
+<ul>
+  <li><a href="probe-failed.html">Si SubTrack no puede leer un archivo</a> – no llegó a aligerarlo
+    porque falló el análisis del origen.</li>
+  <li><a href="missing-source.html">Si falta el archivo de origen</a> – el archivo se ha movido o el acceso guardado a él ha caducado.</li>
+  <li><a href="encode-failed.html">Si una ejecución empieza y luego falla</a> – FFmpeg se inició,
+    trabajó un tiempo y se detuvo.</li>
+  <li><a href="unsupported-codec.html">Si un códec no se puede codificar</a> – la versión que usas no
+    tiene codificador para un códec de destino que has elegido.</li>
+</ul>
+
+<a name="activity-log" id="activity-log"></a>
+<h2>Leer el error completo en el Registro de actividad</h2>
+
+<p>Selecciona <strong>Ventana</strong> &#9656; <strong>Registro de actividad</strong>
+(<kbd>⇧⌘L</kbd>).</p>
+
+<p>El registro recoge lo ocurrido en <strong>todas las colas a la vez</strong>, de lo más reciente a lo más
+antiguo: la hora, la cola, el archivo y lo que le pasó. Existe sobre todo por un
+motivo – <strong>aquí está el texto completo del error, sin cortar.</strong> Una fila de la cola solo
+tiene una línea corta disponible; el registro muestra el mensaje entero.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/activity-log-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/activity-log.webp" width="860" height="312" alt="El Registro de actividad tras una ejecución nocturna en la cola Troubleshooting: la ejecución termina con tres archivos codificados y uno fallido, un problema que se resuelve, una ejecución fallida, un códec que la versión no puede codificar, un origen que falta y el inicio de la ejecución.">
+  </picture>
+  <figcaption>Una ejecución nocturna, leída a la mañana siguiente. Seis líneas para trescientos archivos.</figcaption>
+</figure>
+
+<p>Está pensado para leerse la mañana siguiente a una ejecución que has dejado en marcha. Cada
+ejecución escribe una línea al empezar y otra al terminar, con el resultado, y entre ambas aparece todo
+lo que fue mal: un archivo que falló, un origen que desapareció, una transcodificación que esta
+versión de FFmpeg no puede realizar o un problema que se resolvió después.</p>
+
+<p class="note">Un archivo que no da problemas no aparece en el registro. Analizar, codificar y
+terminar no escriben nada – la línea final incluye los recuentos – de modo que una ejecución de
+trescientos archivos sin incidencias ocupa dos líneas en lugar de seiscientas, y todo lo que ves merece
+la pena leerlo. Una ejecución sin problemas indica <strong>Nada que señalar</strong>.</p>
+
+<p class="note">Ningún mensaje se abrevia. Cada entrada crece lo necesario para mostrar todo lo que
+tiene que decir, y el texto se puede seleccionar y copiar. Solo se acortan las marcas de tiempo: las entradas de hoy
+muestran únicamente la hora, y las anteriores también la fecha.</p>
+
+<p>El registro corresponde a esta sesión de SubTrack. Se vacía al salir de la aplicación, porque su
+función es dar cuenta de la sesión que codificó los archivos.</p>
+
+<p>Si el mensaje no coincide con nada de esta página, conviene que lo sepamos – cópialo del registro e
+<a href="https://github.com/RISCfuture/SubTrack/issues">informa del problema en GitHub</a>.</p>
+
+<a name="not-saving" id="not-saving"></a>
+<h2>Si SubTrack indica «No se puede guardar»</h2>
+
+<p>Todo lo demás de esta página trata de un solo archivo. Este apartado no trata de ninguno en concreto:
+<strong>«No se puede guardar», a la derecha de la barra de estado, significa que SubTrack no puede
+guardar la cola en sí.</strong> Lo que ves en pantalla es correcto, pero lo que hay almacenado en el
+disco ha dejado de reflejarlo.</p>
+
+<p>El aviso solo aparece mientras dura el problema y desaparece en cuanto se puede volver a guardar, de modo que un disco
+que ha estado ocupado un momento no deja rastro. Haz clic en el aviso para abrir el Registro de
+actividad, donde el motivo completo figura en una línea propia – marcada como <strong>Todas las
+colas</strong> porque, a diferencia de casi todo lo que hay en el registro, no se refiere a un solo
+archivo. El registro también conserva la hora a la que empezó el problema y escribe otra línea cuando
+se vuelve a guardar con normalidad, así que un fallo que apareció y desapareció mientras estabas fuera deja
+constancia de su inicio y su final.</p>
+
+<p>No hay ningún botón que lo solucione, y precisamente por eso SubTrack te avisa en lugar de esperar. Mientras el
+aviso esté visible, <strong>es posible que lo que añadas o cambies se pierda al salir</strong>.
+Comprueba que el disco que contiene tu carpeta de inicio no esté lleno y anota lo que no quieras tener
+que configurar de nuevo.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="running-a-queue.html#queue-status">Ejecutar una cola y seguir su progreso</a></li>
+    <li><a href="adding-files.html">Añadir vídeos a una cola</a></li>
+    <li><a href="supported-formats.html">Ver qué admite una versión de FFmpeg</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Añadir vídeos a una cola</title>
+  <meta name="AppleTitle" content="Añadir vídeos a una cola">
+  <meta name="description" content="Arrastra vídeos o carpetas a SubTrack, o añádelos desde la barra de herramientas, y organiza el trabajo en colas independientes.">
+  <meta name="keywords" content="añadir, arrastrar, soltar, carpeta, importar, cola, buscar, mkv, mp4, mov, avi, lote">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="adding-files" id="adding-files"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Añadir vídeos a una cola</h1>
+
+<p>Una cola es una lista de archivos a la espera de ser aligerados, junto con las reglas que
+determinan qué conserva cada uno. Puedes añadir archivos de tres formas.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/add-videos-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/add-videos.webp" width="1000" height="620" alt="Una cola vacía de SubTrack con el texto «Suelta los vídeos aquí» y el menú Añadir de la barra de herramientas abierto, con las opciones Añadir archivos y Añadir carpeta.">
+  </picture>
+  <figcaption>El menú Añadir de la barra de herramientas ofrece ambas opciones; también puedes soltar archivos en una ventana vacía.</figcaption>
+</figure>
+
+<h2>Añadir archivos</h2>
+
+<ol>
+  <li>Arrastra vídeos desde el Finder a la ventana de SubTrack, o bien</li>
+  <li>elige <strong>Archivo</strong> &#9656; <strong>Añadir archivos…</strong> (<kbd>⌘O</kbd>) y
+    selecciónalos, o bien</li>
+  <li>haz clic en <strong>Añadir</strong> en la barra de herramientas.</li>
+</ol>
+
+<p>SubTrack lee cada archivo al añadirlo para saber qué contiene – es el breve estado
+<em>Analizando</em> de la cola. Hasta que termina, todavía no sabe qué conservará el archivo.</p>
+
+<a name="folder-scan" id="folder-scan"></a>
+<h2>Añadir una carpeta entera</h2>
+
+<ol>
+  <li>Elige <strong>Archivo</strong> &#9656; <strong>Añadir carpeta…</strong> (<kbd>⇧⌘O</kbd>) o
+    arrastra una carpeta a la ventana.</li>
+  <li>Elige la carpeta y haz clic en <strong>Abrir</strong>.</li>
+</ol>
+
+<p>SubTrack busca en toda la carpeta, incluido todo lo que haya en sus subcarpetas, y pone en cola
+cada vídeo que encuentra. Una temporada de episodios repartidos en subcarpetas se añade de una sola
+vez.</p>
+
+<p class="note">Soltar una carpeta grande puede tardar un momento; SubTrack muestra el progreso
+mientras busca. Los archivos que no reconoce como vídeo se omiten sin avisar, en lugar de ponerlos
+en cola y que fallen.</p>
+
+<a name="queues" id="queues"></a>
+<h2>Trabajar con varias colas</h2>
+
+<p>Una cola es algo más que una lista. Cada una tiene sus propios archivos, sus propias reglas, su
+propio preajuste, su propia carpeta de destino y sus propios nombres de salida – así, una cola de películas en otros idiomas y una cola de series en inglés pueden necesitar cosas totalmente
+distintas sin que una afecte a la otra.</p>
+
+<ol>
+  <li>Elige <strong>Archivo</strong> &#9656; <strong>Nueva cola</strong> (<kbd>⌘N</kbd>).</li>
+  <li>Selecciona una cola en la barra lateral para trabajar con ella.</li>
+  <li>Para renombrar o eliminar una, elige <strong>Archivo</strong> &#9656;
+    <strong>Renombrar cola…</strong> o <strong>Eliminar cola</strong>.</li>
+</ol>
+
+<p>La próxima vez que abras SubTrack, las colas aparecerán tal como las dejaste, con los archivos
+que aún no se habían ejecutado.</p>
+
+<h2>Si falta un archivo</h2>
+
+<p>SubTrack recuerda dónde está cada archivo de origen. Si lo mueves o lo eliminas después de
+ponerlo en cola, la fila se marca como ausente en lugar de fallar a mitad de una ejecución. Para
+obtener más información, consulta <a href="missing-source.html">Si falta el archivo de origen</a>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="running-a-queue.html">Ejecutar una cola y seguir su progreso</a></li>
+    <li><a href="slim-rules.html">Elegir qué idiomas conservar</a></li>
+    <li><a href="destinations.html">Elegir dónde se guardan los archivos aligerados</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

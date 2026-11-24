@@ -17,6 +17,12 @@
             "value" : "SubTrack"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -41,6 +47,12 @@
             "value" : "SubTrack"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -55,6 +67,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Matroska-Video"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vídeo Matroska"
           }
         },
         "fr" : {
@@ -81,6 +99,12 @@
             "value" : "Copyright ©2026 Tim Morgan"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copyright ©2026 Tim Morgan"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -97,6 +121,12 @@
             "value" : "SubTrack-Warteschlangenobjekt"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Elemento de cola de SubTrack"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -111,6 +141,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "WebM-Video"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vídeo WebM"
           }
         },
         "fr" : {

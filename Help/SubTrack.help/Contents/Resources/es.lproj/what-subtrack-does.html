@@ -1,0 +1,81 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Aligerar vídeos sin volver a codificarlos</title>
+  <meta name="AppleTitle" content="Aligerar vídeos sin volver a codificarlos">
+  <meta name="description" content="SubTrack copia las pistas que conservas en lugar de convertirlas, así que los archivos se aligeran en segundos y sin pérdida de calidad.">
+  <meta name="keywords" content="sin pérdida, copia de flujo, remux, recodificar, transcodificar, calidad, blu-ray, rip, doblaje, handbrake">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="what-subtrack-does" id="what-subtrack-does"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Aligerar vídeos sin volver a codificarlos</h1>
+
+<p>Un remux de Blu-ray o UHD suele llevar una docena de pistas: ocho doblajes en idiomas que no hablas,
+cinco idiomas de subtítulos que no lees y una pista de comentarios que nunca reproducirás. Ocupan casi
+todo el archivo y no aportan nada.</p>
+
+<p>SubTrack las quita. Todo lo que conservas se escribe en un archivo nuevo tal como estaba, y el
+resultado ocupa una fracción del tamaño con la misma calidad.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/main-window-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/main-window.webp" width="1280" height="860" alt="La ventana principal de SubTrack: una cola de rips de Blu-ray con el número de pistas de entrada y de salida y el tamaño de los archivos, con la pestaña Reglas del inspector abierta al lado.">
+  </picture>
+  <figcaption>La cola muestra lo que perderá cada archivo y lo que pesará después.</figcaption>
+</figure>
+
+<a name="stream-copy" id="stream-copy"></a>
+<h2>Por qué es tan rápido</h2>
+
+<p>La mayoría de las herramientas de vídeo decodifican cada fotograma y lo vuelven a codificar. Eso
+tarda horas y cuesta calidad cada vez, porque la imagen se descarta y se aproxima de nuevo.</p>
+
+<p>SubTrack no decodifica nada. Una pista que conservas se copia de un contenedor a otro, byte a byte –
+son los mismos datos comprimidos, cambiados de sitio. No hay pérdida de generación porque no se
+regenera nada, y el trabajo depende de la velocidad de lectura del disco y no de la del procesador.
+Una película de dos horas suele terminar en segundos.</p>
+
+<p>El contenedor tampoco cambia. Si entra un MKV, sale un MKV, así que cualquier cosa que reproduzca
+el original reproducirá también la copia aligerada.</p>
+
+<a name="not-a-transcoder" id="not-a-transcoder"></a>
+<h2>Lo que SubTrack no pretende ser</h2>
+
+<p>SubTrack es un aligerador de pistas, no un transcodificador. No hay controles de calidad, ni campos
+de tasa de bits, ni preajustes de codificador, porque en el uso normal no hay nada que ajustar – copiar
+no tiene opciones.</p>
+
+<p><em>Sí</em> convierte una pista, pero solo en un caso: cuando has pedido conservar una pista que
+está en un códec que has dicho que no quieres. Entonces se convierte esa pista, las demás se siguen
+copiando y SubTrack te avisa antes de empezar. Para obtener más información, consulta
+<a href="preferred-codecs.html#preferred-codecs">Definir códecs preferidos y códecs de destino</a>.</p>
+
+<p class="note">Si lo que quieres es reducir la <em>imagen</em> – recodificar una biblioteca
+con una tasa de bits menor – SubTrack no es la herramienta adecuada ni lo será nunca. Para eso está
+HandBrake.</p>
+
+<h2>El proceso, paso a paso</h2>
+
+<ol>
+  <li><strong>Prepara la cola con tus archivos.</strong> Arrastra películas o una carpeta entera.</li>
+  <li><strong>Deja que las reglas elijan las pistas.</strong> Conserva el inglés y quita los otros
+    once doblajes. Decide qué hacer con los comentarios y con las pistas sin ninguna etiqueta de
+    idioma.</li>
+  <li><strong>Ejecútala.</strong> Todo lo que has conservado se copia en un archivo nuevo.</li>
+</ol>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="adding-files.html">Añadir vídeos a una cola</a></li>
+    <li><a href="slim-rules.html">Elegir qué idiomas conservar</a></li>
+    <li><a href="preferred-codecs.html">Definir códecs preferidos y códecs de destino</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

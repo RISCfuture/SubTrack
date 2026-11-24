@@ -1,0 +1,78 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Qué envía SubTrack y qué no</title>
+  <meta name="AppleTitle" content="Qué envía SubTrack y qué no">
+  <meta name="description" content="Tus archivos de vídeo nunca salen de tu Mac; lo único que envía SubTrack son informes de fallos, la sincronización de preajustes mediante tu propio iCloud y una búsqueda de actualizaciones que puedes desactivar.">
+  <meta name="keywords" content="privacidad, datos, telemetría, analíticas, diagnósticos, sentry, informe de fallos, cloudkit, icloud, rastreo, sin conexión, subir, desactivar, rgpd">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="privacy" id="privacy"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Qué envía SubTrack y qué no</h1>
+
+<p>Casi nada sale de tu Mac. No hay cuentas, ni identificadores publicitarios, ni rastreo. A
+continuación tienes la lista completa de lo que sí se envía y adónde va cada cosa.</p>
+
+<h2>Tus archivos de vídeo nunca salen de tu Mac</h2>
+
+<p>Todo lo que SubTrack hace con un archivo – leer sus pistas, decidir cuáles conservar y escribir la
+copia aligerada – ocurre en tu propio equipo. El FFmpeg incluido en SubTrack se compila sin funciones
+de red, así que no es que la app decida no subir nada: ese FFmpeg no contiene código de red y no
+puede abrir ninguna conexión. Tus archivos, sus nombres y su contenido no se envían a ninguna
+parte.</p>
+
+<h2>Los informes de fallos y de rendimiento se envían a Sentry</h2>
+
+<p>Cuando SubTrack se cierra inesperadamente o funciona mal, envía un informe a Sentry, un servicio de
+supervisión de errores, para poder localizar y corregir el fallo. Un informe incluye información del
+dispositivo, el estado de la app cuando surgió el problema y trazas de rendimiento.</p>
+
+<p>No está vinculado a tu identidad. SubTrack indica a Sentry que no adjunte tu dirección IP, el
+nombre de tu dispositivo ni nada parecido, y además no hay ninguna cuenta a la que asociar un informe.
+Los informes de las compilaciones de depuración y de las pruebas automáticas se descartan antes de
+enviarse.</p>
+
+<h2>Solo se sincronizan los preajustes, y lo hacen mediante tu propio iCloud</h2>
+
+<p>Los preajustes guardados se sincronizan entre tus Mac mediante CloudKit, en el contenedor privado
+de iCloud de tu cuenta de Apple. Ese contenedor es tuyo: el desarrollador no puede leerlo y lo que
+contiene se rige por la política de privacidad de Apple.</p>
+
+<p>Los preajustes son lo único que se sincroniza. Tus colas, los archivos que añades a ellas y tus
+carpetas de salida se guardan en este Mac y no van a ninguna parte.</p>
+
+<h2>Desactivar la búsqueda de actualizaciones</h2>
+
+<p>La versión descargada directamente de GitHub consulta la lista pública de versiones de GitHub para
+saber si hay una más reciente. Esa petición revela lo que revela cualquier petición web a un
+servidor – sobre todo tu dirección IP – y nada más sobre ti. Para desactivarla:</p>
+
+<ol>
+  <li>Selecciona <strong>SubTrack</strong> &#9656; <strong>Ajustes</strong> (<kbd>⌘,</kbd>) y haz
+    clic en <strong>Actualizaciones</strong>.</li>
+  <li>Ajusta <strong>Buscar actualizaciones</strong> en <strong>Nunca</strong>.</li>
+</ol>
+
+<p class="note">La versión de App Store nunca hace esta petición – la tienda la mantiene
+actualizada – así que no tiene ningún ajuste de <strong>Actualizaciones</strong>.</p>
+
+<h2>El documento que prevalece</h2>
+
+<p>Esta página es un resumen pensado para quienes usan la app. La
+<a href="https://riscfuture.github.io/SubTrack/privacy.html">política de privacidad de SubTrack</a>
+es el documento que prevalece, y es la que debes leer si necesitas el texto exacto.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="preset-sync.html">Sincronizar preajustes entre tus Mac</a></li>
+    <li><a href="updates.html">Buscar actualizaciones de SubTrack</a></li>
+    <li><a href="editions.html">Elegir entre las dos versiones de SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+Quita las pistas que no necesitas. Conserva intactas las que sí.
+
+SubTrack quita de tus archivos de vídeo las pistas de audio y de subtítulos que no quieres, y lo hace copiando, no recodificando. Así, un rip de Blu-ray de dos horas se aligera en segundos y sin pérdida de calidad.
+
+AÑADE A LA COLA, DECIDE, COPIA
+• Arrastra películas o una carpeta entera: SubTrack encuentra todos los vídeos que contiene.
+• Las reglas eligen las pistas: conserva los idiomas que hablas, mantén o descarta los comentarios y decide qué hacer con las pistas sin idioma. El primer idioma de la lista se convierte en el audio predeterminado.
+• Todo lo que conservas se copia sin recodificar a un archivo nuevo, bit a bit. Mismo contenedor, misma calidad y una fracción del tamaño.
+
+VE EL PLAN ANTES DE EJECUTARLO
+El inspector muestra todas las pistas de un archivo y lo que SubTrack hará con cada una: conservarla, descartarla o convertirla. Puedes personalizar cualquier decisión, archivo por archivo y pista por pista.
+
+PENSADO PARA LOTES
+• Tantas colas como quieras, cada una con sus archivos, sus reglas, su preajuste y su carpeta de destino.
+• Preajustes de partida para Blu-ray, streaming y rips de la web. Guarda los tuyos y se sincronizarán con tus otros Mac a través de iCloud.
+• Patrones para nombrar los archivos de salida, progreso por archivo y global, progreso en el Dock, un aviso cuando termina una cola y un Registro de actividad para consultar los detalles.
+• Mientras codifica, SubTrack evita que el Mac se suspenda, de modo que un lote nocturno llega hasta el final.
+
+TRANSCODIFICA SOLO SI ES NECESARIO
+Indica los códecs que quieres conservar. Si una pista que conservas no usa ninguno de ellos, SubTrack convierte solo esa pista, a HEVC o H.264 con el codificador de hardware de tu Mac, o a AAC, AC-3, E-AC-3, FLAC, ALAC u Opus en el caso del audio, y te avisa antes de empezar.
+
+TUS ARCHIVOS SON TUYOS
+Tus vídeos no salen nunca de tu Mac. SubTrack incluye su propia versión de FFmpeg con licencia LGPL, compilada sin funciones de red, así que no tienes que instalar nada más. Sin cuentas, sin anuncios y sin seguimiento.
+
+Requiere macOS 27 en un Mac con chip Apple.

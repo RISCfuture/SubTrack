@@ -1,0 +1,84 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Definir códecs preferidos y códecs de destino</title>
+  <meta name="AppleTitle" content="Definir códecs preferidos y códecs de destino">
+  <meta name="description" content="Indica los códecs que quieres conservar tal como están y a qué debe convertir SubTrack todo lo demás.">
+  <meta name="keywords" content="códec, preferido, transcodificar, convertir, destino, h264, hevc, av1, eac3, aac, x265, codificador, no compatible">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="preferred-codecs" id="preferred-codecs"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Definir códecs preferidos y códecs de destino</h1>
+
+<p>Conservar una pista normalmente significa copiarla tal cual. Pero a veces conservas una pista en un
+formato que no puedes usar – por ejemplo, una mezcla de audio sin pérdida que tu reproductor no decodifica.
+Estos dos ajustes describen ese caso, y solo ese.</p>
+
+<p>Son dos listas distintas con dos funciones distintas, y conviene tenerlo claro antes de modificar
+cualquiera de ellas.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/rules-codecs-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/rules-codecs.webp" width="300" height="792" alt="La pestaña Reglas del inspector, con los códecs preferidos de cada tipo de contenido encima de los códecs de destino a los que recurre.">
+  </picture>
+  <figcaption>Los códecs preferidos están justo encima de los códecs de destino a los que recurre.</figcaption>
+</figure>
+
+<a name="transcode-targets" id="transcode-targets"></a>
+<h2>Cómo funcionan juntas las dos listas</h2>
+
+<p><strong>Códecs preferidos</strong> es un filtro sobre lo que ya hay en el archivo. Dice: <em>si una
+pista que conservo está en uno de estos formatos, déjala como está.</em></p>
+
+<p><strong>Códecs de destino de la transcodificación</strong> es la alternativa. Dice: <em>y si no lo
+está, conviértela a este.</em></p>
+
+<p>Así, una pista se copia sin cambios si su códec está en la lista de preferidos, y se convierte al
+códec de destino si no lo está. Un archivo cuyas pistas son todas preferidas no se convierte nunca, que
+es el caso normal y el más rápido.</p>
+
+<p class="note">Añadir <em>más</em> códecs a la lista de preferidos significa convertir <em>menos</em>,
+no más. La lista contiene lo que estás dispuesto a aceptar tal cual.</p>
+
+<h2>Definirlos</h2>
+
+<ol>
+  <li>Muestra el inspector (<kbd>⌥⌘I</kbd>) y selecciona <strong>Reglas</strong>.</li>
+  <li>En <strong>Códecs preferidos</strong>, haz clic en <strong>Vídeo</strong>,
+    <strong>Audio</strong> o <strong>Subtítulos</strong> y edita la lista. El orden indica la
+    preferencia.</li>
+  <li>En <strong>Códecs de destino de la transcodificación</strong>, elige en qué debe convertirse el
+    vídeo y el audio cuando no pasan el filtro.</li>
+</ol>
+
+<p>Los subtítulos tienen una lista de preferidos, pero no un códec de destino: una pista de subtítulos
+se conserva o se quita, pero nunca se convierte.</p>
+
+<h2>Qué saber antes de ejecutar</h2>
+
+<p>Convertir es el camino lento, y SubTrack siempre te avisa de que va a ocurrir. Selecciona un archivo
+y elige <strong>Personalización</strong> en el inspector – cada pista que se vaya a convertir lo indica y
+muestra el códec al que se convertirá.</p>
+
+<h2>Si un códec no se puede codificar</h2>
+
+<p>Decidir convertir es una cosa; disponer del codificador necesario es otra. Cuando SubTrack avise de
+que la versión de FFmpeg que usas no puede escribir un códec de destino que has elegido, consulta
+<a href="unsupported-codec.html">Si un códec no se puede codificar</a>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="supported-formats.html">Ver qué admite una versión de FFmpeg</a></li>
+    <li><a href="overrides.html">Personalizar el plan de pistas de un archivo</a></li>
+    <li><a href="preview.html">Leer el plan completo de un archivo</a></li>
+    <li><a href="editions.html">Elegir entre las dos versiones de SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

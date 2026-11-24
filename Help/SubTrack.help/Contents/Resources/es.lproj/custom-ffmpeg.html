@@ -1,0 +1,70 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Usar tu propia versión de FFmpeg</title>
+  <meta name="AppleTitle" content="Usar tu propia versión de FFmpeg">
+  <meta name="description" content="Indica a SubTrack tu propio ffmpeg y ffprobe, deja que busque uno por ti, qué debe contener la carpeta y cómo deshacerlo si las transcodificaciones empiezan a fallar.">
+  <meta name="keywords" content="ffmpeg personalizado, ffprobe, carpeta, detectar automáticamente, homebrew, macports, compilación estática, codificador, integrado, revertir, volver a analizar, sandbox, app store">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="custom-ffmpeg" id="custom-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Usar tu propia versión de FFmpeg</h1>
+
+<p>Solo merece la pena hacerlo por un motivo concreto: necesitas un codificador que la versión incluida
+no tiene. En cualquier otro caso es mejor la versión incluida – es con la que se prueba SubTrack y viaja con la app.</p>
+
+<h2>Indicar una carpeta a SubTrack</h2>
+
+<ol>
+  <li>Elige <strong>SubTrack</strong> &#9656; <strong>Ajustes</strong> (<kbd>⌘,</kbd>) y haz clic en
+    <strong>FFmpeg</strong>.</li>
+  <li>En <strong>Ubicación de FFmpeg</strong>, selecciona <strong>Personalizado…</strong>.</li>
+  <li>Haz clic en <strong>Detectar automáticamente</strong> para que SubTrack busque una versión por ti, o en
+    <strong>Elegir…</strong> para seleccionar tú mismo la carpeta que contiene los binarios.</li>
+  <li>Comprueba en <strong>Información de FFmpeg</strong> que la versión mostrada es la que querías. Si aparece encima una advertencia naranja – <strong>Esta carpeta debe contener ffmpeg y ffprobe</strong> – significa que SubTrack no puede usar la carpeta; si no aparece nada, sí puede.</li>
+</ol>
+
+<p>Se necesitan los dos binarios, y el error más habitual es indicar una carpeta que solo contiene uno de
+ellos. SubTrack lee las pistas de un archivo con <code>ffprobe</code> y escribe el archivo aligerado con
+<code>ffmpeg</code>; la advertencia indica cuál de los dos falta.</p>
+
+<h2>Dejar que SubTrack busque una</h2>
+
+<p><strong>Detectar automáticamente</strong> busca en los lugares donde un Mac suele tener FFmpeg – Homebrew en cualquiera de sus dos prefijos (<code>/opt/homebrew/bin</code> o <code>/usr/local/bin</code>),
+MacPorts (<code>/opt/local/bin</code>) y <code>/usr/bin</code> – ejecuta cada versión que encuentra y elige
+la más reciente. Si dos versiones son iguales, elige la que ofrece más codificadores.</p>
+
+<p>No consulta el <code>PATH</code> de tu shell: una app abierta desde el Finder no lo hereda, así que el
+resultado correspondería a un entorno que nunca ves. Si tu versión está en otro sitio, usa
+<strong>Elegir…</strong>.</p>
+
+<h2>Si las transcodificaciones empiezan a fallar después</h2>
+
+<p>Las versiones de FFmpeg difieren mucho en lo que incluyen al compilarlas, y una a la que le falta un
+codificador que la versión incluida <em>sí</em> tiene es una causa frecuente de que una cola que
+funcionaba ayer deje de hacerlo. Vuelve a poner <strong>Ubicación de FFmpeg</strong> en
+<strong>Integrado</strong> – así queda todo como antes.</p>
+
+<p>Tras cambiar de versión, selecciona tus archivos y elige <strong>Cola</strong> &#9656;
+<strong>Volver a analizar la selección</strong>. Los planes de pistas que se ven en pantalla se calcularon
+con la versión anterior, y al volver a analizar se recalculan con la nueva.</p>
+
+<p class="note">La versión de App Store muestra aquí un aviso fijo de <strong>Integrado</strong> en lugar de
+la opción para elegir. Una app con sandbox no puede ejecutar un binario que le da el usuario, así que es
+una de las cosas que esa versión no puede hacer. Para obtener más información, consulta
+<a href="editions.html#editions">Elegir entre las dos versiones de SubTrack</a>.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Usar otra versión de FFmpeg</a></li>
+    <li><a href="supported-formats.html">Ver qué admite una versión de FFmpeg</a></li>
+    <li><a href="unsupported-codec.html">Si un códec no se puede codificar</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

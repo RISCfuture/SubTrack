@@ -1,0 +1,52 @@
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Resolver un conflicto de nombres</title>
+  <meta name="AppleTitle" content="Resolver un conflicto de nombres">
+  <meta name="description" content="SubTrack no inicia una cola cuyos nombres destruirían un archivo. Solo hay dos casos en los que ocurre, y ambos se arreglan enseguida.">
+  <meta name="keywords" content="conflicto, coincidir, duplicado, sobrescribir, mismo nombre, Iniciar atenuado, bloqueado, marcador, número, personalización">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="name-conflicts" id="name-conflicts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Resolver un conflicto de nombres</h1>
+
+<p>SubTrack no inicia una cola cuyos nombres destruirían un archivo, y solo hay dos casos en los que
+puede ocurrir.</p>
+
+<h2>Dos archivos se escribirían en el mismo lugar</h2>
+
+<p>El formato no distingue entre dos orígenes – casi siempre porque tienen el mismo nombre en carpetas
+distintas, como <code>Show.mkv</code> en una carpeta Temporada 1 y en otra Temporada 2. El que
+terminara después sobrescribiría al otro.</p>
+
+<p>Para resolverlo, haz que el formato genere nombres distintos. Lo más rápido es añadir
+<code>{n}</code>; lo más preciso, dar a un archivo su propio nombre en la pestaña
+<strong>Personalización</strong>. También puedes enviar las colas a carpetas diferentes.</p>
+
+<h2>Un archivo sobrescribiría su propio origen</h2>
+
+<p>El formato genera exactamente el nombre del origen y la carpeta de salida es la carpeta donde está
+el origen – así que SubTrack tendría que escribir sobre el mismo archivo que está leyendo.</p>
+
+<p>Para resolverlo, añade algo al formato, como <code>{name} (slimmed)</code>, o elige otra carpeta de
+salida. Para obtener más información, consulta
+<a href="destinations.html">Elegir dónde se guardan los archivos aligerados</a>.</p>
+
+<p class="note">El aviso indica qué archivos intervienen, así que puedes ver cuáles coinciden sin
+tener que adivinarlo. <strong>Iniciar</strong> vuelve a estar disponible en cuanto no coinciden dos
+archivos de salida.</p>
+
+<div class="seealso">
+  <h2>Consulta también</h2>
+  <ul>
+    <li><a href="output-names.html">Dar nombre a los archivos que escribe SubTrack</a></li>
+    <li><a href="destinations.html">Elegir dónde se guardan los archivos aligerados</a></li>
+    <li><a href="overrides.html">Personalizar el plan de pistas de un archivo</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
