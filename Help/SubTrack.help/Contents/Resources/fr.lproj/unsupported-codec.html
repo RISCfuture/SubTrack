@@ -1,0 +1,49 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Si un codec ne peut pas être encodé</title>
+  <meta name="AppleTitle" content="Si un codec ne peut pas être encodé">
+  <meta name="description" content="Décider de convertir est une chose, disposer de l’encodeur nécessaire en est une autre. Pourquoi la version que vous utilisez peut ne pas pouvoir écrire le codec choisi.">
+  <meta name="keywords" content="non pris en charge, encodeur, manquant, h264, h265, libx264, libx265, app store, licence, videotoolbox, incompatible, bloqué">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="unsupported-codec" id="unsupported-codec"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si un codec ne peut pas être encodé</h1>
+
+<p>SubTrack vous avertit parfois que le FFmpeg actuel ne peut pas encoder un codec que vous avez choisi
+comme codec cible. Décider de convertir est une chose, disposer de l’encodeur nécessaire en est une
+autre.</p>
+
+<h2>Les deux raisons</h2>
+
+<ul>
+  <li><strong>Vous utilisez la version App Store.</strong> Elle intègre une version de FFmpeg sans les
+    encodeurs logiciels H.264 et H.265, car les règles de l’App Store n’autorisent pas leur licence.
+    Choisissez un codec cible que cette version prend en charge, ou utilisez la version téléchargeable. Pour
+    en savoir plus, consultez
+    <a href="editions.html#editions">Choisir entre les deux versions de SubTrack</a>.</li>
+  <li><strong>Vous avez indiqué à SubTrack votre propre FFmpeg</strong>, et cette version a été compilée sans
+l’encodeur. Le contenu des versions varie énormément. Revenez à
+    <strong>Intégré</strong> dans <strong>Réglages</strong> &#9656; <strong>FFmpeg</strong>, ou installez
+une version qui inclut l’encodeur dont vous avez besoin. Pour en savoir plus, consultez
+    <a href="custom-ffmpeg.html">Utiliser votre propre version de FFmpeg</a>.</li>
+</ul>
+
+<p>Pour voir précisément ce que le FFmpeg utilisé peut lire et écrire, ouvrez
+<strong>Réglages</strong> &#9656; <strong>FFmpeg</strong> et cliquez sur <strong>Formats pris en
+charge</strong>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="preferred-codecs.html">Définir les codecs préférés et les codecs cibles</a></li>
+    <li><a href="supported-formats.html">Voir ce que prend en charge une version de FFmpeg</a></li>
+    <li><a href="editions.html">Choisir entre les deux versions de SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

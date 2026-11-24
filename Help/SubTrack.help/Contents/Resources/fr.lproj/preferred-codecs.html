@@ -1,0 +1,86 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Définir les codecs préférés et les codecs cibles</title>
+  <meta name="AppleTitle" content="Définir les codecs préférés et les codecs cibles">
+  <meta name="description" content="Indiquez les codecs que vous acceptez tels quels, et celui en lequel SubTrack doit convertir tout le reste.">
+  <meta name="keywords" content="codec, préféré, transcoder, transcodage, convertir, cible, codec cible, h264, hevc, av1, eac3, aac, x265, encodeur, non pris en charge">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="preferred-codecs" id="preferred-codecs"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Définir les codecs préférés et les codecs cibles</h1>
+
+<p>Conserver une piste signifie en principe la copier telle quelle. Mais il arrive que la piste que
+vous gardez soit dans un format inutilisable pour vous – par exemple un mixage audio sans perte que
+votre lecteur ne sait pas décoder. Ces deux réglages décrivent ce cas, et seulement celui-là.</p>
+
+<p>Ce sont deux listes distinctes, avec deux rôles distincts, et mieux vaut bien le comprendre avant
+de modifier l’une ou l’autre.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/rules-codecs-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/rules-codecs.webp" width="300" height="792" alt="L’inspecteur Règles, avec les codecs préférés listés par type de média au-dessus des codecs cibles du transcodage vers lesquels ils se replient.">
+  </picture>
+  <figcaption>Les codecs préférés se trouvent juste au-dessus des codecs cibles qui leur servent de repli.</figcaption>
+</figure>
+
+<a name="transcode-targets" id="transcode-targets"></a>
+<h2>Fonctionnement conjoint des deux listes</h2>
+
+<p><strong>Codecs préférés</strong> est un filtre appliqué à ce qui se trouve déjà dans le fichier.
+Il dit&nbsp;: <em>si une piste que je conserve est dans l’un de ces formats, ne la touche
+pas.</em></p>
+
+<p><strong>Codecs cibles du transcodage</strong> est le repli. Il dit&nbsp;: <em>et si elle ne l’est
+pas, convertis-la en celui-ci.</em></p>
+
+<p>Une piste est donc copiée telle quelle quand son codec figure dans la liste des codecs préférés, et
+convertie vers le codec cible dans le cas contraire. Un fichier dont toutes les pistes sont préférées
+n’est jamais converti, ce qui est le cas courant, et le plus rapide.</p>
+
+<p class="note">Ajouter <em>plus</em> de codecs à la liste des codecs préférés signifie convertir
+<em>moins</em>, et non davantage. Cette liste regroupe ce que vous acceptez tel quel.</p>
+
+<h2>Les définir</h2>
+
+<ol>
+  <li>Affichez l’inspecteur (<kbd>⌥⌘I</kbd>) et choisissez <strong>Règles</strong>.</li>
+  <li>Sous <strong>Codecs préférés</strong>, cliquez sur <strong>Vidéo</strong>,
+    <strong>Audio</strong> ou <strong>Sous-titres</strong> et modifiez la liste. L’ordre indique la
+    préférence.</li>
+  <li>Sous <strong>Codecs cibles du transcodage</strong>, choisissez ce que la vidéo et l’audio
+    doivent devenir quand ils ne passent pas le filtre.</li>
+</ol>
+
+<p>Les sous-titres ont une liste de codecs préférés mais pas de codec cible&nbsp;: une piste de
+sous-titres est soit conservée, soit retirée, jamais convertie.</p>
+
+<h2>À savoir avant l’exécution</h2>
+
+<p>La conversion est la voie lente, et SubTrack vous prévient toujours qu’elle va avoir lieu au lieu
+de vous surprendre. Sélectionnez un fichier et choisissez <strong>Personnalisation</strong> dans
+l’inspecteur – toute piste qui sera convertie l’indique et précise en quoi elle sera convertie.</p>
+
+<h2>Si un codec ne peut pas être encodé</h2>
+
+<p>Choisir de convertir est une chose&nbsp;; disposer de l’encodeur qui le permet en est une autre.
+Quand SubTrack vous avertit que la version que vous utilisez ne peut pas écrire un codec cible que
+vous avez choisi, consultez <a href="unsupported-codec.html">Si un codec ne peut pas être
+encodé</a>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="supported-formats.html">Voir ce que prend en charge une version de FFmpeg</a></li>
+    <li><a href="overrides.html">Personnaliser le plan des pistes d’un fichier</a></li>
+    <li><a href="preview.html">Lire le plan complet d’un fichier</a></li>
+    <li><a href="editions.html">Choisir entre les deux versions de SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

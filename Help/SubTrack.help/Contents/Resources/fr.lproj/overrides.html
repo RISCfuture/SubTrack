@@ -1,0 +1,89 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Personnaliser le plan des pistes d’un fichier</title>
+  <meta name="AppleTitle" content="Personnaliser le plan des pistes d’un fichier">
+  <meta name="description" content="Consultez le plan des pistes d’un seul fichier et modifiez le sort de certaines pistes sans toucher au reste de la file d’attente.">
+  <meta name="keywords" content="personnalisation, personnaliser, plan des pistes, par fichier, conserver, retirer, convertir, revenir aux règles, inspecteur, exception">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-overrides" id="track-overrides"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Personnaliser le plan des pistes d’un fichier</h1>
+
+<p>Les règles de conservation s’appliquent à toute la file d’attente. Quand un fichier demande un
+traitement différent – une piste mal étiquetée, un documentaire dont vous voulez justement le
+commentaire –, vous pouvez traiter ce fichier à part.</p>
+
+<a name="track-plan" id="track-plan"></a>
+<h2>Lire le plan</h2>
+
+<ol>
+  <li>Sélectionnez un fichier dans la file d’attente.</li>
+  <li>Affichez l’inspecteur (<kbd>⌥⌘I</kbd>) et choisissez <strong>Personnalisation</strong>
+    (<kbd>⌥⌘2</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-override-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-override.webp" width="300" height="792" alt="L’inspecteur Personnalisation pour un fichier&nbsp;: un menu de pistes au-dessus du codec, de la langue, du titre et des canaux de la piste sélectionnée, puis les commandes qui permettent de l’inclure ou de la convertir.">
+  </picture>
+  <figcaption>Toutes les informations sur la piste sélectionnée, et les deux commandes qui décident de son sort.</figcaption>
+</figure>
+
+<p>Le menu des pistes répertorie toutes les pistes du fichier. Les éléments grisés sont les pistes
+qui seront retirées&nbsp;; les autres seront conservées. Choisissez une piste pour voir ce qui lui
+arrivera et pourquoi.</p>
+
+<p>Pour lire tout le fichier d’un coup plutôt que piste par piste, consultez
+<a href="preview.html#track-preview">Lire le plan complet d’un fichier</a>. C’est le moyen le plus
+rapide de vérifier que vos règles font bien ce que vous voulez avant de leur confier toute une
+file d’attente.</p>
+
+<h2>Modifier une piste</h2>
+
+<p>Choisissez une piste, puis décidez de son sort&nbsp;: la conserver, la retirer ou la convertir
+en un codec donné.</p>
+
+<p><strong>À savoir avant de le faire.</strong> Modifier une seule piste fait passer tout le fichier
+à un plan qui lui est propre. Toutes les autres pistes sont figées telles que les règles les
+traitaient à cet instant, et ce fichier cesse dès lors de suivre les règles de la file d’attente. Si
+vous modifiez les règles ensuite, ce fichier n’en tiendra pas compte.</p>
+
+<p>C’est généralement ce que vous voulez, puisque vous avez choisi ce fichier à dessein&nbsp;; mais
+une personnalisation définie tôt puis oubliée ignorera discrètement les changements de règles
+ultérieurs.</p>
+
+<a name="override-reset" id="override-reset"></a>
+<h2>Revenir aux règles</h2>
+
+<p>Cliquez sur <strong>Revenir aux règles</strong>. Le fichier abandonne son propre plan et suit de
+nouveau les règles de la file d’attente, y compris tout ce que vous avez modifié depuis. Le bouton n’apparaît
+que si le fichier est effectivement personnalisé&nbsp;; sa présence indique donc aussi si une personnalisation est définie.</p>
+
+<h2>Donner un autre nom à un fichier</h2>
+
+<p>Le même onglet permet de définir un nom de sortie pour ce fichier seul, à la place du format de
+nommage de la file d’attente. Pour en savoir plus, consultez
+<a href="output-names.html#output-names">Nommer les fichiers écrits par SubTrack</a>.</p>
+
+<p class="note">Si vous réanalysez un fichier (<strong>File d’attente</strong> &#9656;
+<strong>Réanalyser la sélection</strong>), ses pistes sont relues depuis le disque. Une
+personnalisation qui concernait une piste disparue ne peut pas être appliquée&nbsp;; vérifiez donc
+le plan après avoir remplacé un fichier source.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="preview.html">Lire le plan complet d’un fichier</a></li>
+    <li><a href="slim-rules.html">Choisir les langues à conserver</a></li>
+    <li><a href="preferred-codecs.html">Définir les codecs préférés et les codecs cibles</a></li>
+    <li><a href="output-names.html">Nommer les fichiers écrits par SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Ajouter des vidéos à une file d’attente</title>
+  <meta name="AppleTitle" content="Ajouter des vidéos à une file d’attente">
+  <meta name="description" content="Faites glisser des vidéos ou des dossiers dans SubTrack, ou ajoutez-les depuis la barre d’outils, et répartissez le travail dans des files d’attente distinctes.">
+  <meta name="keywords" content="ajouter, glisser, déposer, dossier, importer, file d’attente, analyser, mkv, mp4, mov, avi, lot">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="adding-files" id="adding-files"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Ajouter des vidéos à une file d’attente</h1>
+
+<p>Une file d’attente est une liste de fichiers à alléger, accompagnée des règles qui déterminent ce
+que chacun conserve. Vous pouvez y ajouter des fichiers de trois façons.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/add-videos-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/add-videos.webp" width="1000" height="620" alt="Une file d’attente SubTrack vide affichant «&nbsp;Déposez des vidéos ici&nbsp;», avec le menu Ajouter de la barre d’outils ouvert sur Ajouter des fichiers… et Ajouter un dossier…">
+  </picture>
+  <figcaption>Le menu Ajouter de la barre d’outils propose les deux méthodes. Une fenêtre vide accepte aussi les fichiers déposés dessus.</figcaption>
+</figure>
+
+<h2>Ajouter des fichiers</h2>
+
+<ol>
+  <li>Faites glisser des vidéos depuis le Finder vers la fenêtre de SubTrack, ou</li>
+  <li>choisissez <strong>Fichier</strong> &#9656; <strong>Ajouter des fichiers…</strong> (<kbd>⌘O</kbd>)
+    et sélectionnez-les, ou</li>
+  <li>cliquez sur <strong>Ajouter</strong> dans la barre d’outils.</li>
+</ol>
+
+<p>SubTrack lit chaque fichier dès son arrivée pour savoir ce qu’il contient. C’est l’état bref
+<em>Analyse</em> dans la file d’attente. Tant qu’il n’est pas terminé, SubTrack ne sait pas encore ce
+que le fichier conservera.</p>
+
+<a name="folder-scan" id="folder-scan"></a>
+<h2>Ajouter un dossier entier</h2>
+
+<ol>
+  <li>Choisissez <strong>Fichier</strong> &#9656; <strong>Ajouter un dossier…</strong> (<kbd>⇧⌘O</kbd>),
+    ou faites glisser un dossier vers la fenêtre.</li>
+  <li>Choisissez le dossier et cliquez sur <strong>Ouvrir</strong>.</li>
+</ol>
+
+<p>SubTrack parcourt tout le dossier, sous-dossiers compris, et place en file d’attente chaque vidéo
+trouvée. Une saison d’épisodes rangés dans un sous-dossier par épisode arrive en une seule
+opération.</p>
+
+<p class="note">Le dépôt d’un dossier volumineux peut prendre un moment. SubTrack affiche sa
+progression pendant la recherche. Les fichiers qu’il ne reconnaît pas comme des vidéos sont ignorés
+sans message, au lieu d’être mis en file d’attente puis en échec.</p>
+
+<a name="queues" id="queues"></a>
+<h2>Travailler avec plusieurs files d’attente</h2>
+
+<p>Une file d’attente est bien plus qu’une liste. Chacune a ses propres fichiers, ses propres règles
+de conservation, son propre préréglage, son propre dossier de destination et sa propre convention de
+nommage. Ainsi, une file de films en version originale et une file de séries télévisées en anglais
+peuvent avoir des besoins totalement différents sans se gêner.</p>
+
+<ol>
+  <li>Choisissez <strong>Fichier</strong> &#9656; <strong>Nouvelle file d’attente</strong> (<kbd>⌘N</kbd>).</li>
+  <li>Sélectionnez une file d’attente dans la barre latérale pour travailler dedans.</li>
+  <li>Pour en renommer ou en supprimer une, choisissez <strong>Fichier</strong> &#9656; <strong>Renommer la file d’attente…</strong> ou
+    <strong>Supprimer la file d’attente</strong>.</li>
+</ol>
+
+<p>Les files d’attente sont restaurées telles que vous les avez laissées à la prochaine ouverture de
+SubTrack, y compris les fichiers qui n’avaient pas encore été traités.</p>
+
+<h2>Si un fichier a disparu</h2>
+
+<p>SubTrack mémorise l’emplacement de chaque fichier source. Si vous déplacez ou supprimez un fichier
+après l’avoir mis en file d’attente, sa ligne est signalée comme introuvable, au lieu d’échouer en
+cours d’exécution. Pour en savoir plus, consultez
+<a href="missing-source.html">Si le fichier source est introuvable</a>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="running-a-queue.html">Exécuter une file d’attente et suivre sa progression</a></li>
+    <li><a href="slim-rules.html">Choisir les langues à conserver</a></li>
+    <li><a href="destinations.html">Choisir où enregistrer les fichiers allégés</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

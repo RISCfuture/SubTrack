@@ -1,0 +1,79 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Ce que SubTrack envoie, et ce qu’il n’envoie pas</title>
+  <meta name="AppleTitle" content="Ce que SubTrack envoie, et ce qu’il n’envoie pas">
+  <meta name="description" content="Vos fichiers vidéo ne quittent jamais votre Mac&nbsp;; SubTrack n’envoie que les rapports de plantage, la synchronisation des préréglages via votre propre iCloud et une recherche de mises à jour que vous pouvez désactiver.">
+  <meta name="keywords" content="confidentialité, données, télémétrie, statistiques, diagnostics, sentry, rapport de plantage, cloudkit, icloud, suivi, hors ligne, envoi, désactiver, rgpd">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="privacy" id="privacy"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Ce que SubTrack envoie, et ce qu’il n’envoie pas</h1>
+
+<p>Presque rien ne quitte votre Mac. Il n’y a ni compte, ni identifiant publicitaire, ni suivi. Voici
+la liste complète de ce qui est envoyé, et de la destination de chaque envoi.</p>
+
+<h2>Vos fichiers vidéo ne quittent jamais votre Mac</h2>
+
+<p>Tout ce que SubTrack fait à un fichier (lire ses pistes, déterminer ce qu’il faut conserver,
+écrire la copie allégée) se passe sur votre propre machine. FFmpeg, intégré à SubTrack, est compilé
+sans fonctions réseau. Il ne s’agit donc pas d’un choix de l’app de ne rien envoyer&nbsp;: ce FFmpeg ne
+contient aucun code réseau et ne peut ouvrir aucune connexion. Vos fichiers, leurs noms et leur contenu
+ne sont jamais envoyés nulle part.</p>
+
+<h2>Les rapports de plantage et de performances sont envoyés à Sentry</h2>
+
+<p>Lorsque SubTrack plante ou fonctionne mal, il envoie un rapport à Sentry, un service de
+surveillance des erreurs, afin que le défaut puisse être trouvé et corrigé. Un rapport contient des
+informations sur l’appareil, l’état de l’app au moment du problème et des traces de performances.</p>
+
+<p>Il n’est pas lié à votre identité. SubTrack demande à Sentry de ne joindre ni votre adresse IP, ni le
+nom de votre appareil, ni aucune autre donnée de ce genre, et il n’existe de toute façon aucun compte
+auquel rattacher un rapport. Les rapports issus des versions de débogage et des tests automatisés sont
+écartés avant l’envoi.</p>
+
+<h2>Seuls les préréglages se synchronisent, via votre propre iCloud</h2>
+
+<p>Les préréglages enregistrés se synchronisent entre vos Mac par CloudKit, dans le conteneur iCloud
+privé associé à votre compte Apple. Ce conteneur est le vôtre&nbsp;: le développeur ne peut pas le lire,
+et ce qu’il contient relève de la politique de confidentialité d’Apple.</p>
+
+<p>Les préréglages sont la seule chose qui se synchronise. Vos files d’attente, les fichiers que vous y
+placez et vos dossiers de destination sont enregistrés sur ce Mac et ne vont nulle part ailleurs.</p>
+
+<h2>Désactiver la recherche de mises à jour</h2>
+
+<p>La version téléchargée directement depuis GitHub interroge la liste publique des versions de GitHub
+pour savoir s’il en existe une plus récente. Cette requête révèle ce que révèle toute requête web à un
+serveur, principalement votre adresse IP, et rien d’autre à votre sujet. Pour l’arrêter&nbsp;:</p>
+
+<ol>
+  <li>Choisissez <strong>SubTrack</strong> &#9656; <strong>Réglages</strong> (<kbd>⌘,</kbd>), puis
+    cliquez sur <strong>Mises à jour</strong>.</li>
+  <li>Réglez <strong>Rechercher les mises à jour</strong> sur <strong>Jamais</strong>.</li>
+</ol>
+
+<p class="note">La version App Store n’envoie jamais cette requête, car c’est le store qui la tient à
+jour&nbsp;: elle n’a donc aucun réglage <strong>Mises à jour</strong>.</p>
+
+<h2>Le document qui fait foi</h2>
+
+<p>Cette page est un résumé destiné aux utilisateurs de l’app. La
+<a href="https://riscfuture.github.io/SubTrack/privacy.html">politique de confidentialité de SubTrack</a>
+est le document qui fait réellement foi, et c’est elle qu’il faut lire si vous avez besoin de la
+formulation exacte.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="preset-sync.html">Synchroniser les préréglages entre vos Mac</a></li>
+    <li><a href="updates.html">Rechercher les mises à jour de SubTrack</a></li>
+    <li><a href="editions.html">Choisir entre les deux versions de SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

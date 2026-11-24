@@ -1,0 +1,6 @@
+{
+  "plan": "Retirez les pistes inutiles.\nGardez les autres, intactes.",
+  "rules": "Choisissez vos langues.\nToute la file les applique.",
+  "override": "Gardez le commentaire ici seulement.\nToute piste, avant l’exécution.",
+  "queues": "Une file par lot,\nchacune avec ses règles."
+}

@@ -16,6 +16,12 @@
             "state" : "new",
             "value" : "SubTrack"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack"
+          }
         }
       }
     },
@@ -34,6 +40,12 @@
             "state" : "new",
             "value" : "SubTrack"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack"
+          }
         }
       }
     },
@@ -43,6 +55,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Matroska-Video"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vidéo Matroska"
           }
         }
       }
@@ -62,6 +80,12 @@
             "state" : "new",
             "value" : "Copyright ©2026 Tim Morgan"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copyright ©2026 Tim Morgan"
+          }
         }
       }
     },
@@ -72,6 +96,12 @@
             "state" : "machine_translated",
             "value" : "SubTrack-Warteschlangenobjekt"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Élément de file d’attente SubTrack"
+          }
         }
       }
     },
@@ -81,6 +111,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "WebM-Video"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vidéo WebM"
           }
         }
       }

@@ -1,0 +1,127 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Aide de SubTrack</title>
+  <meta name="AppleTitle" content="Aide de SubTrack">
+  <meta name="AppleIcon" content="SubTrack.help/Contents/Resources/help-icon.png">
+  <meta name="description" content="Comment alléger des fichiers vidéo avec SubTrack&nbsp;: files d’attente, règles de conservation, préréglages et réglages.">
+  <meta name="keywords" content="subtrack, aide, manuel, sommaire, vidéo, pistes, audio, sous-titres, mkv, remux">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="subtrack-help" id="subtrack-help"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Aide de SubTrack</h1>
+
+<p>SubTrack retire les pistes audio et de sous-titres dont vous n’avez pas besoin et conserve
+intégralement celles qui vous sont utiles. Rien n’est réencodé&nbsp;: un fichier issu d’un Blu-ray de deux heures
+est allégé en quelques secondes, avec exactement la qualité d’origine.</p>
+
+<div class="start-here">
+  <h2>Pour commencer</h2>
+  <ul>
+    <li><a href="what-subtrack-does.html">Alléger des vidéos sans les réencoder</a>
+      <span class="gloss">Copier au lieu de convertir, et pourquoi c’est si rapide.</span></li>
+    <li><a href="adding-files.html">Ajouter des vidéos à une file d’attente</a>
+      <span class="gloss">Faites glisser un film, ou un dossier entier de films.</span></li>
+    <li><a href="running-a-queue.html">Exécuter une file d’attente et suivre sa progression</a>
+      <span class="gloss">Lancez l’exécution, suivez-la et lisez les résultats.</span></li>
+  </ul>
+</div>
+
+<div class="toc">
+
+<section>
+  <h2>Choisir les pistes audio et de sous-titres</h2>
+  <ul>
+    <li><a href="slim-rules.html">Choisir les langues à conserver</a>
+      <span class="gloss">Langues par ordre de priorité, commentaires et pistes sans langue.</span></li>
+    <li><a href="preferred-codecs.html">Définir les codecs préférés et les codecs cibles</a>
+      <span class="gloss">Le seul cas où SubTrack convertit une piste.</span></li>
+    <li><a href="overrides.html">Personnaliser le plan des pistes d’un fichier</a>
+      <span class="gloss">Lorsqu’un fichier doit être traité autrement que les autres.</span></li>
+    <li><a href="preview.html">Lire le plan complet d’un fichier</a>
+      <span class="gloss">Toutes les pistes que l’exécution écrira, et toutes celles qu’elle retirera.</span></li>
+    <li><a href="output-names.html">Nommer les fichiers écrits par SubTrack</a>
+      <span class="gloss">Les balises, et le nom donné au fichier obtenu.</span></li>
+    <li><a href="name-conflicts.html">Résoudre un conflit de nom</a>
+      <span class="gloss">Les deux façons dont des noms peuvent entrer en conflit, et comment les départager.</span></li>
+    <li><a href="destinations.html">Choisir où enregistrer les fichiers allégés</a>
+      <span class="gloss">Le dossier propre à chaque file d’attente, ou à côté de chaque source.</span></li>
+    <li><a href="settings-general.html">Définir la destination par défaut des nouvelles files d’attente</a>
+      <span class="gloss">Ce dont hérite une toute nouvelle file d’attente.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Enregistrer et réutiliser des préréglages</h2>
+  <ul>
+    <li><a href="presets.html">Enregistrer un ensemble de règles comme préréglage</a>
+      <span class="gloss">Les préréglages de départ, et l’enregistrement de vos propres règles.</span></li>
+    <li><a href="preset-sync.html">Synchroniser les préréglages entre vos Mac</a>
+      <span class="gloss">Comment iCloud les transmet, et ce qui reste en place.</span></li>
+    <li><a href="sync-unavailable.html">Si les préréglages ne sont pas synchronisés</a>
+      <span class="gloss">Aucun compte connecté, accès restreint ou erreur signalée par iCloud.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Modifier les réglages de SubTrack</h2>
+  <ul>
+    <li><a href="encoding.html">Définir le nombre d’encodages simultanés</a>
+      <span class="gloss">Quand cette limite compte, et quand elle ne compte pas.</span></li>
+    <li><a href="ffmpeg.html">Utiliser une autre version de FFmpeg</a>
+      <span class="gloss">Quelle version est utilisée, et d’où elle vient.</span></li>
+    <li><a href="custom-ffmpeg.html">Utiliser votre propre version de FFmpeg</a>
+      <span class="gloss">Lorsque vous avez besoin d’un encodeur absent de la version intégrée.</span></li>
+    <li><a href="supported-formats.html">Voir ce que prend en charge une version de FFmpeg</a>
+      <span class="gloss">Tous les conteneurs et codecs qu’il lit, et la liste plus courte de ceux qu’il écrit.</span></li>
+    <li><a href="subtrack-cli.html">Installer l’outil en ligne de commande <code>subtrack</code></a>
+      <span class="gloss">Alléger des fichiers depuis le Terminal.</span></li>
+    <li><a href="cli-install.html">Installer l’outil <code>subtrack</code></a>
+      <span class="gloss">Le placer dans votre <code>PATH</code>, avec ou sans accès administrateur.</span></li>
+    <li><a href="updates.html">Rechercher les mises à jour de SubTrack</a>
+      <span class="gloss">À quelle fréquence, et s’il faut inclure les versions préliminaires.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Résoudre des problèmes</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Si un fichier ne peut pas être allégé</a>
+      <span class="gloss">Lequel des quatre problèmes vous rencontrez, et le Journal d’activité.</span></li>
+    <li><a href="probe-failed.html">Si SubTrack ne peut pas lire un fichier</a>
+      <span class="gloss">L’analyse a échoué avant même le début de l’allègement.</span></li>
+    <li><a href="missing-source.html">Si le fichier source est introuvable</a>
+      <span class="gloss">Déplacé, démonté ou autorisation enregistrée devenue obsolète.</span></li>
+    <li><a href="encode-failed.html">Si une exécution démarre puis échoue</a>
+      <span class="gloss">Disque plein, destination disparue ou source endommagée.</span></li>
+    <li><a href="unsupported-codec.html">Si un codec ne peut pas être encodé</a>
+      <span class="gloss">La version utilisée n’a pas d’encodeur pour le codec cible choisi.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>À propos de SubTrack</h2>
+  <ul>
+    <li><a href="editions.html">Choisir entre les deux versions de SubTrack</a>
+      <span class="gloss">Ce que la version App Store ne peut pas faire, et pourquoi.</span></li>
+    <li><a href="privacy-and-data.html">Ce que SubTrack envoie, et ce qu’il n’envoie pas</a>
+      <span class="gloss">Vos fichiers restent sur votre Mac. Voici tout le reste.</span></li>
+    <li><a href="credits.html">FFmpeg, licences et crédits</a>
+      <span class="gloss">À qui appartient le travail contenu dans SubTrack.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Un problème persiste&nbsp;?</h2>
+  <ul>
+    <li><a href="https://github.com/RISCfuture/SubTrack/issues">Signaler un problème sur GitHub</a></li>
+  </ul>
+</section>
+
+</div>
+
+</body>
+</html>

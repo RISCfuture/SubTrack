@@ -1,0 +1,75 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Définir le nombre d’encodages simultanés</title>
+  <meta name="AppleTitle" content="Définir le nombre d’encodages simultanés">
+  <meta name="description" content="Choisissez combien de fichiers SubTrack traite en même temps et découvrez quel jeu de codecs contient votre version.">
+  <meta name="keywords" content="simultané, simultanés, encodages, performances, parallèle, jeu de codecs, videotoolbox, vitesse, processeur">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-encoding" id="settings-encoding"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Définir le nombre d’encodages simultanés</h1>
+
+<p>Choisissez <strong>SubTrack</strong> &#9656; <strong>Réglages</strong> (<kbd>⌘,</kbd>), puis cliquez sur
+<strong>Encodage</strong>.</p>
+
+<a name="simultaneous-encodes" id="simultaneous-encodes"></a>
+<h2>Encodages simultanés</h2>
+
+<p>Ce réglage limite le nombre de fichiers que SubTrack traite en même temps. Les choix vont de un à
+huit, sans proposer tous les nombres, car la vraie décision se résume à «&nbsp;un à la fois&nbsp;»,
+«&nbsp;quelques-uns&nbsp;» ou «&nbsp;toute la puissance de la machine&nbsp;»&nbsp;: les valeurs intermédiaires ne
+se comportent pas assez différemment pour compter.</p>
+
+<p><strong>Pour un allègement ordinaire, ce réglage change à peine quelque chose.</strong> La copie des
+pistes est limitée par la vitesse de lecture et d’écriture de votre disque, pas par votre processeur.
+Lancer huit copies à la fois revient surtout à les faire attendre après le même disque, et peut être plus
+lent que d’en lancer deux.</p>
+
+<p><strong>Il compte lorsque des pistes sont converties.</strong> La conversion sollicite réellement le
+processeur&nbsp;: plusieurs conversions simultanées exploitent donc davantage la machine. Si vos files
+d’attente comportent régulièrement des conversions, parce que vos sources utilisent des codecs absents
+de votre liste de codecs préférés, augmenter la limite terminera un lot plus tôt.</p>
+
+<p>La contrepartie est la réactivité. Une limite élevée pendant les conversions ralentit le reste du
+Mac. Si vous travaillez pendant le traitement d’un lot, gardez-la basse.</p>
+
+<p class="note">Réduire la limite n’interrompt rien de ce qui est déjà en cours. Les fichiers en cours
+de traitement se terminent&nbsp;; la nouvelle limite s’applique à ceux qui démarrent ensuite.</p>
+
+<a name="codec-sets" id="codec-sets"></a>
+<h2>Jeu de codecs</h2>
+
+<p>Cette ligne indique quelle version de FFmpeg est fournie avec votre exemplaire de SubTrack. Ce n’est pas
+un réglage – il n’y a rien à modifier – elle est là pour vous dire ce dont vous disposez.</p>
+
+<ul>
+  <li><strong>Complet (tous les codecs)</strong> – la version téléchargeable. Elle inclut les encodeurs
+    logiciels H.264 et H.265.</li>
+  <li><strong>App Store (VideoToolbox)</strong> – la version App Store. Encodage matériel via
+    VideoToolbox, sans les encodeurs logiciels, dont la licence n’est pas autorisée par la
+    distribution sur l’App Store.</li>
+</ul>
+
+<p>Les deux allègent les fichiers de la même façon. La différence n’apparaît que lorsqu’une piste doit
+être convertie, et seulement pour certains codecs cibles. Pour en savoir plus, consultez
+<a href="editions.html#editions">Choisir entre les deux versions de SubTrack</a>.</p>
+
+<p>Pour obtenir la liste complète de ce que la version que vous utilisez peut lire et écrire, ouvrez
+<strong>Réglages</strong> &#9656; <strong>FFmpeg</strong> et cliquez sur <strong>Formats pris en
+charge</strong>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Utiliser une autre version de FFmpeg</a></li>
+    <li><a href="editions.html">Choisir entre les deux versions de SubTrack</a></li>
+    <li><a href="running-a-queue.html">Exécuter une file d’attente et suivre sa progression</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Choisir les langues à conserver</title>
+  <meta name="AppleTitle" content="Choisir les langues à conserver">
+  <meta name="description" content="Définissez les langues que SubTrack conserve, par ordre de priorité, et décidez du sort des pistes de commentaires et des pistes sans langue.">
+  <meta name="keywords" content="langue, règles, conserver, retirer, priorité, piste par défaut, sans langue, commentaire, doublage, sous-titres, audio, iso 639">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="slim-rules" id="slim-rules"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Choisir les langues à conserver</h1>
+
+<p>Les règles de conservation sont au cœur de SubTrack. Elles s’appliquent à la fois à tous les fichiers de la
+file d’attente&nbsp;: vous décrivez une seule fois ce que vous voulez conserver, au lieu de le faire
+fichier par fichier.</p>
+
+<p>Pour y accéder, affichez l’inspecteur (<kbd>⌥⌘I</kbd>) et choisissez <strong>Règles</strong>. Les mêmes
+règles apparaissent lorsque vous modifiez un préréglage dans <strong>Réglages</strong> &#9656;
+<strong>Préréglages</strong>.</p>
+
+<a name="rule-languages" id="rule-languages"></a>
+<h2>Définir les langues à conserver</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/rules-languages-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/rules-languages.webp" width="346" height="247" alt="L’éditeur de langues, qui liste l’anglais, le français et le japonais dans cet ordre, chacun avec une poignée de déplacement et un bouton de retrait, au-dessus d’un menu Ajouter.">
+  </picture>
+  <figcaption>La liste est un ordre de priorité&nbsp;: faites glisser les éléments pour la réorganiser.</figcaption>
+</figure>
+
+<ol>
+  <li>Dans l’inspecteur, cliquez sur le contrôle des langues sous <strong>Sélection des pistes</strong>.</li>
+  <li>Recherchez une langue et sélectionnez-la pour l’ajouter à la liste.</li>
+  <li>Faites glisser les éléments pour les classer dans l’ordre voulu.</li>
+</ol>
+
+<p>Les pistes audio et de sous-titres dans ces langues sont conservées. Tout ce qui est dans une autre
+langue est retiré.</p>
+
+<p><strong>L’ordre compte, et son rôle est précis.</strong> La liste est un classement de préférence, et
+la première langue devient la piste audio <em>par défaut</em> du fichier allégé, c’est-à-dire celle qui
+est lue quand vous lancez la lecture sans rien choisir. Si vous conservez l’anglais et le japonais mais
+voulez que l’audio japonais soit lu en premier, placez le japonais en tête.</p>
+
+<p class="note">Les langues sont identifiées d’après l’étiquette enregistrée dans le fichier, qui utilise
+les codes ISO 639-2 à trois lettres. Si l’auteur d’un fichier a mal étiqueté une piste, elle est traitée
+selon son étiquette, et non selon ce que vous entendez.</p>
+
+<a name="rule-untagged" id="rule-untagged"></a>
+<h2>Décider du sort des pistes sans langue</h2>
+
+<p><strong>Conserver les pistes sans langue</strong> concerne les pistes qui ne portent aucune étiquette
+de langue.</p>
+
+<p>Ce seul réglage détermine si certains fichiers sortent parfaits ou muets. Les disques de studio
+étiquettent tout&nbsp;: pour des rips de Blu-ray, vous pouvez donc le laisser désactivé et écarter le
+superflu. Mais les rips issus du web ou du streaming contiennent très souvent une seule piste audio,
+correctement encodée, sans étiquette, et si vous retirez les pistes sans langue, ce fichier perd tout
+son son.</p>
+
+<p>Si vous travaillez avec des rips de sources variées, laissez ce réglage activé. Vous conserverez de
+temps en temps une piste inutile, mais l’alternative est un film muet.</p>
+
+<a name="rule-commentary" id="rule-commentary"></a>
+<h2>Décider du sort des commentaires et des pistes audio supplémentaires</h2>
+
+<p><strong>Inclure les commentaires et l’audio supplémentaire</strong> concerne les pistes audio non
+par défaut dans une langue que vous conservez&nbsp;: commentaires du réalisateur, audiodescription et
+mixages stéréo alternatifs.</p>
+
+<p>Désactivez ce réglage pour ne conserver qu’une piste audio principale par langue demandée. Activez-le
+pour conserver aussi les pistes supplémentaires. Les pistes de commentaires sont généralement petites
+comparées à un mixage principal sans perte, et ce choix pèse donc rarement sur la taille&nbsp;: il s’agit
+surtout de savoir si vous les voulez.</p>
+
+<p>Les pistes de sous-titres que le disque signale comme des commentaires suivent le même réglage,
+puisqu’elles sous-titrent les commentaires audio et ne servent pas à grand-chose sans eux. Une piste qui
+ne porte pas ce signalement, comme c’est le cas dans de nombreux rips, est considérée comme un
+sous-titre ordinaire et conservée selon sa langue, comme les autres.</p>
+
+<h2>Vérifier le résultat avant l’exécution</h2>
+
+<p>Les règles décrivent une intention&nbsp;; l’inspecteur en montre la conséquence. Sélectionnez un fichier et
+choisissez <strong>Aperçu</strong> dans l’inspecteur pour voir le fichier en entier&nbsp;: toutes les pistes
+que vos règles conservent, dans l’ordre où le fichier de sortie les contiendra, et toutes celles
+qu’elles retirent. Si une règle ne fait pas ce que vous attendiez, c’est là que vous le verrez.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="overrides.html">Personnaliser le plan des pistes d’un fichier</a></li>
+    <li><a href="preview.html">Lire le plan complet d’un fichier</a></li>
+    <li><a href="preferred-codecs.html">Définir les codecs préférés et les codecs cibles</a></li>
+    <li><a href="presets.html">Enregistrer un ensemble de règles comme préréglage</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

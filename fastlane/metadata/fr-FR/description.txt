@@ -1,0 +1,25 @@
+Retirez les pistes dont vous n’avez pas besoin. Conservez les autres, intactes.
+
+SubTrack retire les pistes audio et les sous-titres superflus de vos fichiers vidéo en les copiant, sans les réencoder : un rip Blu-ray de deux heures est allégé en quelques secondes, sans aucune perte de qualité.
+
+AJOUTEZ, CHOISISSEZ, COPIEZ
+• Faites glisser des films ou un dossier entier : SubTrack trouve toutes les vidéos qu’il contient.
+• Les règles choisissent les pistes : gardez les langues que vous parlez, conservez ou retirez les commentaires, et décidez du sort des pistes sans langue. La première langue de votre liste devient l’audio par défaut.
+• Tout ce que vous gardez est copié tel quel dans un nouveau fichier, bit pour bit. Même conteneur, même qualité, pour une fraction de la taille.
+
+VOYEZ LE PLAN AVANT L’EXÉCUTION
+L’inspecteur liste chaque piste d’un fichier et indique précisément ce que SubTrack en fera : la conserver, la retirer ou la convertir. Personnalisez tout, fichier par fichier, piste par piste.
+
+CONÇU POUR LES LOTS
+• Autant de files d’attente que vous voulez, chacune avec ses fichiers, ses règles, son préréglage et son dossier de destination.
+• Des préréglages de départ pour le Blu-ray, le streaming et les rips web. Créez les vôtres : ils se synchronisent avec vos autres Mac via votre compte iCloud.
+• Modèles de nom pour les fichiers de sortie, progression par fichier et globale, progression dans le Dock, notification à la fin d’une file d’attente et Journal d’activité quand vous voulez les détails.
+• Pendant l’encodage, votre Mac reste éveillé : un lot lancé la nuit va jusqu’au bout.
+
+TRANSCODAGE UNIQUEMENT SI NÉCESSAIRE
+Indiquez les codecs que vous acceptez de conserver. Si une piste à garder n’en fait pas partie, SubTrack convertit uniquement cette piste – en HEVC ou H.264 avec l’encodeur matériel de votre Mac, ou en AAC, AC-3, E-AC-3, FLAC, ALAC ou Opus pour l’audio – et vous prévient avant de le faire.
+
+VOS FICHIERS RESTENT À VOUS
+Vos vidéos ne quittent jamais votre Mac. SubTrack inclut sa propre version LGPL de FFmpeg, compilée sans accès au réseau : il n’y a rien d’autre à installer. Ni compte, ni publicité, ni suivi.
+
+Nécessite macOS 27 sur un Mac avec puce Apple.

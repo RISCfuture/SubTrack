@@ -1,0 +1,100 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Choisir entre les deux versions de SubTrack</title>
+  <meta name="AppleTitle" content="Choisir entre les deux versions de SubTrack">
+  <meta name="description" content="Les deux versions de SubTrack allègent les fichiers de façon identique&nbsp;; trois fonctionnalités et la recherche de mises à jour distinguent la version App Store de la version téléchargeable.">
+  <meta name="keywords" content="édition, version, app store, mas, téléchargement, téléchargeable, sandbox, bac à sable, grisé, désactivé, indisponible, x264, x265, libx264, libx265, videotoolbox, gpl, lgpl, licence">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="editions" id="editions"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Choisir entre les deux versions de SubTrack</h1>
+
+<p>SubTrack existe en deux versions&nbsp;: l’une sur le Mac App Store, l’autre à télécharger sur le
+web. Elles allègent les fichiers de façon identique – mêmes règles, mêmes préréglages, même copie des
+flux, même résultat, octet pour octet. Pour ce qui fait la raison d’être de l’app, il n’y a aucune
+différence entre elles.</p>
+
+<p>Trois fonctionnalités les distinguent, et toutes les trois tiennent aux règles de l’App Store, non
+à un choix de SubTrack. Si vous êtes arrivé ici en cliquant sur un «&nbsp;?&nbsp;» à côté d’un
+réglage grisé, ce réglage est l’une de ces trois fonctionnalités.</p>
+
+<h2>Savoir quelle version vous utilisez</h2>
+
+<ol>
+  <li>Choisissez <strong>SubTrack</strong> &#9656; <strong>Réglages</strong> (<kbd>⌘,</kbd>) et
+    cliquez sur <strong>Encodage</strong>.</li>
+  <li>Lisez la ligne <strong>Jeu de codecs</strong>. <strong>Complet (tous les codecs)</strong>
+    correspond à la version téléchargeable&nbsp;; <strong>App Store (VideoToolbox)</strong>
+    correspond à la version App Store.</li>
+</ol>
+
+<p>La version App Store n’a pas non plus d’onglet <strong>Mises à jour</strong> dans les Réglages,
+car c’est l’App Store qui s’occupe de ses mises à jour.</p>
+
+<a name="app-store-limits" id="app-store-limits"></a>
+<h2>Ce que la version App Store ne peut pas faire</h2>
+
+<p><strong>L’encodage H.264 et H.265 logiciel.</strong> La version App Store intègre un FFmpeg sous
+licence LGPL, sans libx264 ni libx265 – ces deux bibliothèques sont sous GPL, et les conditions de
+l’App Store sont incompatibles avec la GPL. L’encodage vidéo est confié à VideoToolbox, l’encodeur
+matériel de votre Mac, qui prend en charge H.264 comme HEVC et qui est bien plus rapide que
+l’encodage logiciel. Les encodeurs logiciels offrent plus de qualité pour une même taille de fichier&nbsp;;
+les encodeurs matériels terminent plus tôt. Vous le constaterez dans <strong>Réglages</strong>
+&#9656; <strong>FFmpeg</strong> &#9656; <strong>Formats pris en charge</strong>, où la liste des
+codecs comporte un lien <strong>Codecs manquants&nbsp;?</strong>, ainsi que dans l’avertissement qui
+s’affiche si vous choisissez un codec cible que cette version ne peut pas encoder.</p>
+
+<p><strong>Utiliser votre propre FFmpeg.</strong> Dans <strong>Réglages</strong> &#9656;
+<strong>FFmpeg</strong>, la version App Store affiche <strong>Intégré</strong> et la ligne
+«&nbsp;L’utilisation d’un ffmpeg personnalisé est disponible dans la version téléchargeable.&nbsp;».
+La version téléchargeable propose à la place un choix <strong>Intégré</strong> /
+<strong>Personnalisé…</strong>, accompagné d’un bouton <strong>Détecter automatiquement</strong> qui
+trouve les versions de FFmpeg déjà installées sur votre Mac. Une app confinée dans un bac à sable ne
+peut pas exécuter un programme que vous lui fournissez, et la version App Store est confinée&nbsp;;
+la version téléchargeable ne l’est pas, ce qui lui permet de le faire.</p>
+
+<p><strong>Installer l’outil en ligne de commande <code>subtrack</code>.</strong> Dans
+<strong>Réglages</strong> &#9656; <strong>CLI</strong>, la version App Store affiche
+«&nbsp;L’installation de l’outil en ligne de commande est disponible dans la version
+téléchargeable.&nbsp;» là où la version téléchargeable propose <strong>Installer…</strong>. Copier un
+exécutable dans un dossier de votre <code>PATH</code> sort du cadre du bac à sable.</p>
+
+<p>En plus de ces trois fonctionnalités, la version téléchargeable consulte GitHub pour trouver ses
+propres nouvelles versions et peut vous prévenir qu’une version est disponible. La version App Store
+n’en a pas besoin.</p>
+
+<p class="note">Aucune des deux versions n’est bridée. L’allègement – retirer des pistes et copier
+les autres – n’est en rien affecté, et le transcodage fonctionne dans les deux&nbsp;; seul l’encodeur
+utilisé diffère.</p>
+
+<h2>Obtenir l’autre version</h2>
+
+<p>La version téléchargeable est notariée par Apple et s’installe depuis une image disque&nbsp;; vous
+la mettez à jour vous-même quand elle vous signale qu’une nouvelle version est disponible. La version
+App Store s’installe et se met à jour comme tout le reste sur votre Mac.</p>
+
+<ul>
+  <li><a href="https://riscfuture.github.io/SubTrack/">Le site web de SubTrack</a>, qui renvoie vers
+    les deux versions.</li>
+  <li><a href="https://github.com/RISCfuture/SubTrack/releases">Les versions de SubTrack sur
+    GitHub</a>, pour la version téléchargeable et ses notes.</li>
+</ul>
+
+<p>Vous pouvez installer les deux. Elles partagent le même conteneur iCloud&nbsp;: vos préréglages se
+synchronisent donc entre elles, tout comme entre vos Mac.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="unsupported-codec.html">Si un codec ne peut pas être encodé</a></li>
+    <li><a href="custom-ffmpeg.html">Utiliser votre propre version de FFmpeg</a></li>
+    <li><a href="subtrack-cli.html">Installer l’outil en ligne de commande <code>subtrack</code></a></li>
+  </ul>
+</div>
+
+</body>
+</html>

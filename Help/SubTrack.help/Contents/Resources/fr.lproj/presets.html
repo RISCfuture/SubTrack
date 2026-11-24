@@ -1,0 +1,112 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Enregistrer un ensemble de règles comme préréglage</title>
+  <meta name="AppleTitle" content="Enregistrer un ensemble de règles comme préréglage">
+  <meta name="description" content="Réutilisez un ensemble de règles de conservation dans plusieurs files d’attente et sur plusieurs Mac en l’enregistrant comme préréglage, et comprenez quand le menu des préréglages affiche Nouveau préréglage.">
+  <meta name="keywords" content="préréglage, enregistrer, règles, réutiliser, modèle, blu-ray, streaming, rip web, nouveau préréglage, supprimer">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="presets" id="presets"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Enregistrer un ensemble de règles comme préréglage</h1>
+
+<p>Un préréglage est un ensemble nommé de règles de conservation. Une fois que vous avez déterminé ce dont un
+type de rip a besoin, l’enregistrer vous évite de le déterminer à nouveau.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-presets-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-presets.webp" width="620" height="548" alt="L’onglet Préréglages des réglages de SubTrack, avec la liste des préréglages à gauche et les règles du préréglage sélectionné à droite.">
+  </picture>
+  <figcaption>Réglages &#9656; Préréglages liste vos préréglages et modifie les règles de celui qui est sélectionné.</figcaption>
+</figure>
+
+<a name="saving-presets" id="saving-presets"></a>
+<h2>Enregistrer les règles utilisées</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/preset-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/preset-menu.webp" width="1280" height="860" alt="Le menu des préréglages ouvert en haut de l’inspecteur, avec les préréglages enregistrés au-dessus de l’élément Enregistrer comme préréglage.">
+  </picture>
+  <figcaption>Tous les préréglages enregistrés, et l’élément qui y ajoute les règles utilisées.</figcaption>
+</figure>
+
+<ol>
+  <li>Définissez les règles voulues dans l’inspecteur.</li>
+  <li>Cliquez sur le menu des préréglages en haut de l’inspecteur.</li>
+  <li>Choisissez <strong>Enregistrer comme préréglage…</strong>, donnez-lui un nom et cliquez sur
+    <strong>Enregistrer</strong>.</li>
+</ol>
+
+<p>Pour en appliquer un, choisissez-le dans le même menu. La file d’attente adopte aussitôt ses règles.</p>
+
+<h2>Pourquoi le menu affiche parfois «&nbsp;(Nouveau préréglage)&nbsp;»</h2>
+
+<p>C’est le point de SubTrack qu’il vaut le mieux comprendre, car on le prend d’abord pour un bogue.</p>
+
+<p>Le menu des préréglages n’affiche pas ce sur quoi vous avez cliqué en dernier. Il affiche le préréglage auquel les règles actuelles
+<em>correspondent</em>. Appliquez «&nbsp;Rip Blu-ray – Anglais uniquement&nbsp;», puis ajoutez une langue&nbsp;: le menu n’affiche plus «&nbsp;Rip Blu-ray –
+Anglais uniquement&nbsp;», car les règles ne sont plus celles de ce préréglage. Il affiche «&nbsp;(Nouveau préréglage)&nbsp;» à la place&nbsp;: vous avez
+un ensemble de règles qui ne correspond à aucun préréglage enregistré.</p>
+
+<p>Retirez cette langue, et le menu affiche de nouveau «&nbsp;Rip Blu-ray – Anglais uniquement&nbsp;», sans que vous ayez à réappliquer
+quoi que ce soit. Rien n’a été perdu et le préréglage n’a jamais été modifié&nbsp;: appliquer un préréglage copie ses règles
+dans la file d’attente, sans lier celle-ci au préréglage.</p>
+
+<p>«&nbsp;(Nouveau préréglage)&nbsp;» est donc une invitation, pas un avertissement&nbsp;: enregistrez ces règles si vous voulez les conserver.</p>
+
+<a name="starter-presets" id="starter-presets"></a>
+<h2>Les préréglages fournis avec SubTrack</h2>
+
+<p>SubTrack fournit cinq préréglages de départ, regroupés selon l’origine du fichier – ce qui détermine à la fois
+les pistes à conserver et les codecs à copier.</p>
+
+<ul>
+  <li><strong>Rip Blu-ray – Anglais uniquement</strong> – l’audio et les sous-titres en anglais, rien
+    d’autre.</li>
+  <li><strong>Rip Blu-ray – Anglais + commentaire</strong> – la même chose, plus les pistes audio anglaises non définies par défaut&nbsp;:
+    commentaires, audio descriptif, mixages alternatifs.</li>
+  <li><strong>Rip Blu-ray – Conserver les pistes sans langue</strong> – encore la même chose, et conserve les pistes qui
+    n’ont pas de langue, pour le rip d’un disque qui les a étiquetées de façon incohérente.</li>
+  <li><strong>Rip Web / YouTube – Anglais uniquement</strong> – conserve les pistes sans langue et privilégie les
+    codecs qu’un téléchargement web utilise déjà, de sorte que VP9, AV1 et Opus sont copiés plutôt que convertis vers des
+    codecs de disque qui ne feraient qu’alourdir les fichiers et dégrader la qualité.</li>
+  <li><strong>Rip de service de streaming – Anglais uniquement</strong> – conserve les pistes sans langue, avec la liste ordinaire
+    de codecs de disque.</li>
+</ul>
+
+<p>Le réglage qui distingue la plupart d’entre eux est la conservation des pistes sans langue. Les disques de studio étiquettent
+tout, de sorte que les deux premiers les écartent comme du superflu&nbsp;; les rips web et de streaming ont très souvent une seule
+piste audio sans langue qui constitue toute la bande-son, de sorte que les autres les conservent. Pour en savoir plus, consultez
+<a href="slim-rules.html#rule-untagged">Choisir les langues à conserver</a>.</p>
+
+<p>Les préréglages de départ sont des préréglages ordinaires dès leur apparition – SubTrack ne les protège ni ne
+les restaure. Modifiez-les librement, ou supprimez ceux que vous n’utilisez pas.</p>
+
+<h2>Modifier, renommer et supprimer</h2>
+
+<ol>
+  <li>Choisissez <strong>SubTrack</strong> &#9656; <strong>Réglages</strong> (<kbd>⌘,</kbd>) et cliquez sur
+    <strong>Préréglages</strong>.</li>
+  <li>Sélectionnez un préréglage. Son nom, le nommage des fichiers de sortie et ses règles apparaissent à côté de la liste.</li>
+  <li>Pour le supprimer, cliquez sur <strong>Supprimer le préréglage</strong> et confirmez.</li>
+</ol>
+
+<p class="note">Supprimer un préréglage ne perturbe aucune file d’attente. Une file d’attente qui utilisait ces règles
+les conserve – elle en détient une copie, non une référence –, son menu des préréglages se met simplement à afficher «&nbsp;(Nouveau préréglage)&nbsp;».</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="preset-sync.html">Synchroniser les préréglages entre vos Mac</a></li>
+    <li><a href="slim-rules.html">Choisir les langues à conserver</a></li>
+    <li><a href="output-names.html">Nommer les fichiers écrits par SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

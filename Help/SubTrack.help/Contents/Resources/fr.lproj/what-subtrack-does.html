@@ -1,0 +1,84 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Alléger des vidéos sans les réencoder</title>
+  <meta name="AppleTitle" content="Alléger des vidéos sans les réencoder">
+  <meta name="description" content="SubTrack copie les pistes que vous conservez au lieu de les convertir&nbsp;: les fichiers sont allégés en quelques secondes, sans aucune perte de qualité.">
+  <meta name="keywords" content="sans perte, copie de flux, remux, réencoder, transcoder, qualité, blu-ray, rip, doublage, handbrake">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="what-subtrack-does" id="what-subtrack-does"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Alléger des vidéos sans les réencoder</h1>
+
+<p>Un remux Blu-ray ou UHD contient souvent une douzaine de pistes&nbsp;: huit doublages dans des langues que
+vous ne parlez pas, cinq langues de sous-titres que vous ne lisez pas et une piste de commentaires que
+vous n’écouterez jamais. Elles occupent l’essentiel de l’espace et n’apportent rien.</p>
+
+<p>SubTrack les retire. Tout ce que vous conservez est écrit tel quel dans un nouveau fichier, qui
+ne représente plus qu’une fraction de la taille d’origine, pour une qualité identique.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/main-window-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/main-window.webp" width="1280" height="860" alt="La fenêtre principale de SubTrack&nbsp;: une file d’attente de rips Blu-ray indiquant le nombre de pistes et la taille des fichiers en entrée et en sortie, avec l’inspecteur des règles ouvert à côté.">
+  </picture>
+  <figcaption>La file d’attente indique ce que chaque fichier va perdre et ce qu’il pèsera ensuite.</figcaption>
+</figure>
+
+<a name="stream-copy" id="stream-copy"></a>
+<h2>Pourquoi c’est si rapide</h2>
+
+<p>La plupart des outils vidéo décodent chaque image, puis l’encodent de nouveau. Cela prend des heures
+et coûte de la qualité à chaque fois, car l’image est jetée puis approximée à nouveau.</p>
+
+<p>SubTrack ne décode rien. Une piste que vous conservez est copiée d’un conteneur dans un autre, octet
+par octet&nbsp;: ce sont les mêmes données compressées, simplement déplacées. Il n’y a aucune perte de
+génération puisque rien n’est régénéré, et la vitesse dépend de celle de lecture de votre disque, pas de
+la puissance de votre processeur. Un film de deux heures est généralement traité en quelques
+secondes.</p>
+
+<p>Le conteneur reste lui aussi le même. Un MKV en entrée donne un MKV en sortie&nbsp;: tout ce qui lit votre
+original lira aussi la copie allégée.</p>
+
+<a name="not-a-transcoder" id="not-a-transcoder"></a>
+<h2>Ce que SubTrack n’est volontairement pas</h2>
+
+<p>SubTrack allège les pistes, il ne transcode pas. Il n’y a ni curseur de qualité, ni champ de débit, ni
+préréglage d’encodeur, car en utilisation normale il n’y a rien à ajuster&nbsp;: la copie n’a aucun
+réglage.</p>
+
+<p>SubTrack convertit <em>bel et bien</em> une piste, mais dans un seul cas&nbsp;: vous avez demandé à
+conserver une piste qui utilise un codec dont vous ne voulez pas. Cette piste est alors convertie, les
+autres sont toujours copiées, et SubTrack vous en informe avant de démarrer. Pour en savoir plus,
+consultez
+<a href="preferred-codecs.html#preferred-codecs">Définir les codecs préférés et les codecs cibles</a>.</p>
+
+<p class="note">Si vous voulez réduire la taille de l’<em>image</em>, c’est-à-dire réencoder une
+médiathèque avec un débit plus faible, SubTrack n’est pas l’outil qu’il vous faut, et ne le sera
+jamais. HandBrake est fait pour cela.</p>
+
+<h2>Le déroulement du travail</h2>
+
+<ol>
+  <li><strong>Placez vos fichiers dans une file d’attente.</strong> Faites glisser des films, ou un dossier
+    entier.</li>
+  <li><strong>Laissez les règles choisir les pistes.</strong> Conservez le français, retirez les onze
+    autres doublages. Décidez du sort des commentaires et des pistes sans langue.</li>
+  <li><strong>Lancez l’exécution.</strong> Tout ce que vous avez conservé est copié dans un nouveau
+    fichier.</li>
+</ol>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="adding-files.html">Ajouter des vidéos à une file d’attente</a></li>
+    <li><a href="slim-rules.html">Choisir les langues à conserver</a></li>
+    <li><a href="preferred-codecs.html">Définir les codecs préférés et les codecs cibles</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

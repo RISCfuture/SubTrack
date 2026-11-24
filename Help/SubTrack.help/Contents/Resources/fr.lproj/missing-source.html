@@ -1,0 +1,54 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Si le fichier source est introuvable</title>
+  <meta name="AppleTitle" content="Si le fichier source est introuvable">
+  <meta name="description" content="Une file d’attente conserve une référence à chaque fichier et non une copie&nbsp;: une source déplacée, renommée ou démontée fait passer sa ligne au rouge, tout comme une autorisation devenue obsolète.">
+  <meta name="keywords" content="source manquante, déplacé, renommé, supprimé, démonté, disque, autorisation, permission, sandbox, signet, obsolète, réanalyser, rajouter">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="missing-source" id="missing-source"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si le fichier source est introuvable</h1>
+
+<p>Une file d’attente conserve une référence à chaque fichier, et non une copie, et cette référence
+subsiste après la fermeture de SubTrack. Une file laissée en place pendant la nuit peut donc
+retrouver un fichier qui a été déplacé, renommé, supprimé ou qui se trouve sur un disque que
+personne n’a encore monté. La ligne passe au rouge et indique <strong>La source est
+manquante</strong>.</p>
+
+<p>Il existe une variante moins évidente du même problème. L’ajout d’un fichier est ce qui donne à
+SubTrack l’autorisation d’y accéder, et cette autorisation est enregistrée pour continuer de
+fonctionner après un nouveau lancement. Les autorisations enregistrées peuvent devenir obsolètes&nbsp;:
+le fichier est exactement là où vous l’avez laissé, mais la ligne indique que la référence
+enregistrée n’est plus valide, ou que SubTrack n’a pas l’autorisation de l’ouvrir.</p>
+
+<h2>Restaurer le fichier</h2>
+
+<ol>
+  <li>Remettez le fichier en place – montez le disque, annulez le changement de nom, récupérez-le
+    dans la corbeille.</li>
+  <li>Sélectionnez la ligne, puis choisissez <strong>File d’attente</strong> &#9656;
+    <strong>Réanalyser la sélection</strong>.</li>
+  <li>Si la ligne est toujours signalée, choisissez <strong>File d’attente</strong> &#9656;
+    <strong>Retirer la sélection</strong> (<kbd>Delete</kbd>), puis ajoutez de nouveau le
+    fichier.</li>
+</ol>
+
+<p>La troisième étape est celle qui supprime une autorisation obsolète, et c’est pourquoi elle est
+toujours recommandée&nbsp;: l’ajout d’un fichier est ce qui donne l’accès, donc l’ajouter de nouveau
+redonne l’accès. Retirer une ligne ne supprime jamais rien du disque.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Si un fichier ne peut pas être allégé</a></li>
+    <li><a href="adding-files.html">Ajouter des vidéos à une file d’attente</a></li>
+    <li><a href="destinations.html">Choisir où enregistrer les fichiers allégés</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
