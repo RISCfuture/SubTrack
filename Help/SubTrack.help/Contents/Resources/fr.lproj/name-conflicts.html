@@ -1,0 +1,54 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Résoudre un conflit de nom</title>
+  <meta name="AppleTitle" content="Résoudre un conflit de nom">
+  <meta name="description" content="SubTrack refuse de lancer une file d’attente dont les noms détruiraient un fichier. Cela peut arriver de deux façons seulement, et chacune se corrige rapidement.">
+  <meta name="keywords" content="conflit, collision, doublon, écraser, écrasement, même nom, Démarrer grisé, bloqué, balise, numéro, personnalisation">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="name-conflicts" id="name-conflicts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Résoudre un conflit de nom</h1>
+
+<p>SubTrack refuse de lancer une file d’attente dont les noms détruiraient un fichier, et cela ne
+peut arriver que de deux façons.</p>
+
+<h2>Deux fichiers seraient écrits au même endroit</h2>
+
+<p>Le format ne distingue pas deux sources, le plus souvent parce qu’elles portent le même nom dans
+des dossiers différents, comme <code>Show.mkv</code> dans un dossier Saison 1 et dans un dossier
+Saison 2. Le fichier terminé en dernier écraserait l’autre.</p>
+
+<p>Pour y remédier, faites en sorte que le format produise des noms distincts. Ajouter
+<code>{n}</code> est le moyen le plus rapide&nbsp;; donner son propre nom à un fichier dans l’onglet
+<strong>Personnalisation</strong> est le moyen le plus précis. Vous pouvez aussi envoyer les files
+d’attente vers des dossiers différents.</p>
+
+<h2>Un fichier écraserait sa propre source</h2>
+
+<p>Le format produit exactement le nom de la source, et le dossier de destination est celui où se
+trouve la source&nbsp;: SubTrack devrait donc écrire par-dessus le fichier même qu’il est en train
+de lire.</p>
+
+<p>Pour y remédier, ajoutez quelque chose au format, par exemple <code>{name} (slimmed)</code>, ou
+choisissez un autre dossier de destination. Pour en savoir plus, consultez
+<a href="destinations.html">Choisir où enregistrer les fichiers allégés</a>.</p>
+
+<p class="note">L’avertissement indique les fichiers concernés, ce qui vous permet de voir lesquels
+sont en conflit sans avoir à deviner. Le bouton Démarrer redevient disponible dès que deux
+fichiers de sortie n’entrent plus en collision.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="output-names.html">Nommer les fichiers écrits par SubTrack</a></li>
+    <li><a href="destinations.html">Choisir où enregistrer les fichiers allégés</a></li>
+    <li><a href="overrides.html">Personnaliser le plan des pistes d’un fichier</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

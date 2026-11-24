@@ -1,0 +1,88 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>FFmpeg, licences et crédits</title>
+  <meta name="AppleTitle" content="FFmpeg, licences et crédits">
+  <meta name="description" content="Quelle licence FFmpeg s’applique à l’exemplaire de SubTrack que vous utilisez, où se trouve son code source et à qui l’on doit le travail intégré à l’app.">
+  <meta name="keywords" content="ffmpeg, licence, gpl, lgpl, open source, logiciel libre, x264, x265, libaom, av1, videotoolbox, crédits, remerciements, mentions légales, code source">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="licensing" id="licensing"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>FFmpeg, licences et crédits</h1>
+
+<p>Chaque piste que SubTrack copie, retire ou convertit est traitée par FFmpeg. SubTrack décide de
+ce qui doit se passer&nbsp;; FFmpeg l’exécute. SubTrack est lui-même distribué sous la licence
+publique générale GNU (GPL), version&nbsp;2 ou ultérieure.</p>
+
+<h2>Licence FFmpeg applicable à votre exemplaire</h2>
+
+<p>Les deux versions de SubTrack intègrent des versions de FFmpeg différentes, et ces versions sont
+placées sous des licences différentes.</p>
+
+<ul>
+  <li><strong>Mac App Store – LGPL v2.1+.</strong> Le FFmpeg intégré est compilé sans aucun composant
+    sous licence GPL&nbsp;: ni libx264, ni libx265, ni aucune autre bibliothèque GPL. L’encodage
+    vidéo passe par Apple VideoToolbox. Ce logiciel utilise des bibliothèques du projet FFmpeg
+    sous licence LGPLv2.1.</li>
+  <li><strong>Téléchargement direct – GPL v2+.</strong> Le FFmpeg intégré est compilé avec libx264 et
+    libx265, qui sont placés sous la licence GPL v2 ou ultérieure&nbsp;; l’œuvre combinée est donc
+    elle aussi distribuée sous GPL v2+. Ce logiciel utilise du code du projet FFmpeg sous licence
+    GPLv2+.</li>
+</ul>
+
+<p>libaom, l’encodeur AV1, figure dans les deux versions – ses conditions BSD 2-Clause et la licence
+de brevets Alliance for Open Media Patent License 1.0 conviennent aussi bien à la version LGPL qu’à la
+version GPL.</p>
+
+<h2>Lire l’avis correspondant à votre version</h2>
+
+<ol>
+  <li>Choisissez <strong>SubTrack</strong> &#9656; <strong>À propos de SubTrack</strong>.</li>
+  <li>Cliquez sur <strong>Licence…</strong> pour afficher le texte intégral, y compris les mentions
+    de copyright et un lien vers la licence elle-même.</li>
+</ol>
+
+<p>La fenêtre «&nbsp;À propos&nbsp;» ne présente pas les deux possibilités&nbsp;: elle affiche
+l’avis qui correspond à l’exemplaire que vous utilisez. La licence que vous lisez est donc bien
+celle qui vous engage.</p>
+
+<h2>Où trouver le code source</h2>
+
+<p>Le code source de SubTrack est disponible sur
+<a href="https://github.com/RISCfuture/SubTrack">github.com/RISCfuture/SubTrack</a>. Chaque version
+GitHub de la version téléchargeable comprend, à côté de l’image disque, une archive des sources de
+FFmpeg&nbsp;: le code source correspondant que la GPL exige. Le script de compilation du dépôt fixe
+les versions exactes de FFmpeg, x264, x265 et libaom et les compile à partir des sources&nbsp;; en
+l’exécutant, vous obtenez donc les mêmes binaires que ceux qui sont intégrés.</p>
+
+<p class="note">Le code source et les informations de licence de FFmpeg sont également publiés sur
+<a href="https://www.ffmpeg.org">ffmpeg.org</a>.</p>
+
+<h2>Travaux de tiers dans SubTrack</h2>
+
+<p>Outre FFmpeg, x264, x265 et libaom, SubTrack repose sur les packages Swift suivants&nbsp;:</p>
+
+<ul>
+  <li><strong>DockProgress</strong> de Sindre Sorhus – MIT. Affiche la progression de la file
+    d’attente sur l’icône du Dock.</li>
+  <li><strong>GitHubUpdateChecker</strong> – MIT, dans la version téléchargeable uniquement. Il
+    apporte avec lui swift-markdown-ui, NetworkImage, swift-cmark et swift-log.</li>
+  <li><strong>sentry-cocoa</strong> – MIT. Rapports d’incident.</li>
+  <li><strong>XCUITestKit</strong> – MIT. Utilisé par les tests&nbsp;; n’est livré dans aucune des
+    deux versions.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="editions.html">Choisir entre les deux versions de SubTrack</a></li>
+    <li><a href="ffmpeg.html">Utiliser une autre version de FFmpeg</a></li>
+    <li><a href="privacy-and-data.html">Ce que SubTrack envoie, et ce qu’il n’envoie pas</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

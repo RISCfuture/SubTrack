@@ -1,0 +1,42 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Voir ce que prend en charge une version de FFmpeg</title>
+  <meta name="AppleTitle" content="Voir ce que prend en charge une version de FFmpeg">
+  <meta name="description" content="La fenêtre Formats pris en charge liste tous les conteneurs et codecs de la version utilisée, et distingue la lecture de l’écriture.">
+  <meta name="keywords" content="formats pris en charge, conteneurs, codecs, décodage, encodage, lecture, écriture, filtre, muxer, demuxer, capacités">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="supported-formats" id="supported-formats"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Voir ce que prend en charge une version de FFmpeg</h1>
+
+<p>Cliquez sur <strong>Formats pris en charge</strong> dans <strong>Réglages</strong> &#9656;
+<strong>FFmpeg</strong>. La fenêtre liste les <strong>Conteneurs</strong>, les <strong>Codecs vidéo</strong>,
+les <strong>Codecs audio</strong> et les <strong>Codecs de sous-titres</strong> de la version utilisée,
+chaque groupe pouvant être replié et chaque ligne indiquant l’identifiant du format et son nom complet. Saisissez du texte dans le
+champ <strong>Filtrer</strong> pour restreindre tous les groupes à la fois.</p>
+
+<h2>Décoder n’est pas encoder</h2>
+
+<p>Chaque ligne porte deux repères, qui n’ont pas le même sens. Les conteneurs sont marqués <strong>Lecture /
+Écriture</strong>, les codecs <strong>Décodage / Encodage</strong> – et lire n’est pas écrire. Une version peut
+décoder parfaitement un codec sans pouvoir en produire une seule image. C’est normal&nbsp;: pratiquement
+toutes les versions lisent plus de formats qu’elles n’en écrivent.</p>
+
+<p>Cette asymétrie explique précisément l’avertissement indiquant que le FFmpeg actuel ne peut pas encoder un
+codec cible que vous avez choisi. Filtrez sur le codec, regardez le second repère, et vous le verrez.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Utiliser une autre version de FFmpeg</a></li>
+    <li><a href="unsupported-codec.html">Si un codec ne peut pas être encodé</a></li>
+    <li><a href="preferred-codecs.html">Définir les codecs préférés et les codecs cibles</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Choisir où enregistrer les fichiers allégés</title>
+  <meta name="AppleTitle" content="Choisir où enregistrer les fichiers allégés">
+  <meta name="description" content="Définissez le dossier de destination d’une file d’attente, ou laissez SubTrack enregistrer chaque fichier allégé à côté du fichier dont il provient.">
+  <meta name="keywords" content="destination, dossier de destination, enregistrer, emplacement, à côté de la source, par défaut, réglages généraux">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="destinations" id="destinations"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Choisir où enregistrer les fichiers allégés</h1>
+
+<p>Chaque file d’attente écrit ses fichiers quelque part&nbsp;: soit dans un dossier que vous choisissez,
+soit dans le dossier où se trouve déjà chaque fichier source.</p>
+
+<h2>Définir la destination d’une file d’attente</h2>
+
+<ol>
+  <li>Sélectionnez la file d’attente dans la barre latérale.</li>
+  <li>Cliquez sur <strong>Modifier…</strong> dans la barre située au-dessus de la file d’attente.</li>
+  <li>Choisissez un dossier, puis cliquez sur <strong>Ouvrir</strong>.</li>
+</ol>
+
+<p>Tous les fichiers de cette file d’attente y sont écrits, quel que soit leur dossier d’origine.
+C’est pratique pour rassembler en un seul endroit les résultats de sources dispersées.</p>
+
+<h2>Enregistrer plutôt à côté de chaque source</h2>
+
+<p>Quand aucune destination n’est définie pour une file d’attente, chaque fichier allégé est enregistré
+dans le dossier du fichier dont il provient. Les épisodes d’une série restent ainsi répartis dans leurs
+dossiers de saison au lieu d’être regroupés dans un seul.</p>
+
+<p>C’est le réglage par défaut, et c’est pourquoi la barre de destination peut afficher
+<strong>Enregistrement à côté de chaque source</strong> au lieu du nom d’un dossier.</p>
+
+<p class="note">Enregistrer à côté de la source est la configuration qui risque le plus de provoquer un
+conflit de nom, car le fichier écrit se retrouve dans le même dossier que le fichier d’origine. Si votre
+format produit exactement le nom de la source, SubTrack refuse de démarrer plutôt que de l’écraser. Pour
+en savoir plus, consultez <a href="name-conflicts.html">Résoudre un conflit de nom</a>.</p>
+
+<h2>Définir la destination par défaut des nouvelles files d’attente</h2>
+
+<p>Chaque nouvelle file d’attente démarre avec sa propre destination, définie une fois pour toutes dans
+les Réglages. Pour en savoir plus, consultez
+<a href="settings-general.html">Définir la destination par défaut des nouvelles files d’attente</a>.
+Modifier ce réglage n’a aucun effet sur les files d’attente existantes.</p>
+
+<h2>Si SubTrack ne peut pas écrire dans un dossier</h2>
+
+<p>macOS donne à SubTrack l’accès aux dossiers que vous choisissez, et cet accès est conservé d’un
+lancement à l’autre. Si une destination devient indisponible (disque externe non monté, dossier déplacé
+ou supprimé), l’exécution s’arrête au lieu d’écrire à un endroit inattendu.</p>
+
+<p>Choisissez à nouveau le dossier pour rétablir l’accès. Si le problème vient d’un fichier source et non
+de la destination, consultez <a href="missing-source.html">Si le fichier source est introuvable</a>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="output-names.html">Nommer les fichiers écrits par SubTrack</a></li>
+    <li><a href="adding-files.html#queues">Ajouter des vidéos à une file d’attente</a></li>
+    <li><a href="troubleshooting.html">Si un fichier ne peut pas être allégé</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Exécuter une file d’attente et suivre sa progression</title>
+  <meta name="AppleTitle" content="Exécuter une file d’attente et suivre sa progression">
+  <meta name="description" content="Démarrez tous les fichiers ou une sélection, suivez la progression dans la fenêtre et dans le Dock, et consultez le gain obtenu pour chaque fichier terminé.">
+  <meta name="keywords" content="démarrer, exécuter, exécution, annuler, progression, Dock, état, gain, taille, lot, réanalyser">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="running-a-queue" id="running-a-queue"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Exécuter une file d’attente et suivre sa progression</h1>
+
+<p>Une fois que la file d’attente indique ce que chaque fichier va conserver, vous pouvez
+l’exécuter en entier ou en partie.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/queue-running-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/queue-running.webp" width="1280" height="860" alt="Une file d’attente en cours d’exécution&nbsp;: les fichiers terminés portent une coche, l’un affiche un anneau de progression et les autres attendent leur tour.">
+  </picture>
+  <figcaption>Chaque ligne indique son propre état, et la barre en dessous compte la file d’attente dans son ensemble.</figcaption>
+</figure>
+
+<h2>Lancer l’allègement</h2>
+
+<ol>
+  <li>Pour tout exécuter, choisissez <strong>File d’attente</strong> &#9656; <strong>Tout
+    démarrer</strong> (<kbd>⌘R</kbd>).</li>
+  <li>Pour n’exécuter que certains fichiers, sélectionnez-les et choisissez <strong>File
+    d’attente</strong> &#9656; <strong>Démarrer la sélection</strong> (<kbd>⌘Retour</kbd>).</li>
+  <li>Pour arrêter, choisissez <strong>File d’attente</strong> &#9656; <strong>Tout
+    annuler</strong> (<kbd>⌘.</kbd>).</li>
+</ol>
+
+<p>L’annulation interrompt le travail en cours et supprime le fichier partiel. Vos fichiers source
+ne sont jamais modifiés&nbsp;: SubTrack n’écrit que de nouveaux fichiers.</p>
+
+<p class="note">Si Démarrer est grisé, c’est que deux fichiers de la file d’attente seraient écrits
+au même endroit, ou que l’un d’eux écraserait sa propre source. SubTrack ne démarre pas tant que
+le problème n’est pas résolu, car dans les deux cas un fichier serait détruit. Pour en savoir plus,
+consultez <a href="name-conflicts.html">Résoudre un conflit de nom</a>.</p>
+
+<a name="queue-progress" id="queue-progress"></a>
+<h2>Suivre la progression</h2>
+
+<p>Chaque ligne en cours affiche sa propre progression, et la barre située sous la file d’attente
+indique le nombre d’éléments, le nombre d’éléments terminés et le nombre d’éléments en cours
+d’encodage. L’icône du Dock reflète aussi la progression globale&nbsp;: vous pouvez donc lancer un
+lot et passer à autre chose.</p>
+
+<p>Les fichiers qui sont simplement copiés se terminent presque instantanément. Un fichier dont une
+piste doit être convertie prend le temps que dure cette conversion, ce qui explique qu’une file
+d’attente puisse sembler bloquée sur une seule ligne pendant que les autres défilent. Cette ligne
+travaille bel et bien.</p>
+
+<a name="queue-status" id="queue-status"></a>
+<h2>Lire les résultats</h2>
+
+<p>La file d’attente indique, pour chaque fichier, le nombre de pistes et la taille avant et après,
+afin que vous voyiez ce que l’exécution vous a réellement fait gagner. La taille du fichier de
+sortie n’est connue qu’une fois le fichier terminé&nbsp;; avant cela, il n’y a rien à mesurer sur
+le disque.</p>
+
+<p>Faites un clic droit sur l’en-tête de la file d’attente pour masquer une colonne que vous ne lisez
+pas et rendre sa largeur à Nom&nbsp;; faites de nouveau un clic droit pour la réafficher. SubTrack
+mémorise votre choix. Le symbole d’état et Nom restent toujours affichés.</p>
+
+<p>La colonne d’état affiche un symbole par ligne. Placez le pointeur dessus pour en lire la
+signification&nbsp;:</p>
+
+<ul>
+  <li>Un anneau qui tourne&nbsp;: le fichier est en cours d’analyse ou d’allègement.</li>
+  <li>Une coche&nbsp;: le fichier est terminé.</li>
+  <li>Un triangle d’avertissement&nbsp;: le fichier est introuvable, l’exécution a échoué ou le
+    FFmpeg actuel ne sait pas faire ce que demandent les règles. Pour en savoir plus, consultez
+    <a href="troubleshooting.html#troubleshooting">Si un fichier ne peut pas être allégé</a>.</li>
+</ul>
+
+<h2>Nettoyer</h2>
+
+<ul>
+  <li><strong>File d’attente</strong> &#9656; <strong>Retirer les éléments terminés</strong> retire
+    les lignes terminées et laisse les autres.</li>
+  <li><strong>File d’attente</strong> &#9656; <strong>Retirer la sélection</strong>
+    (<kbd>Supprimer</kbd>) retire des fichiers de la file d’attente. Rien n’est jamais supprimé du
+    disque.</li>
+  <li><strong>File d’attente</strong> &#9656; <strong>Réanalyser la sélection</strong> relit une
+    source, ce qui est utile si vous avez remplacé le fichier ou changé le FFmpeg utilisé par
+    SubTrack.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="encoding.html#settings-encoding">Définir le nombre d’encodages simultanés</a></li>
+    <li><a href="troubleshooting.html">Si un fichier ne peut pas être allégé</a></li>
+    <li><a href="output-names.html">Nommer les fichiers écrits par SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

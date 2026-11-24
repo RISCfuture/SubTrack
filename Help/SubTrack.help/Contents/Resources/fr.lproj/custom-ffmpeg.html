@@ -1,0 +1,73 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Utiliser votre propre version de FFmpeg</title>
+  <meta name="AppleTitle" content="Utiliser votre propre version de FFmpeg">
+  <meta name="description" content="Indiquez à SubTrack vos propres ffmpeg et ffprobe, laissez-le en trouver un, ce que le dossier doit contenir et comment revenir en arrière si les transcodages échouent.">
+  <meta name="keywords" content="ffmpeg personnalisé, ffprobe, dossier, détection automatique, homebrew, macports, FFmpeg statique, encodeur, intégré, rétablir, réanalyser, sandbox, app store">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="custom-ffmpeg" id="custom-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Utiliser votre propre version de FFmpeg</h1>
+
+<p>Il n’y a qu’une raison de le faire&nbsp;: vous avez besoin d’un encodeur que la version intégrée n’a pas.
+Sinon, la version intégrée est préférable – c’est celle avec laquelle SubTrack est testé, et elle
+est livrée avec l’app.</p>
+
+<h2>Indiquer un dossier à SubTrack</h2>
+
+<ol>
+  <li>Choisissez <strong>SubTrack</strong> &#9656; <strong>Réglages</strong> (<kbd>⌘,</kbd>) et cliquez sur
+    <strong>FFmpeg</strong>.</li>
+  <li>Sous <strong>Emplacement de FFmpeg</strong>, sélectionnez <strong>Personnalisé…</strong></li>
+  <li>Cliquez sur <strong>Détecter automatiquement</strong> pour que SubTrack en trouve un, ou sur <strong>Choisir…</strong>
+    pour sélectionner vous-même le dossier qui contient les binaires.</li>
+  <li>Vérifiez sous <strong>Informations sur FFmpeg</strong> que la version affichée correspond à la version
+voulue. Un avertissement orange au-dessus – <strong>Ce dossier doit contenir ffmpeg et
+    ffprobe</strong> – signifie que SubTrack ne peut pas utiliser le dossier&nbsp;; s’il n’y en a pas, c’est que le dossier convient.</li>
+</ol>
+
+<p>Les deux binaires sont requis, et l’erreur la plus courante consiste à indiquer un dossier qui n’en contient qu’un.
+SubTrack lit les pistes d’un fichier avec <code>ffprobe</code> et écrit le fichier allégé avec
+<code>ffmpeg</code>&nbsp;; l’avertissement nomme celui qui manque.</p>
+
+<h2>Laisser SubTrack en trouver un</h2>
+
+<p><strong>Détecter automatiquement</strong> cherche aux endroits où un Mac range habituellement FFmpeg – Homebrew, sous
+l’un ou l’autre préfixe (<code>/opt/homebrew/bin</code> ou <code>/usr/local/bin</code>), MacPorts
+(<code>/opt/local/bin</code>) et <code>/usr/bin</code> –, exécute chacun de ceux qu’il trouve et retient
+le plus récent. Entre deux exécutables portant le même numéro de version, il prend celui qui offre le plus d’encodeurs.</p>
+
+<p>Il ne consulte pas le <code>PATH</code> de votre shell&nbsp;: une app lancée depuis le Finder
+ne l’hérite pas, de sorte que la réponse concernerait un environnement que vous ne voyez jamais. Si votre FFmpeg se trouve
+ailleurs, utilisez <strong>Choisir…</strong></p>
+
+<h2>Si les transcodages échouent ensuite</h2>
+
+<p>Les versions varient énormément selon les options de compilation, et une version à laquelle il manque un encodeur que la
+version intégrée <em>possède</em> est une cause fréquente de panne dans une file d’attente qui fonctionnait la veille. Remettez
+<strong>Emplacement de FFmpeg</strong> sur <strong>Intégré</strong>&nbsp;: cela annule complètement le changement.</p>
+
+<p>Après avoir changé de version de FFmpeg, sélectionnez vos fichiers et choisissez <strong>File d’attente</strong> &#9656;
+<strong>Réanalyser la sélection</strong>. Les plans de pistes affichés ont été établis avec l’ancienne
+version&nbsp;; la réanalyse les recalcule avec la nouvelle.</p>
+
+<p class="note">La version App Store affiche ici un avis fixe <strong>Intégré</strong> à la place du
+choix. Une app sandboxée ne peut pas exécuter un binaire fourni par l’utilisateur, c’est donc l’une des choses que cette
+version ne sait pas faire. Pour en savoir plus, consultez <a href="editions.html#editions">Choisir entre les deux versions de
+SubTrack</a>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Utiliser une autre version de FFmpeg</a></li>
+    <li><a href="supported-formats.html">Voir ce que prend en charge une version de FFmpeg</a></li>
+    <li><a href="unsupported-codec.html">Si un codec ne peut pas être encodé</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

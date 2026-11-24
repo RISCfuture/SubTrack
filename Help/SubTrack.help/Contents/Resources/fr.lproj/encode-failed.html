@@ -1,0 +1,69 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Si une exécution démarre puis échoue</title>
+  <meta name="AppleTitle" content="Si une exécution démarre puis échoue">
+  <meta name="description" content="FFmpeg s’est lancé, a travaillé un moment, puis s’est arrêté. Les causes habituelles sont un disque plein, une destination qui a disparu ou un défaut dans la source.">
+  <meta name="keywords" content="ffmpeg, code de sortie, échec, échoué, disque plein, espace insuffisant, espace libre, démonté, partage réseau, endommagé, vérification, pistes manquantes, réessayer">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="encode-failed" id="encode-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si une exécution démarre puis échoue</h1>
+
+<p>Ce n’est pas le même moment ni le même problème que pour un fichier jamais lisible&nbsp;: FFmpeg
+s’est lancé, a travaillé un moment, puis s’est arrêté. La ligne indique que SubTrack n’a pas pu
+traiter la vidéo et donne le code avec lequel FFmpeg s’est terminé, ce qui ne vous apprend rien en
+soi. Le vrai message se trouve dans le journal d’activité&nbsp;: lisez-le avant de faire des
+suppositions.</p>
+
+<h2>Causes habituelles</h2>
+
+<ul>
+  <li><strong>Le disque s’est rempli.</strong> L’allègement écrit un fichier entièrement nouveau&nbsp;:
+    il faut donc de la place pour le fichier de sortie à côté de l’original jusqu’à la fin de
+    l’exécution.</li>
+  <li><strong>La destination a disparu en cours d’exécution</strong> – un disque externe a été
+    démonté, un partage réseau s’est déconnecté.</li>
+  <li><strong>Une piste de la source est endommagée.</strong> Une copie présentant une zone abîmée
+    peut être analysée sans erreur et échouer quand même dès que FFmpeg atteint le défaut.</li>
+</ul>
+
+<p>SubTrack vérifie aussi le fichier qu’il vient d’écrire&nbsp;: une exécution peut donc échouer
+tout à la fin. Une sortie qui manque de pistes qu’elle devrait contenir, ou qui comporte une piste
+sans données, est signalée comme un échec plutôt que comme réussie. SubTrack refuse ainsi
+délibérément de vous remettre un fichier discrètement défectueux.</p>
+
+<h2>Si elle n’a jamais démarré</h2>
+
+<p>Certains échecs n’indiquent aucun code de sortie, car SubTrack a refusé l’exécution avant de
+lancer FFmpeg&nbsp;: il compare la taille du fichier à écrire avec l’espace disponible sur le volume
+de destination, et s’arrête lorsque le fichier ne tiendra manifestement pas. La ligne indique les
+deux valeurs, et le journal d’activité n’a rien à ajouter, puisque rien ne s’est exécuté. Libérez de
+l’espace sur ce volume ou
+<a href="destinations.html">enregistrez les fichiers de la file d’attente ailleurs</a>, puis
+relancez la ligne.</p>
+
+<p>Cette vérification est une précaution, pas une garantie. La taille de sortie d’un transcodage ne
+peut pas être prévue, et certains volumes n’indiquent pas leur espace libre&nbsp;: un disque peut donc
+tout de même se remplir pendant l’exécution et provoquer un échec comme ceux décrits dans le reste de
+cette page.</p>
+
+<h2>Réessayer</h2>
+
+<p>Une ligne en échec peut être relancée. Corrigez la cause, puis choisissez <strong>File
+d’attente</strong> &#9656; <strong>Démarrer la sélection</strong> (<kbd>⌘Return</kbd>).</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="troubleshooting.html#activity-log">Lire l’erreur complète dans le journal d’activité</a></li>
+    <li><a href="troubleshooting.html">Si un fichier ne peut pas être allégé</a></li>
+    <li><a href="destinations.html">Choisir où enregistrer les fichiers allégés</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Si SubTrack ne peut pas lire un fichier</title>
+  <meta name="AppleTitle" content="Si SubTrack ne peut pas lire un fichier">
+  <meta name="description" content="Pourquoi l’analyse d’un fichier échoue avant tout allègement (ce n’est pas vraiment une vidéo, il est tronqué, son conteneur n’est pas pris en charge, il est chiffré ou macOS le bloque) et que faire.">
+  <meta name="keywords" content="ffprobe, illisible, corrompu, tronqué, drm, chiffré, conteneur, analyser, réanalyser, impossible de lire, autorisation, refusé, accès complet au disque">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="probe-failed" id="probe-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si SubTrack ne peut pas lire un fichier</h1>
+
+<p>Ce problème survient avant tout allègement. SubTrack analyse chaque fichier que vous ajoutez, et
+cette analyse doit réussir pour qu’il existe une liste de pistes sur laquelle décider. Lorsqu’elle
+échoue, la ligne indique que SubTrack n’a pas pu lire le fichier vidéo, et le détail en dessous en donne
+la raison, le plus souvent ce que <code>ffprobe</code> a indiqué en s’arrêtant.</p>
+
+<h2>Causes habituelles</h2>
+
+<ul>
+  <li><strong>Ce n’est pas vraiment une vidéo.</strong> Une extension peut annoncer n’importe quoi. Un
+    fichier sans piste vidéo (un fichier audio isolé, un fichier annexe) est refusé d’emblée, et le
+    message le dit.</li>
+  <li><strong>Il est tronqué, ou encore en cours d’arrivée.</strong> Un téléchargement en cours ou une
+    copie inachevée est vu comme un conteneur endommagé jusqu’à l’arrivée du dernier octet.</li>
+  <li><strong>Le conteneur n’est pas pris en charge par cette version de FFmpeg.</strong> Les versions de FFmpeg
+diffèrent par les formats qu’elles ont été compilées pour traiter.</li>
+  <li><strong>Il est chiffré.</strong> Les vidéos achetées ou louées sont protégées par un DRM, que
+    SubTrack ne retire en aucun cas.</li>
+  <li><strong>macOS le bloque.</strong> Un fichier situé dans le conteneur d’une autre app est refusé
+    d’emblée, sans aucune demande d’autorisation.</li>
+</ul>
+
+<h2>Que faire</h2>
+
+<p>Si c’est macOS qui refuse le fichier, copiez-le à un endroit qui vous appartient et ajoutez la
+copie. Lire un fichier directement dans le conteneur d’une autre app nécessite l’accès complet au
+disque, que vous accordez dans <strong>Confidentialité et sécurité</strong>, dans Réglages
+Système.</p>
+
+<p>Sinon, essayez d’abord de lire le fichier ailleurs&nbsp;: s’il ne s’ouvre pas non plus dans
+QuickTime Player, le problème vient du fichier. S’il se lit sans difficulté, ouvrez
+<strong>Réglages</strong> &#9656; <strong>FFmpeg</strong> et cliquez sur <strong>Formats pris en
+charge</strong> pour vérifier que cette version prend en charge ce conteneur. Sélectionnez ensuite la ligne
+et choisissez <strong>File d’attente</strong> &#9656; <strong>Réanalyser la sélection</strong>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Si un fichier ne peut pas être allégé</a></li>
+    <li><a href="supported-formats.html">Voir ce que prend en charge une version de FFmpeg</a></li>
+    <li><a href="troubleshooting.html#activity-log">Lire l’erreur complète dans le Journal d’activité</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

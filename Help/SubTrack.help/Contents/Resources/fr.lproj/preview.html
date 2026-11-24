@@ -1,0 +1,120 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Lire le plan complet d’un fichier</title>
+  <meta name="AppleTitle" content="Lire le plan complet d’un fichier">
+  <meta name="description" content="Consultez toutes les pistes que l’exécution écrira pour un fichier, dans l’ordre où le résultat les contiendra, ainsi que les pistes qui seront retirées.">
+  <meta name="keywords" content="aperçu, plan, résultat, sortie, pistes, ordre, rôle, par défaut, commentaire, forcé, retirées, inspecteur">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-preview" id="track-preview"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Lire le plan complet d’un fichier</h1>
+
+<p>Avant d’appliquer vos règles à toute une file d’attente, il est utile de voir ce que donne un seul
+fichier. L’onglet <strong>Aperçu</strong> offre cette vue&nbsp;: toutes les pistes que l’exécution
+écrira, dans l’ordre où le résultat les contiendra, et toutes celles qu’elle retirera.</p>
+
+<ol>
+  <li>Sélectionnez un fichier dans la file d’attente.</li>
+  <li>Affichez l’inspecteur (<kbd>⌥⌘I</kbd>) et choisissez <strong>Aperçu</strong> (<kbd>⌥⌘3</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-preview-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-preview.webp" width="300" height="792" alt="L’inspecteur Aperçu pour un fichier&nbsp;: un tableau des pistes du résultat, numérotées dans l’ordre, avec leur langue, leur codec et leur rôle, les pistes retirées en grisé parmi elles, et un volet de détails en dessous qui énumère tout ce que l’on sait de la piste sélectionnée.">
+  </picture>
+  <figcaption>Le résultat, piste par piste, et tout ce que l’on sait de la piste sélectionnée.</figcaption>
+</figure>
+
+<p>Les lignes grisées, et celles où un tiret remplace le numéro, correspondent aux pistes qui seront
+retirées. Elles figurent là pour que vous voyiez ce que vous perdez, pas parce qu’elles seront dans
+le fichier.</p>
+
+<p>Rien ne peut être modifié ici. Cette vue reflète vos règles et la personnalisation éventuelle que
+vous avez définie. Pour la modifier, consultez <a href="overrides.html#track-overrides">Personnaliser le plan des pistes d’un fichier</a>.</p>
+
+<a name="track-roles" id="track-roles"></a>
+<h2>Ce qu’indiquent les colonnes</h2>
+
+<p><strong>Piste</strong> indique la position de la piste dans le résultat, numérotée à partir de un,
+avec une icône qui précise son type. Un tiret signifie que la piste n’est pas du tout dans le
+résultat.</p>
+
+<p><strong>Codec</strong> est le format dans lequel le résultat contiendra la piste, avec la forme de
+ce qu’elle transporte&nbsp;: <code>ac3 5.1</code>, <code>h264 1080p</code>. Une flèche
+(<code>→ aac</code>) indique que la piste est convertie, et non copiée.</p>
+
+<p><strong>Titre</strong> est le nom propre de la piste, lorsque son auteur lui en a donné un&nbsp;:
+«&nbsp;Director’s Commentary&nbsp;», «&nbsp;English (SDH)&nbsp;», «&nbsp;Dolby TrueHD 7.1&nbsp;». C’est souvent le moyen le plus
+rapide de distinguer deux pistes dans la même langue, et la cellule est vide pour les nombreuses
+pistes qui n’ont aucun nom.</p>
+
+<p><strong>Rôle</strong> indique à quoi sert la piste, ce qui détermine généralement si vous voulez
+la conserver&nbsp;:</p>
+
+<ul>
+  <li><strong>Par défaut</strong> – la piste qu’un lecteur choisit de lui-même.</li>
+  <li><strong>Forcé</strong> – des sous-titres pour les seuls dialogues en langue étrangère, et non
+    pour tout le film.</li>
+  <li><strong>Commentaire</strong> – une piste de commentaires par-dessus le film.</li>
+  <li><strong>Pour sourds et malentendants</strong> – des sous-titres qui restituent les sons en plus
+    des paroles (souvent appelés SDH).</li>
+  <li><strong>Audiodescription</strong> et <strong>Descriptions</strong> – la narration de ce qui se
+    passe à l’écran.</li>
+  <li><strong>Doublé</strong> et <strong>Original</strong> – indiquent si l’audio est dans la langue
+    de tournage du film.</li>
+</ul>
+
+<p>Ces informations proviennent des balises du fichier. Une piste mal étiquetée affiche donc
+l’étiquette qu’elle porte, et non ce qu’elle est réellement. C’est justement pour ce cas que l’onglet
+Personnalisation existe.</p>
+
+<p class="note"><strong>Par défaut</strong> est le seul rôle que SubTrack attribue au lieu de le lire.
+Votre ordre de langues détermine la piste audio qui ouvre le fichier allégé&nbsp;: la première piste
+audio du résultat est donc marquée par défaut et les autres ne le sont pas, quoi qu’indique la source.
+Tous les autres rôles sont conservés tels quels.</p>
+
+<a name="track-detail" id="track-detail"></a>
+<h2>Sélectionner une piste pour tout le reste</h2>
+
+<p>Les colonnes n’affichent que ce qui distingue une piste d’une autre. Sélectionnez une ligne&nbsp;:
+le volet en dessous énumère <em>tout</em> ce que l’on sait de cette piste, en trois groupes&nbsp;:</p>
+
+<ul>
+  <li><strong>Sortie</strong> – le codec dans lequel la piste se retrouve, et les indicateurs qu’elle
+    porte en sortie. La position de la piste et sa conservation correspondent à des colonnes de la
+    liste, elles ne sont donc pas répétées ici.</li>
+  <li><strong>Piste</strong> – ce que le fichier dit d’elle&nbsp;: son indice de flux, son codec et
+    son profil, sa langue, son titre, la taille d’image ou la disposition des canaux, la fréquence
+    d’échantillonnage, la profondeur de bits et le débit.</li>
+  <li><strong>Métadonnées</strong> – chaque balise lue par l’analyse, telle quelle et sans filtre.
+    C’est là qu’apparaissent les notes propres à une édition, et il vaut la peine de les lire quand une
+piste ne se comporte pas comme le suggèrent sa langue et son codec.</li>
+</ul>
+
+<p>Faites glisser le séparateur pour donner plus de place à la liste ou au détail, et sélectionnez une
+valeur pour la copier.</p>
+
+<p class="note">La liste et le détail défilent tous les deux. Un remux avec une douzaine de pistes de
+sous-titres ne tient pas dans un inspecteur étroit, pas plus que les métadonnées que certains
+encodeurs écrivent.</p>
+
+<p class="note">Si vous réanalysez un fichier (<strong>File d’attente</strong> &#9656; <strong>Réanalyser
+la sélection</strong>), l’onglet l’indique pendant qu’il relit les pistes, et le plan affiché reste
+l’ancien jusqu’à la fin de l’opération.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="overrides.html">Personnaliser le plan des pistes d’un fichier</a></li>
+    <li><a href="slim-rules.html">Choisir les langues à conserver</a></li>
+    <li><a href="preferred-codecs.html">Définir les codecs préférés et les codecs cibles</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

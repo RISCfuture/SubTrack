@@ -1,0 +1,121 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Si un fichier ne peut pas être allégé</title>
+  <meta name="AppleTitle" content="Si un fichier ne peut pas être allégé">
+  <meta name="description" content="Ce que signifie chaque échec dans la file d’attente – source illisible, fichier introuvable, exécution interrompue en cours de route – et où trouver le texte complet de l’erreur.">
+  <meta name="keywords" content="erreur, échec, ffprobe, ffmpeg, code de sortie, illisible, corrompu, tronqué, drm, chiffré, périmé, permission, sandbox, signet, disque plein, journal d’activité, journal, rouge, avertissement, triangle, bug, signaler, n’enregistre pas, enregistrement, perdu, perte de données, historique, horodatage, sans surveillance, de nuit">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="troubleshooting" id="troubleshooting"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Si un fichier ne peut pas être allégé</h1>
+
+<p>La plupart des fichiers passent de l’ajout à la fin du traitement sans intervention de votre part. Quand ce n’est pas
+le cas, la raison est presque toujours l’une des trois suivantes&nbsp;: la source n’a pas pu être lue du
+tout, la source n’est plus là où elle se trouvait ou une exécution a démarré puis a mal tourné.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/problem-queue-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/problem-queue.webp" width="1180" height="620" alt="Une file d’attente présentant quatre problèmes différents à la fois&nbsp;: une source introuvable, un codec que cette version de FFmpeg ne peut pas encoder, une exécution en échec et un fichier dont la sortie serait muette.">
+  </picture>
+  <figcaption>Chaque problème est indiqué sous le fichier concerné.</figcaption>
+</figure>
+
+<p>Toute ligne qui demande votre attention affiche un triangle d’avertissement dans la colonne d’état.
+<strong>Placez le pointeur sur le triangle pour en lire la raison.</strong> La ligne sous le nom du
+fichier dit la même chose, mais elle est tronquée à la largeur de la colonne, et un message de FFmpeg
+est souvent plus long. Si elle est coupée, placez le pointeur dessus ou ouvrez le Journal d’activité.</p>
+
+<p class="note">Un triangle peut aussi signifier que le FFmpeg que vous utilisez n’a pas d’encodeur pour
+un codec choisi comme codec cible. Dans ce cas, le codec est nommé, et la solution se trouve dans
+<a href="unsupported-codec.html">Si un codec ne peut pas être encodé</a>.</p>
+
+<h2>Identifier le problème rencontré</h2>
+
+<ul>
+  <li><a href="probe-failed.html">Si SubTrack ne peut pas lire un fichier</a> – l’allègement n’a même pas
+    commencé, car l’analyse de la source a échoué.</li>
+  <li><a href="missing-source.html">Si le fichier source est introuvable</a> – le fichier a été déplacé,
+    ou l’autorisation enregistrée pour y accéder n’est plus valide.</li>
+  <li><a href="encode-failed.html">Si une exécution démarre puis échoue</a> – FFmpeg s’est lancé, a
+    travaillé un moment, puis s’est arrêté.</li>
+  <li><a href="unsupported-codec.html">Si un codec ne peut pas être encodé</a> – la version que vous
+utilisez n’a pas d’encodeur pour un codec cible que vous avez choisi.</li>
+</ul>
+
+<a name="activity-log" id="activity-log"></a>
+<h2>Lire l’erreur complète dans le Journal d’activité</h2>
+
+<p>Choisissez <strong>Fenêtre</strong> &#9656; <strong>Journal d’activité</strong> (<kbd>⇧⌘L</kbd>).</p>
+
+<p>Le journal retrace ce qui s’est passé, du plus récent au plus ancien, pour <strong>toutes les files
+d’attente à la fois</strong>&nbsp;: l’heure, la file d’attente, le fichier et ce qui lui est arrivé. Il
+sert surtout à une chose&nbsp;: <strong>c’est là que se trouve le texte complet de l’erreur, sans
+troncature.</strong> Dans la file d’attente, chaque fichier ne dispose que d’une courte ligne&nbsp;; le journal
+contient le message en entier.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/activity-log-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/activity-log.webp" width="860" height="312" alt="Le Journal d’activité après une exécution de nuit dans la file d’attente Troubleshooting&nbsp;: la fin de l’exécution avec trois fichiers encodés et un en échec, un problème résolu, une exécution en échec, un codec que cette version de FFmpeg ne peut pas encoder, une source introuvable et le début de l’exécution.">
+  </picture>
+  <figcaption>Une exécution de nuit, lue le lendemain matin. Six lignes pour trois cents fichiers.</figcaption>
+</figure>
+
+<p>Il est conçu pour être lu le lendemain matin d’une exécution laissée en cours. Chaque exécution écrit une
+ligne à son démarrage et une autre à son arrêt, qui indique son bilan, et entre les deux figure tout ce
+qui s’est mal passé&nbsp;: un fichier en échec, une source disparue, un transcodage que ce FFmpeg ne peut pas
+effectuer, un problème résolu depuis.</p>
+
+<p class="note">Un fichier traité sans problème n’apparaît pas du tout dans le journal. L’analyse,
+l’encodage et la fin du traitement n’écrivent rien – la ligne de clôture donne les totaux – si bien
+qu’une exécution sans incident sur trois cents fichiers tient en deux lignes plutôt qu’en six cents, et
+que tout ce que vous voyez mérite d’être lu. Une exécution sans problème indique <strong>Rien à
+signaler</strong>.</p>
+
+<p class="note">Aucun message n’est abrégé ici. Chaque entrée s’agrandit pour contenir tout ce qu’elle a
+à dire, et le texte peut être sélectionné et copié. Seuls les horodatages sont abrégés&nbsp;: ceux
+d’aujourd’hui n’indiquent que l’heure, les plus anciens indiquent aussi la date.</p>
+
+<p>Le journal couvre la session en cours de SubTrack. Quitter l’app le vide, car il sert à rendre
+compte de la session qui a effectué l’encodage.</p>
+
+<p>Si le message ne correspond à rien de ce que cette page décrit, cela mérite d’être signalé&nbsp;: copiez-le
+depuis le journal et <a href="https://github.com/RISCfuture/SubTrack/issues">signalez un problème sur GitHub</a>.</p>
+
+<a name="not-saving" id="not-saving"></a>
+<h2>Si SubTrack indique qu’il n’enregistre pas</h2>
+
+<p>Le reste de cette page porte sur des problèmes propres à un fichier. Celui-ci ne concerne aucun fichier en particulier&nbsp;:
+<strong>«&nbsp;Enregistrement impossible&nbsp;» à droite de la barre d’état signifie que SubTrack ne parvient pas à
+enregistrer la file d’attente elle-même.</strong> Ce que vous voyez à l’écran est correct&nbsp;; ce qui est
+stocké sur le disque ne suit plus.</p>
+
+<p>Ce message n’apparaît que tant que le problème dure et disparaît dès qu’un enregistrement réussit à
+nouveau&nbsp;: un disque brièvement occupé ne laisse donc aucune trace. Cliquez dessus pour ouvrir le
+Journal d’activité, où la raison complète figure sur une ligne distincte, marquée <strong>Toutes les
+files d’attente</strong> parce que, contrairement à la plupart des entrées, elle ne concerne pas un
+seul fichier. Le journal conserve aussi l’heure de début et écrit une autre ligne lorsque
+l’enregistrement reprend&nbsp;: un incident survenu et résolu pendant votre absence laisse ainsi une trace
+de son début et de sa fin.</p>
+
+<p>Aucun bouton ne règle ce problème, et c’est précisément pourquoi SubTrack vous prévient au lieu
+d’attendre. Tant que le message est affiché, <strong>tout ce que vous ajoutez ou modifiez risque d’être
+perdu lorsque vous quitterez l’app</strong>. Vérifiez que le disque qui contient votre dossier de
+départ n’est pas plein, et notez ce que vous préféreriez ne pas avoir à reconfigurer.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="running-a-queue.html#queue-status">Exécuter une file d’attente et suivre sa progression</a></li>
+    <li><a href="adding-files.html">Ajouter des vidéos à une file d’attente</a></li>
+    <li><a href="supported-formats.html">Voir ce que prend en charge une version de FFmpeg</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Nommer les fichiers écrits par SubTrack</title>
+  <meta name="AppleTitle" content="Nommer les fichiers écrits par SubTrack">
+  <meta name="description" content="Composez les noms des fichiers de sortie avec des balises et résolvez les deux conflits qui empêchent de démarrer une file d’attente.">
+  <meta name="keywords" content="nom de sortie, format, balise, renommer, allégé, conflit, doublon, écraser, extension">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="output-names" id="output-names"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Nommer les fichiers écrits par SubTrack</h1>
+
+<p>SubTrack ne modifie jamais un fichier source – il écrit un nouveau fichier à côté. Le format de
+nom détermine comment ce nouveau fichier s’appelle.</p>
+
+<p>Pour le modifier, affichez l’inspecteur (<kbd>⌥⌘I</kbd>), choisissez <strong>Règles</strong>, puis
+modifiez <strong>Nom de sortie</strong>. Chaque file d’attente a le sien.</p>
+
+<a name="name-tokens" id="name-tokens"></a>
+<h2>Composer un nom avec des balises</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/output-name-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/output-name.webp" width="280" height="87" alt="Le champ Nom de sortie contenant une balise Nom d’origine suivie du texte «&nbsp;(slimmed)&nbsp;», avec les balises disponibles en dessous et un aperçu du nom de fichier obtenu.">
+  </picture>
+  <figcaption>La ligne située dessous affiche un aperçu du format appliqué à un vrai fichier de la file d’attente.</figcaption>
+</figure>
+
+<p>Le format est du texte ordinaire dans lequel des balises représentent les informations propres à
+chaque fichier&nbsp;:</p>
+
+<ul>
+  <li><code>{name}</code> – le nom du fichier source, sans son extension.</li>
+  <li><code>{n}</code> – la position du fichier dans la file d’attente.</li>
+</ul>
+
+<p>Ainsi, <code>{name} (slimmed)</code> transforme <code>The Third Man.mkv</code> en
+<code>The Third Man (slimmed).mkv</code>.</p>
+
+<p>L’extension ne fait jamais partie du format. Le fichier de sortie garde le même conteneur que la
+source&nbsp;: SubTrack ajoute donc lui-même l’extension, et un format qui essaierait de la modifier
+décrirait quelque chose d’impossible.</p>
+
+<h3>Écrire une accolade littérale</h3>
+
+<p>Doublez une accolade pour qu’elle soit prise telle quelle&nbsp;: <code>{{name}}</code> produit le
+texte <code>{name}</code> et non le nom du fichier. Une balise non reconnue comme <code>{title}</code>
+est laissée telle quelle et apparaît ainsi dans le nom&nbsp;; une faute de frappe donne donc un nom de
+fichier inattendu, mais rien n’est perdu.</p>
+
+<h2>Quand deux noms entrent en conflit</h2>
+
+<p>SubTrack refuse de démarrer une file d’attente dont les noms détruiraient un fichier. Cela ne peut
+arriver que de deux façons, et chacune se corrige facilement. Pour en savoir plus, consultez
+<a href="name-conflicts.html">Résoudre un conflit de nom</a>.</p>
+
+<div class="seealso">
+  <h2>Voir aussi</h2>
+  <ul>
+    <li><a href="destinations.html">Choisir où enregistrer les fichiers allégés</a></li>
+    <li><a href="overrides.html">Personnaliser le plan des pistes d’un fichier</a></li>
+    <li><a href="running-a-queue.html">Exécuter une file d’attente et suivre sa progression</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
