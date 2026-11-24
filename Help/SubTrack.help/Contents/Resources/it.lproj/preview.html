@@ -1,0 +1,117 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Leggere il piano completo di un file</title>
+  <meta name="AppleTitle" content="Leggere il piano completo di un file">
+  <meta name="description" content="Vedi tutte le tracce che l’esecuzione scriverà per un file, nell’ordine in cui l’output le conterrà, e quali tracce vengono rimosse.">
+  <meta name="keywords" content="anteprima, piano, output, tracce, ordine, ruolo, predefinito, commento, forzati, rimosse, inspector">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-preview" id="track-preview"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Leggere il piano completo di un file</h1>
+
+<p>Prima di applicare le tue regole a un’intera coda, conviene vedere cosa ne risulta per un singolo
+file. La scheda <strong>Anteprima</strong> mostra proprio questo: tutte le tracce che l’esecuzione
+scriverà, nell’ordine in cui l’output le conterrà, e tutte quelle che rimuoverà.</p>
+
+<ol>
+  <li>Seleziona un file nella coda.</li>
+  <li>Mostra l’Inspector (<kbd>⌥⌘I</kbd>) e scegli la scheda <strong>Anteprima</strong> (<kbd>⌥⌘3</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-preview-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-preview.webp" width="300" height="792" alt="La scheda Anteprima dell’Inspector per un file: una tabella con le tracce dell’output numerate in ordine, con lingua, codec e ruolo, le tracce rimosse in grigio chiaro tra le altre e, sotto, un riquadro di dettaglio con tutto ciò che si sa della traccia selezionata.">
+  </picture>
+  <figcaption>L’output, traccia per traccia, e tutto ciò che si sa di quella che selezioni.</figcaption>
+</figure>
+
+<p>Le righe in grigio chiaro e quelle con un trattino al posto del numero sono le tracce che vengono
+rimosse: sono elencate per mostrarti cosa perdi, non perché saranno nel file.</p>
+
+<p>Qui non si può modificare nulla: l’anteprima è il risultato delle tue regole e delle eventuali
+personalizzazioni. Per cambiarla, consulta <a href="overrides.html#track-overrides">Personalizzare il piano delle tracce di un file</a>.</p>
+
+<a name="track-roles" id="track-roles"></a>
+<h2>Cosa indicano le colonne</h2>
+
+<p><strong>Traccia</strong> indica la posizione della traccia nell’output, numerata a partire da uno,
+con un’icona che ne mostra il tipo. Un trattino significa che la traccia non è presente nell’output.</p>
+
+<p><strong>Codec</strong> è il formato in cui l’output conterrà la traccia, insieme alle sue
+caratteristiche, per esempio <code>ac3 5.1</code> o <code>h264 1080p</code>. Una freccia
+(<code>→ aac</code>) indica che la traccia viene convertita, non copiata.</p>
+
+<p><strong>Titolo</strong> è il nome della traccia, se chi l’ha creata gliene ha dato uno, per
+esempio «Director’s Commentary», «English (SDH)» o «Dolby TrueHD 7.1». Spesso è il modo più rapido
+per distinguere due tracce nella stessa lingua, ed è vuoto per le molte tracce che non hanno alcun
+nome.</p>
+
+<p><strong>Ruolo</strong> indica a cosa <em>serve</em> la traccia, e di solito è ciò che decide se
+ti interessa o no:</p>
+
+<ul>
+  <li><strong>Predefinito</strong> – la traccia che un lettore sceglie da solo.</li>
+  <li><strong>Forzato</strong> – sottotitoli solo per i dialoghi in lingua straniera, non per tutto
+    il film.</li>
+  <li><strong>Commento</strong> – una traccia con commenti parlati sul film.</li>
+  <li><strong>Per non udenti</strong> – sottotitoli che riportano anche i suoni oltre ai dialoghi
+    (spesso chiamati SDH).</li>
+  <li><strong>Audiodescrizione</strong> e <strong>Descrizioni</strong> – narrazione di ciò che
+    accade sullo schermo.</li>
+  <li><strong>Doppiato</strong> e <strong>Originale</strong> – indicano se l’audio è nella lingua
+    in cui è stato girato il film.</li>
+</ul>
+
+<p>Questi ruoli dipendono da come il file è stato etichettato: una traccia etichettata male mostra
+l’etichetta che ha, non ciò che è davvero. È proprio il caso per cui esiste la scheda
+Personalizzazione.</p>
+
+<p class="note"><strong>Predefinito</strong> è l’unico ruolo che SubTrack assegna, invece di limitarsi a leggerlo. L’ordine delle lingue decide con quale traccia audio inizia il file alleggerito, quindi
+la prima traccia audio dell’output è contrassegnata come predefinita e le altre no, a prescindere
+da quanto indicava la sorgente. Tutti gli altri ruoli vengono mantenuti così come sono.</p>
+
+<a name="track-detail" id="track-detail"></a>
+<h2>Selezionare una traccia per tutto il resto</h2>
+
+<p>Le colonne mostrano solo ciò che distingue una traccia dall’altra. Seleziona una riga e il
+riquadro sottostante elenca <em>tutto</em> ciò che si sa di quella traccia, in tre gruppi:</p>
+
+<ul>
+  <li><strong>Output</strong> – il codec in cui la traccia viene scritta e i flag che avrà. La
+    posizione della traccia e l’eventuale rimozione sono già nelle colonne dell’elenco, quindi non
+    vengono ripetute qui.</li>
+  <li><strong>Traccia</strong> – ciò che il file dichiara di essere: indice del flusso, codec e
+    profilo, lingua, titolo, dimensioni dei fotogrammi o disposizione dei canali, frequenza di
+    campionamento, profondità di bit e bitrate.</li>
+  <li><strong>Metadati</strong> – tutti i tag letti dall’analisi, tali e quali e senza filtri. Qui
+    compaiono le note della release, utili da leggere quando una traccia non si comporta come
+    farebbero pensare la sua lingua e il suo codec.</li>
+</ul>
+
+<p>Trascina il divisore per dare più spazio all’elenco o al dettaglio e seleziona un valore per
+copiarlo.</p>
+
+<p class="note">Sia l’elenco sia il dettaglio scorrono. Un remux con una dozzina di tracce di
+sottotitoli non sta in un Inspector stretto, e lo stesso vale per i metadati scritti da alcuni
+encoder.</p>
+
+<p class="note">Se rianalizzi un file (<strong>Coda</strong> &#9656; <strong>Rianalizza
+selezione</strong>), la scheda lo segnala mentre rilegge le tracce e, fino al termine, mostra il
+piano precedente.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="overrides.html">Personalizzare il piano delle tracce di un file</a></li>
+    <li><a href="slim-rules.html">Scegliere quali lingue mantenere</a></li>
+    <li><a href="preferred-codecs.html">Impostare i codec preferiti e i codec di destinazione</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

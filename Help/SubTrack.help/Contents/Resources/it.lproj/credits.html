@@ -1,0 +1,85 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>FFmpeg, licenze e riconoscimenti</title>
+  <meta name="AppleTitle" content="FFmpeg, licenze e riconoscimenti">
+  <meta name="description" content="Quale licenza di FFmpeg si applica alla copia di SubTrack che stai usando, dove è pubblicato il codice sorgente e di chi è il lavoro contenuto nell’app.">
+  <meta name="keywords" content="ffmpeg, licenza, gpl, lgpl, open source, codice sorgente, x264, x265, libaom, av1, videotoolbox, attribuzione, riconoscimenti, crediti">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="licensing" id="licensing"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>FFmpeg, licenze e riconoscimenti</h1>
+
+<p>Ogni traccia che SubTrack copia, rimuove o converte viene gestita da FFmpeg. SubTrack decide cosa
+deve succedere, FFmpeg lo esegue. SubTrack è distribuito con la GNU General Public License, versione
+2 o successiva.</p>
+
+<h2>Quale licenza di FFmpeg si applica alla tua copia</h2>
+
+<p>Le due versioni di SubTrack includono build di FFmpeg diverse, con licenze diverse.</p>
+
+<ul>
+  <li><strong>Mac App Store – LGPL v2.1+.</strong> L’FFmpeg incluso è compilato senza componenti con
+    licenza GPL: né libx264, né libx265, né altre librerie GPL. La codifica video passa invece da
+    Apple VideoToolbox. Questo software usa librerie del progetto FFmpeg con licenza
+    LGPLv2.1.</li>
+  <li><strong>Download diretto – GPL v2+.</strong> L’FFmpeg incluso è compilato con libx264 e
+    libx265, che hanno licenza GPL v2 o successiva, quindi anche l’opera combinata è distribuita
+    con la GPL v2+. Questo software usa codice del progetto FFmpeg con licenza
+    GPLv2+.</li>
+</ul>
+
+<p>libaom, il codificatore AV1, è presente in entrambe le build: i suoi termini BSD 2-Clause e la
+Alliance for Open Media Patent License 1.0 sono adatti sia alla build LGPL sia a quella GPL.</p>
+
+<h2>Leggere l’avviso della build che stai usando</h2>
+
+<ol>
+  <li>Scegli <strong>SubTrack</strong> &#9656; <strong>Informazioni su SubTrack</strong>.</li>
+  <li>Fai clic su <strong>Licenza…</strong> per leggere il testo completo, con le note sul copyright
+    e un link alla licenza stessa.</li>
+</ol>
+
+<p>La finestra Informazioni non elenca entrambe le possibilità: mostra l’avviso della copia che hai
+davanti, quindi ciò che leggi lì è la licenza a cui sei effettivamente soggetto.</p>
+
+<h2>Dove si trova il codice sorgente</h2>
+
+<p>Il codice sorgente di SubTrack è su
+<a href="https://github.com/RISCfuture/SubTrack">github.com/RISCfuture/SubTrack</a>. Ogni release
+GitHub della versione scaricabile include, accanto all’immagine disco, un archivio con i sorgenti di
+FFmpeg: il codice sorgente corrispondente che la GPL richiede. Lo script di build del repository
+fissa la versione esatta di FFmpeg, x264, x265 e libaom e le compila dai sorgenti, quindi eseguirlo
+riproduce i binari inclusi.</p>
+
+<p class="note">Il codice sorgente e le informazioni sulla licenza di FFmpeg sono pubblicati anche su
+<a href="https://www.ffmpeg.org">ffmpeg.org</a>.</p>
+
+<h2>Il lavoro di altri in SubTrack</h2>
+
+<p>Oltre a FFmpeg, x264, x265 e libaom, SubTrack usa questi pacchetti Swift:</p>
+
+<ul>
+  <li><strong>DockProgress</strong> di Sindre Sorhus – MIT. L’avanzamento della coda sull’icona nel
+    Dock.</li>
+  <li><strong>GitHubUpdateChecker</strong> – MIT, solo nella versione scaricabile. Porta con sé
+    swift-markdown-ui, NetworkImage, swift-cmark e swift-log.</li>
+  <li><strong>sentry-cocoa</strong> – MIT. Rapporti sugli arresti anomali.</li>
+  <li><strong>XCUITestKit</strong> – MIT. Usato dai test; non è incluso in nessuna delle due
+    versioni.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="editions.html">Scegliere tra le due versioni di SubTrack</a></li>
+    <li><a href="ffmpeg.html">Usare una build di FFmpeg diversa</a></li>
+    <li><a href="privacy-and-data.html">Cosa invia SubTrack e cosa no</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

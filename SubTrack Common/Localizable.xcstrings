@@ -20,6 +20,12 @@
             "state" : "machine_translated",
             "value" : ""
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : ""
+          }
         }
       }
     },
@@ -45,6 +51,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ (%2$@)"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "%1$@ (%2$@)"
@@ -79,6 +91,12 @@
             "state" : "machine_translated",
             "value" : "%1$@ (%2$lld)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ (%2$lld)"
+          }
         }
       }
     },
@@ -103,6 +121,12 @@
             "state" : "machine_translated",
             "value" : "%@ (ignorée)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@ (saltata)"
+          }
         }
       }
     },
@@ -124,6 +148,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "annulés : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "annullati: %@"
           }
         }
       }
@@ -147,6 +177,12 @@
             "state" : "machine_translated",
             "value" : "encodés : %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "codificati: %@"
+          }
         }
       }
     },
@@ -168,6 +204,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "en échec : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "non riusciti: %@"
           }
         }
       }
@@ -197,6 +239,12 @@
             "state" : "machine_translated",
             "value" : "Les %1$@ fichiers seraient tous enregistrés sous « %2$@ »."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tutti i %1$@ file verrebbero salvati come «%2$@»."
+          }
         }
       }
     },
@@ -221,6 +269,12 @@
             "state" : "machine_translated",
             "value" : "Les %@ fichiers écraseraient leurs propres fichiers source."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "I %@ file sovrascriverebbero i rispettivi file sorgente."
+          }
         }
       }
     },
@@ -241,6 +295,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@ kbps"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "%@ kbps"
@@ -275,6 +335,12 @@
             "state" : "machine_translated",
             "value" : "%1$@ sur %2$@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ di %2$@"
+          }
         }
       }
     },
@@ -297,6 +363,12 @@
             "state" : "machine_translated",
             "value" : "%@ files d’attente"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@ code"
+          }
         }
       }
     },
@@ -318,6 +390,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "espace économisé : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "spazio risparmiato: %@"
           }
         }
       }
@@ -345,6 +423,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ × %2$@"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "%1$@ × %2$@"
@@ -379,6 +463,12 @@
             "state" : "machine_translated",
             "value" : "%1$@ – %2$@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ – %2$@"
+          }
         }
       }
     },
@@ -407,6 +497,12 @@
             "state" : "machine_translated",
             "value" : "%1$@ → %2$@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ → %2$@"
+          }
         }
       }
     },
@@ -427,6 +523,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@-bit"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "%@-bit"
@@ -453,6 +555,12 @@
             "state" : "machine_translated",
             "value" : "%@A"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@A"
+          }
         }
       }
     },
@@ -475,6 +583,12 @@
             "state" : "machine_translated",
             "value" : "%@S"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@S"
+          }
         }
       }
     },
@@ -493,6 +607,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@V"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "%@V"
@@ -520,6 +640,12 @@
             "state" : "machine_translated",
             "value" : "%@ch"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@ch"
+          }
         }
       }
     },
@@ -543,6 +669,12 @@
             "state" : "machine_translated",
             "value" : "%@i"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@i"
+          }
         }
       }
     },
@@ -562,6 +694,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@p"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "%@p"
@@ -689,6 +827,40 @@
                     "stringUnit" : {
                       "state" : "machine_translated",
                       "value" : "%arg fichier en échec."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%#@files@"
+          },
+          "substitutions" : {
+            "files" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file non riuscito."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file non riusciti."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file non riusciti."
                     }
                   }
                 }
@@ -831,6 +1003,40 @@
               }
             }
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%#@items@ · %2$lld in codifica"
+          },
+          "substitutions" : {
+            "items" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg elemento"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg elementi"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg elementi"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -853,6 +1059,12 @@
             "state" : "machine_translated",
             "value" : "(Nouveau préréglage)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "(Nuova preimpostazione)"
+          }
         }
       }
     },
@@ -871,6 +1083,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "AAC"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "AAC"
@@ -897,6 +1115,12 @@
             "state" : "machine_translated",
             "value" : "AC-3"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "AC-3"
+          }
         }
       }
     },
@@ -915,6 +1139,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "ALAC"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "ALAC"
@@ -941,6 +1171,12 @@
             "state" : "machine_translated",
             "value" : "À propos de SubTrack"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Informazioni su SubTrack"
+          }
         }
       }
     },
@@ -964,6 +1200,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "À propos de cette section"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Informazioni su questa sezione"
           }
         }
       }
@@ -989,6 +1231,12 @@
             "state" : "machine_translated",
             "value" : "Journal d’activité"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Registro attività"
+          }
         }
       }
     },
@@ -1010,6 +1258,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ajouter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aggiungi"
           }
         }
       }
@@ -1033,6 +1287,12 @@
             "state" : "machine_translated",
             "value" : "Ajouter des fichiers…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aggiungi file…"
+          }
         }
       }
     },
@@ -1055,6 +1315,12 @@
             "state" : "machine_translated",
             "value" : "Ajouter un dossier…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aggiungi cartella…"
+          }
         }
       }
     },
@@ -1076,6 +1342,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ajoutez de nouveau le fichier à la file d’attente pour rétablir l’accès."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aggiungi di nuovo il file alla coda per ripristinare l’accesso."
           }
         }
       }
@@ -1101,6 +1373,12 @@
             "state" : "machine_translated",
             "value" : "Ajout à la file d’attente…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aggiunta alla coda…"
+          }
         }
       }
     },
@@ -1119,6 +1397,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Advanced SubStation (ASS)"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Advanced SubStation (ASS)"
@@ -1145,6 +1429,12 @@
             "state" : "machine_translated",
             "value" : "Toutes les files d’attente"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tutte le code"
+          }
         }
       }
     },
@@ -1169,6 +1459,12 @@
             "state" : "machine_translated",
             "value" : "Tout est terminé"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tutto fatto"
+          }
         }
       }
     },
@@ -1187,6 +1483,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "App Store (VideoToolbox)"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "App Store (VideoToolbox)"
@@ -1213,6 +1515,12 @@
             "state" : "machine_translated",
             "value" : "Audio"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Audio"
+          }
         }
       }
     },
@@ -1235,6 +1543,12 @@
             "state" : "machine_translated",
             "value" : "Codecs audio"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec audio"
+          }
         }
       }
     },
@@ -1256,6 +1570,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Détecter automatiquement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rileva automaticamente"
           }
         }
       }
@@ -1281,6 +1601,12 @@
             "state" : "machine_translated",
             "value" : "Disponible dans la version téléchargeable de SubTrack. Cliquez pour en savoir plus."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Disponibile nella versione scaricabile di SubTrack. Fai clic per saperne di più."
+          }
         }
       }
     },
@@ -1304,6 +1630,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Profondeur de bits"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Profondità di bit"
           }
         }
       }
@@ -1329,6 +1661,12 @@
             "state" : "machine_translated",
             "value" : "Débit"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bitrate"
+          }
         }
       }
     },
@@ -1350,6 +1688,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Rip Blu-ray – Anglais + commentaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rip Blu-ray – Inglese + commento"
           }
         }
       }
@@ -1375,6 +1719,12 @@
             "state" : "machine_translated",
             "value" : "Rip Blu-ray – Anglais uniquement"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rip Blu-ray – Solo inglese"
+          }
         }
       }
     },
@@ -1396,6 +1746,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Rip Blu-ray – Conserver les pistes sans langue"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rip Blu-ray – Mantieni tracce senza lingua"
           }
         }
       }
@@ -1421,6 +1777,12 @@
             "state" : "machine_translated",
             "value" : "Parcourir les langues…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sfoglia lingue…"
+          }
         }
       }
     },
@@ -1443,6 +1805,12 @@
             "state" : "machine_translated",
             "value" : "Intégré"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Integrato"
+          }
         }
       }
     },
@@ -1461,6 +1829,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "CLI"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "CLI"
@@ -1487,6 +1861,12 @@
             "state" : "machine_translated",
             "value" : "Annuler"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Annulla"
+          }
         }
       }
     },
@@ -1508,6 +1888,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Tout annuler"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Annulla tutto"
           }
         }
       }
@@ -1531,6 +1917,12 @@
             "state" : "machine_translated",
             "value" : "Annuler et retirer"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Annulla e rimuovi"
+          }
         }
       }
     },
@@ -1553,6 +1945,12 @@
             "state" : "machine_translated",
             "value" : "Annuler et retirer la sélection"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Annulla e rimuovi selezione"
+          }
         }
       }
     },
@@ -1574,6 +1972,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Annulé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Annullato"
           }
         }
       }
@@ -1599,6 +2003,12 @@
             "state" : "machine_translated",
             "value" : "Sous-titres codés"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sottotitoli codificati"
+          }
         }
       }
     },
@@ -1621,6 +2031,12 @@
             "state" : "machine_translated",
             "value" : "Modifier la destination…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cambia destinazione…"
+          }
         }
       }
     },
@@ -1642,6 +2058,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Modifier…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cambia…"
           }
         }
       }
@@ -1667,6 +2089,12 @@
             "state" : "machine_translated",
             "value" : "Canaux"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Canali"
+          }
         }
       }
     },
@@ -1690,6 +2118,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Rechercher maintenant"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cerca ora"
           }
         }
       }
@@ -1715,6 +2149,12 @@
             "state" : "machine_translated",
             "value" : "Rechercher les mises à jour…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cerca aggiornamenti…"
+          }
         }
       }
     },
@@ -1738,6 +2178,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Rechercher les mises à jour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cerca aggiornamenti"
           }
         }
       }
@@ -1763,6 +2209,12 @@
             "state" : "machine_translated",
             "value" : "Choisir"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli"
+          }
         }
       }
     },
@@ -1784,6 +2236,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Choisissez un fichier contenant une piste vidéo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli un file che contenga una traccia video."
           }
         }
       }
@@ -1807,6 +2265,12 @@
             "state" : "machine_translated",
             "value" : "Choisissez un dossier de vidéos"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli una cartella di video"
+          }
         }
       }
     },
@@ -1828,6 +2292,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Choisissez un dossier de votre PATH pour installer subtrack"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli una cartella nel tuo PATH in cui installare subtrack"
           }
         }
       }
@@ -1853,6 +2323,12 @@
             "state" : "machine_translated",
             "value" : "Choisissez un dossier accessible en écriture ou authentifiez-vous pour l’installer pour tous les utilisateurs."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli una cartella in cui puoi scrivere oppure autenticati per installarlo per tutti gli utenti."
+          }
         }
       }
     },
@@ -1874,6 +2350,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Choisissez un codec pris en charge ou utilisez la version téléchargeable de SubTrack."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli un codec supportato oppure usa la versione scaricabile di SubTrack."
           }
         }
       }
@@ -1899,6 +2381,12 @@
             "state" : "machine_translated",
             "value" : "Choisissez un dossier de sortie ou ajoutez le dossier parent à la file d’attente."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli una cartella di output oppure aggiungi alla coda la cartella che contiene il file."
+          }
         }
       }
     },
@@ -1920,6 +2408,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Choisissez les fichiers vidéo à alléger"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli i file video da alleggerire"
           }
         }
       }
@@ -1943,6 +2437,12 @@
             "state" : "machine_translated",
             "value" : "Choisissez où enregistrer les fichiers allégés"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli dove salvare i file alleggeriti"
+          }
         }
       }
     },
@@ -1964,6 +2464,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Choisir…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scegli…"
           }
         }
       }
@@ -1989,6 +2495,12 @@
             "state" : "machine_translated",
             "value" : "Sans dialogues"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Senza dialoghi"
+          }
         }
       }
     },
@@ -2011,6 +2523,12 @@
             "state" : "machine_translated",
             "value" : "Retirer les éléments terminés"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rimuovi completati"
+          }
         }
       }
     },
@@ -2031,6 +2549,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Codec"
@@ -2057,6 +2581,12 @@
             "state" : "machine_translated",
             "value" : "Le codec n’est peut-être pas pris en charge"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Il codec potrebbe non essere supportato"
+          }
         }
       }
     },
@@ -2079,6 +2609,12 @@
             "state" : "machine_translated",
             "value" : "Jeu de codecs"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Set di codec"
+          }
         }
       }
     },
@@ -2100,6 +2636,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Commande"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Comando"
           }
         }
       }
@@ -2125,6 +2667,12 @@
             "state" : "machine_translated",
             "value" : "Commentaire"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Commento"
+          }
         }
       }
     },
@@ -2146,6 +2694,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Conteneurs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Contenitori"
           }
         }
       }
@@ -2169,6 +2723,12 @@
             "state" : "machine_translated",
             "value" : "Convertir en…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Converti in…"
+          }
         }
       }
     },
@@ -2190,6 +2750,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Copier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copia"
           }
         }
       }
@@ -2213,6 +2779,12 @@
             "state" : "machine_translated",
             "value" : "Copier la commande d’installation"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copia comando di installazione"
+          }
         }
       }
     },
@@ -2235,6 +2807,12 @@
             "state" : "machine_translated",
             "value" : "Copiez le fichier ailleurs et ajoutez la copie. Lire un fichier directement dans le conteneur d’une autre app nécessite l’accès complet au disque, accordé dans Confidentialité et sécurité des Réglages Système."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copia il file altrove e aggiungi la copia. Leggere un file direttamente dal contenitore di un’altra app richiede l’Accesso completo al disco, che si concede in Privacy e sicurezza nelle Impostazioni di Sistema."
+          }
         }
       }
     },
@@ -2253,6 +2831,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copyright © %@"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Copyright © %@"
@@ -2281,6 +2865,12 @@
             "state" : "machine_translated",
             "value" : "Impossible d’analyser le fichier"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile analizzare il file"
+          }
         }
       }
     },
@@ -2302,6 +2892,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Impossible d’accéder à cet emplacement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile accedere a questa posizione."
           }
         }
       }
@@ -2325,6 +2921,12 @@
             "state" : "machine_translated",
             "value" : "Impossible d’accéder à vos données enregistrées."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile accedere ai dati salvati."
+          }
         }
       }
     },
@@ -2346,6 +2948,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Impossible de trouver un autre ffmpeg aux emplacements habituels."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile trovare un altro ffmpeg nei percorsi abituali."
           }
         }
       }
@@ -2371,6 +2979,12 @@
             "state" : "machine_translated",
             "value" : "Impossible d’installer l’outil en ligne de commande."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile installare lo strumento a riga di comando."
+          }
         }
       }
     },
@@ -2392,6 +3006,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Impossible de traiter la vidéo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile elaborare il video."
           }
         }
       }
@@ -2417,6 +3037,12 @@
             "state" : "machine_translated",
             "value" : "Impossible de lire le fichier vidéo."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile leggere il file video."
+          }
         }
       }
     },
@@ -2440,6 +3066,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Pochette"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copertina"
           }
         }
       }
@@ -2465,6 +3097,12 @@
             "state" : "machine_translated",
             "value" : "Codec personnalisé"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec personalizzato"
+          }
         }
       }
     },
@@ -2487,6 +3125,12 @@
             "state" : "machine_translated",
             "value" : "Personnalisé…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Personalizzato…"
+          }
         }
       }
     },
@@ -2505,6 +3149,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "DTS"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "DTS"
@@ -2533,6 +3183,12 @@
             "state" : "machine_translated",
             "value" : "Tous les jours"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ogni giorno"
+          }
         }
       }
     },
@@ -2554,6 +3210,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Décodage"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Decodifica"
           }
         }
       }
@@ -2579,6 +3241,12 @@
             "state" : "machine_translated",
             "value" : "Décodage / Encodage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Decodifica / Codifica"
+          }
         }
       }
     },
@@ -2602,6 +3270,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Décode %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Decodifica %@"
           }
         }
       }
@@ -2627,6 +3301,12 @@
             "state" : "machine_translated",
             "value" : "Par défaut"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Predefinito"
+          }
         }
       }
     },
@@ -2649,6 +3329,12 @@
             "state" : "machine_translated",
             "value" : "Destination par défaut"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Destinazione predefinita"
+          }
         }
       }
     },
@@ -2670,6 +3356,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Supprimer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Elimina"
           }
         }
       }
@@ -2695,6 +3387,12 @@
             "state" : "machine_translated",
             "value" : "Supprimer le préréglage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Elimina preimpostazione"
+          }
         }
       }
     },
@@ -2717,6 +3415,12 @@
             "state" : "machine_translated",
             "value" : "Supprimer la file d’attente"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Elimina coda"
+          }
         }
       }
     },
@@ -2738,6 +3442,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Supprimer « %@ » ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vuoi eliminare «%@»?"
           }
         }
       }
@@ -2763,6 +3473,12 @@
             "state" : "machine_translated",
             "value" : "Dépendant"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dipendente"
+          }
         }
       }
     },
@@ -2787,6 +3503,12 @@
             "state" : "machine_translated",
             "value" : "Descriptions"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Descrizioni"
+          }
         }
       }
     },
@@ -2808,6 +3530,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Destination"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Destinazione"
           }
         }
       }
@@ -2833,6 +3561,12 @@
             "state" : "machine_translated",
             "value" : "Dimensions"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dimensioni"
+          }
         }
       }
     },
@@ -2856,6 +3590,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ne décode pas %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non decodifica %@"
           }
         }
       }
@@ -2881,6 +3621,12 @@
             "state" : "machine_translated",
             "value" : "N’encode pas %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non codifica %@"
+          }
         }
       }
     },
@@ -2904,6 +3650,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ne lit pas %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non legge %@"
           }
         }
       }
@@ -2929,6 +3681,12 @@
             "state" : "machine_translated",
             "value" : "N’écrit pas %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non scrive %@"
+          }
         }
       }
     },
@@ -2950,6 +3708,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Terminé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fine"
           }
         }
       }
@@ -2975,6 +3739,12 @@
             "state" : "machine_translated",
             "value" : "Faites glisser dans le nom ou cliquez pour l’ajouter à la fin"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trascinalo nel nome oppure fai clic per aggiungerlo alla fine"
+          }
         }
       }
     },
@@ -2998,6 +3768,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Faites glisser pour réorganiser"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trascina per riordinare"
           }
         }
       }
@@ -3023,6 +3799,12 @@
             "state" : "machine_translated",
             "value" : "Faites glisser des fichiers vidéo ou des dossiers, ou ajoutez-les depuis la barre d’outils."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trascina file video o cartelle, oppure aggiungili dalla barra degli strumenti."
+          }
         }
       }
     },
@@ -3044,6 +3826,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Déposez des vidéos ici"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rilascia qui i video"
           }
         }
       }
@@ -3069,6 +3857,12 @@
             "state" : "machine_translated",
             "value" : "Doublé"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Doppiato"
+          }
         }
       }
     },
@@ -3087,6 +3881,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "E-AC-3"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "E-AC-3"
@@ -3115,6 +3915,12 @@
             "state" : "machine_translated",
             "value" : "Modifier"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Modifica"
+          }
         }
       }
     },
@@ -3137,6 +3943,12 @@
             "state" : "machine_translated",
             "value" : "Encodage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codifica"
+          }
         }
       }
     },
@@ -3158,6 +3970,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Options de l’encodeur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Opzioni dell’encoder"
           }
         }
       }
@@ -3183,6 +4001,12 @@
             "state" : "machine_translated",
             "value" : "Encode %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codifica %@"
+          }
         }
       }
     },
@@ -3207,6 +4031,12 @@
             "state" : "machine_translated",
             "value" : "Encodage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codifica"
+          }
         }
       }
     },
@@ -3228,6 +4058,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Événement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Evento"
           }
         }
       }
@@ -3363,6 +4199,40 @@
               }
             }
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’output %1$@ doveva contenere %#@streams@, ma ne contiene %3$llu."
+          },
+          "substitutions" : {
+            "streams" : {
+              "argNum" : 2,
+              "formatSpecifier" : "llu",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg stream"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg stream"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg stream"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3381,6 +4251,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "FFmpeg"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "FFmpeg"
@@ -3409,6 +4285,12 @@
             "state" : "machine_translated",
             "value" : "Informations sur FFmpeg"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Informazioni su FFmpeg"
+          }
         }
       }
     },
@@ -3431,6 +4313,12 @@
             "state" : "machine_translated",
             "value" : "Emplacement de FFmpeg"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Posizione di FFmpeg"
+          }
         }
       }
     },
@@ -3452,6 +4340,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "FFmpeg indisponible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "FFmpeg non disponibile"
           }
         }
       }
@@ -3477,6 +4371,12 @@
             "state" : "machine_translated",
             "value" : "Impossible d’exécuter FFmpeg : %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile eseguire FFmpeg: %@"
+          }
         }
       }
     },
@@ -3498,6 +4398,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "FFmpeg est un logiciel libre distribué sous la licence GNU Lesser General Public License (LGPL), version 2.1 ou ultérieure. La version de FFmpeg fournie avec cet exemplaire de SubTrack est configurée sans aucun composant sous licence GPL – elle ne contient ni libx264, ni libx265, ni aucune autre bibliothèque GPL.\n\nCe logiciel utilise des bibliothèques du projet FFmpeg sous licence LGPLv2.1.\n\nCopyright © 2000–2026 les développeurs de FFmpeg.\n\nLe texte intégral de la licence GNU LGPL v2.1 est disponible à l’adresse https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html. Le code source de FFmpeg et les informations de licence sont disponibles à l’adresse https://www.ffmpeg.org."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "FFmpeg è software libero concesso in licenza secondo la GNU Lesser General Public License (LGPL), versione 2.1 o successiva. La build di FFmpeg inclusa in questa copia di SubTrack è configurata senza componenti con licenza GPL: non contiene libx264, libx265 né altre librerie GPL.\n\nQuesto software utilizza librerie del progetto FFmpeg con licenza LGPLv2.1.\n\nCopyright © 2000–2026 gli sviluppatori di FFmpeg.\n\nIl testo completo della GNU LGPL v2.1 è disponibile all’indirizzo https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html. Il codice sorgente di FFmpeg e le informazioni sulla licenza sono disponibili all’indirizzo https://www.ffmpeg.org."
           }
         }
       }
@@ -3521,6 +4427,12 @@
             "state" : "machine_translated",
             "value" : "FFmpeg – GPL v2+ (avec libx264 + libx265)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "FFmpeg – GPL v2+ (con libx264 + libx265)"
+          }
         }
       }
     },
@@ -3539,6 +4451,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "FFmpeg – LGPL v2.1+"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "FFmpeg – LGPL v2.1+"
@@ -3567,6 +4485,12 @@
             "state" : "machine_translated",
             "value" : "FFmpeg.org"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "FFmpeg.org"
+          }
         }
       }
     },
@@ -3587,6 +4511,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "FLAC"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "FLAC"
@@ -3613,6 +4543,12 @@
             "state" : "machine_translated",
             "value" : "Échec : %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non riuscito: %@"
+          }
         }
       }
     },
@@ -3634,6 +4570,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Fichier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "File"
           }
         }
       }
@@ -3659,6 +4601,12 @@
             "state" : "machine_translated",
             "value" : "Nom du fichier"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nome file"
+          }
         }
       }
     },
@@ -3681,6 +4629,12 @@
             "state" : "machine_translated",
             "value" : "Filtrer"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Filtra"
+          }
         }
       }
     },
@@ -3702,6 +4656,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Recherche des films…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ricerca dei film…"
           }
         }
       }
@@ -3727,6 +4687,12 @@
             "state" : "machine_translated",
             "value" : "Indicateurs"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Flag"
+          }
         }
       }
     },
@@ -3751,6 +4717,12 @@
             "state" : "machine_translated",
             "value" : "Forcé"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Forzato"
+          }
         }
       }
     },
@@ -3774,6 +4746,12 @@
             "state" : "machine_translated",
             "value" : "Libérez de l’espace sur le volume ou choisissez un autre dossier de sortie."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Libera spazio sul volume oppure scegli un’altra cartella di output."
+          }
         }
       }
     },
@@ -3796,6 +4774,12 @@
             "state" : "machine_translated",
             "value" : "Complet (tous les codecs)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Completo (tutti i codec)"
+          }
         }
       }
     },
@@ -3817,6 +4801,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Général"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Generali"
           }
         }
       }
@@ -3842,6 +4832,12 @@
             "state" : "machine_translated",
             "value" : "Obtenir de l’aide à ce sujet."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto su questo argomento."
+          }
         }
       }
     },
@@ -3862,6 +4858,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "H.264 (VideoToolbox)"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "H.264 (VideoToolbox)"
@@ -3888,6 +4890,12 @@
             "state" : "machine_translated",
             "value" : "H.264 (x264)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "H.264 (x264)"
+          }
         }
       }
     },
@@ -3910,6 +4918,12 @@
             "state" : "machine_translated",
             "value" : "HEVC (VideoToolbox)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "HEVC (VideoToolbox)"
+          }
         }
       }
     },
@@ -3928,6 +4942,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "HEVC (x265)"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "HEVC (x265)"
@@ -3955,6 +4975,12 @@
             "state" : "machine_translated",
             "value" : "A un problème"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ha un problema"
+          }
         }
       }
     },
@@ -3979,6 +5005,12 @@
             "state" : "machine_translated",
             "value" : "Pour sourds et malentendants"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Per non udenti"
+          }
         }
       }
     },
@@ -4001,6 +5033,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur les réglages de FFmpeg"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle impostazioni di FFmpeg"
           }
         }
       }
@@ -4025,6 +5063,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur un fichier en échec"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto su un file non riuscito"
+          }
         }
       }
     },
@@ -4047,6 +5091,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur le choix d’une version de FFmpeg"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulla scelta di una build di FFmpeg"
           }
         }
       }
@@ -4071,6 +5121,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur les réglages d’encodage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle impostazioni di codifica"
+          }
         }
       }
     },
@@ -4093,6 +5149,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur les encodages en échec"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle codifiche non riuscite"
           }
         }
       }
@@ -4117,6 +5179,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur l’installation de l’outil en ligne de commande"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sull’installazione dello strumento a riga di comando"
+          }
         }
       }
     },
@@ -4139,6 +5207,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur les règles de conservation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle regole di conservazione"
           }
         }
       }
@@ -4163,6 +5237,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur les fichiers source manquants"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sui file sorgente mancanti"
+          }
         }
       }
     },
@@ -4185,6 +5265,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur les destinations de sortie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle destinazioni di output"
           }
         }
       }
@@ -4209,6 +5295,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur les conflits de noms de sortie"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sui conflitti tra nomi di output"
+          }
         }
       }
     },
@@ -4231,6 +5323,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur la personnalisation par fichier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle personalizzazioni per file"
           }
         }
       }
@@ -4255,6 +5353,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur la synchronisation des préréglages"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulla sincronizzazione delle preimpostazioni"
+          }
         }
       }
     },
@@ -4277,6 +5381,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur les préréglages"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle preimpostazioni"
           }
         }
       }
@@ -4301,6 +5411,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur la lecture du plan de pistes d’un fichier"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulla lettura del piano delle tracce di un file"
+          }
         }
       }
     },
@@ -4323,6 +5439,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur les formats pris en charge"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sui formati supportati"
           }
         }
       }
@@ -4347,6 +5469,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur l’outil en ligne de commande"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sullo strumento a riga di comando"
+          }
         }
       }
     },
@@ -4369,6 +5497,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur les deux éditions de SubTrack"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sulle due versioni di SubTrack"
           }
         }
       }
@@ -4393,6 +5527,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur les fichiers illisibles"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sui file illeggibili"
+          }
         }
       }
     },
@@ -4416,6 +5556,12 @@
             "state" : "machine_translated",
             "value" : "Aide sur les codecs non pris en charge"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sui codec non supportati"
+          }
         }
       }
     },
@@ -4438,6 +5584,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aide sur la recherche de mises à jour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aiuto sul controllo degli aggiornamenti"
           }
         }
       }
@@ -4463,6 +5615,12 @@
             "state" : "machine_translated",
             "value" : "Toutes les heures"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ogni ora"
+          }
         }
       }
     },
@@ -4486,6 +5644,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Fonctionnement de SubTrack"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Come funziona SubTrack"
           }
         }
       }
@@ -4511,6 +5675,12 @@
             "state" : "machine_translated",
             "value" : "Identifiant"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Identificatore"
+          }
         }
       }
     },
@@ -4532,6 +5702,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Inclure les commentaires et l’audio supplémentaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Includi commenti e audio aggiuntivo"
           }
         }
       }
@@ -4557,6 +5733,12 @@
             "state" : "machine_translated",
             "value" : "Inclure dans la sortie"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Includi nell’output"
+          }
         }
       }
     },
@@ -4578,6 +5760,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Inclure les versions préliminaires"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Includi versioni preliminari"
           }
         }
       }
@@ -4602,6 +5790,12 @@
             "state" : "machine_translated",
             "value" : "Taille avant"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dimens. orig."
+          }
         }
       }
     },
@@ -4624,6 +5818,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Pistes avant"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tracce orig."
           }
         }
       }
@@ -4649,6 +5849,12 @@
             "state" : "machine_translated",
             "value" : "Analyse"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Analisi"
+          }
         }
       }
     },
@@ -4673,6 +5879,12 @@
             "state" : "machine_translated",
             "value" : "Analyse de « %@ »…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Analisi di «%@»…"
+          }
         }
       }
     },
@@ -4694,6 +5906,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Mode de l’inspecteur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Modalità Inspector"
           }
         }
       }
@@ -4719,6 +5937,12 @@
             "state" : "machine_translated",
             "value" : "Inspecteur : Personnalisation"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Inspector: Personalizzazione"
+          }
         }
       }
     },
@@ -4740,6 +5964,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Inspecteur : Aperçu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Inspector: Anteprima"
           }
         }
       }
@@ -4765,6 +5995,12 @@
             "state" : "machine_translated",
             "value" : "Inspecteur : Règles"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Inspector: Regole"
+          }
         }
       }
     },
@@ -4786,6 +6022,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Installer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Installa"
           }
         }
       }
@@ -4809,6 +6051,12 @@
             "state" : "machine_translated",
             "value" : "L’installation de l’outil en ligne de commande est disponible dans la version téléchargeable."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’installazione dello strumento a riga di comando è disponibile nella versione scaricabile."
+          }
         }
       }
     },
@@ -4830,6 +6078,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Installer…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Installa…"
           }
         }
       }
@@ -4855,6 +6109,12 @@
             "state" : "machine_translated",
             "value" : "Entrelacé"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Interlacciata"
+          }
         }
       }
     },
@@ -4878,6 +6138,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Karaoké"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Karaoke"
           }
         }
       }
@@ -4903,6 +6169,12 @@
             "state" : "machine_translated",
             "value" : "Les pistes audio autres que celle par défaut, comme les commentaires et les mixages réduits, ainsi que les sous-titres signalés comme commentaires, sont conservées."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mantieni l’audio non predefinito, come commenti e downmix, e i sottotitoli contrassegnati come commento."
+          }
         }
       }
     },
@@ -4924,6 +6196,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Conserver l’original"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mantieni originale"
           }
         }
       }
@@ -4949,6 +6227,12 @@
             "state" : "machine_translated",
             "value" : "Les pistes sans métadonnées de langue sont conservées."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mantieni le tracce prive di metadati sulla lingua."
+          }
         }
       }
     },
@@ -4970,6 +6254,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Conserver les pistes sans langue"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mantieni tracce senza lingua"
           }
         }
       }
@@ -5100,6 +6390,40 @@
               }
             }
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tracce mantenute: %1$lld su %#@tracks@"
+          },
+          "substitutions" : {
+            "tracks" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -5123,6 +6447,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Les pistes sont conservées par ordre de priorité ; les autres sont retirées. L’audio de la première langue devient la piste par défaut."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le tracce vengono mantenute in ordine di priorità; le altre vengono rimosse. L’audio della prima lingua diventa la traccia predefinita."
           }
         }
       }
@@ -5148,6 +6478,12 @@
             "state" : "machine_translated",
             "value" : "Langue"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lingua"
+          }
         }
       }
     },
@@ -5171,6 +6507,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Langues"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lingue"
           }
         }
       }
@@ -5196,6 +6538,12 @@
             "state" : "machine_translated",
             "value" : "Dernière vérification"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ultimo controllo"
+          }
         }
       }
     },
@@ -5217,6 +6565,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Licence…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Licenza…"
           }
         }
       }
@@ -5242,6 +6596,12 @@
             "state" : "machine_translated",
             "value" : "Paroles"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Testo"
+          }
         }
       }
     },
@@ -5260,6 +6620,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "MP4 Timed Text"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "MP4 Timed Text"
@@ -5288,6 +6654,12 @@
             "state" : "machine_translated",
             "value" : "Métadonnées"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Metadati"
+          }
         }
       }
     },
@@ -5312,6 +6684,12 @@
             "state" : "machine_translated",
             "value" : "Codecs manquants ?"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec mancanti?"
+          }
         }
       }
     },
@@ -5330,6 +6708,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mono"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Mono"
@@ -5356,6 +6740,12 @@
             "state" : "machine_translated",
             "value" : "Movie"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Movie"
+          }
         }
       }
     },
@@ -5374,6 +6764,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Movie.mkv"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Movie.mkv"
@@ -5402,6 +6798,12 @@
             "state" : "machine_translated",
             "value" : "Multicouche"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Multilivello"
+          }
         }
       }
     },
@@ -5426,6 +6828,12 @@
             "state" : "machine_translated",
             "value" : "Mon préréglage %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La mia preimpostazione %@"
+          }
         }
       }
     },
@@ -5447,6 +6855,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Nom"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nome"
           }
         }
       }
@@ -5472,6 +6886,12 @@
             "state" : "machine_translated",
             "value" : "Les noms ressemblent à « %@ »"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "I nomi hanno questo aspetto: «%@»"
+          }
         }
       }
     },
@@ -5493,6 +6913,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Nécessite votre attention"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Richiede attenzione"
           }
         }
       }
@@ -5518,6 +6944,12 @@
             "state" : "machine_translated",
             "value" : "Jamais"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mai"
+          }
         }
       }
     },
@@ -5539,6 +6971,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Nouvelle file d’attente"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nuova coda"
           }
         }
       }
@@ -5562,6 +7000,12 @@
             "state" : "machine_translated",
             "value" : "Les nouvelles files d’attente partent de cette destination. Celle de chaque file d’attente se définit depuis sa fenêtre."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le nuove code usano questa destinazione. La destinazione di ogni coda si imposta dalla sua finestra."
+          }
         }
       }
     },
@@ -5584,6 +7028,12 @@
             "state" : "machine_translated",
             "value" : "À côté de chaque source"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Accanto a ogni sorgente"
+          }
         }
       }
     },
@@ -5605,6 +7055,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aucun fichier sélectionné"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nessun file selezionato"
           }
         }
       }
@@ -5630,6 +7086,12 @@
             "state" : "machine_translated",
             "value" : "Aucun préréglage sélectionné"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nessuna preimpostazione selezionata"
+          }
         }
       }
     },
@@ -5651,6 +7113,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aucun ffmpeg exécutable à l’emplacement « %@ »"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nessun ffmpeg eseguibile in «%@»"
           }
         }
       }
@@ -5676,6 +7144,12 @@
             "state" : "machine_translated",
             "value" : "Non diégétique"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non diegetico"
+          }
         }
       }
     },
@@ -5699,6 +7173,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Aucun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nessuno"
           }
         }
       }
@@ -5724,6 +7204,12 @@
             "state" : "machine_translated",
             "value" : "Non analysé"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non analizzato"
+          }
         }
       }
     },
@@ -5748,6 +7234,12 @@
             "state" : "machine_translated",
             "value" : "Ce n’est pas un code de langue ISO 639-2 reconnu."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non è un codice lingua ISO 639-2 riconosciuto."
+          }
         }
       }
     },
@@ -5770,6 +7262,12 @@
             "state" : "machine_translated",
             "value" : "Non choisi"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non scelta"
+          }
         }
       }
     },
@@ -5791,6 +7289,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Non installé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non installato"
           }
         }
       }
@@ -5815,6 +7319,12 @@
             "state" : "machine_translated",
             "value" : "Enregistrement impossible"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile salvare"
+          }
         }
       }
     },
@@ -5837,6 +7347,12 @@
             "state" : "machine_translated",
             "value" : "Rien à signaler"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Niente da segnalare"
+          }
         }
       }
     },
@@ -5858,6 +7374,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Numéro"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Numero"
           }
         }
       }
@@ -5882,6 +7404,12 @@
             "state" : "machine_translated",
             "value" : "Ouvrez le Journal d’activité pour en connaître la raison."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Apri il Registro attività per scoprire il motivo."
+          }
         }
       }
     },
@@ -5900,6 +7428,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Opus"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Opus"
@@ -5928,6 +7462,12 @@
             "state" : "machine_translated",
             "value" : "Original"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Originale"
+          }
         }
       }
     },
@@ -5949,6 +7489,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Nom d’origine"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nome originale"
           }
         }
       }
@@ -5974,6 +7520,12 @@
             "state" : "machine_translated",
             "value" : "Autre"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Altro"
+          }
         }
       }
     },
@@ -5998,6 +7550,12 @@
             "state" : "machine_translated",
             "value" : "Autre…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Altro…"
+          }
         }
       }
     },
@@ -6019,6 +7577,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Sortie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Output"
           }
         }
       }
@@ -6043,6 +7607,12 @@
             "state" : "machine_translated",
             "value" : "Taille après"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dimens. finale"
+          }
         }
       }
     },
@@ -6065,6 +7635,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Pistes après"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tracce finali"
           }
         }
       }
@@ -6090,6 +7666,12 @@
             "state" : "machine_translated",
             "value" : "Nom de sortie"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nome di output"
+          }
         }
       }
     },
@@ -6113,6 +7695,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Format du nom de sortie"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Formato del nome di output"
           }
         }
       }
@@ -6144,6 +7732,12 @@
             "state" : "machine_translated",
             "value" : "Le flux de sortie %1$@ (%2$@) ne contient aucun paquet."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lo stream di output %1$@ (%2$@) non contiene pacchetti."
+          }
         }
       }
     },
@@ -6167,6 +7761,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "La sortie n’aurait aucun audio. Les règles actuelles ne sélectionnent aucune piste audio."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’output non avrebbe audio. Le regole attuali non selezionano nessuna traccia audio."
           }
         }
       }
@@ -6192,6 +7792,12 @@
             "state" : "machine_translated",
             "value" : "Progression globale"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Avanzamento complessivo"
+          }
         }
       }
     },
@@ -6216,6 +7822,12 @@
             "state" : "machine_translated",
             "value" : "Personnalisation"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Personalizzazione"
+          }
         }
       }
     },
@@ -6237,6 +7849,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Paquets"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pacchetti"
           }
         }
       }
@@ -6262,6 +7880,12 @@
             "state" : "machine_translated",
             "value" : "Format de pixel"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Formato pixel"
+          }
         }
       }
     },
@@ -6283,6 +7907,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Codecs préférés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec preferiti"
           }
         }
       }
@@ -6306,6 +7936,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Préréglage"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Preimpostazione"
           }
         }
       }
@@ -6331,6 +7967,12 @@
             "state" : "machine_translated",
             "value" : "Nom du préréglage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nome della preimpostazione"
+          }
         }
       }
     },
@@ -6354,6 +7996,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Préréglages"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Preimpostazioni"
           }
         }
       }
@@ -6379,6 +8027,12 @@
             "state" : "machine_translated",
             "value" : "Les préréglages ne sont pas synchronisés : iCloud n’est pas disponible sur ce Mac."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le preimpostazioni non vengono sincronizzate – iCloud non è disponibile su questo Mac."
+          }
         }
       }
     },
@@ -6402,6 +8056,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Les préréglages ne sont pas synchronisés : iCloud a signalé une erreur."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le preimpostazioni non vengono sincronizzate – iCloud ha segnalato un errore."
           }
         }
       }
@@ -6427,6 +8087,12 @@
             "state" : "machine_translated",
             "value" : "Les préréglages ne sont pas synchronisés : aucun compte iCloud n’est connecté."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le preimpostazioni non vengono sincronizzate – non è stato effettuato l’accesso a nessun account iCloud."
+          }
         }
       }
     },
@@ -6449,6 +8115,12 @@
             "state" : "machine_translated",
             "value" : "Aperçu"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Anteprima"
+          }
         }
       }
     },
@@ -6470,6 +8142,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Problème résolu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Problema risolto"
           }
         }
       }
@@ -6495,6 +8173,12 @@
             "state" : "machine_translated",
             "value" : "Le traitement a été annulé."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’elaborazione è stata annullata."
+          }
         }
       }
     },
@@ -6519,6 +8203,12 @@
             "state" : "machine_translated",
             "value" : "Progressif"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Progressiva"
+          }
         }
       }
     },
@@ -6540,6 +8230,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "File d’attente"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Coda"
           }
         }
       }
@@ -6563,6 +8259,12 @@
             "state" : "machine_translated",
             "value" : "File d’attente %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Coda %@"
+          }
         }
       }
     },
@@ -6584,6 +8286,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Nom de la file d’attente"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nome della coda"
           }
         }
       }
@@ -6607,6 +8315,12 @@
             "state" : "machine_translated",
             "value" : "Files d’attente"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Code"
+          }
         }
       }
     },
@@ -6628,6 +8342,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Les files d’attente qui utilisent déjà ces règles les conservent."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le code che usano già queste regole le mantengono."
           }
         }
       }
@@ -6653,6 +8373,12 @@
             "state" : "machine_translated",
             "value" : "Réanalyser"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rianalizza"
+          }
         }
       }
     },
@@ -6676,6 +8402,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Réanalyser la sélection"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rianalizza selezione"
           }
         }
       }
@@ -6701,6 +8433,12 @@
             "state" : "machine_translated",
             "value" : "Réanalysez « %@ » pour lire ses pistes."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rianalizza «%@» per leggerne le tracce."
+          }
         }
       }
     },
@@ -6725,6 +8463,12 @@
             "state" : "machine_translated",
             "value" : "Réanalyse de ce fichier…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rianalisi di questo file in corso…"
+          }
         }
       }
     },
@@ -6746,6 +8490,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Lecture"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lettura"
           }
         }
       }
@@ -6771,6 +8521,12 @@
             "state" : "machine_translated",
             "value" : "Lecture / Écriture"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lettura / Scrittura"
+          }
         }
       }
     },
@@ -6794,6 +8550,12 @@
             "state" : "machine_translated",
             "value" : "Lire « Fonctionnement de SubTrack »"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Leggi «Come funziona SubTrack»"
+          }
         }
       }
     },
@@ -6816,6 +8578,12 @@
             "state" : "machine_translated",
             "value" : "Lecture de ffmpeg…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lettura di ffmpeg in corso…"
+          }
         }
       }
     },
@@ -6837,6 +8605,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Lecture de la version…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lettura della versione in corso…"
           }
         }
       }
@@ -6862,6 +8636,12 @@
             "state" : "machine_translated",
             "value" : "Lit %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Legge %@"
+          }
         }
       }
     },
@@ -6883,6 +8663,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Prêt"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pronto"
           }
         }
       }
@@ -6906,6 +8692,12 @@
             "state" : "machine_translated",
             "value" : "Retirer"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rimuovi"
+          }
         }
       }
     },
@@ -6927,6 +8719,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Retirer la sélection"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rimuovi selezione"
           }
         }
       }
@@ -6950,6 +8748,12 @@
             "state" : "machine_translated",
             "value" : "Retirer de la file d’attente"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rimuovi dalla coda"
+          }
         }
       }
     },
@@ -6972,6 +8776,12 @@
             "state" : "machine_translated",
             "value" : "Renommer"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rinomina"
+          }
         }
       }
     },
@@ -6993,6 +8803,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Renommer la file d’attente…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rinomina coda…"
           }
         }
       }
@@ -7018,6 +8834,12 @@
             "state" : "machine_translated",
             "value" : "Réorganiser"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Riordina"
+          }
         }
       }
     },
@@ -7039,6 +8861,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Réorganiser la file d’attente"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Riordina coda"
           }
         }
       }
@@ -7064,6 +8892,12 @@
             "state" : "machine_translated",
             "value" : "Signaler un problème…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Segnala un problema…"
+          }
         }
       }
     },
@@ -7088,6 +8922,12 @@
             "state" : "machine_translated",
             "value" : "Réinitialiser les versions ignorées"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Reimposta versioni saltate"
+          }
         }
       }
     },
@@ -7109,6 +8949,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Revenir aux règles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Torna alle regole"
           }
         }
       }
@@ -7132,6 +8978,12 @@
             "state" : "machine_translated",
             "value" : "Restaurez le fichier, ou retirez-le de la file d’attente et ajoutez-le de nouveau."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ripristina il file oppure rimuovilo dalla coda e aggiungilo di nuovo."
+          }
         }
       }
     },
@@ -7153,6 +9005,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Afficher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mostra"
           }
         }
       }
@@ -7176,6 +9034,12 @@
             "state" : "machine_translated",
             "value" : "Afficher la sortie dans le Finder"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mostra output nel Finder"
+          }
         }
       }
     },
@@ -7197,6 +9061,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Afficher la source dans le Finder"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mostra sorgente nel Finder"
           }
         }
       }
@@ -7227,6 +9097,12 @@
             "state" : "machine_translated",
             "value" : "Afficher dans le Finder"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mostra nel Finder"
+          }
         }
       }
     },
@@ -7248,6 +9124,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Rôle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ruolo"
           }
         }
       }
@@ -7273,6 +9155,12 @@
             "state" : "machine_translated",
             "value" : "Règles"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Regole"
+          }
         }
       }
     },
@@ -7294,6 +9182,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Exécution terminée – %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Esecuzione terminata – %@"
           }
         }
       }
@@ -7317,6 +9211,12 @@
             "state" : "machine_translated",
             "value" : "Exécution démarrée"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Esecuzione avviata"
+          }
         }
       }
     },
@@ -7339,6 +9239,12 @@
             "state" : "machine_translated",
             "value" : "Les exécutions, et tout ce qui s’y passe mal, apparaîtront ici."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Qui verranno mostrate le esecuzioni e tutto ciò che va storto al loro interno."
+          }
         }
       }
     },
@@ -7360,6 +9266,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Format d’échantillon"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Formato campione"
           }
         }
       }
@@ -7385,6 +9297,12 @@
             "state" : "machine_translated",
             "value" : "Fréquence d’échantillonnage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Frequenza di campionamento"
+          }
         }
       }
     },
@@ -7409,6 +9327,12 @@
             "state" : "machine_translated",
             "value" : "Enregistrer"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Salva"
+          }
         }
       }
     },
@@ -7430,6 +9354,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Enregistrer comme préréglage…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Salva come preimpostazione…"
           }
         }
       }
@@ -7453,6 +9383,12 @@
             "state" : "machine_translated",
             "value" : "Enregistrer le préréglage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Salva preimpostazione"
+          }
         }
       }
     },
@@ -7475,6 +9411,12 @@
             "state" : "machine_translated",
             "value" : "Enregistrez les règles actuelles et le nom de sortie sous un nom que vous pourrez appliquer à n’importe quelle file d’attente."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Salva le regole attuali e il nome di output con un nome che puoi applicare a qualsiasi coda."
+          }
         }
       }
     },
@@ -7496,6 +9438,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Impossible de charger les données enregistrées : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile caricare i dati salvati: %@"
           }
         }
       }
@@ -7521,6 +9469,12 @@
             "state" : "machine_translated",
             "value" : "Enregistrement sous « %@ »"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Verrà salvato come «%@»"
+          }
         }
       }
     },
@@ -7543,6 +9497,12 @@
             "state" : "machine_translated",
             "value" : "Enregistrement à côté de chaque source"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Verranno salvati accanto a ogni sorgente"
+          }
         }
       }
     },
@@ -7564,6 +9524,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Enregistrement rétabli"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Salvataggio ripreso"
           }
         }
       }
@@ -7589,6 +9555,12 @@
             "state" : "machine_translated",
             "value" : "Balayage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scansione"
+          }
         }
       }
     },
@@ -7612,6 +9584,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Rechercher des langues"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cerca lingue"
           }
         }
       }
@@ -7637,6 +9615,12 @@
             "state" : "machine_translated",
             "value" : "Sélectionnez un préréglage pour modifier ses règles."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Seleziona una preimpostazione per modificarne le regole."
+          }
         }
       }
     },
@@ -7658,6 +9642,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Sélectionnez un seul fichier pour l’analyser."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Seleziona un solo file per analizzarlo."
           }
         }
       }
@@ -7683,6 +9673,12 @@
             "state" : "machine_translated",
             "value" : "Définir"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Imposta"
+          }
         }
       }
     },
@@ -7705,6 +9701,12 @@
             "state" : "machine_translated",
             "value" : "Définissez l’emplacement de FFmpeg dans les Réglages, ou installez-le dans votre PATH."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Imposta la posizione di FFmpeg in Impostazioni oppure installalo nel tuo PATH."
+          }
         }
       }
     },
@@ -7726,6 +9728,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Encodages simultanés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codifiche simultanee"
           }
         }
       }
@@ -7850,6 +9858,40 @@
                     "stringUnit" : {
                       "state" : "machine_translated",
                       "value" : "%arg fichier allégé"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%#@files@, risparmiati %2$@."
+          },
+          "substitutions" : {
+            "files" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file alleggerito"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file alleggeriti"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file alleggeriti"
                     }
                   }
                 }
@@ -7985,6 +10027,40 @@
               }
             }
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%#@files@."
+          },
+          "substitutions" : {
+            "files" : {
+              "argNum" : 1,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file alleggerito"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file alleggeriti"
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg file alleggeriti"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -8013,6 +10089,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Échec de l’allègement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Alleggerimento non riuscito"
           }
         }
       }
@@ -8043,6 +10125,12 @@
             "state" : "machine_translated",
             "value" : "Allègement terminé"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Alleggerimento completato"
+          }
         }
       }
     },
@@ -8072,6 +10160,12 @@
             "state" : "machine_translated",
             "value" : "Allègement terminé avec des erreurs"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Alleggerimento completato con errori"
+          }
         }
       }
     },
@@ -8096,6 +10190,12 @@
             "state" : "machine_translated",
             "value" : "Source manquante"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sorgente mancante"
+          }
         }
       }
     },
@@ -8117,6 +10217,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Index source"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indice nella sorgente"
           }
         }
       }
@@ -8140,6 +10246,12 @@
             "state" : "machine_translated",
             "value" : "La source est manquante"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La sorgente è mancante"
+          }
         }
       }
     },
@@ -8162,6 +10274,12 @@
             "state" : "machine_translated",
             "value" : "Démarrer"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Avvia"
+          }
         }
       }
     },
@@ -8183,6 +10301,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Tout démarrer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Avvia tutto"
           }
         }
       }
@@ -8208,6 +10332,12 @@
             "state" : "machine_translated",
             "value" : "Démarrer la sélection"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Avvia selezione"
+          }
         }
       }
     },
@@ -8230,6 +10360,12 @@
             "state" : "machine_translated",
             "value" : "Statut"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Stato"
+          }
         }
       }
     },
@@ -8251,6 +10387,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Stéréo"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Stereo"
           }
         }
       }
@@ -8276,6 +10418,12 @@
             "state" : "machine_translated",
             "value" : "Image fixe"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Immagine fissa"
+          }
         }
       }
     },
@@ -8300,6 +10448,12 @@
             "state" : "machine_translated",
             "value" : "Rip de service de streaming – Anglais uniquement"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rip da streaming – Solo inglese"
+          }
         }
       }
     },
@@ -8322,6 +10476,12 @@
             "state" : "machine_translated",
             "value" : "SubRip (SRT)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubRip (SRT)"
+          }
         }
       }
     },
@@ -8340,6 +10500,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "SubTrack"
@@ -8368,6 +10534,12 @@
             "state" : "machine_translated",
             "value" : "Site web de SubTrack"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sito web di SubTrack"
+          }
         }
       }
     },
@@ -8390,6 +10562,12 @@
             "state" : "machine_translated",
             "value" : "Icône de l’app SubTrack"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Icona dell’app SubTrack"
+          }
         }
       }
     },
@@ -8411,6 +10589,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "SubTrack inclut FFmpeg, compilé avec libx264 et libx265 et placé sous la licence publique générale GNU, version 2 ou ultérieure (GPL v2+). Ce logiciel utilise du code du projet FFmpeg sous licence GPLv2+."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack include FFmpeg, compilato con libx264 e libx265 e concesso in licenza secondo la GNU General Public License, versione 2 o successiva (GPL v2+). Questo software utilizza codice del progetto FFmpeg con licenza GPLv2+."
           }
         }
       }
@@ -8436,6 +10620,12 @@
             "state" : "machine_translated",
             "value" : "SubTrack inclut FFmpeg, compilé sous la licence publique générale limitée GNU, version 2.1 ou ultérieure (LGPL v2.1+), sans aucun composant sous licence GPL. L’encodage vidéo utilise Apple VideoToolbox. Ce logiciel utilise des bibliothèques du projet FFmpeg sous licence LGPLv2.1."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack include FFmpeg, compilato secondo la GNU Lesser General Public License, versione 2.1 o successiva (LGPL v2.1+), senza componenti con licenza GPL. La codifica video utilizza Apple VideoToolbox. Questo software utilizza librerie del progetto FFmpeg con licenza LGPLv2.1."
+          }
         }
       }
     },
@@ -8457,6 +10647,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "SubTrack n’a pas l’autorisation d’ouvrir « %@ »."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack non ha l’autorizzazione per aprire «%@»."
           }
         }
       }
@@ -8482,6 +10678,12 @@
             "state" : "machine_translated",
             "value" : "SubTrack n’a pas l’autorisation d’enregistrer dans « %@ »."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack non ha l’autorizzazione per salvare in «%@»."
+          }
         }
       }
     },
@@ -8503,6 +10705,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "SubTrack n’a pas l’autorisation d’écrire dans %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack non ha l’autorizzazione per scrivere in %@."
           }
         }
       }
@@ -8526,6 +10734,12 @@
             "state" : "machine_translated",
             "value" : "Sous-titres"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sottotitoli"
+          }
         }
       }
     },
@@ -8547,6 +10761,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Codecs de sous-titres"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec dei sottotitoli"
           }
         }
       }
@@ -8570,6 +10790,12 @@
             "state" : "machine_translated",
             "value" : "Formats pris en charge"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Formati supportati"
+          }
         }
       }
     },
@@ -8592,6 +10818,12 @@
             "state" : "machine_translated",
             "value" : "Ce dossier nécessite un accès administrateur – exécutez plutôt ceci."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa cartella richiede l’accesso come amministratore – esegui invece questo."
+          }
         }
       }
     },
@@ -8613,6 +10845,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "La version de FFmpeg fournie avec cet exemplaire de SubTrack est configurée avec libx264 et libx265, qui sont placés sous la licence publique générale GNU (GPL) version 2 ou ultérieure. L’œuvre combinée est donc distribuée sous GPL v2+.\n\nCe logiciel utilise du code du projet FFmpeg sous licence GPLv2+.\n\nFFmpeg – Copyright © 2000–2026 les développeurs de FFmpeg.\nx264 – Copyright © 2003–2024 le projet x264.\nx265 – Copyright © 2013–2024 MulticoreWare, Inc.\n\nLe texte intégral de la GPL GNU v2 est disponible à l’adresse https://www.gnu.org/licenses/old-licenses/gpl-2.0.html. Le code source de FFmpeg et les informations de licence sont disponibles à l’adresse https://www.ffmpeg.org."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La build di FFmpeg inclusa in questa copia di SubTrack è configurata con libx264 e libx265, che sono concessi in licenza secondo la GNU General Public License (GPL), versione 2 o successiva. L’opera combinata viene quindi distribuita con licenza GPL v2+.\n\nQuesto software utilizza codice del progetto FFmpeg con licenza GPLv2+.\n\nFFmpeg – Copyright © 2000–2026 gli sviluppatori di FFmpeg.\nx264 – Copyright © 2003–2024 il progetto x264.\nx265 – Copyright © 2013–2024 MulticoreWare, Inc.\n\nIl testo completo della GNU GPL v2 è disponibile all’indirizzo https://www.gnu.org/licenses/old-licenses/gpl-2.0.html. Il codice sorgente di FFmpeg e le informazioni sulla licenza sono disponibili all’indirizzo https://www.ffmpeg.org."
           }
         }
       }
@@ -8638,6 +10876,12 @@
             "state" : "machine_translated",
             "value" : "Le codec utilisé lorsqu’une piste n’a pas déjà l’un des codecs préférés."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Il codec usato quando una traccia non ha già uno dei codec preferiti."
+          }
         }
       }
     },
@@ -8662,6 +10906,12 @@
             "state" : "machine_translated",
             "value" : "Le FFmpeg actuel ne peut pas encoder « %@ »."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’FFmpeg attuale non può codificare «%@»."
+          }
         }
       }
     },
@@ -8683,6 +10933,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Le FFmpeg actuel ne peut peut-être pas encoder ce codec."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’FFmpeg attuale potrebbe non essere in grado di codificare questo codec."
           }
         }
       }
@@ -8708,6 +10964,12 @@
             "state" : "machine_translated",
             "value" : "La version téléchargeable de SubTrack inclut une version plus complète de ffmpeg. Cliquez pour en savoir plus."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La versione scaricabile di SubTrack include una build di ffmpeg più completa. Fai clic per saperne di più."
+          }
         }
       }
     },
@@ -8730,6 +10992,12 @@
             "state" : "machine_translated",
             "value" : "Impossible de décoder la sortie de ffprobe : %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile decodificare l’output di ffprobe: %@"
+          }
         }
       }
     },
@@ -8751,6 +11019,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Le fichier terminé se trouve à l’emplacement « %@ »."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Il file finito si trova in «%@»."
           }
         }
       }
@@ -8781,6 +11055,12 @@
             "state" : "machine_translated",
             "value" : "Le dossier de sortie dispose de %1$@ d’espace libre, mais le fichier allégé nécessite environ %2$@."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La cartella di output ha %1$@ liberi, ma il file alleggerito richiede circa %2$@."
+          }
         }
       }
     },
@@ -8803,6 +11083,12 @@
             "state" : "machine_translated",
             "value" : "La référence enregistrée à « %@ » n’est plus valide."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Il riferimento salvato a «%@» non è più valido."
+          }
         }
       }
     },
@@ -8824,6 +11110,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Le type de flux « %@ » n’est pas reconnu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Il tipo di stream «%@» non è riconosciuto."
           }
         }
       }
@@ -8849,6 +11141,12 @@
             "state" : "machine_translated",
             "value" : "Impossible de copier l’outil : %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile copiare lo strumento: %@"
+          }
         }
       }
     },
@@ -8870,6 +11168,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "La vidéo a été encodée, mais n’a pas pu être placée à sa destination. %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Il video è stato codificato, ma non è stato possibile spostarlo nella posizione prevista. %@"
           }
         }
       }
@@ -8893,6 +11197,12 @@
             "state" : "machine_translated",
             "value" : "L’encodeur « %@ » n’est pas disponible dans le FFmpeg actuel"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’encoder «%@» non è disponibile nell’FFmpeg attuale"
+          }
         }
       }
     },
@@ -8914,6 +11224,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "L’encodeur « %@ » n’est pas disponible dans cette version."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’encoder «%@» non è disponibile in questa build."
           }
         }
       }
@@ -8939,6 +11255,12 @@
             "state" : "machine_translated",
             "value" : "L’exécutable « %@ » est introuvable."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile trovare l’eseguibile «%@»."
+          }
         }
       }
     },
@@ -8961,6 +11283,12 @@
             "state" : "machine_translated",
             "value" : "Impossible de lire la valeur « %@ » signalée par ffprobe."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile leggere il valore «%@» segnalato da ffprobe."
+          }
         }
       }
     },
@@ -8982,6 +11310,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "FFmpeg rencontre un problème."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "C’è un problema con FFmpeg."
           }
         }
       }
@@ -9007,6 +11341,12 @@
             "state" : "machine_translated",
             "value" : "Cette version n’inclut pas l’outil subtrack."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa build non include lo strumento subtrack."
+          }
         }
       }
     },
@@ -9031,6 +11371,12 @@
             "state" : "machine_translated",
             "value" : "Ce codec ne figure pas dans la liste des codecs décodables de la version actuelle de FFmpeg."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questo codec non è nell’elenco dei codec decodificabili della build di FFmpeg attuale."
+          }
         }
       }
     },
@@ -9052,6 +11398,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ce dossier contient ffmpeg, mais pas ffprobe"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa cartella contiene ffmpeg ma non ffprobe"
           }
         }
       }
@@ -9075,6 +11427,12 @@
             "state" : "machine_translated",
             "value" : "Ce dossier contient ffprobe, mais pas ffmpeg"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa cartella contiene ffprobe ma non ffmpeg"
+          }
         }
       }
     },
@@ -9096,6 +11454,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ce dossier doit contenir ffmpeg et ffprobe"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa cartella deve contenere ffmpeg e ffprobe"
           }
         }
       }
@@ -9119,6 +11483,12 @@
             "state" : "machine_translated",
             "value" : "Cette file d’attente contient un travail inachevé qui sera annulé."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Questa coda contiene lavoro non completato che verrà annullato."
+          }
         }
       }
     },
@@ -9140,6 +11510,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Heure"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ora"
           }
         }
       }
@@ -9165,6 +11541,12 @@
             "state" : "machine_translated",
             "value" : "Miniatures temporelles"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Miniature temporizzate"
+          }
         }
       }
     },
@@ -9189,6 +11571,12 @@
             "state" : "machine_translated",
             "value" : "Titre"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Titolo"
+          }
         }
       }
     },
@@ -9210,6 +11598,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Afficher/masquer l’inspecteur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mostra/nascondi Inspector"
           }
         }
       }
@@ -9235,6 +11629,12 @@
             "state" : "machine_translated",
             "value" : "Les balises remplacent les informations propres à chaque fichier. L’extension d’origine est toujours conservée."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "I segnaposto sostituiscono i dettagli propri di ogni file. L’estensione originale viene sempre mantenuta."
+          }
         }
       }
     },
@@ -9258,6 +11658,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Piste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Traccia"
           }
         }
       }
@@ -9283,6 +11689,12 @@
             "state" : "machine_translated",
             "value" : "Sélection des pistes"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Selezione delle tracce"
+          }
         }
       }
     },
@@ -9307,6 +11719,12 @@
             "state" : "machine_translated",
             "value" : "Les pistes qui utilisent déjà l’un de ces codecs sont conservées telles quelles ; toutes les autres sont transcodées vers le codec cible ci-dessous."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le tracce che usano già uno di questi vengono mantenute così come sono; tutte le altre vengono transcodificate nel codec di destinazione indicato sotto."
+          }
         }
       }
     },
@@ -9329,6 +11747,12 @@
             "state" : "machine_translated",
             "value" : "Codecs cibles du transcodage"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec di destinazione della transcodifica"
+          }
         }
       }
     },
@@ -9347,6 +11771,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "TrueHD"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "TrueHD"
@@ -9375,6 +11805,12 @@
             "state" : "machine_translated",
             "value" : "Type"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tipo"
+          }
         }
       }
     },
@@ -9397,6 +11833,12 @@
             "state" : "machine_translated",
             "value" : "Inconnue"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sconosciuta"
+          }
         }
       }
     },
@@ -9418,6 +11860,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Code non reconnu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codice non riconosciuto"
           }
         }
       }
@@ -9443,6 +11891,12 @@
             "state" : "machine_translated",
             "value" : "Sans langue"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Senza lingua"
+          }
         }
       }
     },
@@ -9466,6 +11920,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Mises à jour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aggiornamenti"
           }
         }
       }
@@ -9491,6 +11951,12 @@
             "state" : "machine_translated",
             "value" : "Utiliser un nom personnalisé :"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Usa nome personalizzato:"
+          }
         }
       }
     },
@@ -9512,6 +11978,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Utiliser le nom par défaut"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Usa nome predefinito"
           }
         }
       }
@@ -9535,6 +12007,12 @@
             "state" : "machine_translated",
             "value" : "L’utilisation d’un ffmpeg personnalisé est disponible dans la version téléchargeable."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’uso di un ffmpeg personalizzato è disponibile nella versione scaricabile."
+          }
         }
       }
     },
@@ -9556,6 +12034,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Version"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Versione"
           }
         }
       }
@@ -9585,6 +12069,12 @@
             "state" : "machine_translated",
             "value" : "Version %1$@ (%2$@)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Versione %1$@ (%2$@)"
+          }
         }
       }
     },
@@ -9607,6 +12097,12 @@
             "state" : "machine_translated",
             "value" : "Vidéo"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Video"
+          }
         }
       }
     },
@@ -9628,6 +12124,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Codecs vidéo"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Codec video"
           }
         }
       }
@@ -9653,6 +12155,12 @@
             "state" : "machine_translated",
             "value" : "Audiodescription"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Audiodescrizione"
+          }
         }
       }
     },
@@ -9674,6 +12182,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "En attente"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "In attesa"
           }
         }
       }
@@ -9699,6 +12213,12 @@
             "state" : "machine_translated",
             "value" : "Rip Web / YouTube – Anglais uniquement"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rip Web / YouTube – Solo inglese"
+          }
         }
       }
     },
@@ -9723,6 +12243,12 @@
             "state" : "machine_translated",
             "value" : "Chaque semaine"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ogni settimana"
+          }
         }
       }
     },
@@ -9745,6 +12271,12 @@
             "state" : "machine_translated",
             "value" : "Pourquoi n’est-ce pas disponible ?"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Perché non è disponibile?"
+          }
         }
       }
     },
@@ -9766,6 +12298,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Écriture"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scrittura"
           }
         }
       }
@@ -9791,6 +12329,12 @@
             "state" : "machine_translated",
             "value" : "Écrit %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Scrive %@"
+          }
         }
       }
     },
@@ -9815,6 +12359,12 @@
             "state" : "machine_translated",
             "value" : "Impossible d’enregistrer vos modifications : %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non è stato possibile salvare le modifiche: %@"
+          }
         }
       }
     },
@@ -9837,6 +12387,12 @@
             "state" : "machine_translated",
             "value" : "`subtrack` – allège des vidéos depuis le Terminal. Nécessite ffmpeg dans votre PATH, ou indiquez `--ffmpeg`."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "`subtrack` – alleggerisci i video da Terminale. Richiede ffmpeg nel tuo PATH, oppure passa `--ffmpeg`."
+          }
         }
       }
     },
@@ -9857,6 +12413,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "audio"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "audio"
@@ -9885,6 +12447,12 @@
             "state" : "machine_translated",
             "value" : "code"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "codice"
+          }
         }
       }
     },
@@ -9905,6 +12473,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "codec"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "codec"
@@ -9931,6 +12505,12 @@
             "state" : "machine_translated",
             "value" : "Impossible de démarrer ffmpeg : %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossibile avviare ffmpeg: %@"
+          }
         }
       }
     },
@@ -9953,6 +12533,12 @@
             "state" : "machine_translated",
             "value" : "ffmpeg s’est arrêté avec le code %@."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "ffmpeg è terminato con codice %@."
+          }
         }
       }
     },
@@ -9974,6 +12560,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "ffprobe s’est arrêté avec le code %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "ffprobe è terminato con codice %@."
           }
         }
       }
@@ -10005,6 +12597,12 @@
             "state" : "machine_translated",
             "value" : "ffprobe s’est arrêté avec le code %1$@ : %2$@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "ffprobe è terminato con codice %1$@: %2$@"
+          }
         }
       }
     },
@@ -10027,6 +12625,12 @@
             "state" : "machine_translated",
             "value" : "ffprobe n’a renvoyé aucune donnée pour « %@ »."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "ffprobe non ha restituito dati per «%@»."
+          }
         }
       }
     },
@@ -10048,6 +12652,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "macOS n’a pas autorisé la lecture de « %@ »."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "macOS non ha consentito la lettura di «%@»."
           }
         }
       }
@@ -10072,6 +12682,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "nom"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "nome"
           }
         }
       }
@@ -10168,6 +12784,30 @@
               }
             }
           }
+        },
+        "it" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld file alleggerito"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld file alleggeriti"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld file alleggeriti"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -10192,6 +12832,12 @@
             "state" : "machine_translated",
             "value" : "sous-titres"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "sottotitoli"
+          }
         }
       }
     },
@@ -10214,6 +12860,12 @@
             "state" : "machine_translated",
             "value" : "vidéo"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "video"
+          }
         }
       }
     },
@@ -10233,6 +12885,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "~%@"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "~%@"
@@ -10261,6 +12919,12 @@
             "state" : "machine_translated",
             "value" : "· les noms ressemblent à « %@ »"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "· i nomi hanno questo aspetto: «%@»"
+          }
         }
       }
     },
@@ -10282,6 +12946,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "« %@ » ne contient aucune piste vidéo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "«%@» non contiene nessuna traccia video."
           }
         }
       }
@@ -10307,6 +12977,12 @@
             "state" : "machine_translated",
             "value" : "« %@ » est introuvable ou a été déplacé."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "«%@» è mancante o è stato spostato."
+          }
         }
       }
     },
@@ -10331,6 +13007,12 @@
             "state" : "machine_translated",
             "value" : "« %@ » ne se trouve plus à l’endroit d’où il a été ajouté."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "«%@» non si trova più nella posizione da cui è stato aggiunto."
+          }
         }
       }
     },
@@ -10353,6 +13035,12 @@
             "state" : "machine_translated",
             "value" : "« %@ » écraserait son propre fichier source."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "«%@» sovrascriverebbe il proprio file sorgente."
+          }
         }
       }
     },
@@ -10371,6 +13059,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "→ %@"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "→ %@"

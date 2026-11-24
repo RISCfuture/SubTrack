@@ -8,7 +8,7 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
 ### Added
 
-- SubTrack is now available in German, French and Spanish.
+- SubTrack is now available in German, French, Spanish and Italian.
 
 ## 2.0.1
 

@@ -1,0 +1,25 @@
+Elimina le tracce che non ti servono. Conserva tutto il resto, bit per bit.
+
+SubTrack toglie dai tuoi file video le tracce audio e i sottotitoli che non vuoi copiandoli, senza ricodificarli: il rip di un Blu-ray di due ore si alleggerisce in pochi secondi, senza alcuna perdita di qualità.
+
+IN CODA, SCEGLI, COPIA
+• Trascina i film, o un’intera cartella: SubTrack trova tutti i video al suo interno.
+• Le regole scelgono le tracce: tieni le lingue che parli, conserva o elimina i commenti e decidi cosa fare delle tracce senza lingua. La prima lingua dell’elenco diventa l’audio predefinito.
+• Tutto ciò che conservi viene copiato in un nuovo file, bit per bit. Stesso contenitore, stessa qualità, una frazione delle dimensioni.
+
+IL PIANO, PRIMA DELL’ESECUZIONE
+L’Inspector elenca ogni traccia di un file e cosa farà SubTrack: conservarla, eliminarla o convertirla. Puoi personalizzare tutto, file per file e traccia per traccia.
+
+PENSATO PER I LOTTI
+• Tutte le code che vuoi, ciascuna con i propri file, le proprie regole, la propria preimpostazione e la propria cartella di destinazione.
+• Preimpostazioni di partenza per rip di Blu-ray, streaming e web. Salva le tue: si sincronizzano con gli altri Mac tramite il tuo account iCloud.
+• Formati dei nomi di output, avanzamento per file e complessivo, avanzamento nel Dock, una notifica al termine di una coda e un Registro attività quando ti servono i dettagli.
+• Durante la codifica il Mac resta attivo, così un lotto notturno arriva fino in fondo.
+
+TRANSCODIFICA SOLO SE NECESSARIO
+Indica i codec che ti vanno bene. Se una traccia che conservi non è tra questi, SubTrack converte solo quella traccia, in HEVC o H.264 con l’encoder hardware del tuo Mac oppure, per l’audio, in AAC, AC-3, E-AC-3, FLAC, ALAC od Opus, e te lo dice prima di iniziare.
+
+I TUOI FILE RESTANO TUOI
+I tuoi video non lasciano mai il Mac. SubTrack include una propria build LGPL di FFmpeg, compilata senza funzioni di rete, quindi non c’è nulla da installare. Niente account, niente pubblicità, nessun tracciamento.
+
+Richiede macOS 27 su un Mac con chip Apple.

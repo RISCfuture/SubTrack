@@ -1,0 +1,86 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Personalizzare il piano delle tracce di un file</title>
+  <meta name="AppleTitle" content="Personalizzare il piano delle tracce di un file">
+  <meta name="description" content="Leggi il piano delle tracce di un singolo file e cambia cosa succede alle singole tracce, senza toccare il resto della coda.">
+  <meta name="keywords" content="personalizzazione, piano delle tracce, per file, mantenere, rimuovere, convertire, ripristinare, regole, Inspector, eccezione">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-overrides" id="track-overrides"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Personalizzare il piano delle tracce di un file</h1>
+
+<p>Le regole di conservazione valgono per l’intera coda. Quando un file richiede un trattamento
+diverso, per esempio una traccia etichettata male o un documentario di cui vuoi tenere il commento,
+puoi intervenire solo su quel file.</p>
+
+<a name="track-plan" id="track-plan"></a>
+<h2>Leggere il piano</h2>
+
+<ol>
+  <li>Seleziona un file nella coda.</li>
+  <li>Mostra l’Inspector (<kbd>⌥⌘I</kbd>) e scegli la scheda <strong>Personalizzazione</strong> (<kbd>⌥⌘2</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-override-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-override.webp" width="300" height="792" alt="La scheda Personalizzazione dell’Inspector per un file: un selettore di tracce sopra codec, lingua, titolo e canali della traccia selezionata, e i controlli per includerla o convertirla.">
+  </picture>
+  <figcaption>Tutti i dati della traccia selezionata e i due controlli che ne cambiano la sorte.</figcaption>
+</figure>
+
+<p>Il menu delle tracce elenca tutte le tracce del file. Le voci attenuate sono quelle che verranno
+rimosse; le altre verranno mantenute. Scegli una traccia per vedere cosa le succederà e perché.</p>
+
+<p>Per leggere l’intero file in una volta anziché una traccia alla volta, consulta
+<a href="preview.html#track-preview">Leggere il piano completo di un file</a>. È il modo più rapido
+per verificare che le regole facciano ciò che intendevi prima di applicarle a un’intera coda.</p>
+
+<h2>Modificare una traccia</h2>
+
+<p>Scegli una traccia, poi decidi cosa farne: mantenerla, rimuoverla o convertirla in un codec
+specifico.</p>
+
+<p><strong>Una cosa da sapere prima di procedere.</strong> Modificando una sola traccia, l’intero file
+passa a un piano proprio. Tutte le altre tracce restano fissate esattamente come le avevano stabilite le regole in quel
+momento e, da allora in poi, il file non segue più le regole della coda. Se in seguito modifichi le regole, questo
+file non si aggiornerà.</p>
+
+<p>Di solito è ciò che vuoi, dato che hai scelto il file di proposito, ma significa che una
+personalizzazione impostata tempo fa e dimenticata ignorerà, senza avvisarti, le modifiche successive alle
+regole.</p>
+
+<a name="override-reset" id="override-reset"></a>
+<h2>Tornare alle regole</h2>
+
+<p>Fai clic su <strong>Torna alle regole</strong>. Il file abbandona il proprio piano e segue di nuovo
+le regole della coda, comprese le modifiche fatte nel frattempo. Il pulsante compare solo quando un
+file ha davvero una personalizzazione, quindi serve anche a capire se ne è impostata una.</p>
+
+<h2>Dare a un file un nome diverso</h2>
+
+<p>La stessa scheda imposta un nome di output solo per questo file, al posto del formato del nome di output
+della coda. Per maggiori informazioni, consulta
+<a href="output-names.html#output-names">Dare un nome ai file scritti da SubTrack</a>.</p>
+
+<p class="note">Se rianalizzi un file (<strong>Coda</strong> &#9656; <strong>Rianalizza
+selezione</strong>), le sue tracce vengono lette di nuovo dal disco. Una personalizzazione che si
+riferiva a una traccia non più presente non può essere applicata, quindi controlla il piano dopo aver
+sostituito un file sorgente.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="preview.html">Leggere il piano completo di un file</a></li>
+    <li><a href="slim-rules.html">Scegliere quali lingue mantenere</a></li>
+    <li><a href="preferred-codecs.html">Impostare i codec preferiti e i codec di destinazione</a></li>
+    <li><a href="output-names.html">Dare un nome ai file scritti da SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

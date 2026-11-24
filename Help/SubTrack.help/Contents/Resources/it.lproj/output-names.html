@@ -1,0 +1,69 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Dare un nome ai file scritti da SubTrack</title>
+  <meta name="AppleTitle" content="Dare un nome ai file scritti da SubTrack">
+  <meta name="description" content="Componi i nomi dei file di output con i segnaposto e risolvi i due conflitti che impediscono l’avvio di una coda.">
+  <meta name="keywords" content="nome di output, formato, segnaposto, rinominare, alleggerito, conflitto, duplicato, sovrascrivere, estensione">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="output-names" id="output-names"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Dare un nome ai file scritti da SubTrack</h1>
+
+<p>SubTrack non modifica mai un file sorgente: ne scrive uno nuovo accanto. Il formato del nome di output stabilisce
+come si chiama il nuovo file.</p>
+
+<p>Per cambiarlo, mostra l’Inspector (<kbd>⌥⌘I</kbd>), scegli la scheda <strong>Regole</strong> e modifica
+<strong>Nome di output</strong>. Ogni coda ha il proprio.</p>
+
+<a name="name-tokens" id="name-tokens"></a>
+<h2>Comporre un nome con i segnaposto</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/output-name-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/output-name.webp" width="280" height="87" alt="Il campo del nome di output con un segnaposto Nome originale seguito dal testo «(slimmed)», con i segnaposto disponibili sotto e un’anteprima del nome del file risultante.">
+  </picture>
+  <figcaption>La riga sottostante mostra in anteprima il formato applicato a un file reale della coda.</figcaption>
+</figure>
+
+<p>Il formato è testo normale con dei segnaposto al posto dei dettagli di ciascun file:</p>
+
+<ul>
+  <li><code>{name}</code> – il nome del file sorgente, senza l’estensione.</li>
+  <li><code>{n}</code> – la posizione del file nella coda.</li>
+</ul>
+
+<p>Così <code>{name} (slimmed)</code> trasforma <code>The Third Man.mkv</code> in
+<code>The Third Man (slimmed).mkv</code>.</p>
+
+<p>L’estensione non fa mai parte del formato. Il file di output ha lo stesso contenitore della sorgente,
+quindi è SubTrack ad aggiungere l’estensione; un formato che provasse a cambiarla descriverebbe
+qualcosa che non può fare.</p>
+
+<h3>Scrivere una parentesi graffa letterale</h3>
+
+<p>Raddoppia una parentesi graffa per ottenerla così com’è: <code>{{name}}</code> produce il testo
+<code>{name}</code> invece del nome del file. Un segnaposto non riconosciuto, come <code>{title}</code>,
+viene lasciato com’è e compare identico nel nome: un errore di battitura dà un nome di file strano, ma
+non si perde nulla.</p>
+
+<h2>Quando due nomi coincidono</h2>
+
+<p>SubTrack non avvia una coda se i suoi nomi distruggerebbero un file, e i casi possibili sono due – ognuno con una soluzione rapida. Per maggiori informazioni, consulta
+<a href="name-conflicts.html">Risolvere un conflitto di nomi</a>.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="destinations.html">Scegliere dove salvare i file alleggeriti</a></li>
+    <li><a href="overrides.html">Personalizzare il piano delle tracce di un file</a></li>
+    <li><a href="running-a-queue.html">Eseguire una coda e seguirne l’avanzamento</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

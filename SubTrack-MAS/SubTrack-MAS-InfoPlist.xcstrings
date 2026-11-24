@@ -28,6 +28,12 @@
             "state" : "machine_translated",
             "value" : "SubTrack"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack"
+          }
         }
       }
     },
@@ -58,6 +64,12 @@
             "state" : "machine_translated",
             "value" : "SubTrack"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "SubTrack"
+          }
         }
       }
     },
@@ -79,6 +91,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Vidéo Matroska"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Video Matroska"
           }
         }
       }
@@ -110,6 +128,12 @@
             "state" : "machine_translated",
             "value" : "Copyright ©2026 Tim Morgan"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copyright ©2026 Tim Morgan"
+          }
         }
       }
     },
@@ -132,6 +156,12 @@
             "state" : "machine_translated",
             "value" : "Élément de file d’attente SubTrack"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Elemento della coda di SubTrack"
+          }
         }
       }
     },
@@ -153,6 +183,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Vidéo WebM"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Video WebM"
           }
         }
       }

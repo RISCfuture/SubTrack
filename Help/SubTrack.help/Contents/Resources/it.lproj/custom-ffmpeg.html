@@ -1,0 +1,73 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Usare una tua build di FFmpeg</title>
+  <meta name="AppleTitle" content="Usare una tua build di FFmpeg">
+  <meta name="description" content="Indica a SubTrack i tuoi ffmpeg e ffprobe, lascia che li trovi da solo, cosa deve contenere la cartella e come tornare indietro se le transcodifiche non riescono più.">
+  <meta name="keywords" content="ffmpeg personalizzato, ffprobe, cartella, rileva automaticamente, homebrew, macports, build statica, encoder, integrato, ripristinare, rianalizzare, sandbox, app store">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="custom-ffmpeg" id="custom-ffmpeg"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Usare una tua build di FFmpeg</h1>
+
+<p>Conviene farlo solo per un motivo preciso: ti serve un encoder che la build inclusa non ha. In
+tutti gli altri casi è meglio la build inclusa, perché è quella con cui SubTrack viene provato e
+viaggia insieme all’app.</p>
+
+<h2>Indicare una cartella a SubTrack</h2>
+
+<ol>
+  <li>Scegli <strong>SubTrack</strong> &#9656; <strong>Impostazioni</strong> (<kbd>⌘,</kbd>) e fai clic su
+    <strong>FFmpeg</strong>.</li>
+  <li>In <strong>Posizione di FFmpeg</strong>, seleziona <strong>Personalizzato…</strong>.</li>
+  <li>Fai clic su <strong>Rileva automaticamente</strong> per lasciare che SubTrack ne trovi una, oppure su
+    <strong>Scegli…</strong> per selezionare tu la cartella che contiene i file binari.</li>
+  <li>In <strong>Informazioni su FFmpeg</strong>, controlla che la versione indicata sia la build che
+    intendevi. Un avviso arancione sopra la versione, <strong>Questa cartella deve contenere ffmpeg e
+    ffprobe</strong>, significa che SubTrack non può usare la cartella; se non c’è nulla, può usarla.</li>
+</ol>
+
+<p>Servono entrambi i file binari, e l’errore più comune è indicare una cartella che ne contiene
+uno solo. SubTrack legge le tracce di un file con <code>ffprobe</code> e scrive il file alleggerito
+con <code>ffmpeg</code>; l’avviso indica quale dei due manca.</p>
+
+<h2>Lasciare che SubTrack ne trovi una</h2>
+
+<p><strong>Rileva automaticamente</strong> cerca nei punti in cui un Mac tiene di solito FFmpeg:
+Homebrew in entrambi i prefissi (<code>/opt/homebrew/bin</code> o <code>/usr/local/bin</code>),
+MacPorts (<code>/opt/local/bin</code>) e <code>/usr/bin</code>. Esegue ogni build che trova e sceglie
+la più recente. Tra due build della stessa versione prende quella che offre più encoder.</p>
+
+<p>Non consulta il <code>PATH</code> della tua shell: un’app aperta dal Finder non lo eredita, quindi
+il risultato riguarderebbe un ambiente che non vedi mai. Se la tua build si trova altrove, usa
+<strong>Scegli…</strong>.</p>
+
+<h2>Se in seguito le transcodifiche non riescono più</h2>
+
+<p>Le build differiscono molto per ciò con cui sono state compilate, e una a cui manca un encoder
+presente nella build inclusa è un modo frequente di rompere una coda che ieri funzionava. Riporta
+<strong>Posizione di FFmpeg</strong> su <strong>Integrato</strong>: così annulli tutto.</p>
+
+<p>Dopo aver cambiato build, seleziona i file e scegli <strong>Coda</strong> &#9656;
+<strong>Rianalizza selezione</strong>. I piani delle tracce visualizzati sono stati calcolati con la
+build precedente; rianalizzando, vengono ricalcolati con quella nuova.</p>
+
+<p class="note">Nella versione App Store, al posto della scelta compare un avviso fisso
+<strong>Integrato</strong>. Un’app in sandbox non può eseguire un file binario fornito dall’utente,
+quindi è una delle cose che quella versione non può fare. Per maggiori informazioni, consulta
+<a href="editions.html#editions">Scegliere tra le due versioni di SubTrack</a>.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Usare una build di FFmpeg diversa</a></li>
+    <li><a href="supported-formats.html">Vedere cosa supporta una build di FFmpeg</a></li>
+    <li><a href="unsupported-codec.html">Se un codec non può essere codificato</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

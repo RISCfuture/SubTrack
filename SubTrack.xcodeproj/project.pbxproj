@@ -617,6 +617,7 @@
 				de,
 				fr,
 				es,
+				it,
 			);
 			mainGroup = 01ECAEC8300C9E09003C1729;
 			minimizedProjectReferenceProxies = 1;
