@@ -1,0 +1,116 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Eine Reihe von Regeln als Voreinstellung sichern</title>
+  <meta name="AppleTitle" content="Eine Reihe von Regeln als Voreinstellung sichern">
+  <meta name="description" content="Verwende eine Regeln für zu behaltende Spuren in mehreren Warteschlangen und auf mehreren Macs wieder, indem du sie als Voreinstellung sicherst, und erfahre, wann das Menü „Neue Voreinstellung“ anzeigt.">
+  <meta name="keywords" content="voreinstellung, sichern, speichern, regeln, wiederverwenden, starter, blu-ray, streaming, web-rip, neue voreinstellung, löschen">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="presets" id="presets"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Eine Reihe von Regeln als Voreinstellung sichern</h1>
+
+<p>Eine Voreinstellung ist eine benannte Reihe von Regeln für zu behaltende Spuren. Wenn du herausgefunden hast, was eine
+bestimmte Art von Rip braucht, musst du es durch Sichern nie wieder herausfinden.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-presets-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-presets.webp" width="620" height="548" alt="Der Bereich „Voreinstellungen“ in den SubTrack-Einstellungen mit einer Liste der Voreinstellungen links und den Regeln der ausgewählten Voreinstellung rechts.">
+  </picture>
+  <figcaption>Einstellungen &#9656; Voreinstellungen listet deine Voreinstellungen auf und bearbeitet die Regeln der ausgewählten.</figcaption>
+</figure>
+
+<a name="saving-presets" id="saving-presets"></a>
+<h2>Die verwendeten Regeln sichern</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/preset-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/preset-menu.webp" width="1280" height="860" alt="Das geöffnete Voreinstellungsmenü oben im Inspektor mit den gesicherten Voreinstellungen über dem Eintrag „Als Voreinstellung sichern&nbsp;…“.">
+  </picture>
+  <figcaption>Jede gesicherte Voreinstellung und der Eintrag, der die verwendeten Regeln hinzufügt.</figcaption>
+</figure>
+
+<ol>
+  <li>Richte im Inspektor die gewünschten Regeln ein.</li>
+  <li>Klicke oben im Inspektor auf das Voreinstellungsmenü.</li>
+  <li>Wähle <strong>Als Voreinstellung sichern&nbsp;…</strong>, gib einen Namen ein und klicke auf
+    <strong>Sichern</strong>.</li>
+</ol>
+
+<p>Um eine anzuwenden, wähle sie im selben Menü. Die Warteschlange übernimmt ihre Regeln sofort.</p>
+
+<h2>Warum das Menü manchmal „(Neue Voreinstellung)“ anzeigt</h2>
+
+<p>Diesen Teil von SubTrack solltest du verstehen, weil er beim ersten Mal wie ein Fehler
+aussieht.</p>
+
+<p>Das Voreinstellungsmenü zeigt nicht, was du zuletzt <em>angeklickt</em> hast. Es zeigt, welcher
+Voreinstellung die aktuellen Regeln <em>entsprechen</em>. Wende „Blu-ray-Rip – Nur Englisch“ an und füge dann
+eine Sprache hinzu, und das Menü zeigt nicht mehr „Blu-ray-Rip – Nur Englisch“ – weil die Regeln nicht mehr die
+dieser Voreinstellung sind. Stattdessen steht dort „(Neue Voreinstellung)“: Du hast eine Reihe von Regeln, die
+keiner gesicherten Voreinstellung entspricht.</p>
+
+<p>Entferne die Sprache wieder, und das Menü zeigt wieder „Blu-ray-Rip – Nur Englisch“, ohne dass du etwas erneut
+anwendest. Nichts ging verloren, und die Voreinstellung wurde nie geändert – beim Anwenden einer Voreinstellung
+werden ihre Regeln in die Warteschlange kopiert, die Warteschlange wird nicht an sie gebunden.</p>
+
+<p>„(Neue Voreinstellung)“ ist also eine Einladung, keine Warnung: Sichere diese Regeln, wenn du sie behalten
+möchtest.</p>
+
+<a name="starter-presets" id="starter-presets"></a>
+<h2>Die mitgelieferten Voreinstellungen</h2>
+
+<p>SubTrack liefert fünf Starter aus, gruppiert danach, woher die Datei stammt – das entscheidet sowohl darüber,
+welche Spuren behaltenswert sind, als auch darüber, welche Codecs sich zu kopieren lohnen.</p>
+
+<ul>
+  <li><strong>Blu-ray-Rip – Nur Englisch</strong> – englische Tonspuren und Untertitel, sonst nichts.</li>
+  <li><strong>Blu-ray-Rip – Englisch + Kommentar</strong> – dasselbe, plus die englischen Tonspuren, die nicht
+    Standard sind: Kommentar, Audiodeskription, alternative Mischungen.</li>
+  <li><strong>Blu-ray-Rip – Spuren ohne Sprachangabe behalten</strong> – wieder dasselbe, und behält Spuren ohne
+    Sprachangabe, für einen Disc-Rip, der sie uneinheitlich markiert hat.</li>
+  <li><strong>Web-/YouTube-Rip – Nur Englisch</strong> – behält Spuren ohne Sprachangabe und bevorzugt die
+    Codecs, die ein Web-Download bereits verwendet, sodass VP9, AV1 und Opus kopiert statt in Disc-Codecs
+    umgewandelt werden, was nur Größe und Qualität kosten würde.</li>
+  <li><strong>Streamingdienst-Rip – Nur Englisch</strong> – behält Spuren ohne Sprachangabe, mit der
+    gewöhnlichen Liste der Disc-Codecs.</li>
+</ul>
+
+<p>Die Einstellung, die die meisten von ihnen unterscheidet, ist, ob Spuren ohne Sprachangabe behalten werden.
+Studio-Discs markieren alles, daher verwerfen die ersten beiden sie als Ballast; Web- und Streaming-Rips
+liefern sehr oft eine einzige Tonspur ohne Sprachangabe, die der gesamte Soundtrack ist, daher behalten die
+übrigen sie. Siehe <a href="slim-rules.html#rule-untagged">Festlegen, welche Sprachen behalten werden</a>.</p>
+
+<p>Die Starter sind vom ersten Moment an gewöhnliche Voreinstellungen – SubTrack schützt oder
+stellt sie nicht wieder her. Bearbeite sie nach Belieben oder lösche die, die du nicht brauchst.</p>
+
+<h2>Bearbeiten, umbenennen und löschen</h2>
+
+<ol>
+  <li>Wähle <strong>SubTrack</strong> &#9656; <strong>Einstellungen</strong> (<kbd>⌘,</kbd>) und klicke auf
+    <strong>Voreinstellungen</strong>.</li>
+  <li>Wähle eine Voreinstellung aus. Ihr Name, die Benennung der Ausgabe und ihre Regeln erscheinen neben der
+    Liste.</li>
+  <li>Um sie zu entfernen, klicke auf <strong>Voreinstellung löschen</strong> und bestätige.</li>
+</ol>
+
+<p class="note">Das Löschen einer Voreinstellung berührt keine Warteschlange. Eine Warteschlange, die diese Regeln
+verwendet hat, behält sie – sie hält eine Kopie, keinen Verweis –, nur ihr Voreinstellungsmenü zeigt nun
+„(Neue Voreinstellung)“.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="preset-sync.html">Voreinstellungen zwischen deinen Macs synchronisieren</a></li>
+    <li><a href="slim-rules.html">Festlegen, welche Sprachen behalten werden</a></li>
+    <li><a href="output-names.html">Die von SubTrack geschriebenen Dateien benennen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

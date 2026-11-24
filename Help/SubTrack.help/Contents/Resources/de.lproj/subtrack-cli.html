@@ -1,0 +1,88 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Das Befehlszeilenprogramm subtrack installieren</title>
+  <meta name="AppleTitle" content="Das Befehlszeilenprogramm subtrack installieren">
+  <meta name="description" content="Installiere das Programm subtrack unter Einstellungen ▸ CLI in deinem PATH und verschlanke Dateien im Terminal oder in einem Skript.">
+  <meta name="keywords" content="cli, Befehlszeile, Befehlszeilenprogramm, Terminal, Shell, Skript, Stapel, sudo, usr local bin, path, installieren, Optionen, Argumente, Automatisierung, cron">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="subtrack-cli" id="subtrack-cli"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Das Befehlszeilenprogramm <code>subtrack</code> installieren</h1>
+
+<p>SubTrack liefert ein Zwillingsprogramm für die Befehlszeile mit. <code>subtrack</code> verwendet
+dieselbe Engine wie die App, nimmt eine Datei entgegen und schreibt eine Datei, und es liest seine
+Regeln für zu behaltende Spuren aus Optionen statt aus dem Inspektor. Es ist für Aufgaben gedacht, für die ein
+Fenster nicht passt: Verschlanken über SSH, Verschlanken als Teil eines Skripts oder eine
+Schleife über eine ganze Bibliothek über Nacht.</p>
+
+<p>Es gehört nur zur Download-Version. Im Bereich <strong>CLI</strong> der App-Store-Version steht
+das, und es gibt nichts zum Klicken. Weitere Informationen:
+<a href="editions.html#editions">Zwischen den beiden Versionen von SubTrack wählen</a>.</p>
+
+<p><a href="cli-install.html">Das Programm <code>subtrack</code> installieren</a> beschreibt, wie du
+es in deinen <code>PATH</code> legst, auch für den Fall, dass der gewählte Ordner Administratorzugriff
+erfordert.</p>
+
+<a name="cli-options" id="cli-options"></a>
+<h2>Ausführen</h2>
+
+<p>Der Aufruf lautet <code>subtrack [options] &lt;input&gt; &lt;output&gt;</code> – eine Quelldatei,
+eine Ausgabedatei.</p>
+
+<p><strong>Das Programm bringt FFmpeg nicht mit.</strong> Darüber stolpern fast alle. Das in der App
+enthaltene FFmpeg bleibt im App-Bundle; was du installiert hast, ist nur die ausführbare Datei
+<code>subtrack</code>. Sie sucht <code>ffmpeg</code> und <code>ffprobe</code> in deinem
+<code>PATH</code> und hält mit einem Fehler an, wenn eines von beiden fehlt. Installiere FFmpeg selbst
+– das von Homebrew genügt – oder gib die Programme mit <code>--ffmpeg &lt;path&gt;</code> und
+<code>--ffprobe &lt;path&gt;</code> an.</p>
+
+<p>Die übrigen Optionen sind die Regeln des Inspektors, jeweils eine Option pro Regel:</p>
+
+<ul>
+  <li><code>-l</code>, <code>--language &lt;lang&gt;</code> – eine Sprache, die behalten wird, als
+    dreibuchstabiger Code. Wiederholbar; die Reihenfolge ist die Priorität, und der Ton der ersten
+    Sprache steht in der Ausgabe an erster Stelle. Ohne jedes <code>-l</code> wird <code>eng</code>
+    behalten.</li>
+  <li><code>-n</code>, <code>--no-language</code> – Spuren ohne Sprachangabe behalten.</li>
+  <li><code>--include-other-audio</code> – Ton, der nicht der Standard ist, behalten: Kommentare,
+    Audiodeskription, alternative Mischungen. Untertitelspuren, die als Kommentar markiert sind, folgen
+    ihm ebenfalls.</li>
+  <li><code>--video-codec</code>, <code>--audio-codec</code>, <code>--subtitle-codec</code> – Codecs,
+    die unverändert kopiert werden. Wiederholbar.</li>
+  <li><code>--video-transcode</code>, <code>--audio-transcode</code> – in welchen Codec eine behaltene Spur umgewandelt wird,
+    wenn sie keinen dieser Codecs hat.</li>
+  <li><code>--video-option</code>, <code>--audio-option</code> – eine zusätzliche FFmpeg-Option, die
+    beim Umcodieren übergeben wird. Wiederholbar.</li>
+  <li><code>-d</code>, <code>--dry-run</code> – die Vorgänge ausgeben und nichts schreiben.</li>
+  <li><code>--skip-noops</code> – eine Datei in Ruhe lassen, wenn das Verschlanken nichts an ihr
+    ändern würde.</li>
+  <li><code>--skip-verify</code> – die Ausgabe danach nicht erneut lesen, um sie zu prüfen.</li>
+  <li><code>--suppress-stderr</code> – FFmpegs eigene Ausgaben verwerfen.</li>
+  <li><code>-h</code>, <code>--help</code> – die vollständige Liste, vom Programm selbst
+    ausgegeben.</li>
+</ul>
+
+<p class="note">Die wiederholbaren Optionen ersetzen ihre Standardwerte, statt sie zu ergänzen. Die
+erste <code>--audio-codec</code>, die du angibst, löscht die eingebaute Liste; nenne also jeden Codec,
+der behalten werden soll – nicht nur den zusätzlichen.</p>
+
+<p>Der Fortschritt wird als Prozentwert in die Standardfehlerausgabe geschrieben; die Standardausgabe
+bleibt so für eine Pipe sauber. Probiere <code>--dry-run</code>, bevor du eine Schleife auf eine
+Bibliothek loslässt.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Einen anderen FFmpeg-Build verwenden</a></li>
+    <li><a href="slim-rules.html">Festlegen, welche Sprachen behalten werden</a></li>
+    <li><a href="preferred-codecs.html">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a></li>
+    <li><a href="editions.html">Zwischen den beiden Versionen von SubTrack wählen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

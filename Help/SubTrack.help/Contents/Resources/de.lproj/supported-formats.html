@@ -1,0 +1,42 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Unterstützte Formate eines FFmpeg-Builds anzeigen</title>
+  <meta name="AppleTitle" content="Unterstützte Formate eines FFmpeg-Builds anzeigen">
+  <meta name="description" content="Das Blatt „Unterstützte Formate“ listet jeden Container und Codec auf, den der laufende Build verarbeitet, und kennzeichnet Lesen und Schreiben getrennt.">
+  <meta name="keywords" content="unterstützte formate, container, codecs, decodieren, codieren, lesen, schreiben, filter, muxer, demuxer, fähigkeiten">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="supported-formats" id="supported-formats"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Unterstützte Formate eines FFmpeg-Builds anzeigen</h1>
+
+<p>Klicke in <strong>Einstellungen</strong> &#9656; <strong>FFmpeg</strong> auf <strong>Unterstützte Formate</strong>.
+Das Blatt listet <strong>Container</strong>, <strong>Video-Codecs</strong>,
+<strong>Audio-Codecs</strong> und <strong>Untertitel-Codecs</strong> für den Build auf, den du verwendest.
+Jede Gruppe lässt sich einklappen, und jede Zeile nennt die Kennung des Formats und seinen vollständigen Namen.
+Gib im Feld <strong>Filter</strong> etwas ein, um alle Gruppen gleichzeitig einzugrenzen.</p>
+
+<h2>Lesen ist nicht Schreiben</h2>
+
+<p>Jede Zeile trägt zwei Markierungen, und sie bedeuten Verschiedenes. Container sind mit <strong>Lesen /
+Schreiben</strong> markiert, Codecs mit <strong>Decodieren / Codieren</strong> – und Lesen ist nicht Schreiben.
+Ein Build kann einen Codec einwandfrei decodieren und trotzdem kein einziges Bild in diesem Codec erzeugen können. Das ist
+normal: Praktisch jeder Build liest mehr, als er schreibt.</p>
+
+<p>Genau diese Asymmetrie steckt hinter der Warnung, dass das aktuelle FFmpeg ein gewählten Zielcodec zum Umcodieren
+nicht codieren kann. Filtere nach dem Codec, sieh dir die zweite Markierung an, und du siehst es.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Einen anderen FFmpeg-Build verwenden</a></li>
+    <li><a href="unsupported-codec.html">Wenn sich ein Codec nicht codieren lässt</a></li>
+    <li><a href="preferred-codecs.html">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

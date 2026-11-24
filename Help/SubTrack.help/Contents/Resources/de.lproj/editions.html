@@ -1,0 +1,99 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Zwischen den beiden Versionen von SubTrack wählen</title>
+  <meta name="AppleTitle" content="Zwischen den beiden Versionen von SubTrack wählen">
+  <meta name="description" content="Beide Versionen von SubTrack verschlanken Dateien identisch; nur drei Funktionen und die Update-Prüfung unterscheiden die App-Store-Version von der Download-Version.">
+  <meta name="keywords" content="Edition, Version, App Store, MAS, Download, Sandbox, abgeblendet, deaktiviert, ausgegraut, nicht verfügbar, x264, x265, libx264, libx265, VideoToolbox, GPL, LGPL, Lizenz">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="editions" id="editions"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Zwischen den beiden Versionen von SubTrack wählen</h1>
+
+<p>SubTrack gibt es in zwei Builds: einen aus dem Mac App Store und einen als Download aus dem Web.
+Sie verschlanken Dateien identisch – dieselben Regeln, dieselben Voreinstellungen, dasselbe
+Kopieren der Streams, dieselbe Ausgabe, Byte für Byte. Bei dem, wofür die App gemacht ist, gibt es
+keinen Unterschied zwischen ihnen.</p>
+
+<p>Drei Funktionen unterscheiden sie, und alle drei gehen auf die Richtlinien des App Store zurück,
+nicht auf eine Entscheidung von SubTrack. Wenn du hier gelandet bist, weil du neben einem
+abgeblendeten Bedienelement auf „?“ geklickt hast, gehört dieses Bedienelement zu den dreien.</p>
+
+<h2>Herausfinden, welche Version du hast</h2>
+
+<ol>
+  <li>Wähle <strong>SubTrack</strong> &#9656; <strong>Einstellungen</strong> (<kbd>⌘,</kbd>) und
+    klicke auf <strong>Codierung</strong>.</li>
+  <li>Sieh dir die Zeile <strong>Codec-Umfang</strong> an. <strong>Vollständig (alle
+    Codecs)</strong> steht für die Download-Version, <strong>App Store (VideoToolbox)</strong> für
+    die App-Store-Version.</li>
+</ol>
+
+<p>Die App-Store-Version hat außerdem keinen Tab <strong>Updates</strong> in den Einstellungen, weil
+der Store die Updates übernimmt.</p>
+
+<a name="app-store-limits" id="app-store-limits"></a>
+<h2>Was die App-Store-Version nicht kann</h2>
+
+<p><strong>Software-Codierung von H.264 und H.265.</strong> Der App-Store-Build enthält ein FFmpeg
+unter der LGPL, ohne libx264 und libx265 – diese stehen unter der GPL, und die Bedingungen des Store
+und die GPL vertragen sich nicht. Das Codieren von Video übernimmt VideoToolbox, der
+Hardware-Encoder deines Mac, der sowohl H.264 als auch HEVC beherrscht und viel schneller ist als
+die Codierung per Software. Die Software-Encoder bringen mehr Qualität in dieselbe Dateigröße; die
+Hardware-Encoder sind früher fertig. Das zeigt sich unter <strong>Einstellungen</strong> &#9656;
+<strong>FFmpeg</strong> &#9656; <strong>Unterstützte Formate</strong>, wo die Codec-Liste einen Link
+<strong>Fehlende Codecs?</strong> enthält, und in der Warnung, die du erhältst, wenn du ein
+Zielcodec zum Umcodieren wählst, das dieser Build nicht codieren kann.</p>
+
+<p><strong>SubTrack auf ein eigenes FFmpeg verweisen.</strong> Unter <strong>Einstellungen</strong>
+&#9656; <strong>FFmpeg</strong> zeigt die App-Store-Version <strong>Integriert</strong> und die Zeile
+„Ein eigenes ffmpeg kann in der Download-Version verwendet werden.“ Die Download-Version bietet dort
+stattdessen die Auswahl <strong>Integriert</strong> / <strong>Eigene&nbsp;…</strong> sowie die
+Taste <strong>Automatisch erkennen</strong>, die die FFmpeg-Builds findet, die bereits auf deinem Mac
+installiert sind. Eine App in der Sandbox darf kein ausführbares Programm starten, das du ihr
+gibst, und die App-Store-Version läuft in der Sandbox; die Download-Version nicht, und deshalb kann
+sie das.</p>
+
+<p><strong>Das Befehlszeilenprogramm <code>subtrack</code> installieren.</strong> Unter
+<strong>Einstellungen</strong> &#9656; <strong>CLI</strong> steht in der App-Store-Version „Das
+Befehlszeilenprogramm kann in der Download-Version installiert werden“, wo die Download-Version
+<strong>Installieren&nbsp;…</strong> anbietet. Eine Binärdatei in einen Ordner in deinem
+<code>PATH</code> zu kopieren, liegt außerhalb der Sandbox.</p>
+
+<p>Darüber hinaus sucht die Download-Version auf GitHub nach eigenen neuen Versionen und kann dir
+mitteilen, dass eine erschienen ist. Die App-Store-Version braucht das nicht.</p>
+
+<p class="note">Keine der beiden Versionen ist die abgespeckte. Das Verschlanken – Spuren weglassen
+und den Rest kopieren – bleibt von alldem unberührt, und das Umcodieren funktioniert in beiden; nur
+der Encoder dahinter ist ein anderer.</p>
+
+<h2>Die andere Version holen</h2>
+
+<p>Die Download-Version ist von Apple notarisiert und wird aus einem Disk-Image installiert; du
+aktualisierst sie selbst, wenn sie dir meldet, dass es eine neue Version gibt. Die
+App-Store-Version wird wie alles andere auf deinem Mac installiert und aktualisiert.</p>
+
+<ul>
+  <li><a href="https://riscfuture.github.io/SubTrack/">Die SubTrack-Website</a>, die auf beide
+    verweist.</li>
+  <li><a href="https://github.com/RISCfuture/SubTrack/releases">SubTrack-Versionen auf GitHub</a>
+    für die Download-Version und ihre Hinweise.</li>
+</ul>
+
+<p>Du kannst beide installiert lassen. Sie teilen sich denselben iCloud-Container, sodass deine
+Voreinstellungen zwischen ihnen synchronisiert werden, genau wie zwischen Macs.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="unsupported-codec.html">Wenn sich ein Codec nicht codieren lässt</a></li>
+    <li><a href="custom-ffmpeg.html">Einen eigenen FFmpeg-Build verwenden</a></li>
+    <li><a href="subtrack-cli.html">Das Befehlszeilenprogramm <code>subtrack</code> installieren</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

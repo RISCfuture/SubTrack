@@ -1,0 +1,101 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Festlegen, welche Sprachen behalten werden</title>
+  <meta name="AppleTitle" content="Festlegen, welche Sprachen behalten werden">
+  <meta name="description" content="Lege die Sprachen fest, die SubTrack behält, in der Reihenfolge ihrer Priorität, und entscheide über Kommentarspuren und Spuren ohne Sprachangabe.">
+  <meta name="keywords" content="Sprache, Regeln, behalten, entfernen, Priorität, Standardspur, ohne Sprachangabe, Kommentar, Synchronfassung, Untertitel, Audio, ISO 639">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="slim-rules" id="slim-rules"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Festlegen, welche Sprachen behalten werden</h1>
+
+<p>Die Regeln für zu behaltende Spuren sind das Herzstück von SubTrack. Sie gelten für alle Dateien der
+Warteschlange auf einmal, du beschreibst also nur ein Mal, was behalten werden soll, statt für jede
+Datei einzeln.</p>
+
+<p>Blende dazu den Inspektor ein (<kbd>⌥⌘I</kbd>) und wähle <strong>Regeln</strong>. Dieselben
+Regeln erscheinen, wenn du eine Voreinstellung unter <strong>Einstellungen</strong> &#9656;
+<strong>Voreinstellungen</strong> bearbeitest.</p>
+
+<a name="rule-languages" id="rule-languages"></a>
+<h2>Die zu behaltenden Sprachen festlegen</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/rules-languages-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/rules-languages.webp" width="346" height="247" alt="Der Spracheneditor mit Englisch, Französisch und Japanisch in dieser Reihenfolge, jeweils mit Anfasser zum Ziehen und Entfernen-Taste, über einem Menü „Hinzufügen“.">
+  </picture>
+  <figcaption>Die Liste ist eine Rangfolge – ziehe die Einträge, um sie umzusortieren.</figcaption>
+</figure>
+
+<ol>
+  <li>Klicke im Inspektor unter <strong>Spurauswahl</strong> auf das Steuerelement für die Sprachen.</li>
+  <li>Suche nach einer Sprache und wähle sie aus, um sie der Liste hinzuzufügen.</li>
+  <li>Ziehe die Einträge in die gewünschte Reihenfolge.</li>
+</ol>
+
+<p>Audio- und Untertitelspuren in diesen Sprachen werden behalten. Alles in anderen Sprachen entfällt.</p>
+
+<p><strong>Die Reihenfolge ist wichtig, und zwar aus einem bestimmten Grund.</strong> Die Liste ist eine
+Rangfolge der Vorlieben, und die erste Sprache darin wird zur <em>Standard</em>-Audiospur der
+verschlankten Datei – der Spur, die abgespielt wird, wenn du auf Abspielen drückst, ohne etwas
+auszuwählen. Behältst du Englisch und Japanisch, möchtest aber zuerst das japanische Audio hören,
+setze Japanisch an die erste Stelle.</p>
+
+<p class="note">Sprachen werden anhand der in der Datei gespeicherten Angabe abgeglichen, die
+dreistellige ISO-639-2-Codes verwendet. Hat der Ersteller einer Datei eine Spur falsch gekennzeichnet,
+wird sie nach der Angabe behandelt, nicht nach dem, was du hörst.</p>
+
+<a name="rule-untagged" id="rule-untagged"></a>
+<h2>Über Spuren ohne Sprachangabe entscheiden</h2>
+
+<p><strong>Spuren ohne Sprachangabe behalten</strong> betrifft Spuren, die überhaupt keine
+Sprachangabe tragen.</p>
+
+<p>Diese eine Einstellung entscheidet darüber, ob manche Dateien perfekt oder stumm herauskommen.
+Studio-Discs kennzeichnen alles, daher kannst du die Option bei Blu-ray-Rips gefahrlos ausgeschaltet
+lassen und den Ballast entfernen. Web- und Streaming-Rips enthalten aber sehr oft eine einzige,
+korrekt codierte Audiospur ohne Angabe – und wenn du Spuren ohne Sprachangabe entfernst, verliert
+diese Datei ihren gesamten Ton.</p>
+
+<p>Arbeitest du mit Rips aus gemischten Quellen, lass die Option eingeschaltet. Du behältst dann ab und
+zu eine Spur, die du nicht gebraucht hättest; die Alternative ist ein stummer Film.</p>
+
+<a name="rule-commentary" id="rule-commentary"></a>
+<h2>Über Kommentar und zusätzliches Audio entscheiden</h2>
+
+<p><strong>Kommentar und zusätzliches Audio einbeziehen</strong> betrifft das Nicht-Standard-Audio in
+einer Sprache, die du behältst: Regiekommentar, Audiodeskription und alternative Downmixes.</p>
+
+<p>Ist die Option ausgeschaltet, behältst du eine Hauptaudiospur pro gewünschter Sprache. Ist sie
+eingeschaltet, behältst du auch die zusätzlichen Spuren. Kommentarspuren sind neben einem verlustfreien
+Hauptmix meist klein, das kostet also selten viel Platz – es geht darum, ob du sie haben möchtest.</p>
+
+<p>Untertitelspuren, die die Disc als Kommentar gekennzeichnet hat, folgen derselben Einstellung, da sie
+das Kommentar-Audio untertiteln und ohne es kaum nützlich sind. Eine Spur ohne eine solche
+Kennzeichnung – so werden viele Rips ausgeliefert – gilt als gewöhnlicher Untertitel und wird wie jeder
+andere nach Sprache behalten.</p>
+
+<h2>Das Ergebnis vor dem Start prüfen</h2>
+
+<p>Regeln beschreiben eine Absicht; der Inspektor zeigt die Folgen. Wähle eine beliebige Datei aus und
+wähle im Inspektor <strong>Vorschau</strong>, um die ganze Datei auf einmal zu sehen – jede Spur, die
+deine Regeln behalten, in der Reihenfolge, in der die Ausgabe sie enthalten wird, und jede Spur, die
+entfällt. Wenn eine Regel nicht das tut, was du erwartet hast, siehst du es dort.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="overrides.html">Den Spurplan für eine Datei anpassen</a></li>
+    <li><a href="preview.html">Den gesamten Plan für eine Datei ansehen</a></li>
+    <li><a href="preferred-codecs.html">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a></li>
+    <li><a href="presets.html">Eine Reihe von Regeln als Voreinstellung sichern</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

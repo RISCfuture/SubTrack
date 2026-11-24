@@ -1,0 +1,81 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Videos verschlanken, ohne sie neu zu codieren</title>
+  <meta name="AppleTitle" content="Videos verschlanken, ohne sie neu zu codieren">
+  <meta name="description" content="SubTrack kopiert die Spuren, die du behältst, statt sie umzuwandeln. So werden Dateien in Sekunden schlanker, ohne Qualitätsverlust.">
+  <meta name="keywords" content="verlustfrei, Stream-Kopie, Remux, neu codieren, umcodieren, Qualität, Blu-ray, Rip, Synchronfassung, HandBrake">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="what-subtrack-does" id="what-subtrack-does"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Videos verschlanken, ohne sie neu zu codieren</h1>
+
+<p>Ein Blu-ray- oder UHD-Remux enthält oft ein Dutzend Spuren: acht Synchronfassungen in Sprachen, die du
+nicht sprichst, fünf Untertitelsprachen, die du nicht liest, und eine Kommentarspur, die du nie
+abspielen wirst. Sie machen den größten Teil der Dateigröße aus und haben keinen Nutzen.</p>
+
+<p>SubTrack entfernt sie. Alles, was du behältst, wird unverändert in eine neue Datei geschrieben, und
+das Ergebnis ist bei identischer Qualität nur ein Bruchteil so groß.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/main-window-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/main-window.webp" width="1280" height="860" alt="Das SubTrack-Hauptfenster: eine Warteschlange mit Blu-ray-Rips, die Spurzahlen und Dateigrößen von Eingabe und Ausgabe zeigt, daneben der geöffnete Inspektor mit den Regeln.">
+  </picture>
+  <figcaption>Die Warteschlange zeigt, was jede Datei verliert und wie groß sie danach sein wird.</figcaption>
+</figure>
+
+<a name="stream-copy" id="stream-copy"></a>
+<h2>Warum es so schnell geht</h2>
+
+<p>Die meisten Videoprogramme decodieren jedes Bild und codieren es erneut. Das dauert Stunden und kostet
+jedes Mal Qualität, weil das Bild verworfen und neu angenähert wird.</p>
+
+<p>SubTrack decodiert nichts. Eine Spur, die du behältst, wird Byte für Byte aus einem Container in einen
+anderen kopiert – dieselben komprimierten Daten, nur verschoben. Es entsteht kein Generationsverlust,
+weil nichts neu erzeugt wird, und die Arbeit hängt davon ab, wie schnell deine Festplatte liest, nicht
+davon, wie schnell dein Prozessor rechnet. Ein zweistündiger Film ist in der Regel in Sekunden
+fertig.</p>
+
+<p>Auch der Container bleibt derselbe. Aus einer MKV-Datei wird wieder eine MKV-Datei, sodass alles, was
+dein Original abspielt, auch die verschlankte Kopie akzeptiert.</p>
+
+<a name="not-a-transcoder" id="not-a-transcoder"></a>
+<h2>Was SubTrack bewusst nicht ist</h2>
+
+<p>SubTrack ist ein Spurverschlanker, kein Umcodierer. Es gibt keine Qualitätsregler, keine
+Bitratenfelder und keine Encoder-Voreinstellungen, weil es im normalen Gebrauch nichts einzustellen
+gibt – Kopieren hat keine Einstellungen.</p>
+
+<p>Es <em>wandelt</em> eine Spur um, aber nur in einer Situation: Du wolltest eine Spur behalten, und sie
+liegt in einem Codec vor, den du nicht haben möchtest. Dann wird nur diese eine Spur umgewandelt, der
+Rest wird weiterhin kopiert, und SubTrack sagt es dir, bevor es beginnt. Siehe
+<a href="preferred-codecs.html#preferred-codecs">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a>.</p>
+
+<p class="note">Wenn du eigentlich das <em>Bild</em> verkleinern möchtest – eine Mediathek mit
+niedrigerer Bitrate neu codieren –, ist SubTrack das falsche Werkzeug und wird es immer sein.
+HandBrake ist das richtige.</p>
+
+<h2>So läuft die Arbeit ab</h2>
+
+<ol>
+  <li><strong>Dateien einreihen.</strong> Ziehe Filme oder einen ganzen Ordner hinein.</li>
+  <li><strong>Die Regeln die Spuren auswählen lassen.</strong> Behalte Englisch, entferne die anderen
+    elf Synchronfassungen. Entscheide über Kommentar und über Spuren ganz ohne Sprachangabe.</li>
+  <li><strong>Starten.</strong> Alles, was du behalten hast, wird in eine neue Datei kopiert.</li>
+</ol>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="adding-files.html">Videos zu einer Warteschlange hinzufügen</a></li>
+    <li><a href="slim-rules.html">Festlegen, welche Sprachen behalten werden</a></li>
+    <li><a href="preferred-codecs.html">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

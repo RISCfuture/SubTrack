@@ -1,0 +1,83 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Den Spurplan für eine Datei anpassen</title>
+  <meta name="AppleTitle" content="Den Spurplan für eine Datei anpassen">
+  <meta name="description" content="Sieh dir den Spurplan einer einzelnen Datei an und ändere, was mit einzelnen Spuren geschieht, ohne den Rest der Warteschlange zu beeinflussen.">
+  <meta name="keywords" content="anpassen, Anpassung, Spurplan, pro Datei, behalten, entfernen, umwandeln, zurücksetzen, Inspektor, Ausnahme">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-overrides" id="track-overrides"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Den Spurplan für eine Datei anpassen</h1>
+
+<p>Die Regeln für zu behaltende Spuren gelten für die ganze Warteschlange. Braucht eine Datei eine andere
+Behandlung – eine falsch gekennzeichnete Spur, eine Dokumentation, bei der du den Kommentar doch behalten möchtest –,
+kannst du diese Datei gesondert anpassen.</p>
+
+<a name="track-plan" id="track-plan"></a>
+<h2>Den Plan lesen</h2>
+
+<ol>
+  <li>Wähle eine Datei in der Warteschlange aus.</li>
+  <li>Blende den Inspektor ein (<kbd>⌥⌘I</kbd>) und wähle <strong>Anpassung</strong> (<kbd>⌥⌘2</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-override-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-override.webp" width="300" height="792" alt="Der Inspektor „Anpassung“ für eine Datei: ein Spurmenü über Codec, Sprache, Titel und Kanälen der ausgewählten Spur sowie den Bedienelementen, mit denen du sie einbeziehst oder umwandelst.">
+  </picture>
+  <figcaption>Alles über die ausgewählte Spur und die zwei Bedienelemente, die über ihr Schicksal entscheiden.</figcaption>
+</figure>
+
+<p>Das Spurmenü listet jede Spur der Datei auf. Abgeblendete Einträge sind Spuren, die entfernt werden; die
+übrigen werden behalten. Wähle eine Spur, um zu sehen, was mit ihr geschieht und warum.</p>
+
+<p>Wie du nicht Spur für Spur, sondern die ganze Datei auf einmal liest, erfährst du unter
+<a href="preview.html#track-preview">Den gesamten Plan für eine Datei ansehen</a>. So prüfst du am
+schnellsten, ob deine Regeln tun, was du wolltest, bevor du eine ganze Warteschlange damit verarbeitest.</p>
+
+<h2>Eine Spur ändern</h2>
+
+<p>Wähle eine Spur und lege dann fest, was mit ihr geschehen soll – behalten, entfernen oder in einen bestimmten Codec umwandeln.</p>
+
+<p><strong>Eines solltest du vorher wissen.</strong> Wenn du eine einzelne Spur änderst, erhält die ganze Datei einen eigenen Plan. Alle anderen Spuren werden genau so festgeschrieben, wie die Regeln sie in diesem Moment vorsahen, und die Datei folgt von da an nicht mehr den Regeln der Warteschlange.
+Änderst du danach die Regeln, übernimmt diese Datei die Änderungen nicht.</p>
+
+<p>Meist ist das genau richtig – du hast die Datei bewusst herausgegriffen –, aber es bedeutet auch,
+dass eine früh gesetzte und vergessene Anpassung später geänderte Regeln stillschweigend ignoriert.</p>
+
+<a name="override-reset" id="override-reset"></a>
+<h2>Zu den Regeln zurückkehren</h2>
+
+<p>Klicke auf <strong>Auf Regeln zurücksetzen</strong>. Die Datei gibt ihren eigenen Plan auf und
+folgt wieder den Regeln der Warteschlange, einschließlich aller Änderungen, die du inzwischen vorgenommen hast. Die
+Taste erscheint nur, solange eine Datei tatsächlich angepasst ist, und zeigt dir so auch, ob eine
+Anpassung gesetzt ist.</p>
+
+<h2>Einer Datei einen anderen Namen geben</h2>
+
+<p>Im selben Tab legst du auch einen Ausgabenamen nur für diese Datei fest, der das Namensformat der
+Warteschlange außer Kraft setzt. Siehe
+<a href="output-names.html#output-names">Die von SubTrack geschriebenen Dateien benennen</a>.</p>
+
+<p class="note">Wenn du eine Datei erneut analysierst (<strong>Warteschlange</strong> &#9656;
+<strong>Auswahl erneut analysieren</strong>), werden ihre Spuren noch einmal von der Festplatte
+gelesen. Eine Anpassung, die sich auf eine inzwischen fehlende Spur bezieht, lässt sich nicht
+umsetzen; prüfe deshalb den Plan, nachdem du eine Quelldatei ersetzt hast.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="preview.html">Den gesamten Plan für eine Datei ansehen</a></li>
+    <li><a href="slim-rules.html">Festlegen, welche Sprachen behalten werden</a></li>
+    <li><a href="preferred-codecs.html">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a></li>
+    <li><a href="output-names.html">Die von SubTrack geschriebenen Dateien benennen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

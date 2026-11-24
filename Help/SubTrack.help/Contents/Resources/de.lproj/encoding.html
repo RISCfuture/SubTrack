@@ -1,0 +1,75 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Festlegen, wie viele Dateien gleichzeitig codiert werden</title>
+  <meta name="AppleTitle" content="Festlegen, wie viele Dateien gleichzeitig codiert werden">
+  <meta name="description" content="Lege fest, an wie vielen Dateien SubTrack gleichzeitig arbeitet, und sieh nach, welchen Codec-Umfang dein Build enthält.">
+  <meta name="keywords" content="gleichzeitig, parallel, Codierungen, Leistung, Codec-Umfang, VideoToolbox, Geschwindigkeit, Tempo">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-encoding" id="settings-encoding"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Festlegen, wie viele Dateien gleichzeitig codiert werden</h1>
+
+<p>Wähle <strong>SubTrack</strong> &#9656; <strong>Einstellungen</strong> (<kbd>⌘,</kbd>) und klicke
+auf <strong>Codierung</strong>.</p>
+
+<a name="simultaneous-encodes" id="simultaneous-encodes"></a>
+<h2>Gleichzeitige Codierungen</h2>
+
+<p>Hiermit legst du fest, an wie vielen Dateien SubTrack gleichzeitig arbeitet. Zur Auswahl stehen
+die Werte von eins bis acht, nicht jede Zahl, denn entscheidend ist nur: „eine nach der anderen“,
+„ein paar“ oder „den ganzen Mac auslasten“ – die Werte dazwischen verhalten sich nicht verschieden
+genug, um eine Rolle zu spielen.</p>
+
+<p><strong>Beim gewöhnlichen Verschlanken spielt diese Einstellung kaum eine Rolle.</strong> Das
+Kopieren von Spuren wird dadurch begrenzt, wie schnell deine Festplatte lesen und schreiben kann,
+nicht durch deinen Prozessor. Acht Kopien gleichzeitig warten meist nur auf dieselbe Festplatte und
+können langsamer sein als zwei.</p>
+
+<p><strong>Sie spielt eine Rolle, wenn Spuren umcodiert werden.</strong> Das Umcodieren ist echte
+Prozessorarbeit, daher beanspruchen mehrere gleichzeitig den Mac tatsächlich stärker. Wenn deine
+Warteschlangen regelmäßig umcodieren – weil deine Quellen Codecs außerhalb deiner bevorzugten
+Liste verwenden –, ist ein Stapel mit einem höheren Wert schneller fertig.</p>
+
+<p>Der Preis dafür ist die Reaktionsfähigkeit. Ein hoher Wert beim Umcodieren lässt den Rest deines Macs
+träge wirken. Wenn du arbeitest, während ein Stapel läuft, wähle einen niedrigen Wert.</p>
+
+<p class="note">Ein niedrigerer Wert unterbricht nichts, was bereits läuft. Dateien, die gerade
+bearbeitet werden, werden fertiggestellt; der neue Wert gilt für alles, was danach beginnt.</p>
+
+<a name="codec-sets" id="codec-sets"></a>
+<h2>Codec-Umfang</h2>
+
+<p>Hier siehst du, welcher FFmpeg-Build in deiner Kopie von SubTrack enthalten ist. Das ist keine
+Einstellung – es gibt nichts zu ändern –, sondern eine Information darüber, was du hast.</p>
+
+<ul>
+  <li><strong>Vollständig (alle Codecs)</strong> – die Download-Version. Enthält die
+    Software-Encoder für H.264 und H.265.</li>
+  <li><strong>App Store (VideoToolbox)</strong> – die App-Store-Version.
+    Hardware-Codierung über VideoToolbox, ohne die Software-Encoder, deren Lizenz der Vertrieb über
+    den App Store nicht erlaubt.</li>
+</ul>
+
+<p>Beide verschlanken Dateien auf dieselbe Weise. Ein Unterschied zeigt sich nur, wenn eine Spur
+umcodiert werden muss, und nur bei bestimmten Zielcodecs. Siehe
+<a href="editions.html#editions">Zwischen den beiden Versionen von SubTrack wählen</a>.</p>
+
+<p>Die vollständige Liste dessen, was der verwendete Build lesen und schreiben kann, findest du
+unter <strong>Einstellungen</strong> &#9656; <strong>FFmpeg</strong>, wenn du auf
+<strong>Unterstützte Formate</strong> klickst.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Einen anderen FFmpeg-Build verwenden</a></li>
+    <li><a href="editions.html">Zwischen den beiden Versionen von SubTrack wählen</a></li>
+    <li><a href="running-a-queue.html">Eine Warteschlange ausführen und ihren Fortschritt verfolgen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

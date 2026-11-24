@@ -1,0 +1,52 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Wenn die Quelldatei fehlt</title>
+  <meta name="AppleTitle" content="Wenn die Quelldatei fehlt">
+  <meta name="description" content="Eine Warteschlange enthält zu jeder Datei einen Verweis statt einer Kopie; eine verschobene, umbenannte oder ausgeworfene Quelle färbt ihre Zeile rot – ebenso eine nicht mehr gültige Zugriffsberechtigung.">
+  <meta name="keywords" content="Quelle fehlt, verschoben, umbenannt, gelöscht, ausgeworfen, Festplatte, Berechtigung, Sandbox, Lesezeichen, ungültig, erneut analysieren, erneut hinzufügen">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="missing-source" id="missing-source"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Wenn die Quelldatei fehlt</h1>
+
+<p>Eine Warteschlange enthält zu jeder Datei einen Verweis und keine Kopie, und dieser Verweis bleibt
+beim Beenden von SubTrack erhalten. Eine Warteschlange, die du über Nacht stehen lässt, kann also auf
+eine Datei treffen, die verschoben, umbenannt oder gelöscht wurde oder die auf einer Festplatte liegt,
+die gerade nicht angeschlossen ist. Die Zeile wird rot und meldet <strong>Die Quelle fehlt</strong>.</p>
+
+<p>Es gibt eine weniger offensichtliche Variante desselben Problems. Durch das Hinzufügen einer Datei
+erhält SubTrack die Berechtigung, auf sie zuzugreifen, und diese Berechtigung wird gespeichert, damit sie
+auch nach einem Neustart noch gilt. Eine gespeicherte Zugriffsberechtigung kann ungültig werden: Die Datei liegt genau
+dort, wo du sie gelassen hast, aber die Zeile meldet, dass die gespeicherte Referenz nicht mehr gültig
+ist oder dass SubTrack keine Berechtigung hat, sie zu öffnen.</p>
+
+<h2>Die Datei wiederherstellen</h2>
+
+<ol>
+  <li>Lege die Datei zurück – schließe die Festplatte an, mache die Umbenennung rückgängig, hole sie
+    aus dem Papierkorb zurück.</li>
+  <li>Wähle die Zeile aus und wähle <strong>Warteschlange</strong> &#9656; <strong>Auswahl erneut
+    analysieren</strong>.</li>
+  <li>Wenn sie weiterhin markiert ist, wähle <strong>Warteschlange</strong> &#9656; <strong>Auswahl
+    entfernen</strong> (<kbd>⌫</kbd>) und füge die Datei erneut hinzu.</li>
+</ol>
+
+<p>Der dritte Schritt erneuert eine ungültig gewordene Zugriffsberechtigung, und deshalb ist er die Standardempfehlung:
+Das Hinzufügen einer Datei erteilt den Zugriff, also erteilt ihn das erneute Hinzufügen erneut. Das
+Entfernen einer Zeile löscht nie etwas von der Festplatte.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Wenn sich eine Datei nicht verschlanken lässt</a></li>
+    <li><a href="adding-files.html">Videos zu einer Warteschlange hinzufügen</a></li>
+    <li><a href="destinations.html">Festlegen, wohin verschlankte Dateien gesichert werden</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Den gesamten Plan für eine Datei ansehen</title>
+  <meta name="AppleTitle" content="Den gesamten Plan für eine Datei ansehen">
+  <meta name="description" content="Sieh alle Spuren, die ein Durchlauf für eine Datei schreibt, in der Reihenfolge der Ausgabe – und welche Spuren entfallen.">
+  <meta name="keywords" content="Vorschau, Plan, Ausgabe, Spuren, Reihenfolge, Rolle, Standard, Kommentar, erzwungen, entfallen, Inspektor">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="track-preview" id="track-preview"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Den gesamten Plan für eine Datei ansehen</h1>
+
+<p>Bevor du eine Warteschlange mit deinen Regeln losschickst, lohnt es sich zu sehen, was bei einer
+einzelnen Datei herauskommt. Das zeigt der Tab <strong>Vorschau</strong>: alle Spuren, die der
+Durchlauf schreibt, in der Reihenfolge der Ausgabe – und alle Spuren, die er weglässt.</p>
+
+<ol>
+  <li>Wähle eine Datei in der Warteschlange aus.</li>
+  <li>Blende den Inspektor ein (<kbd>⌥⌘I</kbd>) und wähle <strong>Vorschau</strong> (<kbd>⌥⌘3</kbd>).</li>
+</ol>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/track-preview-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/track-preview.webp" width="300" height="792" alt="Der Vorschau-Inspektor für eine Datei: eine Tabelle der Ausgabespuren, der Reihe nach nummeriert, mit Sprache, Codec und Rolle, dazwischen abgeblendet die entfallenden Spuren, darunter ein Detailbereich mit allem, was über die ausgewählte Spur bekannt ist.">
+  </picture>
+  <figcaption>Die Ausgabe, Spur für Spur, und alles, was über die ausgewählte Spur bekannt ist.</figcaption>
+</figure>
+
+<p>Abgeblendete Zeilen und Zeilen mit einem Strich anstelle einer Nummer sind Spuren, die entfallen –
+sie werden aufgeführt, damit du siehst, was du verlierst, nicht weil sie in der Datei landen.</p>
+
+<p>Hier lässt sich nichts ändern. Die Vorschau ist das Ergebnis deiner Regeln und einer eventuell
+gesetzten Anpassung. Wie du etwas änderst, erfährst du unter <a href="overrides.html#track-overrides">Den Spurplan für eine Datei anpassen</a>.</p>
+
+<a name="track-roles" id="track-roles"></a>
+<h2>Was die Spalten bedeuten</h2>
+
+<p><strong>Spur</strong> zeigt, an welcher Stelle die Spur in der Ausgabe steht, von eins an gezählt,
+mit einem Symbol für ihre Art. Ein Strich bedeutet, dass sie gar nicht in der Ausgabe enthalten ist.</p>
+
+<p><strong>Codec</strong> ist das Format, in dem die Ausgabe die Spur enthält, und die Eckdaten des
+Inhalts – <code>ac3 5.1</code>, <code>h264 1080p</code>. Ein Pfeil (<code>→ aac</code>) bedeutet,
+dass die Spur umgewandelt statt kopiert wird.</p>
+
+<p><strong>Titel</strong> ist der eigene Name der Spur, sofern ihr Urheber ihr einen gegeben hat –
+„Audiokommentar des Regisseurs“, „Englisch (SDH)“, „Dolby TrueHD 7.1“. Daran erkennst du oft am
+schnellsten, welche von zwei Spuren in derselben Sprache welche ist. Bei den vielen Spuren ohne Namen
+bleibt das Feld leer.</p>
+
+<p><strong>Rolle</strong> sagt, wofür die Spur <em>gedacht</em> ist, und das entscheidet meist, ob du
+sie haben willst:</p>
+
+<ul>
+  <li><strong>Standard</strong> – die Spur, die ein Player von sich aus wählt.</li>
+  <li><strong>Erzwungen</strong> – Untertitel nur für fremdsprachige Dialoge, nicht für den ganzen Film.</li>
+  <li><strong>Kommentar</strong> – eine Tonspur mit Kommentar zum Hauptfilm.</li>
+  <li><strong>Für Hörgeschädigte</strong> – Untertitel, die neben der Sprache auch Geräusche wiedergeben
+    (oft SDH genannt).</li>
+  <li><strong>Audiodeskription</strong> und <strong>Beschreibungen</strong> – Erzählung dessen, was auf
+    dem Bildschirm zu sehen ist.</li>
+  <li><strong>Synchronisiert</strong> und <strong>Original</strong> – ob der Ton in der Sprache vorliegt,
+    in der der Film gedreht wurde.</li>
+</ul>
+
+<p>Die Rollen stammen aus den Tags der Datei. Eine falsch gekennzeichnete Spur zeigt daher die
+Bezeichnung, die sie trägt, und nicht, was sie wirklich ist. Genau dafür gibt es den Tab Anpassung.</p>
+
+<p class="note"><strong>Standard</strong> ist die einzige Rolle, die SubTrack vergibt, statt sie zu
+lesen. Die Reihenfolge deiner Sprachen bestimmt, mit welcher Tonspur die verschlankte Datei beginnt:
+Die erste Tonspur der Ausgabe wird als Standard markiert, die anderen nicht – gleichgültig, was die
+Quelle angab. Alle anderen Rollen werden unverändert übernommen.</p>
+
+<a name="track-detail" id="track-detail"></a>
+<h2>Eine Spur auswählen, um alles Weitere zu sehen</h2>
+
+<p>Die Spalten zeigen nur, was eine Spur von der anderen unterscheidet. Wähle eine beliebige Zeile aus,
+und der Bereich darunter listet <em>alles</em>, was über diese Spur bekannt ist, in drei Gruppen:</p>
+
+<ul>
+  <li><strong>Ausgabe</strong> – der Codec, in dem die Spur endet, und die Markierungen, mit denen sie
+    herauskommt. Wo sie steht und ob sie behalten wird, zeigen die Spalten der Liste, deshalb wird das
+    hier nicht wiederholt.</li>
+  <li><strong>Spur</strong> – was die Datei über sich selbst sagt: Stream-Index, Codec und Profil,
+    Sprache, Titel, Bildgröße oder Kanalanordnung, Abtastrate, Bittiefe und Bitrate.</li>
+  <li><strong>Metadaten</strong> – jedes Tag, das die Analyse gelesen hat, wortgetreu und ungefiltert.
+    Hier tauchen die eigenen Hinweise einer Veröffentlichung auf. Ein Blick lohnt sich, wenn sich eine
+    Spur nicht so verhält, wie Sprache und Codec es nahelegen.</li>
+</ul>
+
+<p>Ziehe den Trenner, um der Liste oder den Details mehr Platz zu geben, und wähle einen beliebigen
+Wert aus, um ihn zu kopieren.</p>
+
+<p class="note">Liste und Details lassen sich scrollen. Ein Remux mit einem Dutzend Untertitelspuren
+passt nicht in einen schmalen Inspektor, ebenso wenig die Metadaten, die manche Encoder schreiben.</p>
+
+<p class="note">Wenn du eine Datei erneut analysierst (<strong>Warteschlange</strong> &#9656; <strong>Auswahl
+erneut analysieren</strong>), weist der Tab darauf hin, solange er die Spuren neu liest. Bis dahin
+zeigt er weiter den alten Plan.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="overrides.html">Den Spurplan für eine Datei anpassen</a></li>
+    <li><a href="slim-rules.html">Festlegen, welche Sprachen behalten werden</a></li>
+    <li><a href="preferred-codecs.html">Bevorzugte Codecs und Zielcodecs zum Umcodieren festlegen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

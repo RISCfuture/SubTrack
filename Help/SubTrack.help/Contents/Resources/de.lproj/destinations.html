@@ -1,0 +1,70 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Festlegen, wohin verschlankte Dateien gesichert werden</title>
+  <meta name="AppleTitle" content="Festlegen, wohin verschlankte Dateien gesichert werden">
+  <meta name="description" content="Lege den Ausgabeordner für eine Warteschlange fest oder lass SubTrack jede verschlankte Datei neben der Datei sichern, aus der sie entstanden ist.">
+  <meta name="keywords" content="Ziel, Ausgabeordner, sichern, Speicherort, neben der Quelle, Standard, Allgemeine Einstellungen">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="destinations" id="destinations"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Festlegen, wohin verschlankte Dateien gesichert werden</h1>
+
+<p>Jede Warteschlange schreibt ihre Ausgabe irgendwohin. Dieser Ort ist entweder ein Ordner, den du
+auswählst, oder der Ordner, in dem die jeweilige Quelldatei bereits liegt.</p>
+
+<h2>Das Ziel einer Warteschlange festlegen</h2>
+
+<ol>
+  <li>Wähle die Warteschlange in der Seitenleiste aus.</li>
+  <li>Klicke in der Leiste über der Warteschlange auf <strong>Ändern&nbsp;…</strong></li>
+  <li>Wähle einen Ordner aus und klicke auf <strong>Öffnen</strong>.</li>
+</ol>
+
+<p>Jede Datei dieser Warteschlange wird dorthin geschrieben, egal aus welchem Ordner sie stammt. Das
+ist praktisch, wenn du die Ergebnisse verstreuter Quellen an einem Ort sammeln möchtest.</p>
+
+<h2>Stattdessen neben jeder Quelle sichern</h2>
+
+<p>Eine Warteschlange ohne festgelegtes Ziel sichert jede verschlankte Datei im selben Ordner wie die
+Datei, aus der sie entstanden ist. Die Folgen einer Staffel bleiben so auf ihre Staffelordner
+verteilt, statt in einem einzigen Ordner zusammengeführt zu werden.</p>
+
+<p>Das ist die Standardeinstellung, und deshalb kann in der Zielleiste <strong>Wird neben jeder
+Quelle gesichert</strong> stehen, statt dass ein Ordner genannt wird.</p>
+
+<p class="note">Das Sichern neben der Quelle führt am ehesten zu einem Namenskonflikt, weil die Ausgabe
+im selben Ordner landet wie die Eingabe. Ergibt dein Format genau den Namen der Quelle, weigert sich
+SubTrack zu starten, statt sie zu überschreiben. Siehe
+<a href="name-conflicts.html">Einen Namenskonflikt beheben</a>.</p>
+
+<h2>Den Standard für neue Warteschlangen festlegen</h2>
+
+<p>Jede neue Warteschlange beginnt mit einem eigenen Ziel, das du einmal in den Einstellungen festlegst. Weitere Informationen:
+<a href="settings-general.html">Das Standardziel für neue Warteschlangen festlegen</a>. Eine
+bereits vorhandene Warteschlange wird dadurch nie verändert.</p>
+
+<h2>Wenn SubTrack nicht in einen Ordner schreiben kann</h2>
+
+<p>macOS gewährt SubTrack Zugriff auf die Ordner, die du auswählst, und dieser Zugriff bleibt über
+Neustarts hinweg erhalten. Wenn ein Ziel nicht mehr verfügbar ist – etwa eine externe Festplatte, die
+nicht angeschlossen ist, oder ein Ordner, der verschoben oder gelöscht wurde –, hält der Durchlauf an,
+statt an einen unerwarteten Ort zu schreiben.</p>
+
+<p>Wählst du den Ordner erneut aus, wird der Zugriff wiederhergestellt. Liegt das Problem bei einer
+Quelldatei und nicht beim Ziel, findest du Hilfe unter <a href="missing-source.html">Wenn die Quelldatei fehlt</a>.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="output-names.html">Die von SubTrack geschriebenen Dateien benennen</a></li>
+    <li><a href="adding-files.html#queues">Videos zu einer Warteschlange hinzufügen</a></li>
+    <li><a href="troubleshooting.html">Wenn sich eine Datei nicht verschlanken lässt</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

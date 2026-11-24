@@ -1,0 +1,71 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Die von SubTrack geschriebenen Dateien benennen</title>
+  <meta name="AppleTitle" content="Die von SubTrack geschriebenen Dateien benennen">
+  <meta name="description" content="Erstelle Ausgabenamen aus Platzhaltern und löse die beiden Konflikte, die den Start einer Warteschlange verhindern.">
+  <meta name="keywords" content="Ausgabename, Format, Platzhalter, Token, umbenennen, verschlankt, Konflikt, Duplikat, überschreiben, Dateiendung">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="output-names" id="output-names"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Die von SubTrack geschriebenen Dateien benennen</h1>
+
+<p>SubTrack verändert nie eine Quelldatei – es schreibt daneben eine neue. Das Namensformat legt
+fest, wie diese neue Datei heißt.</p>
+
+<p>Um es zu ändern, blende den Inspektor ein (<kbd>⌥⌘I</kbd>), wähle <strong>Regeln</strong>
+und bearbeite <strong>Ausgabename</strong>. Jede Warteschlange hat ihr eigenes Format.</p>
+
+<a name="name-tokens" id="name-tokens"></a>
+<h2>Einen Namen aus Platzhaltern zusammensetzen</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/output-name-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/output-name.webp" width="280" height="87" alt="Das Feld „Ausgabename“ mit einem Platzhalter „Originalname“, gefolgt vom Text „(slimmed)“, darunter die verfügbaren Platzhalter und eine Vorschau des entstehenden Dateinamens.">
+  </picture>
+  <figcaption>Die Zeile darunter zeigt das Format als Vorschau an einer echten Datei der Warteschlange.</figcaption>
+</figure>
+
+<p>Das Format ist gewöhnlicher Text mit Platzhaltern, die für die Angaben der jeweiligen Datei
+stehen:</p>
+
+<ul>
+  <li><code>{name}</code> – der Name der Quelldatei ohne Dateiendung.</li>
+  <li><code>{n}</code> – die Position der Datei in der Warteschlange.</li>
+</ul>
+
+<p>So wird aus <code>The Third Man.mkv</code> mit <code>{name} (slimmed)</code> die Datei
+<code>The Third Man (slimmed).mkv</code>.</p>
+
+<p>Die Dateiendung ist nie Teil des Formats. Die Ausgabe behält denselben Container wie die Quelle,
+sodass SubTrack die Endung selbst ergänzt; ein Format, das sie ändern wollte, würde etwas
+beschreiben, das nicht möglich ist.</p>
+
+<h3>Eine geschweifte Klammer wörtlich schreiben</h3>
+
+<p>Verdopple eine Klammer, damit sie wörtlich gemeint ist: <code>{{name}}</code> ergibt den Text
+<code>{name}</code> statt des Dateinamens. Ein unbekannter Platzhalter wie <code>{title}</code>
+bleibt unverändert und erscheint so im Namen; ein Tippfehler ergibt also einen seltsamen
+Dateinamen, aber es geht nichts verloren.</p>
+
+<h2>Wenn zwei Namen kollidieren</h2>
+
+<p>SubTrack startet keine Warteschlange, deren Namen eine Datei zerstören würden, und das kann auf
+genau zwei Arten passieren – beide lassen sich schnell beheben. Siehe
+<a href="name-conflicts.html">Einen Namenskonflikt beheben</a>.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="destinations.html">Festlegen, wohin verschlankte Dateien gesichert werden</a></li>
+    <li><a href="overrides.html">Den Spurplan für eine Datei anpassen</a></li>
+    <li><a href="running-a-queue.html">Eine Warteschlange ausführen und ihren Fortschritt verfolgen</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

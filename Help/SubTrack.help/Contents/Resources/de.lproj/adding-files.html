@@ -1,0 +1,92 @@
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Videos zu einer Warteschlange hinzufügen</title>
+  <meta name="AppleTitle" content="Videos zu einer Warteschlange hinzufügen">
+  <meta name="description" content="Ziehe Videos oder Ordner in SubTrack oder füge sie über die Symbolleiste hinzu und verteile die Arbeit auf mehrere Warteschlangen.">
+  <meta name="keywords" content="hinzufügen, ziehen, ablegen, Ordner, importieren, Warteschlange, durchsuchen, mkv, mp4, mov, avi, Stapel">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="adding-files" id="adding-files"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Videos zu einer Warteschlange hinzufügen</h1>
+
+<p>Eine Warteschlange ist eine Liste von Dateien, die darauf warten, verschlankt zu werden, samt den
+Regeln, die festlegen, was jede Datei behält. Du kannst auf drei Arten Dateien hinzufügen.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/add-videos-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/add-videos.webp" width="1000" height="620" alt="Eine leere SubTrack-Warteschlange mit dem Text „Videos hierher ziehen“ und dem geöffneten Menü „Hinzufügen“ in der Symbolleiste mit den Einträgen „Dateien hinzufügen&nbsp;…“ und „Ordner hinzufügen&nbsp;…“.">
+  </picture>
+  <figcaption>Das Menü „Hinzufügen“ in der Symbolleiste bietet beide Möglichkeiten; auf ein leeres Fenster kannst du Dateien auch ziehen.</figcaption>
+</figure>
+
+<h2>Dateien hinzufügen</h2>
+
+<ol>
+  <li>Ziehe Videos aus dem Finder auf das SubTrack-Fenster oder</li>
+  <li>wähle <strong>Datei</strong> &#9656; <strong>Dateien hinzufügen&nbsp;…</strong> (<kbd>⌘O</kbd>)
+    und wähle die Videos aus oder</li>
+  <li>klicke in der Symbolleiste auf <strong>Hinzufügen</strong>.</li>
+</ol>
+
+<p>SubTrack liest jede Datei beim Hinzufügen, um herauszufinden, was darin steckt – das ist der kurze
+Status <em>Wird analysiert</em> in der Warteschlange. Solange das läuft, weiß SubTrack noch nicht, was
+die Datei behalten wird.</p>
+
+<a name="folder-scan" id="folder-scan"></a>
+<h2>Einen ganzen Ordner hinzufügen</h2>
+
+<ol>
+  <li>Wähle <strong>Datei</strong> &#9656; <strong>Ordner hinzufügen&nbsp;…</strong> (<kbd>⇧⌘O</kbd>)
+    oder ziehe einen Ordner auf das Fenster.</li>
+  <li>Wähle den Ordner aus und klicke auf <strong>Öffnen</strong>.</li>
+</ol>
+
+<p>SubTrack durchsucht den gesamten Ordner einschließlich aller darin enthaltenen Unterordner und
+reiht jedes gefundene Video ein. Eine Staffel mit Episoden in je einem Unterordner landet so mit
+einer einzigen Geste in der Warteschlange.</p>
+
+<p class="note">Das Ablegen eines großen Ordners kann einen Moment dauern; SubTrack zeigt den Fortschritt
+der Suche an. Dateien, die SubTrack nicht als Video erkennt, werden stillschweigend übersprungen, statt
+eingereiht zu werden und dann fehlzuschlagen.</p>
+
+<a name="queues" id="queues"></a>
+<h2>In mehreren Warteschlangen arbeiten</h2>
+
+<p>Eine Warteschlange ist mehr als eine Liste. Jede hat ihre eigenen Dateien, ihre eigenen Regeln für zu
+behaltende Spuren, ihre eigene Voreinstellung, ihren eigenen Ausgabeordner und ihre eigene Benennung – eine
+Warteschlange mit fremdsprachigen Filmen und eine mit englischen Serien-Rips können also völlig
+unterschiedliche Anforderungen haben, ohne sich zu stören.</p>
+
+<ol>
+  <li>Wähle <strong>Datei</strong> &#9656; <strong>Neue Warteschlange</strong> (<kbd>⌘N</kbd>).</li>
+  <li>Wähle in der Seitenleiste eine Warteschlange aus, um darin zu arbeiten.</li>
+  <li>Um eine Warteschlange umzubenennen oder zu entfernen, wähle <strong>Datei</strong> &#9656;
+    <strong>Warteschlange umbenennen&nbsp;…</strong> oder
+    <strong>Warteschlange löschen</strong>.</li>
+</ol>
+
+<p>Beim nächsten Öffnen von SubTrack sind die Warteschlangen genau so wiederhergestellt, wie du sie
+verlassen hast, einschließlich der Dateien, die noch nicht verarbeitet wurden.</p>
+
+<h2>Wenn eine Datei fehlt</h2>
+
+<p>SubTrack merkt sich, wo jede Quelldatei liegt. Wenn du eine Datei nach dem Einreihen verschiebst
+oder löschst, wird die Zeile als fehlend markiert, statt mitten in einem Durchlauf fehlzuschlagen.
+Siehe <a href="missing-source.html">Wenn die Quelldatei fehlt</a>.</p>
+
+<div class="seealso">
+  <h2>Siehe auch</h2>
+  <ul>
+    <li><a href="running-a-queue.html">Eine Warteschlange ausführen und ihren Fortschritt verfolgen</a></li>
+    <li><a href="slim-rules.html">Festlegen, welche Sprachen behalten werden</a></li>
+    <li><a href="destinations.html">Festlegen, wohin verschlankte Dateien gesichert werden</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
