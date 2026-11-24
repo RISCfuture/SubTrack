@@ -1,0 +1,48 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Se un codec non può essere codificato</title>
+  <meta name="AppleTitle" content="Se un codec non può essere codificato">
+  <meta name="description" content="Decidere di convertire è una cosa, avere l’encoder per farlo è un’altra. Perché la build in uso potrebbe non riuscire a scrivere il codec che hai scelto.">
+  <meta name="keywords" content="non supportato, encoder, mancante, h264, h265, libx264, libx265, app store, licenza, videotoolbox, incompatibile, bloccato">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="unsupported-codec" id="unsupported-codec"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Se un codec non può essere codificato</h1>
+
+<p>A volte SubTrack avvisa che l’FFmpeg in uso non può codificare un codec che hai scelto come codec di
+destinazione. Decidere di convertire è una cosa, avere l’encoder per farlo è un’altra.</p>
+
+<h2>I due motivi</h2>
+
+<ul>
+  <li><strong>Stai usando la versione App Store.</strong> Include una build di FFmpeg senza gli encoder
+    software H.264 e H.265, perché le regole dell’App Store non ne consentono la licenza. Scegli un
+    codec di destinazione supportato dalla build oppure usa la versione scaricabile. Per maggiori
+    informazioni, consulta
+    <a href="editions.html#editions">Scegliere tra le due versioni di SubTrack</a>.</li>
+  <li><strong>Hai indicato a SubTrack un FFmpeg tuo</strong> e quella build è stata compilata senza
+    l’encoder. Le build differiscono moltissimo per ciò che includono. Torna a
+    <strong>Integrato</strong> in <strong>Impostazioni</strong> &#9656; <strong>FFmpeg</strong>,
+    oppure installa una build con l’encoder che ti serve. Per maggiori informazioni, consulta
+    <a href="custom-ffmpeg.html">Usare una tua build di FFmpeg</a>.</li>
+</ul>
+
+<p>Per vedere esattamente cosa può leggere e scrivere l’FFmpeg in uso, apri
+<strong>Impostazioni</strong> &#9656; <strong>FFmpeg</strong> e fai clic su <strong>Formati
+supportati</strong>.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="preferred-codecs.html">Impostare i codec preferiti e i codec di destinazione</a></li>
+    <li><a href="supported-formats.html">Vedere cosa supporta una build di FFmpeg</a></li>
+    <li><a href="editions.html">Scegliere tra le due versioni di SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

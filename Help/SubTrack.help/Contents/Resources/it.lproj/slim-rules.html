@@ -1,0 +1,93 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Scegliere quali lingue mantenere</title>
+  <meta name="AppleTitle" content="Scegliere quali lingue mantenere">
+  <meta name="description" content="Imposta le lingue che SubTrack mantiene, in ordine di priorità, e decidi cosa fare con i commenti e con le tracce senza lingua.">
+  <meta name="keywords" content="lingua, regole, mantenere, rimuovere, priorità, traccia predefinita, senza lingua, commento, doppiaggio, sottotitoli, audio, iso 639">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="slim-rules" id="slim-rules"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Scegliere quali lingue mantenere</h1>
+
+<p>Le regole di conservazione sono il cuore di SubTrack. Si applicano in un colpo solo a tutti i file
+della coda, quindi descrivi una volta sola cosa vuoi mantenere invece di farlo file per file.</p>
+
+<p>Per aprirle, mostra l’Inspector (<kbd>⌥⌘I</kbd>) e scegli la scheda <strong>Regole</strong>. Le stesse
+regole compaiono quando modifichi una preimpostazione in <strong>Impostazioni</strong> &#9656;
+<strong>Preimpostazioni</strong>.</p>
+
+<a name="rule-languages" id="rule-languages"></a>
+<h2>Impostare le lingue da mantenere</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/rules-languages-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/rules-languages.webp" width="346" height="247" alt="L’editor delle lingue con l’elenco inglese, francese e giapponese in ordine, ciascuna con una maniglia di trascinamento e un pulsante di rimozione, sopra il menu Aggiungi.">
+  </picture>
+  <figcaption>L’elenco è in ordine di priorità: trascina le voci per riordinarle.</figcaption>
+</figure>
+
+<ol>
+  <li>Nell’Inspector, fai clic sul controllo delle lingue sotto <strong>Selezione delle tracce</strong>.</li>
+  <li>Cerca una lingua e selezionala per aggiungerla all’elenco.</li>
+  <li>Trascina le voci per metterle nell’ordine che preferisci.</li>
+</ol>
+
+<p>Le tracce audio e dei sottotitoli in queste lingue vengono mantenute. Tutto ciò che è in
+qualsiasi altra lingua viene rimosso.</p>
+
+<p><strong>L’ordine conta, e ha un effetto preciso.</strong> L’elenco è una classifica di preferenza,
+e la prima lingua diventa la traccia audio <em>predefinita</em> del file alleggerito, cioè quella che
+si sente premendo play senza scegliere nulla. Se mantieni inglese e giapponese ma vuoi che parta prima
+l’audio giapponese, metti il giapponese per primo.</p>
+
+<p class="note">Le lingue vengono riconosciute dall’etichetta memorizzata nel file, che usa i codici
+ISO 639-2 di tre lettere. Se chi ha creato il file ha etichettato male una traccia, questa viene
+trattata secondo l’etichetta e non secondo quello che ascolti.</p>
+
+<a name="rule-untagged" id="rule-untagged"></a>
+<h2>Decidere cosa fare con le tracce senza lingua</h2>
+
+<p><strong>Mantieni tracce senza lingua</strong> riguarda le tracce che non hanno alcuna etichetta di
+lingua.</p>
+
+<p>Questa sola impostazione decide se alcuni file escono perfetti o senza audio. I dischi degli studi
+etichettano tutto, quindi per i rip da Blu-ray puoi tranquillamente lasciarla disattivata e rimuovere il superfluo. I rip da web e da streaming, invece, contengono spesso una sola traccia audio, codificata
+correttamente ma senza etichetta: se rimuovi le tracce senza lingua, quel file perde tutto l’audio.</p>
+
+<p>Se lavori con rip di provenienza mista, lasciala attivata. Manterrai qualche traccia di cui non
+avevi bisogno, ma l’alternativa è un film muto.</p>
+
+<a name="rule-commentary" id="rule-commentary"></a>
+<h2>Decidere cosa fare con i commenti e l’audio aggiuntivo</h2>
+
+<p><strong>Includi commenti e audio aggiuntivo</strong> riguarda l’audio non predefinito nelle lingue che mantieni: i commenti del regista, l’audio descrittivo e i downmix alternativi.</p>
+
+<p>Se la disattivi, mantieni una sola traccia audio principale per ogni lingua richiesta. Se la attivi, mantieni anche quelle aggiuntive. I commenti sono di solito piccoli rispetto a un mix principale
+lossless, quindi raramente pesano molto: si tratta solo di decidere se li vuoi.</p>
+
+<p>Le tracce dei sottotitoli che il disco ha contrassegnato come commento seguono la stessa
+impostazione, perché sottotitolano l’audio del commento e da soli servono a poco. Una traccia
+senza questo contrassegno, come accade in molti rip, risulta un normale sottotitolo e viene mantenuta in base alla lingua come tutte le altre.</p>
+
+<h2>Controllare il risultato prima di avviare la coda</h2>
+
+<p>Le regole descrivono un’intenzione; l’Inspector ne mostra la conseguenza. Seleziona un file e scegli la scheda <strong>Anteprima</strong> dell’Inspector per vedere il file per intero: tutte le tracce che le regole mantengono, nell’ordine in cui compariranno nell’output, e tutte quelle che rimuovono. Se una regola
+non fa quello che ti aspettavi, lo vedi lì.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="overrides.html">Personalizzare il piano delle tracce di un file</a></li>
+    <li><a href="preview.html">Leggere il piano completo di un file</a></li>
+    <li><a href="preferred-codecs.html">Impostare i codec preferiti e i codec di destinazione</a></li>
+    <li><a href="presets.html">Salvare un insieme di regole come preimpostazione</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

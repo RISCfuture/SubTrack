@@ -1,0 +1,51 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Risolvere un conflitto di nomi</title>
+  <meta name="AppleTitle" content="Risolvere un conflitto di nomi">
+  <meta name="description" content="SubTrack non avvia una coda i cui nomi distruggerebbero un file. Può succedere in due soli modi, ed entrambi si risolvono in fretta.">
+  <meta name="keywords" content="conflitto, collisione, duplicato, sovrascrivere, stesso nome, Avvia disattivato, bloccato, segnaposto, numero, personalizzazione">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="name-conflicts" id="name-conflicts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Risolvere un conflitto di nomi</h1>
+
+<p>SubTrack non avvia una coda i cui nomi distruggerebbero un file, e questo può succedere in due
+soli modi.</p>
+
+<h2>Due file verrebbero scritti nella stessa posizione</h2>
+
+<p>Il formato non distingue due sorgenti, di solito perché hanno lo stesso nome in cartelle diverse,
+come <code>Show.mkv</code> in una cartella Stagione 1 e in una Stagione 2. Il file terminato per
+ultimo sovrascriverebbe l’altro.</p>
+
+<p>Per risolvere, fai in modo che il formato produca nomi distinti. Aggiungere <code>{n}</code> è il
+metodo più rapido; assegnare a un file un nome tutto suo nella scheda <strong>Personalizzazione</strong> è
+il metodo più preciso. In alternativa, invia le code a cartelle diverse.</p>
+
+<h2>Un file sovrascriverebbe la propria sorgente</h2>
+
+<p>Il formato produce esattamente il nome della sorgente e la cartella di destinazione è la cartella
+in cui si trova la sorgente: SubTrack dovrebbe quindi scrivere sopra il file che sta leggendo.</p>
+
+<p>Per risolvere, aggiungi qualcosa al formato, come <code>{name} (slimmed)</code>, oppure scegli una
+cartella di destinazione diversa. Per maggiori informazioni, consulta
+<a href="destinations.html">Scegliere dove salvare i file alleggeriti</a>.</p>
+
+<p class="note">L’avviso indica quali file sono coinvolti, così puoi vedere quali sono in conflitto
+senza dover indovinare. Avvia torna disponibile non appena non ci sono più due destinazioni uguali.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="output-names.html">Dare un nome ai file scritti da SubTrack</a></li>
+    <li><a href="destinations.html">Scegliere dove salvare i file alleggeriti</a></li>
+    <li><a href="overrides.html">Personalizzare il piano delle tracce di un file</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

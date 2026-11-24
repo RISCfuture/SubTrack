@@ -1,0 +1,59 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Se SubTrack non riesce a leggere un file</title>
+  <meta name="AppleTitle" content="Se SubTrack non riesce a leggere un file">
+  <meta name="description" content="Perché l’analisi di un file non riesce prima ancora che inizi l’alleggerimento – non è davvero un video, è incompleto, il contenitore non è supportato, è cifrato o macOS ne blocca l’accesso – e cosa fare.">
+  <meta name="keywords" content="ffprobe, illeggibile, danneggiato, incompleto, drm, cifrato, contenitore, analizzare, rianalizzare, impossibile leggere, permesso, negato, accesso completo al disco">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="probe-failed" id="probe-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Se SubTrack non riesce a leggere un file</h1>
+
+<p>Succede prima che inizi qualsiasi alleggerimento. SubTrack analizza ogni file che aggiungi e
+l’analisi deve riuscire perché ci sia un elenco di tracce su cui prendere decisioni. Se non riesce,
+la riga indica che SubTrack non ha potuto leggere il file video e il dettaglio sotto ne spiega il
+motivo, di solito riportando quanto <code>ffprobe</code> ha detto prima di interrompersi.</p>
+
+<h2>Le cause più comuni</h2>
+
+<ul>
+  <li><strong>Non è davvero un video.</strong> Un’estensione non dice nulla sul contenuto. Un file senza
+    tracce video, come un file audio isolato o un file accessorio, viene rifiutato subito e
+    l’errore lo indica.</li>
+  <li><strong>È incompleto o ancora in arrivo.</strong> Un download in corso o una copia non ancora
+    terminata risultano come un contenitore danneggiato finché non arriva l’ultimo byte.</li>
+  <li><strong>Il contenitore non è tra quelli che questa build sa leggere.</strong> Le build di
+    FFmpeg differiscono per i formati con cui sono state compilate.</li>
+  <li><strong>È cifrato.</strong> I video acquistati o noleggiati sono protetti da DRM e
+    SubTrack non può rimuoverlo.</li>
+  <li><strong>macOS ne blocca l’accesso.</strong> Un file all’interno del contenitore di un’altra
+    app viene rifiutato subito, senza alcuna richiesta per consentirne l’accesso.</li>
+</ul>
+
+<h2>Cosa fare</h2>
+
+<p>Se a rifiutare il file è macOS, copialo in una cartella tua e aggiungi la copia. Per leggere un
+file direttamente dal contenitore di un’altra app serve l’accesso completo al disco, che si
+concede in <strong>Privacy e sicurezza</strong> nelle Impostazioni di Sistema.</p>
+
+<p>Altrimenti, prova prima a riprodurre il file con un altro programma: se non si apre nemmeno in
+QuickTime Player, il problema è il file. Se invece si riproduce senza problemi, apri
+<strong>Impostazioni</strong> &#9656; <strong>FFmpeg</strong> e fai clic su
+<strong>Formati supportati</strong> per verificare che questa build legga quel contenitore. Poi
+seleziona la riga e scegli <strong>Coda</strong> &#9656; <strong>Rianalizza selezione</strong>.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Se un file non viene alleggerito</a></li>
+    <li><a href="supported-formats.html">Vedere cosa supporta una build di FFmpeg</a></li>
+    <li><a href="troubleshooting.html#activity-log">Leggere l’errore completo nel Registro attività</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

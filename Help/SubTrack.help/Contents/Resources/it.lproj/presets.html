@@ -1,0 +1,113 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Salvare un insieme di regole come preimpostazione</title>
+  <meta name="AppleTitle" content="Salvare un insieme di regole come preimpostazione">
+  <meta name="description" content="Riutilizza un insieme di regole di conservazione tra code e Mac salvandolo come preimpostazione, e scopri quando il menu delle preimpostazioni mostra «Nuova preimpostazione».">
+  <meta name="keywords" content="preimpostazione, salvare, regole, riutilizzare, iniziale, blu-ray, streaming, rip web, nuova preimpostazione, eliminare">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="presets" id="presets"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Salvare un insieme di regole come preimpostazione</h1>
+
+<p>Una preimpostazione è un insieme di regole di conservazione con un nome. Una volta capito che cosa
+serve a un certo tipo di rip, salvarlo ti evita di doverlo stabilire di nuovo.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-presets-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-presets.webp" width="620" height="548" alt="La scheda Preimpostazioni delle impostazioni di SubTrack, con l’elenco delle preimpostazioni a sinistra e le regole di quella selezionata a destra.">
+  </picture>
+  <figcaption>Impostazioni &#9656; Preimpostazioni elenca le tue preimpostazioni e modifica le regole di quella selezionata.</figcaption>
+</figure>
+
+<a name="saving-presets" id="saving-presets"></a>
+<h2>Salvare le regole in uso</h2>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/preset-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/preset-menu.webp" width="1280" height="860" alt="Il menu delle preimpostazioni aperto nella parte superiore dell’Inspector, con le preimpostazioni salvate sopra la voce Salva come preimpostazione.">
+  </picture>
+  <figcaption>Tutte le preimpostazioni salvate e la voce che aggiunge a esse le regole in uso.</figcaption>
+</figure>
+
+<ol>
+  <li>Imposta le regole che vuoi nell’Inspector.</li>
+  <li>Fai clic sul menu delle preimpostazioni nella parte superiore dell’Inspector.</li>
+  <li>Scegli <strong>Salva come preimpostazione…</strong>, assegna un nome e fai clic su
+    <strong>Salva</strong>.</li>
+</ol>
+
+<p>Per applicarne una, sceglila dallo stesso menu. La coda ne assume subito le regole.</p>
+
+<h2>Perché il menu a volte mostra «(Nuova preimpostazione)»</h2>
+
+<p>È l’aspetto di SubTrack più utile da capire, perché la prima volta sembra un errore.</p>
+
+<p>Il menu delle preimpostazioni non mostra l’ultima su cui hai <em>fatto clic</em>, ma quella a cui
+le regole attuali <em>corrispondono</em>. Applica «Rip Blu-ray – Solo inglese» e aggiungi una lingua:
+il menu smette di mostrare «Rip Blu-ray – Solo inglese», perché le regole non sono più quelle di
+quella preimpostazione. Mostra invece «(Nuova preimpostazione)»: hai un insieme di regole che non
+corrisponde ad alcuna preimpostazione salvata.</p>
+
+<p>Se rimuovi di nuovo quella lingua, il menu torna a mostrare «Rip Blu-ray – Solo inglese» senza che tu debba
+applicare nulla. Non si è perso niente e la preimpostazione non è mai stata modificata: applicare una
+preimpostazione copia le sue regole nella coda, invece di collegare la coda alla preimpostazione.</p>
+
+<p>«(Nuova preimpostazione)» è quindi un invito, non un avviso: salva queste regole se vuoi
+conservarle.</p>
+
+<a name="starter-presets" id="starter-presets"></a>
+<h2>Le preimpostazioni incluse in SubTrack</h2>
+
+<p>SubTrack include cinque preimpostazioni iniziali, raggruppate in base all’origine del file: è
+questo che decide sia quali tracce vale la pena mantenere sia quali codec vale la pena copiare.</p>
+
+<ul>
+  <li><strong>Rip Blu-ray – Solo inglese</strong>: audio e sottotitoli in inglese, nient’altro.</li>
+  <li><strong>Rip Blu-ray – Inglese + commento</strong>: come sopra, più l’audio inglese non
+    predefinito: commento, audio descrittivo, mix alternativi.</li>
+  <li><strong>Rip Blu-ray – Mantieni tracce senza lingua</strong>: come sopra, e mantiene anche le tracce prive di indicazione della lingua, per il rip di un disco che le ha contrassegnate in modo
+    incoerente.</li>
+  <li><strong>Rip Web / YouTube – Solo inglese</strong>: mantiene le tracce senza lingua e preferisce i
+    codec che un download dal web usa già, così VP9, AV1 e Opus vengono copiati anziché convertiti
+    nei codec dei dischi, cosa che costerebbe solo spazio e qualità.</li>
+  <li><strong>Rip da streaming – Solo inglese</strong>: mantiene le tracce senza lingua,
+    con il normale elenco di codec dei dischi.</li>
+</ul>
+
+<p>Ciò che distingue maggiormente le preimpostazioni è se le tracce senza lingua vengono mantenute. I dischi degli studi contrassegnano tutto, quindi le prime due le rimuovono come superflue; i rip dal web e dallo streaming hanno molto spesso un’unica traccia audio senza lingua
+che costituisce l’intera colonna sonora, quindi le altre le mantengono. Per maggiori informazioni,
+consulta <a href="slim-rules.html#rule-untagged">Scegliere quali lingue mantenere</a>.</p>
+
+<p>Le preimpostazioni iniziali sono preimpostazioni normali fin dal momento in cui compaiono:
+SubTrack non le protegge né le ripristina. Modificale liberamente o elimina quelle che non usi.</p>
+
+<h2>Modificare, rinominare ed eliminare</h2>
+
+<ol>
+  <li>Scegli <strong>SubTrack</strong> &#9656; <strong>Impostazioni</strong> (<kbd>⌘,</kbd>) e fai clic su
+    <strong>Preimpostazioni</strong>.</li>
+  <li>Seleziona una preimpostazione. Accanto all’elenco compaiono il suo nome, il formato del nome di output e le regole.</li>
+  <li>Per eliminarla, fai clic su <strong>Elimina preimpostazione</strong> e conferma.</li>
+</ol>
+
+<p class="note">Eliminare una preimpostazione non influisce su nessuna coda. Una coda che usava quelle
+regole le mantiene, perché ne ha una copia e non un riferimento: il suo menu delle preimpostazioni
+inizia semplicemente a mostrare «(Nuova preimpostazione)».</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="preset-sync.html">Sincronizzare le preimpostazioni tra i tuoi Mac</a></li>
+    <li><a href="slim-rules.html">Scegliere quali lingue mantenere</a></li>
+    <li><a href="output-names.html">Dare un nome ai file scritti da SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "plan": "Via le tracce inutili.\nTieni il resto, bit per bit.",
+  "rules": "Lingue: una volta sola.\nOgni file in coda le segue.",
+  "override": "Tieni il commento solo su questo.\nOgni traccia, prima dell’esecuzione.",
+  "queues": "Una coda per gruppo,\ncon le sue regole."
+}

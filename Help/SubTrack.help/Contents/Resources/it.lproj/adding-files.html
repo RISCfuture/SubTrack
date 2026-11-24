@@ -1,0 +1,89 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Aggiungere video a una coda</title>
+  <meta name="AppleTitle" content="Aggiungere video a una coda">
+  <meta name="description" content="Trascina video o cartelle in SubTrack, oppure aggiungili dalla barra degli strumenti, e organizza il lavoro in code separate.">
+  <meta name="keywords" content="aggiungere, trascinare, rilasciare, cartella, importare, coda, analisi, mkv, mp4, mov, avi, batch, più file">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="adding-files" id="adding-files"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Aggiungere video a una coda</h1>
+
+<p>Una coda è un elenco di file in attesa di essere alleggeriti, insieme alle regole che stabiliscono
+cosa mantenere di ciascuno. Puoi aggiungere file in tre modi.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/add-videos-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/add-videos.webp" width="1000" height="620" alt="Una coda di SubTrack vuota con la scritta «Rilascia qui i video» e il menu Aggiungi della barra degli strumenti aperto su Aggiungi file… e Aggiungi cartella….">
+  </picture>
+  <figcaption>Il menu Aggiungi della barra degli strumenti offre entrambi i modi, e puoi anche rilasciare i file direttamente su una finestra vuota.</figcaption>
+</figure>
+
+<h2>Aggiungere file</h2>
+
+<ol>
+  <li>Trascina i video dal Finder nella finestra di SubTrack, oppure</li>
+  <li>scegli <strong>File</strong> &#9656; <strong>Aggiungi file…</strong> (<kbd>⌘O</kbd>) e
+    selezionali, oppure</li>
+  <li>fai clic su <strong>Aggiungi</strong> nella barra degli strumenti.</li>
+</ol>
+
+<p>SubTrack legge ogni file appena arriva per scoprire cosa contiene: è il breve stato
+<em>Analisi</em> che vedi nella coda. Finché non termina, SubTrack non sa ancora cosa manterrà del file.</p>
+
+<a name="folder-scan" id="folder-scan"></a>
+<h2>Aggiungere un’intera cartella</h2>
+
+<ol>
+  <li>Scegli <strong>File</strong> &#9656; <strong>Aggiungi cartella…</strong> (<kbd>⇧⌘O</kbd>)
+    oppure trascina una cartella nella finestra.</li>
+  <li>Scegli la cartella e fai clic su <strong>Apri</strong>.</li>
+</ol>
+
+<p>SubTrack esamina l’intera cartella, comprese le sottocartelle, e mette in coda ogni video che
+trova. Una stagione di episodi divisi in sottocartelle arriva con un solo gesto.</p>
+
+<p class="note">Rilasciare una cartella molto grande può richiedere qualche istante; SubTrack mostra
+l’avanzamento della ricerca. I file che non riconosce come video vengono ignorati senza avvisi,
+invece di essere messi in coda e poi dare errore.</p>
+
+<a name="queues" id="queues"></a>
+<h2>Lavorare con più code</h2>
+
+<p>Una coda non è solo un elenco. Ognuna ha i propri file, le proprie regole di conservazione, la propria preimpostazione, la propria cartella di destinazione e il proprio formato del nome di output: così una coda
+di film in lingua straniera e una di serie TV in inglese possono avere esigenze del tutto diverse
+senza interferire l’una con l’altra.</p>
+
+<ol>
+  <li>Scegli <strong>File</strong> &#9656; <strong>Nuova coda</strong> (<kbd>⌘N</kbd>).</li>
+  <li>Seleziona una coda nella barra laterale per lavorarci.</li>
+  <li>Per rinominare o eliminare una coda, scegli <strong>File</strong> &#9656; <strong>Rinomina
+    coda…</strong> oppure <strong>Elimina coda</strong>.</li>
+</ol>
+
+<p>Quando riapri SubTrack, le code ricompaiono esattamente come le avevi lasciate, compresi i file
+non ancora elaborati.</p>
+
+<h2>Se un file risulta mancante</h2>
+
+<p>SubTrack ricorda dove si trova ogni file sorgente. Se lo sposti o lo elimini dopo averlo messo in
+coda, la riga viene contrassegnata come mancante, invece di interrompere l’esecuzione a metà.
+Per maggiori informazioni, consulta
+<a href="missing-source.html">Se il file sorgente è mancante</a>.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="running-a-queue.html">Eseguire una coda e seguirne l’avanzamento</a></li>
+    <li><a href="slim-rules.html">Scegliere quali lingue mantenere</a></li>
+    <li><a href="destinations.html">Scegliere dove salvare i file alleggeriti</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

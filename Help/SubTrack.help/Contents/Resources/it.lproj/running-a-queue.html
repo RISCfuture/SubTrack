@@ -1,0 +1,99 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Eseguire una coda e seguirne l’avanzamento</title>
+  <meta name="AppleTitle" content="Eseguire una coda e seguirne l’avanzamento">
+  <meta name="description" content="Avvia tutti i file o solo quelli selezionati, segui l’avanzamento nella finestra e nel Dock e leggi quanto ha risparmiato ogni file terminato.">
+  <meta name="keywords" content="avviare, eseguire, annullare, avanzamento, Dock, stato, risparmio, dimensione, batch, rianalizzare">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="running-a-queue" id="running-a-queue"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Eseguire una coda e seguirne l’avanzamento</h1>
+
+<p>Quando la coda mostra cosa manterrà ogni file, puoi eseguirla tutta oppure solo in parte.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/queue-running-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/queue-running.webp" width="1280" height="860" alt="Una coda a metà esecuzione: i file terminati hanno un segno di spunta, uno mostra un anello di avanzamento e gli altri aspettano il proprio turno.">
+  </picture>
+  <figcaption>Ogni riga mostra il proprio stato e la barra sotto conta la coda nel suo insieme.</figcaption>
+</figure>
+
+<h2>Avviare l’alleggerimento</h2>
+
+<ol>
+  <li>Per eseguire tutto, scegli <strong>Coda</strong> &#9656; <strong>Avvia tutto</strong>
+    (<kbd>⌘R</kbd>).</li>
+  <li>Per eseguire solo alcuni file, selezionali e scegli <strong>Coda</strong> &#9656;
+    <strong>Avvia selezione</strong> (<kbd>⌘Invio</kbd>).</li>
+  <li>Per fermare l’esecuzione, scegli <strong>Coda</strong> &#9656; <strong>Annulla tutto</strong>
+    (<kbd>⌘.</kbd>).</li>
+</ol>
+
+<p>Annullando, il lavoro in corso si interrompe e l’output parziale viene scartato. I file sorgente
+non vengono mai modificati: SubTrack scrive sempre e solo file nuovi.</p>
+
+<p class="note">Se Avvia è disattivato, due file della coda verrebbero scritti nella stessa
+posizione oppure uno sovrascriverebbe la propria sorgente. SubTrack non si avvia finché il problema
+non è risolto, perché in entrambi i casi un file andrebbe distrutto. Per maggiori informazioni,
+consulta <a href="name-conflicts.html">Risolvere un conflitto di nomi</a>.</p>
+
+<a name="queue-progress" id="queue-progress"></a>
+<h2>Seguire l’avanzamento</h2>
+
+<p>Ogni riga in esecuzione mostra il proprio avanzamento, mentre la barra sotto la coda indica quanti
+elementi ci sono, quanti sono terminati e quanti sono in codifica in questo momento. Anche l’icona
+nel Dock riporta l’avanzamento complessivo, quindi puoi avviare un batch e passare ad altro.</p>
+
+<p>I file che vengono solo copiati terminano quasi subito. Un file in cui va convertita una traccia
+richiede il tempo che serve alla conversione, ed è per questo che una coda può sembrare ferma su una
+sola riga mentre le altre scorrono veloci. Quella riga sta facendo un lavoro vero.</p>
+
+<a name="queue-status" id="queue-status"></a>
+<h2>Leggere i risultati</h2>
+
+<p>La coda mostra per ogni file il numero di tracce e la dimensione prima e dopo, così vedi quanto è
+stato effettivamente risparmiato. La dimensione dell’output è definitiva solo quando un file è
+terminato; fino ad allora sul disco non c’è nulla da misurare.</p>
+
+<p>Fai clic con il tasto destro sull’intestazione della coda per nascondere le colonne che non leggi e
+restituire la loro larghezza a Nome; fai di nuovo clic per riaverle. SubTrack ricorda la tua scelta.
+Il simbolo di stato e Nome restano sempre visibili.</p>
+
+<p>La colonna di stato mostra un simbolo per ogni riga. Passaci sopra con il puntatore per leggerne il
+significato:</p>
+
+<ul>
+  <li>Un anello che ruota: il file viene analizzato oppure alleggerito.</li>
+  <li>Un segno di spunta: terminato.</li>
+  <li>Un triangolo di avviso: il file è mancante, l’esecuzione non è riuscita oppure la build di
+    FFmpeg in uso non può fare ciò che chiedono le regole. Per maggiori informazioni, consulta
+    <a href="troubleshooting.html#troubleshooting">Se un file non viene alleggerito</a>.</li>
+</ul>
+
+<h2>Fare ordine</h2>
+
+<ul>
+  <li><strong>Coda</strong> &#9656; <strong>Rimuovi completati</strong> rimuove le righe terminate e
+    lascia le altre.</li>
+  <li><strong>Coda</strong> &#9656; <strong>Rimuovi selezione</strong> (<kbd>Elimina</kbd>) toglie i
+    file dalla coda. Non elimina mai nulla dal disco.</li>
+  <li><strong>Coda</strong> &#9656; <strong>Rianalizza selezione</strong> rilegge una sorgente: è
+    utile se hai sostituito il file o cambiato la build di FFmpeg usata da SubTrack.</li>
+</ul>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="encoding.html#settings-encoding">Impostare quanti file codificare contemporaneamente</a></li>
+    <li><a href="troubleshooting.html">Se un file non viene alleggerito</a></li>
+    <li><a href="output-names.html">Dare un nome ai file scritti da SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

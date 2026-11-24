@@ -1,0 +1,65 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Se un’esecuzione parte e poi non riesce</title>
+  <meta name="AppleTitle" content="Se un’esecuzione parte e poi non riesce">
+  <meta name="description" content="FFmpeg è partito, ha lavorato per un po’ e si è fermato. Le cause più comuni sono un disco pieno, una destinazione scomparsa o un danno nella sorgente.">
+  <meta name="keywords" content="ffmpeg, codice di uscita, non riuscito, errore, disco pieno, spazio insufficiente, spazio libero, smontato, condivisione di rete, danneggiato, verifica, tracce mancanti, riprova">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="encode-failed" id="encode-failed"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Se un’esecuzione parte e poi non riesce</h1>
+
+<p>È un problema diverso da quello di un file che non è mai stato leggibile: FFmpeg è partito, ha
+lavorato per un po’ e si è fermato. La riga indica che SubTrack non è riuscito a elaborare il video
+e riporta il codice con cui FFmpeg è terminato, che da solo non dice nulla. Il messaggio vero si
+trova nel Registro attività: leggilo prima di fare congetture.</p>
+
+<h2>Le cause più comuni</h2>
+
+<ul>
+  <li><strong>Il disco si è riempito.</strong> L’alleggerimento scrive un file completamente nuovo,
+    quindi il file di output ha bisogno di spazio accanto all’originale fino al termine
+    dell’esecuzione.</li>
+  <li><strong>La destinazione è scomparsa durante l’esecuzione</strong>: un disco esterno è stato
+    smontato o una condivisione di rete si è interrotta.</li>
+  <li><strong>Una traccia della sorgente è danneggiata.</strong> Un rip con un punto rovinato può
+    essere analizzato senza problemi e fallire comunque quando FFmpeg arriva al danno.</li>
+</ul>
+
+<p>SubTrack controlla anche il file che ha appena scritto, quindi un’esecuzione può fallire proprio alla fine: un file di output a cui mancano tracce che dovrebbe avere, o con una traccia
+priva di dati, viene segnalato come non riuscito anziché come completato. SubTrack si rifiuta di proposito di consegnarti un file che, senza questo controllo, sarebbe sbagliato a tua insaputa.</p>
+
+<h2>Se non è mai partita</h2>
+
+<p>Alcuni errori non riportano alcun codice di uscita, perché SubTrack ha rifiutato l’esecuzione
+prima di avviare FFmpeg: confronta le dimensioni del file che verrebbe scritto con lo spazio
+disponibile sul volume di destinazione e si ferma quando il file chiaramente non ci sta. La riga
+indica entrambi i valori e il Registro attività non ha altro da aggiungere, perché non è stato
+eseguito nulla. Libera spazio su quel volume oppure
+<a href="destinations.html">salva l’output della coda altrove</a>, poi avvia di nuovo la
+riga.</p>
+
+<p>Questo controllo è una cortesia, non una garanzia. Le dimensioni dell’output di una transcodifica
+non si possono prevedere e alcuni volumi non indicano lo spazio libero, quindi un disco può
+comunque riempirsi a metà e provocare l’errore descritto nel resto di questa pagina.</p>
+
+<h2>Riprovare</h2>
+
+<p>Una riga non riuscita può essere avviata di nuovo. Risolvi la causa, poi scegli
+<strong>Coda</strong> &#9656; <strong>Avvia selezione</strong> (<kbd>⌘Invio</kbd>).</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="troubleshooting.html#activity-log">Leggere l’errore completo nel Registro attività</a></li>
+    <li><a href="troubleshooting.html">Se un file non viene alleggerito</a></li>
+    <li><a href="destinations.html">Scegliere dove salvare i file alleggeriti</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

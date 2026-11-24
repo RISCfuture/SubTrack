@@ -1,0 +1,80 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Alleggerire i video senza ricodificarli</title>
+  <meta name="AppleTitle" content="Alleggerire i video senza ricodificarli">
+  <meta name="description" content="SubTrack copia le tracce che mantieni invece di convertirle, così i file si alleggeriscono in pochi secondi e senza perdita di qualità.">
+  <meta name="keywords" content="lossless, copia dei flussi, remux, ricodificare, transcodificare, qualità, blu-ray, rip, doppiaggio, handbrake">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="what-subtrack-does" id="what-subtrack-does"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Alleggerire i video senza ricodificarli</h1>
+
+<p>Un remux da Blu-ray o UHD contiene spesso una dozzina di tracce: otto doppiaggi in lingue che non
+parli, sottotitoli in cinque lingue che non leggi e una traccia di commento che non ascolterai mai.
+Occupano la maggior parte dello spazio e non servono a niente.</p>
+
+<p>SubTrack le rimuove. Tutto ciò che mantieni viene scritto in un nuovo file esattamente com’era, e il
+risultato è una frazione delle dimensioni, con la stessa qualità.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/main-window-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/main-window.webp" width="1280" height="860" alt="La finestra principale di SubTrack: una coda di rip da Blu-ray con il numero di tracce in ingresso e in uscita e le dimensioni dei file, con l’Inspector delle regole aperto accanto.">
+  </picture>
+  <figcaption>La coda mostra cosa perderà ogni file e quanto peserà dopo.</figcaption>
+</figure>
+
+<a name="stream-copy" id="stream-copy"></a>
+<h2>Perché è così veloce</h2>
+
+<p>La maggior parte degli strumenti video decodifica ogni fotogramma e lo codifica di nuovo. Ci vogliono
+ore e ogni volta si perde qualità, perché l’immagine viene scartata e approssimata da capo.</p>
+
+<p>SubTrack non decodifica nulla. Una traccia che mantieni viene copiata da un contenitore all’altro,
+byte per byte: gli stessi dati compressi, semplicemente spostati. Non c’è perdita di generazione
+perché nulla viene rigenerato, e il lavoro dipende dalla velocità di lettura del disco, non da quella
+del processore. Un film di due ore finisce in genere in pochi secondi.</p>
+
+<p>Anche il contenitore resta lo stesso. Da un MKV esce un MKV, quindi tutto ciò che riproduce
+l’originale riprodurrà anche la copia alleggerita.</p>
+
+<a name="not-a-transcoder" id="not-a-transcoder"></a>
+<h2>Cosa SubTrack non è, di proposito</h2>
+
+<p>SubTrack è uno strumento per alleggerire le tracce, non un transcodificatore. Non ci sono cursori
+della qualità, campi per il bitrate né preimpostazioni dell’encoder, perché nell’uso normale non c’è
+nulla da regolare: la copia non ha impostazioni.</p>
+
+<p><em>Può</em> convertire una traccia, ma solo in un caso: hai chiesto di mantenere una traccia che
+è in un codec che hai detto di non volere. Allora viene convertita solo quella traccia, le altre
+vengono comunque copiate, e SubTrack ti avvisa prima di iniziare. Per maggiori informazioni, consulta
+<a href="preferred-codecs.html#preferred-codecs">Impostare i codec preferiti e i codec di destinazione</a>.</p>
+
+<p class="note">Se quello che vuoi davvero è ridurre l’<em>immagine</em>, cioè ricodificare una libreria
+a un bitrate inferiore, SubTrack non è lo strumento adatto e non lo sarà mai. Per questo c’è
+HandBrake.</p>
+
+<h2>Come procede il lavoro</h2>
+
+<ol>
+  <li><strong>Metti in coda i file.</strong> Trascina dei film, oppure un’intera cartella.</li>
+  <li><strong>Lascia che siano le regole a scegliere le tracce.</strong> Mantieni l’inglese e rimuovi
+    gli altri undici doppiaggi. Decidi cosa fare con i commenti e con le tracce senza lingua.</li>
+  <li><strong>Avvia.</strong> Tutto ciò che hai mantenuto viene copiato in un nuovo file.</li>
+</ol>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="adding-files.html">Aggiungere video a una coda</a></li>
+    <li><a href="slim-rules.html">Scegliere quali lingue mantenere</a></li>
+    <li><a href="preferred-codecs.html">Impostare i codec preferiti e i codec di destinazione</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

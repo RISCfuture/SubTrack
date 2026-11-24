@@ -1,0 +1,74 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Impostare quanti file codificare contemporaneamente</title>
+  <meta name="AppleTitle" content="Impostare quanti file codificare contemporaneamente">
+  <meta name="description" content="Scegli quanti file SubTrack elabora contemporaneamente e scopri quale set di codec include la tua build.">
+  <meta name="keywords" content="simultanee, contemporanee, codifiche, prestazioni, parallelo, set di codec, videotoolbox, velocità">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="settings-encoding" id="settings-encoding"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Impostare quanti file codificare contemporaneamente</h1>
+
+<p>Scegli <strong>SubTrack</strong> &#9656; <strong>Impostazioni</strong> (<kbd>⌘,</kbd>) e fai clic su
+<strong>Codifica</strong>.</p>
+
+<a name="simultaneous-encodes" id="simultaneous-encodes"></a>
+<h2>Codifiche simultanee</h2>
+
+<p>Questa opzione limita quanti file SubTrack elabora nello stesso momento. I valori vanno da uno a otto
+invece di includere ogni numero, perché la scelta che conta è tra «uno alla volta», «un paio» o
+«tutta la potenza del computer»: i valori intermedi non si comportano in modo abbastanza diverso da fare
+la differenza.</p>
+
+<p><strong>Per un normale alleggerimento, questa impostazione conta poco.</strong> La copia delle tracce
+dipende dalla velocità di lettura e scrittura del disco, non dal processore. Eseguire otto copie insieme
+significa soprattutto farle competere per lo stesso disco, e può essere più lento che eseguirne due.</p>
+
+<p><strong>Conta quando le tracce vengono convertite.</strong> La conversione richiede un vero lavoro del
+processore, quindi più conversioni insieme sfruttano di più il computer. Se le tue code prevedono spesso
+conversioni, perché le sorgenti usano codec che non sono tra quelli preferiti, alzare il limite ti farà
+finire un gruppo di file più in fretta.</p>
+
+<p>Il prezzo da pagare è la reattività. Con un limite alto, durante le conversioni il resto del Mac può
+risultare lento. Se lavori mentre è in corso un gruppo di file, tieni il limite basso.</p>
+
+<p class="note">Abbassare il limite non interrompe nulla di ciò che è già in corso. I file in elaborazione
+vengono completati; il nuovo limite si applica a quelli che iniziano dopo.</p>
+
+<a name="codec-sets" id="codec-sets"></a>
+<h2>Set di codec</h2>
+
+<p>Qui puoi vedere quale build di FFmpeg include la tua copia di SubTrack. Non è un’impostazione, non c’è
+nulla da modificare: serve solo a farti sapere che cosa hai.</p>
+
+<ul>
+  <li><strong>Completo (tutti i codec)</strong> – la versione scaricabile. Include gli encoder software
+    H.264 e H.265.</li>
+  <li><strong>App Store (VideoToolbox)</strong> – la versione App Store. Codifica hardware tramite
+    VideoToolbox, senza gli encoder software, la cui licenza non è consentita nella distribuzione
+    tramite App Store.</li>
+</ul>
+
+<p>Entrambe alleggeriscono i file allo stesso modo. La differenza emerge solo quando una traccia deve
+essere convertita, e solo per alcuni codec di destinazione. Per maggiori informazioni, consulta
+<a href="editions.html#editions">Scegliere tra le due versioni di SubTrack</a>.</p>
+
+<p>Per l’elenco completo di ciò che la build in uso può leggere e scrivere, apri
+<strong>Impostazioni</strong> &#9656; <strong>FFmpeg</strong> e fai clic su <strong>Formati
+supportati</strong>.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Usare una build di FFmpeg diversa</a></li>
+    <li><a href="editions.html">Scegliere tra le due versioni di SubTrack</a></li>
+    <li><a href="running-a-queue.html">Eseguire una coda e seguirne l’avanzamento</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

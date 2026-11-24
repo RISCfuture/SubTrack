@@ -1,0 +1,50 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Se il file sorgente è mancante</title>
+  <meta name="AppleTitle" content="Se il file sorgente è mancante">
+  <meta name="description" content="Una coda conserva un riferimento a ogni file, non una copia: se la sorgente viene spostata, rinominata o smontata, la riga diventa rossa. Lo stesso accade se l’accesso salvato non è più valido.">
+  <meta name="keywords" content="sorgente mancante, spostato, rinominato, eliminato, smontato, disco, autorizzazione, sandbox, accesso salvato, non valido, rianalizza, aggiungi di nuovo">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="missing-source" id="missing-source"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Se il file sorgente è mancante</h1>
+
+<p>Una coda conserva un riferimento a ogni file, non una copia, e quel riferimento resta valido
+anche dopo aver chiuso SubTrack. Così una coda lasciata lì per tutta la notte può ritrovarsi con un
+file che è stato spostato, rinominato, eliminato o che si trova su un disco non ancora montato. La
+riga diventa rossa e riporta <strong>La sorgente è mancante</strong>.</p>
+
+<p>Esiste anche una versione meno evidente dello stesso problema. Aggiungere un file è ciò che dà a
+SubTrack l’autorizzazione per raggiungerlo, e questa autorizzazione viene salvata in modo che
+continui a funzionare dopo un nuovo avvio. Gli accessi salvati possono diventare non validi: il file
+è esattamente dove l’hai lasciato, ma la riga indica che il riferimento salvato non è più valido o
+che SubTrack non ha l’autorizzazione per aprirlo.</p>
+
+<h2>Ripristinare il file</h2>
+
+<ol>
+  <li>Rimetti il file al suo posto: monta il disco, annulla la modifica del nome oppure recuperalo
+    dal Cestino.</li>
+  <li>Seleziona la riga e scegli <strong>Coda</strong> &#9656; <strong>Rianalizza selezione</strong>.</li>
+  <li>Se la riga è ancora segnalata, scegli <strong>Coda</strong> &#9656; <strong>Rimuovi
+    selezione</strong> (<kbd>Elimina</kbd>) e aggiungi di nuovo il file.</li>
+</ol>
+
+<p>Il terzo passaggio è quello che elimina un accesso salvato non più valido, ed è per questo che è la soluzione di riferimento: aggiungere un file è ciò che concede l’accesso, quindi aggiungerlo di
+nuovo lo concede di nuovo. Rimuovere una riga non elimina mai nulla dal disco.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="troubleshooting.html">Se un file non viene alleggerito</a></li>
+    <li><a href="adding-files.html">Aggiungere video a una coda</a></li>
+    <li><a href="destinations.html">Scegliere dove salvare i file alleggeriti</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

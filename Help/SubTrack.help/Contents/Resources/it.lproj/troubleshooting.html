@@ -1,0 +1,118 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Se un file non viene alleggerito</title>
+  <meta name="AppleTitle" content="Se un file non viene alleggerito">
+  <meta name="description" content="Cosa significa ciascun errore nella coda (sorgente illeggibile, file mancante, esecuzione interrotta a metà) e dove trovare il testo completo dell’errore.">
+  <meta name="keywords" content="errore, non riuscito, ffprobe, ffmpeg, codice di uscita, illeggibile, danneggiato, troncato, drm, cifrato, obsoleto, permessi, sandbox, accesso salvato, disco pieno, registro attività, registro, rosso, avviso, triangolo, bug, segnalazione, impossibile salvare, salvare, perso, perdita di dati, cronologia, orario, senza supervisione, durante la notte">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="troubleshooting" id="troubleshooting"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Se un file non viene alleggerito</h1>
+
+<p>La maggior parte dei file arriva al completamento senza bisogno del tuo intervento. Quando
+non succede, le cause sono quasi sempre tre: la sorgente non si è potuta leggere affatto, la
+sorgente non si trova più dov’era oppure un’esecuzione è partita e poi qualcosa è andato storto.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/problem-queue-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/problem-queue.webp" width="1180" height="620" alt="Una coda con quattro problemi diversi contemporaneamente: una sorgente mancante, un codec che la build non può codificare, un’esecuzione non riuscita e un file il cui output sarebbe privo di audio.">
+  </picture>
+  <figcaption>Ogni problema è indicato sotto il file a cui si riferisce.</figcaption>
+</figure>
+
+<p>Ogni riga che richiede attenzione mostra un triangolo di avviso nella colonna dello stato. <strong>Passa
+il puntatore sul triangolo per leggere il motivo.</strong> La riga sotto il nome del file dice la stessa
+cosa, ma viene troncata alla larghezza della colonna, e un messaggio di FFmpeg è spesso più lungo. Se è
+troncata, passaci sopra il puntatore oppure apri il Registro attività.</p>
+
+<p class="note">Un triangolo può anche significare che la build di FFmpeg in uso non ha un encoder per uno dei
+codec di destinazione che hai scelto. In quel caso viene indicato il codec, e la soluzione si
+trova in <a href="unsupported-codec.html">Se un codec non può essere codificato</a>.</p>
+
+<h2>Individuare il problema che ti riguarda</h2>
+
+<ul>
+  <li><a href="probe-failed.html">Se SubTrack non riesce a leggere un file</a> – l’alleggerimento non è
+    nemmeno iniziato, perché l’analisi della sorgente non è riuscita.</li>
+  <li><a href="missing-source.html">Se il file sorgente è mancante</a> – il file è stato spostato, oppure
+    l’accesso salvato per raggiungerlo non è più valido.</li>
+  <li><a href="encode-failed.html">Se un’esecuzione parte e poi non riesce</a> – FFmpeg è stato avviato,
+    ha lavorato per un po’ e si è fermato.</li>
+  <li><a href="unsupported-codec.html">Se un codec non può essere codificato</a> – la build in uso non
+    ha un encoder per un codec di destinazione che hai scelto.</li>
+</ul>
+
+<a name="activity-log" id="activity-log"></a>
+<h2>Leggere l’errore completo nel Registro attività</h2>
+
+<p>Scegli <strong>Finestra</strong> &#9656; <strong>Registro attività</strong> (<kbd>⇧⌘L</kbd>).</p>
+
+<p>Il registro racconta ciò che è successo in <strong>tutte le code insieme</strong>, a partire dall’evento più recente: per ognuno riporta l’ora, la coda, il file e ciò che gli è accaduto. Esiste
+soprattutto per un motivo: <strong>qui si trova il testo completo e non troncato dell’errore.</strong>
+In una riga della coda c’è spazio solo per una breve frase; il registro riporta il messaggio intero.</p>
+
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/activity-log-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/activity-log.webp" width="860" height="312" alt="Il Registro attività dopo un’esecuzione notturna nella coda Troubleshooting: l’esecuzione che termina con tre file codificati e uno non riuscito, un problema risolto, un’esecuzione non riuscita, un codec che la build non può codificare, una sorgente mancante e l’avvio dell’esecuzione.">
+  </picture>
+  <figcaption>Un’esecuzione notturna, letta la mattina dopo. Sei righe per trecento file.</figcaption>
+</figure>
+
+<p>È pensato per essere letto la mattina dopo aver lasciato un’esecuzione in corso. Ogni
+esecuzione scrive una riga all’avvio e un’altra alla fine, con il riepilogo del risultato; nel mezzo
+c’è tutto ciò che è andato storto: un file non riuscito, una sorgente scomparsa, una transcodifica che
+questa build di FFmpeg non può eseguire, un problema poi risolto.</p>
+
+<p class="note">Un file che va a buon fine non compare affatto nel registro. L’analisi, la codifica e il
+completamento non scrivono nulla (la riga finale riporta i totali), quindi un’esecuzione senza problemi
+su trecento file occupa due righe invece di seicento, e tutto ciò che vedi merita di essere letto. Se
+un’esecuzione non ha avuto problemi, il registro mostra <strong>Niente da segnalare</strong>.</p>
+
+<p class="note">Nessun messaggio è abbreviato. Ogni voce si allunga quanto serve per contenere il testo,
+che puoi selezionare e copiare. Solo data e ora sono abbreviate: le voci di oggi mostrano solo l’ora,
+quelle precedenti anche la data.</p>
+
+<p>Il registro riguarda la sessione in corso di SubTrack. Quando esci dall’app viene svuotato, perché
+serve a rendere conto della sessione che ha eseguito la codifica.</p>
+
+<p>Se il messaggio non corrisponde a nulla di ciò che è descritto in questa pagina, merita
+attenzione: copialo dal registro e <a href="https://github.com/RISCfuture/SubTrack/issues">segnala un problema su GitHub</a>.</p>
+
+<a name="not-saving" id="not-saving"></a>
+<h2>Se SubTrack indica «Impossibile salvare»</h2>
+
+<p>Tutto il resto di questa pagina riguarda un singolo file. Questo caso, invece, non riguarda alcun
+file: <strong>«Impossibile salvare», a destra nella barra di stato, significa che SubTrack non riesce
+a salvare su disco la coda stessa.</strong> Ciò che vedi sullo schermo è corretto; ciò che è memorizzato sul
+disco ha smesso di tenere il passo.</p>
+
+<p>L’indicazione compare solo finché il problema persiste e scompare appena un salvataggio riesce di
+nuovo, quindi un disco occupato per qualche istante non lascia traccia. Fai clic sull’indicazione per aprire
+il Registro attività, dove il motivo completo è riportato su una riga a parte, contrassegnata con
+<strong>Tutte le code</strong> perché, a differenza di quasi tutte le altre voci, non riguarda un singolo
+file. Il registro conserva anche l’ora in cui il problema è iniziato e scrive un’altra riga quando il
+salvataggio riprende, così un guasto comparso e sparito mentre non c’eri lascia traccia di entrambi
+i momenti.</p>
+
+<p>Non esiste un pulsante che risolva il problema, ed è proprio per questo che SubTrack te lo segnala
+invece di aspettare. Finché è visibile, <strong>ciò che aggiungi o modifichi potrebbe andare perso
+all’uscita</strong>. Controlla che il disco che contiene la tua cartella Inizio non sia pieno e annota
+ciò che preferiresti non dover impostare una seconda volta.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="running-a-queue.html#queue-status">Eseguire una coda e seguirne l’avanzamento</a></li>
+    <li><a href="adding-files.html">Aggiungere video a una coda</a></li>
+    <li><a href="supported-formats.html">Vedere cosa supporta una build di FFmpeg</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

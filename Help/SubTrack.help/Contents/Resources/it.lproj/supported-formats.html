@@ -1,0 +1,42 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Vedere cosa supporta una build di FFmpeg</title>
+  <meta name="AppleTitle" content="Vedere cosa supporta una build di FFmpeg">
+  <meta name="description" content="Il pannello Formati supportati elenca ogni contenitore e codec gestito dalla build in uso e distingue la lettura dalla scrittura.">
+  <meta name="keywords" content="formati supportati, contenitori, codec, decodificare, codificare, lettura, scrittura, filtro, muxer, demuxer, funzionalità">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="supported-formats" id="supported-formats"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Vedere cosa supporta una build di FFmpeg</h1>
+
+<p>Fai clic su <strong>Formati supportati</strong> in <strong>Impostazioni</strong> &#9656;
+<strong>FFmpeg</strong>. Il pannello elenca <strong>Contenitori</strong>, <strong>Codec video</strong>,
+<strong>Codec audio</strong> e <strong>Codec dei sottotitoli</strong> della build in uso; ogni gruppo
+si può comprimere e ogni riga riporta l’identificatore del formato e il suo nome completo. Scrivi nel
+campo <strong>Filtra</strong> per restringere tutti i gruppi insieme.</p>
+
+<h2>Decodificare non significa codificare</h2>
+
+<p>Ogni riga ha due indicatori, che significano cose diverse. I contenitori sono contrassegnati da
+<strong>Lettura / Scrittura</strong>, i codec da <strong>Decodifica / Codifica</strong> – e leggere non significa scrivere. Una build può decodificare alla perfezione un codec senza riuscire a produrne
+nemmeno un fotogramma. È normale: quasi ogni build legge più di quanto scrive.</p>
+
+<p>Questa asimmetria è proprio all’origine dell’avviso che l’FFmpeg in uso non può codificare un
+codec di destinazione che hai scelto. Filtra per il codec, guarda il secondo indicatore e lo
+vedrai.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Usare una build di FFmpeg diversa</a></li>
+    <li><a href="unsupported-codec.html">Se un codec non può essere codificato</a></li>
+    <li><a href="preferred-codecs.html">Impostare i codec preferiti e i codec di destinazione</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

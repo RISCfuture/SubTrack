@@ -1,0 +1,86 @@
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Installare lo strumento a riga di comando subtrack</title>
+  <meta name="AppleTitle" content="Installare lo strumento a riga di comando subtrack">
+  <meta name="description" content="Aggiungi lo strumento subtrack al tuo PATH da Impostazioni ▸ CLI e alleggerisci i file da Terminale o da uno script.">
+  <meta name="keywords" content="cli, riga di comando, terminale, shell, script, batch, sudo, usr local bin, path, installare, opzioni, argomenti, automazione, cron">
+  <meta name="robots" content="index, anchor">
+  <link rel="stylesheet" href="subtrack-help.css">
+</head>
+<body>
+<a name="subtrack-cli" id="subtrack-cli"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" width="30" height="30"></figure>
+<h1>Installare lo strumento a riga di comando <code>subtrack</code></h1>
+
+<p>SubTrack include un gemello a riga di comando. <code>subtrack</code> usa lo stesso motore dell’app,
+prende un file in ingresso e ne scrive uno in uscita, e legge le regole di conservazione da opzioni
+anziché dall’Inspector. Serve per i lavori per cui una finestra non è adatta: alleggerire via SSH,
+integrare l’alleggerimento in uno script o scorrere un’intera libreria durante la notte.</p>
+
+<p>È incluso solo nella versione scaricabile. Il pannello <strong>CLI</strong> della versione App
+Store lo dice e non offre nulla su cui fare clic. Per maggiori informazioni, consulta
+<a href="editions.html#editions">Scegliere tra le due versioni di SubTrack</a>.</p>
+
+<p><a href="cli-install.html">Installare lo strumento <code>subtrack</code></a> spiega come aggiungerlo
+al tuo <code>PATH</code>, anche nel caso in cui la cartella scelta richieda l’accesso da
+amministratore.</p>
+
+<a name="cli-options" id="cli-options"></a>
+<h2>Eseguirlo</h2>
+
+<p>Il comando è <code>subtrack [opzioni] &lt;input&gt; &lt;output&gt;</code>: un file sorgente e un file di output.</p>
+
+<p><strong>Lo strumento non porta con sé FFmpeg.</strong> È un punto su cui quasi tutti inciampano.
+L’FFmpeg incluso nell’app resta dentro il pacchetto dell’app; ciò che hai installato è solo
+l’eseguibile <code>subtrack</code>. Lo strumento cerca <code>ffmpeg</code> e <code>ffprobe</code>
+nel tuo <code>PATH</code> e si ferma con un errore se manca uno dei due. Installa FFmpeg per conto
+tuo (va bene anche quello di Homebrew) oppure indica i file eseguibili con
+<code>--ffmpeg &lt;percorso&gt;</code> e <code>--ffprobe &lt;percorso&gt;</code>.</p>
+
+<p>Le altre opzioni corrispondono alle regole dell’Inspector, una per ciascuna:</p>
+
+<ul>
+  <li><code>-l</code>, <code>--language &lt;lingua&gt;</code> – una lingua da mantenere, come codice
+    di tre lettere. Si può ripetere; l’ordine indica la priorità e l’audio della prima lingua apre
+    il file di output. Senza alcun <code>-l</code>, viene mantenuto <code>eng</code>.</li>
+  <li><code>-n</code>, <code>--no-language</code> – mantiene le tracce senza indicazione di
+    lingua.</li>
+  <li><code>--include-other-audio</code> – mantiene l’audio non predefinito: commenti, audio
+    descrittivo, mix alternativi. Le tracce dei sottotitoli contrassegnate come commento seguono la
+    stessa regola.</li>
+  <li><code>--video-codec</code>, <code>--audio-codec</code>, <code>--subtitle-codec</code> – i
+    codec da copiare così come sono. Si possono ripetere.</li>
+  <li><code>--video-transcode</code>, <code>--audio-transcode</code> – il codec in cui viene
+    trasformata una traccia mantenuta che non è tra quelli indicati.</li>
+  <li><code>--video-option</code>, <code>--audio-option</code> – un’opzione aggiuntiva di FFmpeg da
+    passare durante la transcodifica. Si possono ripetere.</li>
+  <li><code>-d</code>, <code>--dry-run</code> – mostra le operazioni senza scrivere nulla.</li>
+  <li><code>--skip-noops</code> – lascia intatto un file se l’alleggerimento non lo
+    modificherebbe.</li>
+  <li><code>--skip-verify</code> – non rilegge il file di output per controllarlo.</li>
+  <li><code>--suppress-stderr</code> – scarta i messaggi di FFmpeg.</li>
+  <li><code>-h</code>, <code>--help</code> – l’elenco completo, mostrato dallo strumento
+    stesso.</li>
+</ul>
+
+<p class="note">Le opzioni ripetibili sostituiscono i valori predefiniti, non vi si aggiungono. La
+prima <code>--audio-codec</code> che indichi cancella l’elenco integrato, quindi indica tutti i
+codec che vuoi mantenere, non solo quello in più.</p>
+
+<p>L’avanzamento viene scritto sullo standard error come percentuale, così lo standard output resta
+pulito per una pipe. Prova <code>--dry-run</code> prima di lanciare un ciclo su un’intera
+libreria.</p>
+
+<div class="seealso">
+  <h2>Vedi anche</h2>
+  <ul>
+    <li><a href="ffmpeg.html">Usare una build di FFmpeg diversa</a></li>
+    <li><a href="slim-rules.html">Scegliere quali lingue mantenere</a></li>
+    <li><a href="preferred-codecs.html">Impostare i codec preferiti e i codec di destinazione</a></li>
+    <li><a href="editions.html">Scegliere tra le due versioni di SubTrack</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
